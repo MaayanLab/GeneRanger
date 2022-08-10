@@ -64,7 +64,7 @@ export default function Home() {
 
       <div style={{textAlign: 'center'}}>
         {
-          gene != null ?
+          (gene != null) && !(databases.every(e => e === false)) ?
             <Link 
             href={{
               pathname: "gene/[gene]",
@@ -75,7 +75,7 @@ export default function Home() {
             <Button variant="contained" color="primary">Submit</Button>
           </Link>
           :
-          <Button variant="contained" color="error">Select a gene to continue</Button>
+          <Button variant="contained" color="error">Select options to continue</Button>
         }
         
       </div>
