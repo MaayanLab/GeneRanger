@@ -15,38 +15,45 @@ const layout = [
     { i: "g", x: 12, y: 0, w: 2, h: 2 }
   ];
 
-export default function Dashboard() {
-    const router = useRouter();
-    const query = router.query;
-    const gene = query.gene;
-    const databases = query.databases;
+export async function getServerSideProps(context) {
+
+    return { 
+        props: {
+            gene: context.query.gene,
+            databases: context.query.databases 
+        } 
+    }
+
+}
+
+export default function Dashboard(props) {
 
     return (
-    <div>
         <div>
-            This is the dashboard page for the {gene} gene.
-        </div>
-        <div>
-            Other information is {databases}.
-        </div>
+            <div>
+                This is the dashboard page for the {props.gene} gene.
+            </div>
+            <div>
+                Other information is {props.databases}.
+            </div>
 
-        <ResponsiveGridLayout
-            layouts={{ lg: layout }}
-            breakpoints={{ lg: 1200, md: 1100, sm: 1000, xs: 900, xxs: 800 }}
-            cols={{ lg: 14, md: 12, sm: 10, xs: 8, xxs: 6 }}
-            rowHeight={300}
-            className={styles.grid}
-        >
-            <div key="a" style={{backgroundColor: "darkgray"}}></div>
-            <div key="b" style={{backgroundColor: "darkgray"}}></div>
-            <div key="c" style={{backgroundColor: "darkgray"}}></div>
-            <div key="d" style={{backgroundColor: "darkgray"}}></div>
-            <div key="e" style={{backgroundColor: "darkgray"}}></div>
-            <div key="f" style={{backgroundColor: "darkgray"}}></div>
-            <div key="g" style={{backgroundColor: "darkgray"}}></div>
-      
-      </ResponsiveGridLayout>
-    </div>
+            <ResponsiveGridLayout
+                layouts={{ lg: layout }}
+                breakpoints={{ lg: 1200, md: 1100, sm: 1000, xs: 900, xxs: 800 }}
+                cols={{ lg: 14, md: 12, sm: 10, xs: 8, xxs: 6 }}
+                rowHeight={300}
+                className={styles.grid}
+            >
+                <div key="a" style={{backgroundColor: "darkgray"}}></div>
+                <div key="b" style={{backgroundColor: "darkgray"}}></div>
+                <div key="c" style={{backgroundColor: "darkgray"}}></div>
+                <div key="d" style={{backgroundColor: "darkgray"}}></div>
+                <div key="e" style={{backgroundColor: "darkgray"}}></div>
+                <div key="f" style={{backgroundColor: "darkgray"}}></div>
+                <div key="g" style={{backgroundColor: "darkgray"}}></div>
+        
+        </ResponsiveGridLayout>
+        </div>
       
     )
   }
