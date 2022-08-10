@@ -14,8 +14,8 @@ const genes = ["BRI3", "CTTN", "UTP14C", "UTP18", "FZD10", "GFRA1", "RCVRN", "GA
 
 export default function Home() {
 
-  const [gene, setGene] = useState('A2M');
-  const [databases, setDatabases] = useState([true, true, true, true, true, true, true])
+  const [gene, setGene] = useState();
+  const [databases, setDatabases] = useState([true, true, true, true, true, true, true]);
 
   function updateDatabases(index) {
     let updatedArray = [...databases];
@@ -44,7 +44,7 @@ export default function Home() {
           disablePortal
           options={ genes }
           sx={{ width: 300 }}
-          onChange={(event, value) => setGene(value)}
+          onChange={(event, value) => {setGene(value)}}
           renderInput={(params) => <TextField {...params} label="Human Gene Symbol" />}
         />
     </div>
@@ -63,15 +63,21 @@ export default function Home() {
       </FormGroup>
 
       <div style={{textAlign: 'center'}}>
-        <Link 
-          href={{
-            pathname: "gene/[gene]",
-            query: {
-                gene: gene,
-                databases: databases
-          }}}>
-          <Button variant="contained">Submit</Button>
-        </Link>
+        {
+          gene != null ?
+            <Link 
+            href={{
+              pathname: "gene/[gene]",
+              query: {
+                  gene: gene,
+                  databases: databases
+            }}}>
+            <Button variant="contained" color="primary">Submit</Button>
+          </Link>
+          :
+          <Button variant="contained" color="error">Select a gene to continue</Button>
+        }
+        
       </div>
 
       
