@@ -1,24 +1,29 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
+import React, { useState } from 'react';
 import styles from '../styles/Home.module.css'
-import { Responsive, WidthProvider } from "react-grid-layout";
+import { FormGroup, FormControlLabel, Switch, TextField, Button, Autocomplete } from '@mui/material';
+// import genes from './api/genes.json'
 
+// console.log(genes)
 
-const ResponsiveGridLayout = WidthProvider(Responsive);
+const options = ["BRI3", "CTTN", "UTP14C", "UTP18", "FZD10", "GFRA1", "RCVRN", "GAS2L2", "MMP24OS", "OR1I1", "LPIN1", "TMEM216", "FAM107B", "SCAI", "STAB2", "C3orf70", "C1QB", "MTMR2", "LARGE2", "ARL17A", "AP5S1", "PKP1", "SIPA1L3", "S100A11"];
 
-const layout = [
-  { i: "a", x: 0, y: 0, w: 2, h: 2 },
-  { i: "b", x: 2, y: 0, w: 2, h: 2 },
-  { i: "c", x: 4, y: 0, w: 2, h: 2 },
-  { i: "d", x: 6, y: 0, w: 2, h: 2 },
-  { i: "e", x: 8, y: 0, w: 2, h: 2 },
-  { i: "f", x: 10, y: 0, w: 2, h: 2 },
-  { i: "g", x: 12, y: 0, w: 2, h: 2 }
-];
 
 export default function Home() {
+
+  const [gene, setGene] = useState('A2M');
+  const [databases, setDatabases] = useState([true, true, true, true, true, true, true])
+
+  function updateDatabases(index) {
+    let updatedArray = [...databases];
+    updatedArray[index] = !updatedArray[index];
+    setDatabases(updatedArray);
+  }
+
   return (
     <div>
       <Head>
@@ -26,29 +31,54 @@ export default function Home() {
         {/* <link rel="icon" type="image/x-icon" href="/favicon.ico" /> */}
       </Head>
 
-      <div style={{display: 'flex', justifyContent: 'center'}}>
-      <Image src="/images/logo.png" alt="Logo" width={72} height={16} />
+      <div className={styles.mainDiv}>
+
+      <div className={styles.title}>
+        <Image src="/images/logo.png" alt="Logo" width={72} height={16} />
         <h1 className={styles.header}>Gene and Protein Expression across Human Cells and Tissues</h1>
       </div>
       
       <div className={styles.text}>This web app takes the input of a human gene and displays its expression across human cells and tissues utilizing a variety of processed datasets from healthy tissues. If the gene is not contained in one of the datasets, a plot will not be produced for that resource.</div>
 
-      <ResponsiveGridLayout
-        layouts={{ lg: layout }}
-        breakpoints={{ lg: 1200, md: 1100, sm: 1000, xs: 900, xxs: 800 }}
-        cols={{ lg: 14, md: 12, sm: 10, xs: 8, xxs: 6 }}
-        rowHeight={300}
-        style={{marginLeft: "auto", marginRight: "auto", backgroundColor: "gray", borderStyle: 'solid', borderRadius: '15px', width: '80%'}}
-      >
-        <div key="a" style={{backgroundColor: "darkgray"}}></div>
-        <div key="b" style={{backgroundColor: "darkgray"}}></div>
-        <div key="c" style={{backgroundColor: "darkgray"}}></div>
-        <div key="d" style={{backgroundColor: "darkgray"}}></div>
-        <div key="e" style={{backgroundColor: "darkgray"}}></div>
-        <div key="f" style={{backgroundColor: "darkgray"}}></div>
-        <div key="g" style={{backgroundColor: "darkgray"}}></div>
+    <div>
+      <Autocomplete
+          disablePortal
+          id="combo-box-demo"
+          options={ options }
+          sx={{ width: 300 }}
+          onChange={(event, value) => setGene(value)}
+          renderInput={(params) => <TextField {...params} label="Human Gene Symbol" />}
+        />
+    </div>
       
-      </ResponsiveGridLayout>
+
+      <h2>Select Datasets</h2>
+
+      <FormGroup className={styles.form}>
+        <FormControlLabel control={<Switch onChange={() => updateDatabases(0)} defaultChecked />} label="Include GTEX - gene?" labelPlacement="start"/>
+        <FormControlLabel control={<Switch onChange={() => updateDatabases(1)} defaultChecked />} label="Include ARCHS4 - Tissue?" labelPlacement="start"/>
+        <FormControlLabel control={<Switch onChange={() => updateDatabases(2)} defaultChecked />} label="Include ARCHS4 - Tissue &amp; Cell Type?" labelPlacement="start"/>
+        <FormControlLabel control={<Switch onChange={() => updateDatabases(3)} defaultChecked />} label="Include Tabula Sapiens?" labelPlacement="start"/>
+        <FormControlLabel control={<Switch onChange={() => updateDatabases(4)} defaultChecked />} label="Include HPM?" labelPlacement="start"/>
+        <FormControlLabel control={<Switch onChange={() => updateDatabases(5)} defaultChecked />} label="Include HPA?" labelPlacement="start"/>
+        <FormControlLabel control={<Switch onChange={() => updateDatabases(6)} defaultChecked />} label="Include GTEx - Proteomics?" labelPlacement="start"/>
+      </FormGroup>
+
+      <div style={{textAlign: 'center'}}>
+        <Link 
+          href={{
+            pathname: "gene/[gene]",
+            query: {
+                gene: gene,
+                databases: databases
+          }}}>
+          <Button variant="contained">Submit</Button>
+        </Link>
+      </div>
+
+      
+        
+      </div>
     </div>
   )
 }
