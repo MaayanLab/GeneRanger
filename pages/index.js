@@ -10,8 +10,7 @@ import { FormGroup, FormControlLabel, Switch, TextField, Button, Autocomplete } 
 
 // console.log(genes)
 
-const options = ["BRI3", "CTTN", "UTP14C", "UTP18", "FZD10", "GFRA1", "RCVRN", "GAS2L2", "MMP24OS", "OR1I1", "LPIN1", "TMEM216", "FAM107B", "SCAI", "STAB2", "C3orf70", "C1QB", "MTMR2", "LARGE2", "ARL17A", "AP5S1", "PKP1", "SIPA1L3", "S100A11"];
-
+const genes = ["BRI3", "CTTN", "UTP14C", "UTP18", "FZD10", "GFRA1", "RCVRN", "GAS2L2", "MMP24OS", "OR1I1", "LPIN1", "TMEM216", "FAM107B", "SCAI", "STAB2", "C3orf70", "C1QB", "MTMR2", "LARGE2", "ARL17A", "AP5S1", "PKP1", "SIPA1L3", "S100A11"];
 
 export default function Home() {
 
@@ -43,8 +42,7 @@ export default function Home() {
     <div>
       <Autocomplete
           disablePortal
-          id="combo-box-demo"
-          options={ options }
+          options={ genes }
           sx={{ width: 300 }}
           onChange={(event, value) => setGene(value)}
           renderInput={(params) => <TextField {...params} label="Human Gene Symbol" />}

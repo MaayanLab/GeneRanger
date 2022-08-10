@@ -1,7 +1,9 @@
-
+import Link from 'next/link'
+import { Button } from '@mui/material';
 import styles from '../../styles/Dashboard.module.css'
-import { useRouter } from "next/router";
 import { Responsive, WidthProvider } from "react-grid-layout";
+import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -29,12 +31,26 @@ export async function getServerSideProps(context) {
 export default function Dashboard(props) {
 
     return (
-        <div>
+        <div className={styles.mainDiv}>
+
+            <Link 
+                href={{
+                    pathname: "../"
+                    }}>
+                <Button variant="contained">Home</Button>
+            </Link>
+
             <div>
-                This is the dashboard page for the {props.gene} gene.
+                Gene: {props.gene}
             </div>
-            <div>
-                Other information is {props.databases}.
+            <div className={styles.databases}>
+                <div>GTEX - gene {props.databases[0] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>} </div>
+                <div>ARCHS4 - Tissue {props.databases[1] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
+                <div>ARCHS4 - Tissue &amp; Cell Type {props.databases[2] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
+                <div>Tabula Sapiens {props.databases[3] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
+                <div>HPM {props.databases[4] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
+                <div>HPA {props.databases[5] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
+                <div>GTEx - Proteomics {props.databases[6] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
             </div>
 
             <ResponsiveGridLayout
