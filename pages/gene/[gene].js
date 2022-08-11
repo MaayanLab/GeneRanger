@@ -41,7 +41,7 @@ export default function Dashboard(props) {
             </Link>
 
             <div>
-                Gene: {props.gene}
+                Selected Gene: {props.gene}
             </div>
             <div className={styles.databases}>
                 <div>GTEX - gene {props.databases[0] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>} </div>

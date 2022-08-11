@@ -33,7 +33,7 @@ export default function Home() {
       <div className={styles.mainDiv}>
 
       <div className={styles.title}>
-        <Image src="/images/logo.png" alt="Logo" width={72} height={16} />
+        <Image src="/images/logo.png" alt="App Logo" width={72} height={16} />
         <h1 className={styles.header}>Gene and Protein Expression across Human Cells and Tissues</h1>
       </div>
       
@@ -80,7 +80,22 @@ export default function Home() {
         
       </div>
 
-      
+      <footer className={styles.footer}>
+        <div className={styles.footerLinks}>
+          <div><a className={styles.link} href="mailto:avi.maayan@mssm.edu">Contact Us</a></div>
+          <div><a className={styles.link} href="">Usage License</a></div>
+        </div>
+        <div>
+          <a href="https://icahn.mssm.edu/research/bioinformatics" target="_blank" rel="noopener noreferrer"><Image src="/images/icahn_cb.png" alt="School Logo" width={137} height={80} /></a>
+        </div>
+        <div>
+          <a href="https://labs.icahn.mssm.edu/maayanlab/" target="_blank" rel="noopener noreferrer"><Image style={{borderRadius: '10px'}} src="/images/maayanlab_logo.png" alt="Lab Logo" width={80} height={80} /></a>
+        </div>
+        <div className={styles.githubButtons}>
+          <a className={styles.githubLink} href="https://github.com/MaayanLab/single-gene-expression-dashboard" target="_blank" rel="noopener noreferrer"><Button variant="contained" color="primary"><Image style={{borderRadius: '5px'}} src="/images/GitHub-Mark.png" alt="GitHub Logo" width={16} height={16} />&nbsp;View source code</Button></a>
+          <a className={styles.githubLink} href="https://github.com/MaayanLab/single-gene-expression-dashboard/issues/new" target="_blank" rel="noopener noreferrer"><Button variant="contained" color="primary"><Image style={{borderRadius: '5px'}} src="/images/GitHub-Mark.png" alt="GitHub Logo" width={16} height={16} />&nbsp;Submit an issue</Button></a>
+        </div>
+      </footer>
         
       </div>
     </div>
