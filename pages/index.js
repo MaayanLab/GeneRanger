@@ -53,13 +53,13 @@ export default function Home() {
       <h2>Select Datasets</h2>
 
       <FormGroup className={styles.form}>
-        <FormControlLabel control={<Switch onChange={() => updateDatabases(0)} defaultChecked />} label="Include GTEX - gene?" labelPlacement="start"/>
-        <FormControlLabel control={<Switch onChange={() => updateDatabases(1)} defaultChecked />} label="Include ARCHS4 - Tissue?" labelPlacement="start"/>
-        <FormControlLabel control={<Switch onChange={() => updateDatabases(2)} defaultChecked />} label="Include ARCHS4 - Tissue &amp; Cell Type?" labelPlacement="start"/>
+        <FormControlLabel control={<Switch onChange={() => updateDatabases(0)} defaultChecked />} label={<><Image src="/images/GTEx.png" alt="GTEx Logo" width={'250px'} height={'32px'}/>(Gene)</>} labelPlacement="start"/>
+        <FormControlLabel control={<Switch onChange={() => updateDatabases(1)} defaultChecked />} label={<><Image src="/images/archs4.png" alt="archs4 Logo" width={'250px'} height={'32px'}/>(Tissue)</>} labelPlacement="start"/>
+        <FormControlLabel control={<Switch onChange={() => updateDatabases(2)} defaultChecked />} label={<><Image src="/images/archs4.png" alt="archs4 Logo" width={'250px'} height={'32px'}/>(Tissue &amp; Cell Type)</>} labelPlacement="start"/>
         <FormControlLabel control={<Switch onChange={() => updateDatabases(3)} defaultChecked />} label="Include Tabula Sapiens?" labelPlacement="start"/>
-        <FormControlLabel control={<Switch onChange={() => updateDatabases(4)} defaultChecked />} label="Include HPM?" labelPlacement="start"/>
-        <FormControlLabel control={<Switch onChange={() => updateDatabases(5)} defaultChecked />} label="Include HPA?" labelPlacement="start"/>
-        <FormControlLabel control={<Switch onChange={() => updateDatabases(6)} defaultChecked />} label="Include GTEx - Proteomics?" labelPlacement="start"/>
+        <FormControlLabel control={<Switch onChange={() => updateDatabases(4)} defaultChecked />} label={<><Image src="/images/HPM.gif" alt="HPM Logo" width={'250px'} height={'32px'}/></>} labelPlacement="start"/>
+        <FormControlLabel control={<Switch onChange={() => updateDatabases(5)} defaultChecked />} label={<><Image src="/images/HPA.svg" alt="HPA Logo" width={'250px'} height={'32px'}/></>} labelPlacement="start"/>
+        <FormControlLabel control={<Switch onChange={() => updateDatabases(6)} defaultChecked />} label={<><Image src="/images/GTEx.png" alt="GTEx Logo" width={'250px'} height={'32px'}/>(Proteomics)</>} labelPlacement="start"/>
       </FormGroup>
 
       <div style={{textAlign: 'center'}}>
