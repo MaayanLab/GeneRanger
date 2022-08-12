@@ -65,7 +65,7 @@ export default function Home() {
           <h2>Proteomics Datasets</h2>
           <div className={styles.innerFormDiv}>
             <FormGroup className={styles.form}>
-              <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(3)} defaultChecked />} label={<><Image src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo" width={'250px'} height={'250px'}/></>} labelPlacement="start"/>
+              <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(3)} defaultChecked />} label={<><Image style={{borderRadius: '8px'}} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo" width={'250px'} height={'250px'}/></>} labelPlacement="start"/>
             </FormGroup>
 
             <FormGroup>
