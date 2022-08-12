@@ -24,11 +24,22 @@
 .formDiv {
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 150px;
+}
+
+.innerFormDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 25px;
 }
 
-.form {
-  width: 25%;
+.dbGroup {
+  text-align: center;
+  background-color: lightsteelblue;
+  border-radius: 25px;
+  padding: 25px;
 }
 
 .formItem {
