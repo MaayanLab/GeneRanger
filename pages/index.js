@@ -24,16 +24,17 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <div className={styles.page}>
       <Head>
         <title>Single Gene Expression Dashboard</title>
         {/* <link rel="icon" type="image/x-icon" href="/favicon.ico" /> */}
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400" rel="stylesheet"></link>
       </Head>
 
       <div className={styles.mainDiv}>
 
       <div className={styles.title}>
-        <Image src="/images/logo.png" alt="App Logo" width={72} height={16} />
+        <Image src="/images/logo.png" alt="App Logo" width={106} height={102} />
         <h1 className={styles.header}>Gene and Protein Expression across Human Cells and Tissues</h1>
       </div>
       
