@@ -28,7 +28,6 @@ export default function Home() {
       <Head>
         <title>Single Gene Expression Dashboard</title>
         {/* <link rel="icon" type="image/x-icon" href="/favicon.ico" /> */}
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400" rel="stylesheet"></link>
       </Head>
 
       <div className={styles.mainDiv}>
