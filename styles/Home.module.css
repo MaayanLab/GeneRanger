@@ -21,8 +21,19 @@
   margin-right: auto;
 }
 
+.formDiv {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
 .form {
   width: 25%;
+}
+
+.formItem {
+  margin: 10px;
+  text-align: center;
 }
 
 .mainDiv {
