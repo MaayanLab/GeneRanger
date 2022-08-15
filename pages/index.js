@@ -6,11 +6,7 @@ import 'react-resizable/css/styles.css';
 import React, { useState } from 'react';
 import styles from '../styles/Home.module.css'
 import { FormGroup, FormControlLabel, Switch, TextField, Button, Autocomplete } from '@mui/material';
-// import genes from './api/genes.json'
-
-// console.log(genes)
-
-const genes = ["BRI3", "CTTN", "UTP14C", "UTP18", "FZD10", "GFRA1", "RCVRN", "GAS2L2", "MMP24OS", "OR1I1", "LPIN1", "TMEM216", "FAM107B", "SCAI", "STAB2", "C3orf70", "C1QB", "MTMR2", "LARGE2", "ARL17A", "AP5S1", "PKP1", "SIPA1L3", "S100A11"];
+import genes from '../json/genes.json'
 
 export default function Home() {
 
