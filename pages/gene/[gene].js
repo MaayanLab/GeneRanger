@@ -46,11 +46,10 @@ export default function Dashboard(props) {
             <div className={styles.databases}>
                 <div>GTEX - gene {props.databases[0] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>} </div>
                 <div>ARCHS4 - Tissue {props.databases[1] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
-                <div>ARCHS4 - Tissue &amp; Cell Type {props.databases[2] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
-                <div>Tabula Sapiens {props.databases[3] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
-                <div>HPM {props.databases[4] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
-                <div>HPA {props.databases[5] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
-                <div>GTEx - Proteomics {props.databases[6] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
+                <div>Tabula Sapiens {props.databases[2] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
+                <div>HPM {props.databases[3] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
+                <div>HPA {props.databases[4] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
+                <div>GTEx - Proteomics {props.databases[5] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
             </div>
 
             <ResponsiveGridLayout

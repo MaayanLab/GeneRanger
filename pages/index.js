@@ -1,17 +1,17 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import React, { useState } from 'react';
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.css';
 import { FormGroup, FormControlLabel, Switch, TextField, Button, Autocomplete } from '@mui/material';
-import genes from '../json/genes.json'
+import genes from '../json/genes.json';
 
 export default function Home() {
 
   const [gene, setGene] = useState();
-  const [databases, setDatabases] = useState([true, true, true, true, true, true, true]);
+  const [databases, setDatabases] = useState([true, true, true, true, true, true]);
 
   function updateDatabases(index) {
     let updatedArray = [...databases];
@@ -22,14 +22,15 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <Head>
-        <title>Single Gene Expression Dashboard</title>
-        {/* <link rel="icon" type="image/x-icon" href="/favicon.ico" /> */}
+        <title>Single Gene and Protein Expression Dashboard</title>
+        <link rel="icon" href="/images/logo.png" />
       </Head>
 
       <div className={styles.mainDiv}>
 
       <div className={styles.title}>
-        <Image src="/images/logo.png" alt="App Logo" width={106} height={102} />
+        {/* <Image src="/images/logo.png" alt="App Logo" layout="fixed" width={106} height={102} /> */}
+        <img className={styles.mainLogo} src="/images/logo.png" alt="App Logo" width={150} height={"auto"} />
         <h1 className={styles.header}>Gene and Protein Expression across Human Cells and Tissues</h1>
       </div>
       
@@ -48,27 +49,21 @@ export default function Home() {
       <div className={styles.formDiv}>
 
         <div className={styles.dbGroup}>
-          <h2>Gene Expression Datasets</h2>
+          <h2>Transcriptomics</h2>
           <FormGroup>
-            <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(0)} defaultChecked />} label={<><Image src="/images/GTEx.png" alt="GTEx Logo" width={'250px'} height={'32px'}/></>} labelPlacement="start"/>
-            <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(1)} defaultChecked />} label={<><Image src="/images/archs4.png" alt="archs4 Logo" width={'250px'} height={'32px'}/><div>(Tissue)</div></>} labelPlacement="start"/>
-            <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(2)} defaultChecked />} label={<><Image src="/images/archs4.png" alt="archs4 Logo" width={'250px'} height={'32px'}/><div>(Tissue &amp; Cell Type)</div></>} labelPlacement="start"/>
+            <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(0)} defaultChecked />} label={<><a className={styles.logoLink} href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer"><img className={styles.databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/></a></>} labelPlacement="start"/>
+            <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(1)} defaultChecked />} label={<><a className={styles.logoLink} href="https://maayanlab.cloud/archs4/" target="_blank" rel="noopener noreferrer"><img className={styles.databaseLogo} src="/images/archs4.png" alt="archs4 Logo"/></a></>} labelPlacement="start"/>
+            <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(2)} defaultChecked />} label={<><a className={styles.logoLink} href="https://tabula-sapiens-portal.ds.czbiohub.org" target="_blank" rel="noopener noreferrer"><img className={styles.databaseLogo} style={{borderRadius: '8px'}} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo"/></a></>} labelPlacement="start"/>
           </FormGroup>
         </div>
 
         <div className={styles.dbGroup}>
-          <h2>Proteomics Datasets</h2>
-          <div className={styles.innerFormDiv}>
-            <FormGroup className={styles.form}>
-              <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(3)} defaultChecked />} label={<><Image style={{borderRadius: '8px'}} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo" width={'250px'} height={'250px'}/></>} labelPlacement="start"/>
-            </FormGroup>
-
+          <h2>Proteomics</h2>
             <FormGroup>
-              <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(4)} defaultChecked />} label={<><Image src="/images/HPM.gif" alt="HPM Logo" width={'250px'} height={'32px'}/></>} labelPlacement="start"/>
-              <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(5)} defaultChecked />} label={<><Image src="/images/HPA.svg" alt="HPA Logo" width={'250px'} height={'32px'}/></>} labelPlacement="start"/>
-              <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(6)} defaultChecked />} label={<><Image src="/images/GTEx.png" alt="GTEx Logo" width={'250px'} height={'32px'}/></>} labelPlacement="start"/>
+              <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(3)} defaultChecked />} label={<><a className={styles.logoLink} href="http://www.humanproteomemap.org" target="_blank" rel="noopener noreferrer"><img className={styles.databaseLogo} src="/images/HPM.gif" alt="HPM Logo"/></a></>} labelPlacement="start"/>
+              <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(4)} defaultChecked />} label={<><a className={styles.logoLink} href="https://www.proteinatlas.org" target="_blank" rel="noopener noreferrer"><img className={styles.databaseLogo} src="/images/HPA.svg" alt="HPA Logo"/></a></>} labelPlacement="start"/>
+              <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(5)} defaultChecked />} label={<><a className={styles.logoLink} href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer"><img className={styles.databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/></a></>} labelPlacement="start"/>
             </FormGroup>
-          </div>
         </div>  
       </div>
 
@@ -92,8 +87,9 @@ export default function Home() {
 
       <footer className={styles.footer}>
         <div className={styles.footerLinks}>
+        <div><a className={styles.link} href="https://appyters.maayanlab.cloud/Gene_Expression_by_Tissue/">Appyter</a></div>
           <div><a className={styles.link} href="mailto:avi.maayan@mssm.edu">Contact Us</a></div>
-          <div><a className={styles.link} href="">Usage License</a></div>
+          <div><a className={styles.link} href="https://github.com/MaayanLab/single-gene-expression-dashboard/blob/main/LICENSE">Usage License</a></div>
         </div>
         <div>
           <a href="https://icahn.mssm.edu/research/bioinformatics" target="_blank" rel="noopener noreferrer"><Image src="/images/icahn_cb.png" alt="School Logo" width={137} height={80} /></a>
