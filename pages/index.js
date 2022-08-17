@@ -29,7 +29,6 @@ export default function Home() {
       <div className={styles.mainDiv}>
 
       <div className={styles.title}>
-        {/* <Image src="/images/logo.png" alt="App Logo" layout="fixed" width={106} height={102} /> */}
         <img className={styles.mainLogo} src="/images/logo.png" alt="App Logo" width={150} height={"auto"} />
         <h1 className={styles.header}>Gene and Protein Expression across Human Cells and Tissues</h1>
       </div>
