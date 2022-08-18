@@ -58,15 +58,15 @@ export default function Home() {
 
         <div className={styles.dbGroup}>
           <h2>Proteomics</h2>
-            <FormGroup>
-              <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(3)} defaultChecked />} label={<><a className={styles.logoLink} href="http://www.humanproteomemap.org" target="_blank" rel="noopener noreferrer"><img className={styles.databaseLogo} src="/images/HPM.gif" alt="HPM Logo"/></a></>} labelPlacement="start"/>
-              <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(4)} defaultChecked />} label={<><a className={styles.logoLink} href="https://www.proteinatlas.org" target="_blank" rel="noopener noreferrer"><img className={styles.databaseLogo} src="/images/HPA.svg" alt="HPA Logo"/></a></>} labelPlacement="start"/>
-              <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(5)} defaultChecked />} label={<><a className={styles.logoLink} href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer"><img className={styles.databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/></a></>} labelPlacement="start"/>
-            </FormGroup>
+          <FormGroup>
+            <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(3)} defaultChecked />} label={<><a className={styles.logoLink} href="http://www.humanproteomemap.org" target="_blank" rel="noopener noreferrer"><img className={styles.databaseLogo} src="/images/HPM.gif" alt="HPM Logo"/></a></>} labelPlacement="start"/>
+            <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(4)} defaultChecked />} label={<><a className={styles.logoLink} href="https://www.proteinatlas.org" target="_blank" rel="noopener noreferrer"><img className={styles.databaseLogo} src="/images/HPA.svg" alt="HPA Logo"/></a></>} labelPlacement="start"/>
+            <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(5)} defaultChecked />} label={<><a className={styles.logoLink} href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer"><img className={styles.databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/></a></>} labelPlacement="start"/>
+          </FormGroup>
         </div>  
       </div>
 
-      <div style={{textAlign: 'center'}}>
+      <div className={styles.buttonDiv}>
         {
           (gene != null) && !(databases.every(e => e === false)) ?
             <Link 
@@ -81,12 +81,11 @@ export default function Home() {
           :
           <Button variant="contained" color="error">Select options to continue</Button>
         }
-        
+        <a className={styles.buttonLink} href="https://appyters.maayanlab.cloud/Gene_Expression_by_Tissue/"><Button variant="contained">Run the Appyter</Button></a>
       </div>
 
       <footer className={styles.footer}>
         <div className={styles.footerLinks}>
-        <div><a className={styles.link} href="https://appyters.maayanlab.cloud/Gene_Expression_by_Tissue/">Appyter</a></div>
           <div><a className={styles.link} href="mailto:avi.maayan@mssm.edu">Contact Us</a></div>
           <div><a className={styles.link} href="https://github.com/MaayanLab/single-gene-expression-dashboard/blob/main/LICENSE">Usage License</a></div>
         </div>
@@ -97,8 +96,8 @@ export default function Home() {
           <a href="https://labs.icahn.mssm.edu/maayanlab/" target="_blank" rel="noopener noreferrer"><Image style={{borderRadius: '10px'}} src="/images/maayanlab_logo.png" alt="Lab Logo" width={80} height={80} /></a>
         </div>
         <div className={styles.githubButtons}>
-          <a className={styles.githubLink} href="https://github.com/MaayanLab/single-gene-expression-dashboard" target="_blank" rel="noopener noreferrer"><Button variant="contained" color="primary"><Image style={{borderRadius: '5px'}} src="/images/GitHub-Mark.png" alt="GitHub Logo" width={16} height={16} />&nbsp;View source code</Button></a>
-          <a className={styles.githubLink} href="https://github.com/MaayanLab/single-gene-expression-dashboard/issues/new" target="_blank" rel="noopener noreferrer"><Button variant="contained" color="primary"><Image style={{borderRadius: '5px'}} src="/images/GitHub-Mark.png" alt="GitHub Logo" width={16} height={16} />&nbsp;Submit an issue</Button></a>
+          <a className={styles.buttonLink} href="https://github.com/MaayanLab/single-gene-expression-dashboard" target="_blank" rel="noopener noreferrer"><Button variant="contained" color="primary"><Image style={{borderRadius: '5px'}} src="/images/GitHub-Mark.png" alt="GitHub Logo" width={16} height={16} />&nbsp;View source code</Button></a>
+          <a className={styles.buttonLink} href="https://github.com/MaayanLab/single-gene-expression-dashboard/issues/new" target="_blank" rel="noopener noreferrer"><Button variant="contained" color="primary"><Image style={{borderRadius: '5px'}} src="/images/GitHub-Mark.png" alt="GitHub Logo" width={16} height={16} />&nbsp;Submit an issue</Button></a>
         </div>
       </footer>
         

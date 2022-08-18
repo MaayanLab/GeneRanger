@@ -6,6 +6,7 @@ import styles from '../../styles/Dashboard.module.css';
 import { Responsive, WidthProvider } from "react-grid-layout";
 import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import { PrismaClient } from '@prisma/client';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -20,6 +21,29 @@ const layout = [
   ];
 
 export async function getServerSideProps(context) {
+
+    const prisma = new PrismaClient();
+
+    // const gtex_proteomics = await prisma.gtex_proteomics.findMany({
+    //     where: {
+    //         gene_id: 'ENSG00000000003',
+    //     },
+    // });
+    // console.log(gtex_proteomics);
+
+    // const hpm = await prisma.hpm.findMany({
+    //     where: {
+    //         gene: context.query.gene,
+    //     },
+    // });
+    // console.log(hpm);
+
+    // const hpa = await prisma.hpa.findMany({
+    //     where: {
+    //         gene: 'ENSG00000000003',
+    //     },
+    // });
+    // console.log(hpa);
 
     return { 
         props: {
@@ -103,7 +127,6 @@ export default function Dashboard(props) {
 
         <footer className={styles.footer}>
             <div className={styles.footerLinks}>
-                <div><a className={styles.link} href="https://appyters.maayanlab.cloud/Gene_Expression_by_Tissue/">Appyter</a></div>
                 <div><a className={styles.link} href="mailto:avi.maayan@mssm.edu">Contact Us</a></div>
                 <div><a className={styles.link} href="https://github.com/MaayanLab/single-gene-expression-dashboard/blob/main/LICENSE">Usage License</a></div>
             </div>
@@ -114,8 +137,8 @@ export default function Dashboard(props) {
                 <a href="https://labs.icahn.mssm.edu/maayanlab/" target="_blank" rel="noopener noreferrer"><Image style={{borderRadius: '10px'}} src="/images/maayanlab_logo.png" alt="Lab Logo" width={80} height={80} /></a>
             </div>
             <div className={styles.githubButtons}>
-                <a className={styles.githubLink} href="https://github.com/MaayanLab/single-gene-expression-dashboard" target="_blank" rel="noopener noreferrer"><Button variant="contained" color="primary"><Image style={{borderRadius: '5px'}} src="/images/GitHub-Mark.png" alt="GitHub Logo" width={16} height={16} />&nbsp;View source code</Button></a>
-                <a className={styles.githubLink} href="https://github.com/MaayanLab/single-gene-expression-dashboard/issues/new" target="_blank" rel="noopener noreferrer"><Button variant="contained" color="primary"><Image style={{borderRadius: '5px'}} src="/images/GitHub-Mark.png" alt="GitHub Logo" width={16} height={16} />&nbsp;Submit an issue</Button></a>
+                <a className={styles.buttonLink} href="https://github.com/MaayanLab/single-gene-expression-dashboard" target="_blank" rel="noopener noreferrer"><Button variant="contained" color="primary"><Image style={{borderRadius: '5px'}} src="/images/GitHub-Mark.png" alt="GitHub Logo" width={16} height={16} />&nbsp;View source code</Button></a>
+                <a className={styles.buttonLink} href="https://github.com/MaayanLab/single-gene-expression-dashboard/issues/new" target="_blank" rel="noopener noreferrer"><Button variant="contained" color="primary"><Image style={{borderRadius: '5px'}} src="/images/GitHub-Mark.png" alt="GitHub Logo" width={16} height={16} />&nbsp;Submit an issue</Button></a>
             </div>
         </footer>
 
