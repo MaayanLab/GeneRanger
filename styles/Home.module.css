@@ -49,7 +49,7 @@
 }
 
 .dbGroup {
-  height: 390px;
+  height: auto;
   text-align: center;
   background-color: lightsteelblue;
   border-radius: 25px;
@@ -61,10 +61,16 @@
   text-align: center;
 }
 
-.databaseLogo {
-  width: 250px;
-  height: auto;
+.t_databaseLogo {
+  width: 300px;
+  height: 55px;
 }
+
+.p_databaseLogo {
+  width: 300px;
+  height: 55px;
+}
+
 
 .logoLink {
   cursor: default;
