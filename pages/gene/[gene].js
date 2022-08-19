@@ -22,7 +22,7 @@ const layout = [
 
 export async function getServerSideProps(context) {
 
-    const prisma = new PrismaClient();
+    // const prisma = new PrismaClient();
 
     // const gtex_proteomics = await prisma.gtex_proteomics.findMany({
     //     where: {
