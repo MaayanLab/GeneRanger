@@ -24,31 +24,69 @@ export async function getServerSideProps(context) {
 
     // const prisma = new PrismaClient();
 
-    // const gtex_proteomics = await prisma.gtex_proteomics.findMany({
-    //     where: {
-    //         gene_id: 'ENSG00000000003',
-    //     },
-    // });
-    // console.log(gtex_proteomics);
+    // let all_db_data = {};
 
-    // const hpm = await prisma.hpm.findMany({
-    //     where: {
-    //         gene: context.query.gene,
-    //     },
-    // });
-    // console.log(hpm);
+    // if (context.query.databases[0] == "true") {
+    //     const gtex_transcriptomics = await prisma.gtex_transcriptomics.findFirst({
+    //         where: {
+    //             name: context.query.gene,
+    //         },
+    //     });
+    //     Object.assign(all_db_data, {gtex_transcriptomics: gtex_transcriptomics});
+    // }
+    
+    // if (context.query.databases[1] == "true") {
+    //     const archs4 = await prisma.archs4.findFirst({
+    //         where: {
+    //             name: context.query.gene,
+    //         },
+    //     });
+    //     Object.assign(all_db_data, {archs4: archs4});
+    // }
 
-    // const hpa = await prisma.hpa.findMany({
-    //     where: {
-    //         gene: 'ENSG00000000003',
-    //     },
-    // });
-    // console.log(hpa);
+    // if (context.query.databases[2] == "true") {
+    //     const tabula_sapiens = await prisma.tabula_sapiens.findFirst({
+    //         where: {
+    //             name: context.query.gene,
+    //         },
+    //     });
+    //     Object.assign(all_db_data, {tabula_sapiens: tabula_sapiens});
+    // }
 
+    // if (context.query.databases[3] == "true") {
+    //     const hpm = await prisma.hpm.findFirst({
+    //         where: {
+    //             gene: context.query.gene,
+    //         },
+    //     });
+    //     Object.assign(all_db_data, {hpm: hpm});
+    // }
+
+    // if (context.query.databases[4] == "true") {
+    //     const hpa = await prisma.hpa.findFirst({
+    //         where: {
+    //             gene_name: context.query.gene,
+    //         },
+    //     });
+    //     Object.assign(all_db_data, {hpa: hpa});
+    // }
+
+    // if (context.query.databases[5] == "true") {
+    //     const gtex_proteomics = await prisma.gtex_proteomics.findFirst({
+    //         where: {
+    //             gene_id: context.query.gene,
+    //         },
+    //     });
+    //     Object.assign(all_db_data, {gtex_proteomics: gtex_proteomics});
+    // }
+
+    // console.log(all_db_data)
+    
     return { 
         props: {
             gene: context.query.gene,
-            databases: context.query.databases 
+            databases: context.query.databases, 
+            // all_db_data: all_db_data
         } 
     }
 
@@ -73,16 +111,7 @@ export default function Dashboard(props) {
                 Selected Gene: {props.gene}
             </h1>
 
-            {/* <div className={styles.databases}>
-                <div>GTEX - gene {props.databases[0] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>} </div>
-                <div>ARCHS4 - Tissue {props.databases[1] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
-                <div>Tabula Sapiens {props.databases[2] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
-                <div>HPM {props.databases[3] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
-                <div>HPA {props.databases[4] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
-                <div>GTEx - Proteomics {props.databases[5] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
-            </div> */}
-
-            <div className={styles.dbDiv}>
+            {/* <div className={styles.dbDiv}>
 
                 <div className={styles.dbGroup}>
                     <h2>Transcriptomics</h2>
@@ -98,7 +127,7 @@ export default function Dashboard(props) {
                     <div>GTEx {props.databases[5] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
                 </div>
 
-            </div>
+            </div> */}
 
             <Link 
                 href={{

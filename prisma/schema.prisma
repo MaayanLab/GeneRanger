@@ -7,27 +7,81 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model archs4 {
+  index  Int  @id
+  name   String?
+  tissue String?
+  q1     Float?
+  median Float?
+  q3     Float?
+  count  Float?
+  max    Float?
+  mean   Float?
+  min    Float?
+  std    Float?
+
+  @@index([index], map: "ix_archs4_index")
+}
+
 model gtex_proteomics {
-  gene_id            String?
+  index              Int  @id
+  gene_id            String? @map("gene.id")
   tissue             String?
   value              Float?
   tissue_specificity Float?
-  id                 Int     @id @default(autoincrement())
+
+  @@index([index], map: "ix_gtex_proteomics_index")
+}
+
+model gtex_transcriptomics {
+  index  Int  @id
+  name   String?
+  tissue String?
+  q1     Float?
+  median Float?
+  q3     Float?
+  count  Float?
+  max    Float?
+  mean   Float?
+  min    Float?
+  std    Float?
+
+  @@index([index], map: "ix_gtex_transcriptomics_index")
 }
 
 model hpa {
+  index       Int  @id
   gene        String?
-  gene_name   String?
+  gene_name   String? @map("gene.name")
   tissue      String?
-  cell_type   String?
+  cell_type   String? @map("cell.type")
   level       String?
   reliability String?
-  id          Int     @id @default(autoincrement())
+
+  @@index([index], map: "ix_hpa_index")
 }
 
 model hpm {
+  index  Int  @id
   gene   String?
   tissue String?
   value  Float?
-  id     Int     @id @default(autoincrement())
+
+  @@index([index], map: "ix_hpm_index")
+}
+
+model tabula_sapiens {
+  index  Int  @id
+  name   String?
+  cell   String?
+  q1     Float?
+  median Float?
+  q3     Float?
+  count  Float?
+  max    Float?
+  mean   Float?
+  min    Float?
+  std    Float?
+
+  @@index([index], map: "ix_tabula_sapiens_index")
 }

@@ -51,7 +51,7 @@
 .dbGroup {
   height: auto;
   text-align: center;
-  background-color: lightsteelblue;
+  background-color: #90acd0;
   border-radius: 25px;
   padding: 5px 25px 5px 25px;
 }
@@ -62,18 +62,25 @@
 }
 
 .t_databaseLogo {
-  width: 300px;
+  width: auto;
   height: 55px;
 }
 
 .p_databaseLogo {
-  width: 300px;
+  width: 400px;
   height: 55px;
 }
 
-
 .logoLink {
   cursor: default;
+}
+
+.appyterLogo {
+  background-color: white;
+  border-radius: 4px;
+  width: auto;
+  height: 30px;
+  margin-left: 5px;
 }
 
 .mainDiv {
@@ -105,7 +112,7 @@
 .footerLinks {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  text-align: left;
   gap: 5px;
 }
 
