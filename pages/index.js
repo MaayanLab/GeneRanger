@@ -7,11 +7,13 @@ import React, { useState } from 'react';
 import styles from '../styles/Home.module.css';
 import { FormGroup, FormControlLabel, Switch, TextField, Button, Autocomplete } from '@mui/material';
 import genes from '../json/genes.json';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Home() {
 
   const [gene, setGene] = useState();
   const [databases, setDatabases] = useState([true, true, true, true, true, true]);
+  const [loading, setLoading] = useState(false);
 
   function updateDatabases(index) {
     let updatedArray = [...databases];
@@ -68,6 +70,10 @@ export default function Home() {
         </div>  
       </div>
 
+      {
+          loading == true ? <CircularProgress/> : <></>
+      }
+
       <div className={styles.buttonDiv}>
         {
           (gene != null) && !(databases.every(e => e === false)) ?
@@ -78,7 +84,7 @@ export default function Home() {
                   gene: gene,
                   databases: databases
             }}}>
-            <Button variant="contained" color="primary">Submit</Button>
+            <Button variant="contained" color="primary" onClick={()=>{setLoading(true)}}>Submit</Button>
           </Link>
           :
           <Button variant="contained" color="error">Select options to continue</Button>
