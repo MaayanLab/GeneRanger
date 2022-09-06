@@ -27,69 +27,69 @@ const layout = [
 
 export async function getServerSideProps(context) {
 
-    // const prisma = new PrismaClient();
+    const prisma = new PrismaClient();
 
-    // let all_db_data = {};
+    let all_db_data = {};
 
-    // if (context.query.databases[0] == "true") {
-    //     const gtex_transcriptomics = await prisma.gtex_transcriptomics.findMany({
-    //         where: {
-    //             name: context.query.gene,
-    //         },
-    //     });
-    //     Object.assign(all_db_data, {gtex_transcriptomics: gtex_transcriptomics});
-    // }
+    if (context.query.databases[0] == "true") {
+        const gtex_transcriptomics = await prisma.gtex_transcriptomics.findMany({
+            where: {
+                name: context.query.gene,
+            },
+        });
+        Object.assign(all_db_data, {gtex_transcriptomics: gtex_transcriptomics});
+    }
     
-    // if (context.query.databases[1] == "true") {
-    //     const archs4 = await prisma.archs4.findMany({
-    //         where: {
-    //             name: context.query.gene,
-    //         },
-    //     });
-    //     Object.assign(all_db_data, {archs4: archs4});
-    // }
+    if (context.query.databases[1] == "true") {
+        const archs4 = await prisma.archs4.findMany({
+            where: {
+                name: context.query.gene,
+            },
+        });
+        Object.assign(all_db_data, {archs4: archs4});
+    }
 
-    // if (context.query.databases[2] == "true") {
-    //     const tabula_sapiens = await prisma.tabula_sapiens.findMany({
-    //         where: {
-    //             name: context.query.gene,
-    //         },
-    //     });
-    //     Object.assign(all_db_data, {tabula_sapiens: tabula_sapiens});
-    // }
+    if (context.query.databases[2] == "true") {
+        const tabula_sapiens = await prisma.tabula_sapiens.findMany({
+            where: {
+                name: context.query.gene,
+            },
+        });
+        Object.assign(all_db_data, {tabula_sapiens: tabula_sapiens});
+    }
 
-    // if (context.query.databases[3] == "true") {
-    //     const hpm = await prisma.hpm.findMany({
-    //         where: {
-    //             gene: context.query.gene,
-    //         },
-    //     });
-    //     Object.assign(all_db_data, {hpm: hpm});
-    // }
+    if (context.query.databases[3] == "true") {
+        const hpm = await prisma.hpm.findMany({
+            where: {
+                gene: context.query.gene,
+            },
+        });
+        Object.assign(all_db_data, {hpm: hpm});
+    }
 
-    // if (context.query.databases[4] == "true") {
-    //     const hpa = await prisma.hpa.findMany({
-    //         where: {
-    //             gene_name: context.query.gene,
-    //         },
-    //     });
-    //     Object.assign(all_db_data, {hpa: hpa});
-    // }
+    if (context.query.databases[4] == "true") {
+        const hpa = await prisma.hpa.findMany({
+            where: {
+                gene_name: context.query.gene,
+            },
+        });
+        Object.assign(all_db_data, {hpa: hpa});
+    }
 
-    // if (context.query.databases[5] == "true") {
-    //     const gtex_proteomics = await prisma.gtex_proteomics.findMany({
-    //         where: {
-    //             gene_id: context.query.gene,
-    //         },
-    //     });
-    //     Object.assign(all_db_data, {gtex_proteomics: gtex_proteomics});
-    // }
+    if (context.query.databases[5] == "true") {
+        const gtex_proteomics = await prisma.gtex_proteomics.findMany({
+            where: {
+                gene_id: context.query.gene,
+            },
+        });
+        Object.assign(all_db_data, {gtex_proteomics: gtex_proteomics});
+    }
     
     return { 
         props: {
             gene: context.query.gene,
             databases: context.query.databases, 
-            // all_db_data: all_db_data
+            all_db_data: all_db_data
         } 
     }
 
@@ -97,203 +97,203 @@ export async function getServerSideProps(context) {
 
 export default function Dashboard(props) {
 
-    // let gtex_transcriptomics = null;
-    // let archs4 = null;
-    // let tabula_sapiens = null;
-    // let hpm = null;
-    // let hpa = null;
-    // let gtex_proteomics = null;
+    let gtex_transcriptomics = null;
+    let archs4 = null;
+    let tabula_sapiens = null;
+    let hpm = null;
+    let hpa = null;
+    let gtex_proteomics = null;
 
-    // console.log(props.all_db_data);
+    console.log(props.all_db_data);
 
-    // if (props.databases[0] == "true") {
+    if (props.databases[0] == "true") {
 
-    //     let data = props.all_db_data.gtex_transcriptomics;
+        let data = props.all_db_data.gtex_transcriptomics;
 
-    //     if (data.length != 0) {
+        if (data.length != 0) {
 
-    //         let mean_index = 1;
-    //         let sd_index = 2;
-    //         let min_index = 3;
-    //         let q1_index = 4;
-    //         let median_index = 5;
-    //         let q3_index = 6;
-    //         let max_index = 7;
+            let mean_index = 1;
+            let sd_index = 2;
+            let min_index = 3;
+            let q1_index = 4;
+            let median_index = 5;
+            let q3_index = 6;
+            let max_index = 7;
 
-    //         let q1 = Object.values(data[q1_index]).slice(3);
-    //         let q3 = Object.values(data[q3_index]).slice(3);
-    //         let min = Object.values(data[min_index]).slice(3);
-    //         let max = Object.values(data[max_index]).slice(3);
-    //         let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
-    //         let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
-    //         let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
+            let q1 = Object.values(data[q1_index]).slice(3);
+            let q3 = Object.values(data[q3_index]).slice(3);
+            let min = Object.values(data[min_index]).slice(3);
+            let max = Object.values(data[max_index]).slice(3);
+            let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
+            let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
+            let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
 
-    //         gtex_transcriptomics = {
-    //             q1: q1,
-    //             median: Object.values(data[median_index]).slice(3),
-    //             q3: q3,
-    //             mean: Object.values(data[mean_index]).slice(3),
-    //             sd: Object.values(data[sd_index]).slice(3),
-    //             lowerfence: lowerfence,
-    //             upperfence: upperfence,
-    //             y: Object.keys(data[q1_index]).slice(3),
-    //             orientation: 'h',
-    //             type: 'box'
-    //         }
-    //     }
-    // }
+            gtex_transcriptomics = {
+                q1: q1,
+                median: Object.values(data[median_index]).slice(3),
+                q3: q3,
+                mean: Object.values(data[mean_index]).slice(3),
+                sd: Object.values(data[sd_index]).slice(3),
+                lowerfence: lowerfence,
+                upperfence: upperfence,
+                y: Object.keys(data[q1_index]).slice(3),
+                orientation: 'h',
+                type: 'box'
+            }
+        }
+    }
     
-    // if (props.databases[1] == "true") {
+    if (props.databases[1] == "true") {
 
-    //     let data = props.all_db_data.archs4;
+        let data = props.all_db_data.archs4;
 
-    //     if (data.length != 0) {
+        if (data.length != 0) {
 
-    //         let mean_index = 1;
-    //         let sd_index = 2;
-    //         let min_index = 3;
-    //         let max_index = 4;
-    //         let q1_index = 5;
-    //         let median_index = 6;
-    //         let q3_index = 7;
+            let mean_index = 1;
+            let sd_index = 2;
+            let min_index = 3;
+            let max_index = 4;
+            let q1_index = 5;
+            let median_index = 6;
+            let q3_index = 7;
 
-    //         let q1 = Object.values(data[q1_index]).slice(3);
-    //         let q3 = Object.values(data[q3_index]).slice(3);
-    //         let min = Object.values(data[min_index]).slice(3);
-    //         let max = Object.values(data[max_index]).slice(3);
-    //         let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
-    //         let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
-    //         let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
+            let q1 = Object.values(data[q1_index]).slice(3);
+            let q3 = Object.values(data[q3_index]).slice(3);
+            let min = Object.values(data[min_index]).slice(3);
+            let max = Object.values(data[max_index]).slice(3);
+            let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
+            let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
+            let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
 
-    //         archs4 = {
-    //             q1: q1,
-    //             median: Object.values(data[median_index]).slice(3),
-    //             q3: q3,
-    //             mean: Object.values(data[mean_index]).slice(3),
-    //             sd: Object.values(data[sd_index]).slice(3),
-    //             lowerfence: lowerfence,
-    //             upperfence: upperfence,
-    //             y: Object.keys(data[q1_index]).slice(3),
-    //             orientation: 'h',
-    //             type: 'box'
-    //         }
-    //     }
+            archs4 = {
+                q1: q1,
+                median: Object.values(data[median_index]).slice(3),
+                q3: q3,
+                mean: Object.values(data[mean_index]).slice(3),
+                sd: Object.values(data[sd_index]).slice(3),
+                lowerfence: lowerfence,
+                upperfence: upperfence,
+                y: Object.keys(data[q1_index]).slice(3),
+                orientation: 'h',
+                type: 'box'
+            }
+        }
 
-    // }
+    }
 
-    // if (props.databases[2] == "true") {
+    if (props.databases[2] == "true") {
 
-    //     let data = props.all_db_data.tabula_sapiens;
+        let data = props.all_db_data.tabula_sapiens;
 
-    //     if (data.length != 0) {
+        if (data.length != 0) {
 
-    //         let mean_index = 1;
-    //         let sd_index = 2;
-    //         let min_index = 3;
-    //         let q1_index = 4;
-    //         let median_index = 5;
-    //         let q3_index = 6;
-    //         let max_index = 7;
+            let mean_index = 1;
+            let sd_index = 2;
+            let min_index = 3;
+            let q1_index = 4;
+            let median_index = 5;
+            let q3_index = 6;
+            let max_index = 7;
 
-    //         let q1 = Object.values(data[q1_index]).slice(3);
-    //         let q3 = Object.values(data[q3_index]).slice(3);
-    //         let min = Object.values(data[min_index]).slice(3);
-    //         let max = Object.values(data[max_index]).slice(3);
-    //         let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
-    //         let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
-    //         let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
+            let q1 = Object.values(data[q1_index]).slice(3);
+            let q3 = Object.values(data[q3_index]).slice(3);
+            let min = Object.values(data[min_index]).slice(3);
+            let max = Object.values(data[max_index]).slice(3);
+            let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
+            let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
+            let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
 
-    //         tabula_sapiens = {
-    //             q1: q1,
-    //             median: Object.values(data[median_index]).slice(3),
-    //             q3: q3,
-    //             mean: Object.values(data[mean_index]).slice(3),
-    //             sd: Object.values(data[sd_index]).slice(3),
-    //             lowerfence: lowerfence,
-    //             upperfence: upperfence,
-    //             y: Object.keys(data[q1_index]).slice(3),
-    //             orientation: 'h',
-    //             type: 'box'
-    //         }
-    //     }
+            tabula_sapiens = {
+                q1: q1,
+                median: Object.values(data[median_index]).slice(3),
+                q3: q3,
+                mean: Object.values(data[mean_index]).slice(3),
+                sd: Object.values(data[sd_index]).slice(3),
+                lowerfence: lowerfence,
+                upperfence: upperfence,
+                y: Object.keys(data[q1_index]).slice(3),
+                orientation: 'h',
+                type: 'box'
+            }
+        }
 
-    // }
+    }
 
-    // if (props.databases[3] == "true") {
+    if (props.databases[3] == "true") {
 
-    //     let data = props.all_db_data.hpm;
+        let data = props.all_db_data.hpm;
 
-    //     if (data.length != 0) {
+        if (data.length != 0) {
 
-    //         let values = [];
-    //         let tissues = [];
+            let values = [];
+            let tissues = [];
 
-    //         for (let i = 0; i < data.length; i++) {
-    //             values.push(data[i].value)
-    //             tissues.push(data[i].tissue)
-    //         }
+            for (let i = 0; i < data.length; i++) {
+                values.push(data[i].value)
+                tissues.push(data[i].tissue)
+            }
 
-    //         hpm = {
-    //             x: values,
-    //             y: tissues,
-    //             type: "scatter",
-    //             mode: "markers",
-    //             marker: { color: '#1f77b4' },
-    //           }
-    //     }
-    // }
+            hpm = {
+                x: values,
+                y: tissues,
+                type: "scatter",
+                mode: "markers",
+                marker: { color: '#1f77b4' },
+              }
+        }
+    }
 
-    // if (props.databases[4] == "true") {
+    if (props.databases[4] == "true") {
 
-    //     let data = props.all_db_data.hpa;
+        let data = props.all_db_data.hpa;
 
-    //     if (data.length != 0) {
+        if (data.length != 0) {
 
-    //         let levels = [];
-    //         let tissue_and_cells = [];
+            let levels = [];
+            let tissue_and_cells = [];
 
-    //         for (let i = 0; i < data.length; i++) {
-    //             levels.push(data[i].level)
-    //             tissue_and_cells.push(data[i].tissue + ', ' + data[i].cell_type)
-    //         }
+            for (let i = 0; i < data.length; i++) {
+                levels.push(data[i].level)
+                tissue_and_cells.push(data[i].tissue + ', ' + data[i].cell_type)
+            }
 
-    //         hpa = {
-    //             x: levels,
-    //             y: tissue_and_cells,
-    //             // category_orders: {"Level": ["Not detected", "Low", "Medium", "High"]}, 
-    //             type: "scatter",
-    //             mode: "markers",
-    //             marker: { color: '#1f77b4' },
-    //           }
-    //     }
+            hpa = {
+                x: levels,
+                y: tissue_and_cells,
+                // category_orders: {"Level": ["Not detected", "Low", "Medium", "High"]}, 
+                type: "scatter",
+                mode: "markers",
+                marker: { color: '#1f77b4' },
+              }
+        }
 
-    // }
+    }
 
-    // if (props.databases[5] == "true") {
+    if (props.databases[5] == "true") {
 
-    //     let data = props.all_db_data.gtex_proteomics;
+        let data = props.all_db_data.gtex_proteomics;
 
-    //     if (data.length != 0) {
+        if (data.length != 0) {
 
-    //         let tissues = [];
-    //         let temp = {};
-    //         gtex_proteomics = [];
+            let tissues = [];
+            let temp = {};
+            gtex_proteomics = [];
 
-    //         for (let i = 0; i < Object.keys(data).length; i++) {
-    //             if (!tissues.includes(data[i].tissue)) {
-    //                 tissues.push(data[i].tissue);
-    //                 if (temp.x != null) {
-    //                     gtex_proteomics.push(temp);
-    //                 }
-    //                 temp = {name: data[i].tissue, type: 'box', x: [data[i].value], marker: {color: '#1f77b4'}};
-    //             } else {
-    //                 temp.x.push(data[i].value);
-    //             }
-    //         }
-    //         gtex_proteomics.push(temp);
-    //     }
+            for (let i = 0; i < Object.keys(data).length; i++) {
+                if (!tissues.includes(data[i].tissue)) {
+                    tissues.push(data[i].tissue);
+                    if (temp.x != null) {
+                        gtex_proteomics.push(temp);
+                    }
+                    temp = {name: data[i].tissue, type: 'box', x: [data[i].value], marker: {color: '#1f77b4'}};
+                } else {
+                    temp.x.push(data[i].value);
+                }
+            }
+            gtex_proteomics.push(temp);
+        }
 
-    // }
+    }
 
 
     return (
@@ -338,12 +338,12 @@ export default function Dashboard(props) {
                 <Button variant="contained">Home</Button>
             </Link>
 
-            {/* {
+            {
                 gtex_transcriptomics != null 
                     ? 
                         <Plot
                             data={[gtex_transcriptomics]}
-                            layout={{width: '1000', height: '10000', title: 'GTEx Transcriptomics', yaxis: {automargin: true}}}
+                            layout={{width: '1000', height: '1000', title: props.gene + ' (RNA-seq) GTEx', yaxis: {automargin: true}}}
                             config={{responsive: true}}
                         />
                     : 
@@ -355,7 +355,7 @@ export default function Dashboard(props) {
                     ? 
                         <Plot
                             data={[archs4]}
-                            layout={{width: '1000', height: '10000', title: 'ARCHS4',
+                            layout={{width: '1000', height: '1000', title: props.gene + ' (RNA-seq) ARCHS4',
                             yaxis: {
                               automargin: true
                             }}}
@@ -369,7 +369,7 @@ export default function Dashboard(props) {
                     ? 
                         <Plot
                             data={[tabula_sapiens]}
-                            layout={{width: '1000', height: '10000', title: 'Tabula Sapiens',
+                            layout={{width: '1000', height: '10000', title: props.gene + ' (RNA-seq) Tabula Sapiens',
                             yaxis: {
                               automargin: true
                             }}}
@@ -383,10 +383,16 @@ export default function Dashboard(props) {
                     ? 
                         <Plot
                             data={[hpm]}
-                            layout={{width: '1000', height: '1000', title: 'HPM',
+                            layout={{width: '1000', height: '1000', title: props.gene + ' (HPM)',
                             yaxis: {
                               automargin: true
-                            }}}
+                            },
+                            xaxis: {
+                                title: {
+                                  text: 'Average Spectral Counts',
+                                }
+                              }
+                            }}
                         />
                     : 
                         <div>Nothing here...</div>
@@ -397,19 +403,17 @@ export default function Dashboard(props) {
                     ? 
                         <Plot
                             data={[hpa]}
-                            layout={{width: '1000', height: '1000', title: 'HPA',
+                            layout={{width: '1000', height: '1000', title: props.gene + ' (HPA)',
                             yaxis: {
                               automargin: true
                             },
                             xaxis: {
                                 "categoryorder": "array",
-                                "categoryarray":  ["Not detected", "Low", "Medium", "High"]
+                                "categoryarray":  ["Not detected", "Low", "Medium", "High"],
+                                title: {
+                                    text: 'Tissue Expression Level',
+                                }
                             }
-                            // xaxis: {
-                            //     'tickmode':'array', 
-                            //     'tickvals':[0, 1, 2, 3], 
-                            //     'ticktext':["Not detected", "Low", "Medium", "High"]
-                            // }
                         }}
                         />
                     : 
@@ -421,18 +425,23 @@ export default function Dashboard(props) {
                     ? 
                         <Plot
                             data={gtex_proteomics}
-                            layout={{width: '1000', height: '1000', title: 'GTEx Proteomics',
+                            layout={{width: '1000', height: '1000', title: props.gene + ' (GTEx Proteomics)',
                             showlegend: false,
                             yaxis: {
                               automargin: true
+                            },
+                            xaxis: {
+                                title: {
+                                    text: 'log2(relative abundance)',
+                                }
                             }
                             }}
                         />
                     : 
                         <div>Nothing here...</div>
-            } */}
+            }
 
-            <ResponsiveGridLayout
+            {/* <ResponsiveGridLayout
                 layouts={{ lg: layout }}
                 breakpoints={{ lg: 1200, md: 1100, sm: 1000, xs: 900, xxs: 800 }}
                 cols={{ lg: 14, md: 12, sm: 10, xs: 8, xxs: 6 }}
@@ -463,7 +472,7 @@ export default function Dashboard(props) {
 
                 </div>
         
-        </ResponsiveGridLayout>
+        </ResponsiveGridLayout> */}
 
         <footer className={styles.footer}>
             <div className={styles.footerLinks}>
