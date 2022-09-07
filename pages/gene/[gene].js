@@ -104,7 +104,7 @@ export default function Dashboard(props) {
     let hpa = null;
     let gtex_proteomics = null;
 
-    console.log(props.all_db_data);
+    // console.log(props.all_db_data);
 
     if (props.databases[0] == "true") {
 
@@ -341,11 +341,58 @@ export default function Dashboard(props) {
             {
                 gtex_transcriptomics != null 
                     ? 
-                        <Plot
-                            data={[gtex_transcriptomics]}
-                            layout={{width: '1000', height: '1000', title: props.gene + ' (RNA-seq) GTEx', yaxis: {automargin: true}}}
-                            config={{responsive: true}}
-                        />
+                        <a href="#gtex_transcriptomics">GTEx Transcriptomics</a>
+                    : 
+                        <></>
+            }
+            {
+                archs4 != null 
+                    ? 
+                        <a href="#archs4">ARCHS4</a>
+                    : 
+                        <></>
+            }
+            {
+                tabula_sapiens != null 
+                    ? 
+                        <a href="#tabula_sapiens">Tabula Sapiens</a>
+                    : 
+                        <></>
+            }
+            {
+                hpm != null 
+                    ? 
+                        <a href="#hpm">HPM</a>
+                    : 
+                        <></>
+            }
+            {
+                hpa != null 
+                    ? 
+                        <a href="#hpa">HPA</a>
+                    : 
+                        <></>
+            }
+            {
+                gtex_proteomics != null 
+                    ? 
+                        <a href="#gtex_proteomics">GTEx Proteomics</a>
+                    : 
+                        <></>
+            }
+
+            {
+                gtex_transcriptomics != null 
+                    ? 
+                        <div id="gtex_transcriptomics">
+                            <Plot
+                                data={[gtex_transcriptomics]}
+                                layout={{width: '500', height: '500', title: props.gene + ' (RNA-seq) GTEx', yaxis: {automargin: true}}}
+                                config={{responsive: true}}
+                                id={"gtex_transcriptomics"}
+                            />
+                        </div>
+                        
                     : 
                         <div>Nothing here...</div>
             }
@@ -353,13 +400,16 @@ export default function Dashboard(props) {
             {
                 archs4 != null 
                     ? 
-                        <Plot
-                            data={[archs4]}
-                            layout={{width: '1000', height: '1000', title: props.gene + ' (RNA-seq) ARCHS4',
-                            yaxis: {
-                              automargin: true
-                            }}}
-                        />
+                        <div id="archs4">
+                            <Plot
+                                data={[archs4]}
+                                layout={{width: '500', height: '500', title: props.gene + ' (RNA-seq) ARCHS4',
+                                yaxis: {
+                                automargin: true
+                                }}}
+                            />
+                        </div>
+                        
                     : 
                         <div>Nothing here...</div>
             }
@@ -367,13 +417,16 @@ export default function Dashboard(props) {
             {
                 tabula_sapiens != null 
                     ? 
-                        <Plot
-                            data={[tabula_sapiens]}
-                            layout={{width: '1000', height: '10000', title: props.gene + ' (RNA-seq) Tabula Sapiens',
-                            yaxis: {
-                              automargin: true
-                            }}}
-                        />
+                        <div id="tabula_sapiens">
+                            <Plot
+                                data={[tabula_sapiens]}
+                                layout={{width: '500', height: '500', title: props.gene + ' (RNA-seq) Tabula Sapiens',
+                                yaxis: {
+                                automargin: true
+                                }}}
+                            />
+                        </div>
+                        
                     : 
                         <div>Nothing here...</div>
             }
@@ -381,19 +434,21 @@ export default function Dashboard(props) {
             {
                 hpm != null 
                     ? 
-                        <Plot
-                            data={[hpm]}
-                            layout={{width: '1000', height: '1000', title: props.gene + ' (HPM)',
-                            yaxis: {
-                              automargin: true
-                            },
-                            xaxis: {
-                                title: {
-                                  text: 'Average Spectral Counts',
+                        <div id="hpm">
+                            <Plot
+                                data={[hpm]}
+                                layout={{width: '500', height: '500', title: props.gene + ' (HPM)',
+                                yaxis: {
+                                automargin: true
+                                },
+                                xaxis: {
+                                    title: {
+                                    text: 'Average Spectral Counts',
+                                    }
                                 }
-                              }
-                            }}
-                        />
+                                }}
+                            />
+                        </div>
                     : 
                         <div>Nothing here...</div>
             }
@@ -401,9 +456,10 @@ export default function Dashboard(props) {
             {
                 hpa != null 
                     ? 
-                        <Plot
+                        <div id="hpa">
+                            <Plot
                             data={[hpa]}
-                            layout={{width: '1000', height: '1000', title: props.gene + ' (HPA)',
+                            layout={{width: '500', height: '500', title: props.gene + ' (HPA)',
                             yaxis: {
                               automargin: true
                             },
@@ -414,8 +470,9 @@ export default function Dashboard(props) {
                                     text: 'Tissue Expression Level',
                                 }
                             }
-                        }}
-                        />
+                            }}  
+                            />
+                        </div>
                     : 
                         <div>Nothing here...</div>
             }
@@ -423,20 +480,22 @@ export default function Dashboard(props) {
             {
                 gtex_proteomics != null 
                     ? 
-                        <Plot
-                            data={gtex_proteomics}
-                            layout={{width: '1000', height: '1000', title: props.gene + ' (GTEx Proteomics)',
-                            showlegend: false,
-                            yaxis: {
-                              automargin: true
-                            },
-                            xaxis: {
-                                title: {
-                                    text: 'log2(relative abundance)',
+                        <div id="gtex_proteomics">
+                            <Plot
+                                data={gtex_proteomics}
+                                layout={{width: '500', height: '500', title: props.gene + ' (GTEx Proteomics)',
+                                showlegend: false,
+                                yaxis: {
+                                automargin: true
+                                },
+                                xaxis: {
+                                    title: {
+                                        text: 'log2(relative abundance)',
+                                    }
                                 }
-                            }
-                            }}
-                        />
+                                }}
+                            />
+                        </div>
                     : 
                         <div>Nothing here...</div>
             }
