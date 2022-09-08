@@ -8,10 +8,11 @@ import styles from '../styles/Home.module.css';
 import { FormGroup, FormControlLabel, Switch, TextField, Button, Autocomplete } from '@mui/material';
 import genes from '../json/genes.json';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useRouter } from 'next/router'
 
 export default function Home() {
 
-  const [gene, setGene] = useState();
+  // const [gene, setGene] = useState();
   const [databases, setDatabases] = useState([true, true, true, true, true, true]);
   const [loading, setLoading] = useState(false);
 
@@ -19,6 +20,25 @@ export default function Home() {
     let updatedArray = [...databases];
     updatedArray[index] = !updatedArray[index];
     setDatabases(updatedArray);
+  }
+
+  const router = useRouter();
+
+  function submitGene (gene) {
+    console.log(gene)
+    if (gene != null) {
+      let href = {
+        pathname: "gene/[gene]",
+        query: {
+            gene: gene,
+            databases: databases
+      }};
+      router.push(href)
+      setLoading(true)
+    } else {
+      setLoading(false)
+    }
+    
   }
 
   return (
@@ -42,9 +62,12 @@ export default function Home() {
           disablePortal
           options={ genes }
           sx={{ width: 300 }}
-          onChange={(event, value) => {setGene(value)}}
+          onChange={(event, value) => {submitGene(value)}}
           renderInput={(params) => <TextField {...params} label="Human Gene Symbol" />}
         />
+        {
+          loading == true ? <div style={{display: 'flex', justifyContent: 'center', marginTop: '15px'}}><CircularProgress/></div> : <></>
+        }
     </div>
 
       <div className={styles.formDiv}>
@@ -70,11 +93,7 @@ export default function Home() {
         </div>  
       </div>
 
-      {
-          loading == true ? <CircularProgress/> : <></>
-      }
-
-      <div className={styles.buttonDiv}>
+      {/* <div className={styles.buttonDiv}>
         {
           (gene != null) && !(databases.every(e => e === false)) ?
             <Link 
@@ -90,7 +109,7 @@ export default function Home() {
           <Button variant="contained" color="error">Select options to continue</Button>
         }
         <a className={styles.buttonLink} href="https://appyters.maayanlab.cloud/Gene_Expression_by_Tissue/"><Button color="primary" variant="contained">Run the Appyter <img className={styles.appyterLogo} src="/images/appyterLogo.png" alt="appyter logo"></img></Button></a>
-      </div>
+      </div> */}
 
       <footer className={styles.footer}>
         <div className={styles.footerLinks}>
