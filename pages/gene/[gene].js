@@ -1,12 +1,8 @@
-import Link from 'next/link';
 import Head from 'next/head';
 import Image from 'next/image';
-// import styles from '../../styles/Dashboard.module.css';
 import { Responsive, WidthProvider } from "react-grid-layout";
 import { PrismaClient } from '@prisma/client';
-// import React from 'react';
 import dynamic from 'next/dynamic';
-import { ConstructionOutlined } from '@mui/icons-material';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import React, { useState } from 'react';
@@ -15,27 +11,27 @@ import { FormGroup, FormControlLabel, Switch, TextField, Button, Autocomplete } 
 import genes from '../../json/genes.json';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useRouter } from 'next/router'
-// import Plot from 'react-plotly.js';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Footer from '../../components/footer';
 
 const Plot = dynamic(() => import('react-plotly.js'), {
 	ssr: false,
 });
 
-const ResponsiveGridLayout = WidthProvider(Responsive);
+// const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const layout = [
-    { i: "a", x: 0, y: 0, w: 2, h: 2 },
-    { i: "b", x: 2, y: 0, w: 2, h: 2 },
-    { i: "c", x: 4, y: 0, w: 2, h: 2 },
-    { i: "d", x: 6, y: 0, w: 2, h: 2 },
-    { i: "e", x: 8, y: 0, w: 2, h: 2 },
-    { i: "f", x: 10, y: 0, w: 2, h: 2 }
-  ];
+// const layout = [
+//     { i: "a", x: 0, y: 0, w: 2, h: 2 },
+//     { i: "b", x: 2, y: 0, w: 2, h: 2 },
+//     { i: "c", x: 4, y: 0, w: 2, h: 2 },
+//     { i: "d", x: 6, y: 0, w: 2, h: 2 },
+//     { i: "e", x: 8, y: 0, w: 2, h: 2 },
+//     { i: "f", x: 10, y: 0, w: 2, h: 2 }
+//   ];
 
 export async function getServerSideProps(context) {
 
@@ -115,8 +111,6 @@ export default function Dashboard(props) {
     let hpm = null;
     let hpa = null;
     let gtex_proteomics = null;
-
-    // console.log(props.all_db_data);
 
     if (props.databases[0] == "true") {
 
@@ -307,7 +301,6 @@ export default function Dashboard(props) {
 
     }
 
-    // const [gene, setGene] = useState();
     const [databases, setDatabases] = useState([true, true, true, true, true, true]);
     // const [loading, setLoading] = useState(false);
 
@@ -379,292 +372,192 @@ export default function Dashboard(props) {
 
     return (
 
-<div className={styles.page}>
-      <Head>
-        <title>Single Gene and Protein Expression Dashboard</title>
-        <link rel="icon" href="/images/logo.png" />
-      </Head>
+    <div className={styles.page}>
+        <Head>
+            <title>Single Gene and Protein Expression Dashboard</title>
+            <link rel="icon" href="/images/logo.png" />
+        </Head>
 
-      <div className={styles.mainDiv}>
+        <div className={styles.mainDiv}>
 
-      <div className={styles.title}>
-        <img className={styles.mainLogo} src="/images/logo.png" alt="App Logo" width={150} height={"auto"} />
-        <h1 className={styles.header}>Gene and Protein Expression across Human Cells and Tissues</h1>
-      </div>
-      
-      <div className={styles.text}>This web app takes the input of a human gene and displays its expression across human cells and tissues utilizing a variety of processed datasets from healthy tissues. If the gene is not contained in one of the datasets, a plot will not be produced for that resource.</div>
-
-    <div style={{display: 'flex', gap: '250px'}}>
-
-        <div className={styles.dbGroup}>
-            <h2>Transcriptomics</h2>
-            <FormGroup>
-                <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(0)} defaultChecked />} label={<><a className={styles.logoLink} href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer"><img className={styles.t_databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/></a></>} labelPlacement="start"/>
-                <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(1)} defaultChecked />} label={<><a className={styles.logoLink} href="https://maayanlab.cloud/archs4/" target="_blank" rel="noopener noreferrer"><img className={styles.t_databaseLogo} src="/images/archs4.png" alt="archs4 Logo"/></a></>} labelPlacement="start"/>
-                <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(2)} defaultChecked />} label={<><a className={styles.logoLink} href="https://tabula-sapiens-portal.ds.czbiohub.org" target="_blank" rel="noopener noreferrer"><img className={styles.t_databaseLogo} style={{borderRadius: '8px', width: '200px', marginLeft: '15px'}} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo"/></a></>} labelPlacement="start"/>
-            </FormGroup>
-            <h2>Proteomics</h2>
-            <FormGroup>
-                <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(3)} defaultChecked />} label={<><a className={styles.logoLink} href="http://www.humanproteomemap.org" target="_blank" rel="noopener noreferrer"><img className={styles.p_databaseLogo} src="/images/HPM.gif" alt="HPM Logo"/></a></>} labelPlacement="start"/>
-                <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(4)} defaultChecked />} label={<><a className={styles.logoLink} href="https://www.proteinatlas.org" target="_blank" rel="noopener noreferrer"><img className={styles.p_databaseLogo} src="/images/HPA.svg" alt="HPA Logo"/></a></>} labelPlacement="start"/>
-                <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(5)} defaultChecked />} label={<><a className={styles.logoLink} href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer"><img className={styles.p_databaseLogo} style={{width: 'auto'}} src="/images/GTEx.png" alt="GTEx Logo"/></a></>} labelPlacement="start"/>
-            </FormGroup>
+        <div className={styles.title}>
+            <img className={styles.mainLogo} src="/images/logo.png" alt="App Logo" width={150} height={"auto"} />
+            <h1 className={styles.header}>Gene and Protein Expression across Human Cells and Tissues</h1>
         </div>
-
-        <div style={{display: 'flex', flexDirection: 'column'}}>
-            <div>
-                <Autocomplete
-                    disablePortal
-                    options={ genes }
-                    sx={{ width: 300 }}
-                    onChange={(event, value) => {submitGene(value)}}
-                    renderInput={(params) => <TextField {...params} label="Human Gene Symbol" />}
-                    />
-                    {/* {
-                    loading == true ? <div style={{display: 'flex', justifyContent: 'center', marginTop: '15px'}}><CircularProgress/></div> : <></>
-                    } */}
-            </div>
-            <Box sx={{ width: '100%' }}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="GTEx Transcriptomics" {...a11yProps(0)} />
-                    <Tab label="ARCHS4" {...a11yProps(1)} />
-                    <Tab label="Tabula Sapiens" {...a11yProps(2)} />
-                    <Tab label="HPM" {...a11yProps(3)} />
-                    <Tab label="HPA" {...a11yProps(4)} />
-                    <Tab label="GTEx Proteomics" {...a11yProps(5)} />
-                    </Tabs>
-                </Box>
-                <TabPanel value={value} index={0}>
-                    {
-                        gtex_transcriptomics != null 
-                            ? 
-                                <div id="gtex_transcriptomics">
-                                    <Plot
-                                        data={[gtex_transcriptomics]}
-                                        layout={{width: '500', height: '500', title: props.gene + ' (RNA-seq) GTEx', yaxis: {automargin: true}}}
-                                        config={{responsive: true}}
-                                        id={"gtex_transcriptomics"}
-                                    />
-                                </div>
-                                
-                            : 
-                                <div>Nothing here...</div>
-                    }
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                    {
-                        archs4 != null 
-                            ? 
-                                <div id="archs4">
-                                    <Plot
-                                        data={[archs4]}
-                                        layout={{width: '500', height: '500', title: props.gene + ' (RNA-seq) ARCHS4',
-                                        yaxis: {
-                                        automargin: true
-                                        }}}
-                                    />
-                                </div>
-                                
-                            : 
-                                <div>Nothing here...</div>
-                    }
-                </TabPanel>
-                <TabPanel value={value} index={2}>
-                    {
-                        tabula_sapiens != null 
-                            ? 
-                                <div id="tabula_sapiens">
-                                    <Plot
-                                        data={[tabula_sapiens]}
-                                        layout={{width: '500', height: '500', title: props.gene + ' (RNA-seq) Tabula Sapiens',
-                                        yaxis: {
-                                        automargin: true
-                                        }}}
-                                    />
-                                </div>
-                                
-                            : 
-                                <div>Nothing here...</div>
-                    }
-                </TabPanel>
-                <TabPanel value={value} index={3}>
-                    {
-                        hpm != null 
-                            ? 
-                                <div id="hpm">
-                                    <Plot
-                                        data={[hpm]}
-                                        layout={{width: '500', height: '500', title: props.gene + ' (HPM)',
-                                        yaxis: {
-                                        automargin: true
-                                        },
-                                        xaxis: {
-                                            title: {
-                                            text: 'Average Spectral Counts',
-                                            }
-                                        }
-                                        }}
-                                    />
-                                </div>
-                            : 
-                                <div>Nothing here...</div>
-                    }
-                </TabPanel>
-                <TabPanel value={value} index={4}>
-                    {
-                        hpa != null 
-                            ? 
-                                <div id="hpa">
-                                    <Plot
-                                    data={[hpa]}
-                                    layout={{width: '500', height: '500', title: props.gene + ' (HPA)',
-                                    yaxis: {
-                                    automargin: true
-                                    },
-                                    xaxis: {
-                                        "categoryorder": "array",
-                                        "categoryarray":  ["Not detected", "Low", "Medium", "High"],
-                                        title: {
-                                            text: 'Tissue Expression Level',
-                                        }
-                                    }
-                                    }}  
-                                    />
-                                </div>
-                            : 
-                                <div>Nothing here...</div>
-                    }
-                </TabPanel>
-                <TabPanel value={value} index={5}>
-                    {
-                        gtex_proteomics != null 
-                            ? 
-                                <div id="gtex_proteomics">
-                                    <Plot
-                                        data={gtex_proteomics}
-                                        layout={{width: '500', height: '500', title: props.gene + ' (GTEx Proteomics)',
-                                        showlegend: false,
-                                        yaxis: {
-                                        automargin: true
-                                        },
-                                        xaxis: {
-                                            title: {
-                                                text: 'log2(relative abundance)',
-                                            }
-                                        }
-                                        }}
-                                    />
-                                </div>
-                            : 
-                                <div>Nothing here...</div>
-                    }
-                </TabPanel>
-            </Box>
-            {/* <div style={{display: 'flex', gap: '20px'}}>
-
-                
-                {
-                    archs4 != null 
-                        ? 
-                            <a href="#archs4">ARCHS4</a>
-                        : 
-                            <></>
-                }
-                {
-                    tabula_sapiens != null 
-                        ? 
-                            <a href="#tabula_sapiens">Tabula Sapiens</a>
-                        : 
-                            <></>
-                }
-                {
-                    hpm != null 
-                        ? 
-                            <a href="#hpm">HPM</a>
-                        : 
-                            <></>
-                }
-                {
-                    hpa != null 
-                        ? 
-                            <a href="#hpa">HPA</a>
-                        : 
-                            <></>
-                }
-                {
-                    gtex_proteomics != null 
-                        ? 
-                            <a href="#gtex_proteomics">GTEx Proteomics</a>
-                        : 
-                            <></>
-                }
-
-        </div> */}
-        </div>
-    </div>
-
-            {/* <div className={styles.dbDiv}>
-
-                <div className={styles.dbGroup}>
-                    <h2>Transcriptomics</h2>
-                    <div>GTEx {props.databases[0] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
-                    <div>ARCHS4 {props.databases[1] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
-                    <div>Tabula Sapiens {props.databases[2] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
-                </div>
-
-                <div className={styles.dbGroup}>
-                    <h2>Proteomics</h2>
-                    <div>HPM {props.databases[3] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
-                    <div>HPA {props.databases[4] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
-                    <div>GTEx {props.databases[5] === "true" ? <CheckBoxIcon/> : <DisabledByDefaultIcon/>}</div>
-                </div>
-
-            </div> */}
-
-            {/* <Link 
-                href={{
-                    pathname: "../"
-                    }}>
-                <Button variant="contained">Home</Button>
-            </Link> */}
-
-            
-
-            {/* <ResponsiveGridLayout
-                layouts={{ lg: layout }}
-                breakpoints={{ lg: 1200, md: 1100, sm: 1000, xs: 900, xxs: 800 }}
-                cols={{ lg: 14, md: 12, sm: 10, xs: 8, xxs: 6 }}
-                rowHeight={300}
-                className={styles.grid}
-            >
-                <div key="a" style={{backgroundColor: "darkgray"}}>
-
-                </div>
-
-                <div key="b" style={{backgroundColor: "darkgray"}}>
-
-                </div>
-
-                <div key="c" style={{backgroundColor: "darkgray"}}>
-
-                </div>
-
-                <div key="d" style={{backgroundColor: "darkgray"}}>
-
-                </div>
-
-                <div key="e" style={{backgroundColor: "darkgray"}}>
-
-                </div>
-
-                <div key="f" style={{backgroundColor: "darkgray"}}>
-
-                </div>
         
-        </ResponsiveGridLayout> */}
+        <div className={styles.text}>This web app takes the input of a human gene and displays its expression across human cells and tissues utilizing a variety of processed datasets from healthy tissues. If the gene is not contained in one of the datasets, a plot will not be produced for that resource.</div>
 
-        <footer className={styles.footer}>
+        <div style={{display: 'flex', gap: '250px'}}>
+
+            <div className={styles.dbGroup}>
+                <h2>Transcriptomics</h2>
+                <FormGroup>
+                    <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(0)} defaultChecked />} label={<><a className={styles.logoLink} href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer"><img className={styles.t_databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/></a></>} labelPlacement="start"/>
+                    <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(1)} defaultChecked />} label={<><a className={styles.logoLink} href="https://maayanlab.cloud/archs4/" target="_blank" rel="noopener noreferrer"><img className={styles.t_databaseLogo} src="/images/archs4.png" alt="archs4 Logo"/></a></>} labelPlacement="start"/>
+                    <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(2)} defaultChecked />} label={<><a className={styles.logoLink} href="https://tabula-sapiens-portal.ds.czbiohub.org" target="_blank" rel="noopener noreferrer"><img className={styles.t_databaseLogo} style={{borderRadius: '8px', width: '200px', marginLeft: '15px'}} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo"/></a></>} labelPlacement="start"/>
+                </FormGroup>
+                <h2>Proteomics</h2>
+                <FormGroup>
+                    <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(3)} defaultChecked />} label={<><a className={styles.logoLink} href="http://www.humanproteomemap.org" target="_blank" rel="noopener noreferrer"><img className={styles.p_databaseLogo} src="/images/HPM.gif" alt="HPM Logo"/></a></>} labelPlacement="start"/>
+                    <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(4)} defaultChecked />} label={<><a className={styles.logoLink} href="https://www.proteinatlas.org" target="_blank" rel="noopener noreferrer"><img className={styles.p_databaseLogo} src="/images/HPA.svg" alt="HPA Logo"/></a></>} labelPlacement="start"/>
+                    <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(5)} defaultChecked />} label={<><a className={styles.logoLink} href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer"><img className={styles.p_databaseLogo} style={{width: 'auto'}} src="/images/GTEx.png" alt="GTEx Logo"/></a></>} labelPlacement="start"/>
+                </FormGroup>
+            </div>
+
+            <div style={{display: 'flex', flexDirection: 'column'}}>
+                <div>
+                    <Autocomplete
+                        disablePortal
+                        options={ genes }
+                        sx={{ width: 300 }}
+                        onChange={(event, value) => {submitGene(value)}}
+                        renderInput={(params) => <TextField {...params} label="Human Gene Symbol" />}
+                        />
+                        {/* {
+                        loading == true ? <div style={{display: 'flex', justifyContent: 'center', marginTop: '15px'}}><CircularProgress/></div> : <></>
+                        } */}
+                </div>
+                <Box sx={{ width: '100%' }}>
+                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                        <Tab label="GTEx Transcriptomics" {...a11yProps(0)} />
+                        <Tab label="ARCHS4" {...a11yProps(1)} />
+                        <Tab label="Tabula Sapiens" {...a11yProps(2)} />
+                        <Tab label="HPM" {...a11yProps(3)} />
+                        <Tab label="HPA" {...a11yProps(4)} />
+                        <Tab label="GTEx Proteomics" {...a11yProps(5)} />
+                        </Tabs>
+                    </Box>
+                    <TabPanel value={value} index={0}>
+                        {
+                            gtex_transcriptomics != null 
+                                ? 
+                                    <div id="gtex_transcriptomics">
+                                        <Plot
+                                            data={[gtex_transcriptomics]}
+                                            layout={{width: '500', height: '500', title: props.gene + ' (RNA-seq) GTEx', yaxis: {automargin: true}}}
+                                            config={{responsive: true}}
+                                            id={"gtex_transcriptomics"}
+                                        />
+                                    </div>
+                                    
+                                : 
+                                    <div>Nothing here...</div>
+                        }
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                        {
+                            archs4 != null 
+                                ? 
+                                    <div id="archs4">
+                                        <Plot
+                                            data={[archs4]}
+                                            layout={{width: '500', height: '500', title: props.gene + ' (RNA-seq) ARCHS4',
+                                            yaxis: {
+                                            automargin: true
+                                            }}}
+                                        />
+                                    </div>
+                                    
+                                : 
+                                    <div>Nothing here...</div>
+                        }
+                    </TabPanel>
+                    <TabPanel value={value} index={2}>
+                        {
+                            tabula_sapiens != null 
+                                ? 
+                                    <div id="tabula_sapiens">
+                                        <Plot
+                                            data={[tabula_sapiens]}
+                                            layout={{width: '500', height: '500', title: props.gene + ' (RNA-seq) Tabula Sapiens',
+                                            yaxis: {
+                                            automargin: true
+                                            }}}
+                                        />
+                                    </div>
+                                    
+                                : 
+                                    <div>Nothing here...</div>
+                        }
+                    </TabPanel>
+                    <TabPanel value={value} index={3}>
+                        {
+                            hpm != null 
+                                ? 
+                                    <div id="hpm">
+                                        <Plot
+                                            data={[hpm]}
+                                            layout={{width: '500', height: '500', title: props.gene + ' (HPM)',
+                                            yaxis: {
+                                            automargin: true
+                                            },
+                                            xaxis: {
+                                                title: {
+                                                text: 'Average Spectral Counts',
+                                                }
+                                            }
+                                            }}
+                                        />
+                                    </div>
+                                : 
+                                    <div>Nothing here...</div>
+                        }
+                    </TabPanel>
+                    <TabPanel value={value} index={4}>
+                        {
+                            hpa != null 
+                                ? 
+                                    <div id="hpa">
+                                        <Plot
+                                        data={[hpa]}
+                                        layout={{width: '500', height: '500', title: props.gene + ' (HPA)',
+                                        yaxis: {
+                                        automargin: true
+                                        },
+                                        xaxis: {
+                                            "categoryorder": "array",
+                                            "categoryarray":  ["Not detected", "Low", "Medium", "High"],
+                                            title: {
+                                                text: 'Tissue Expression Level',
+                                            }
+                                        }
+                                        }}  
+                                        />
+                                    </div>
+                                : 
+                                    <div>Nothing here...</div>
+                        }
+                    </TabPanel>
+                    <TabPanel value={value} index={5}>
+                        {
+                            gtex_proteomics != null 
+                                ? 
+                                    <div id="gtex_proteomics">
+                                        <Plot
+                                            data={gtex_proteomics}
+                                            layout={{width: '500', height: '500', title: props.gene + ' (GTEx Proteomics)',
+                                            showlegend: false,
+                                            yaxis: {
+                                            automargin: true
+                                            },
+                                            xaxis: {
+                                                title: {
+                                                    text: 'log2(relative abundance)',
+                                                }
+                                            }
+                                            }}
+                                        />
+                                    </div>
+                                : 
+                                    <div>Nothing here...</div>
+                        }
+                    </TabPanel>
+                </Box>
+            </div>
+        </div>
+
+        {/* <footer className={styles.footer}>
             <div className={styles.footerLinks}>
                 <div><a className={styles.link} href="mailto:avi.maayan@mssm.edu">Contact Us</a></div>
                 <div><a className={styles.link} href="https://github.com/MaayanLab/single-gene-expression-dashboard/blob/main/LICENSE">Usage License</a></div>
@@ -679,7 +572,9 @@ export default function Dashboard(props) {
                 <a className={styles.buttonLink} href="https://github.com/MaayanLab/single-gene-expression-dashboard" target="_blank" rel="noopener noreferrer"><Button variant="contained" color="primary"><Image style={{borderRadius: '5px'}} src="/images/GitHub-Mark.png" alt="GitHub Logo" width={16} height={16} />&nbsp;View source code</Button></a>
                 <a className={styles.buttonLink} href="https://github.com/MaayanLab/single-gene-expression-dashboard/issues/new" target="_blank" rel="noopener noreferrer"><Button variant="contained" color="primary"><Image style={{borderRadius: '5px'}} src="/images/GitHub-Mark.png" alt="GitHub Logo" width={16} height={16} />&nbsp;Submit an issue</Button></a>
             </div>
-        </footer>
+        </footer> */}
+        
+        <Footer/>
 
         </div>
     </div>

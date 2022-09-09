@@ -1,6 +1,4 @@
 import Head from 'next/head';
-import Image from 'next/image';
-import Link from 'next/link';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import React, { useState } from 'react';
@@ -9,6 +7,7 @@ import { FormGroup, FormControlLabel, Switch, TextField, Button, Autocomplete } 
 import genes from '../json/genes.json';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useRouter } from 'next/router'
+import Footer from '../components/footer';
 
 export default function Home() {
 
@@ -111,23 +110,8 @@ export default function Home() {
         <a className={styles.buttonLink} href="https://appyters.maayanlab.cloud/Gene_Expression_by_Tissue/"><Button color="primary" variant="contained">Run the Appyter <img className={styles.appyterLogo} src="/images/appyterLogo.png" alt="appyter logo"></img></Button></a>
       </div> */}
 
-      <footer className={styles.footer}>
-        <div className={styles.footerLinks}>
-          <div><a className={styles.link} href="mailto:avi.maayan@mssm.edu">Contact Us</a></div>
-          <div><a className={styles.link} href="https://github.com/MaayanLab/single-gene-expression-dashboard/blob/main/LICENSE">Usage License</a></div>
-        </div>
-        <div>
-          <a href="https://icahn.mssm.edu/research/bioinformatics" target="_blank" rel="noopener noreferrer"><Image src="/images/icahn_cb.png" alt="School Logo" width={137} height={80} /></a>
-        </div>
-        <div>
-          <a href="https://labs.icahn.mssm.edu/maayanlab/" target="_blank" rel="noopener noreferrer"><Image style={{borderRadius: '10px'}} src="/images/maayanlab_logo.png" alt="Lab Logo" width={80} height={80} /></a>
-        </div>
-        <div className={styles.githubButtons}>
-          <a className={styles.buttonLink} href="https://github.com/MaayanLab/single-gene-expression-dashboard" target="_blank" rel="noopener noreferrer"><Button variant="contained" color="primary"><Image style={{borderRadius: '5px'}} src="/images/GitHub-Mark.png" alt="GitHub Logo" width={16} height={16} />&nbsp;View source code</Button></a>
-          <a className={styles.buttonLink} href="https://github.com/MaayanLab/single-gene-expression-dashboard/issues/new" target="_blank" rel="noopener noreferrer"><Button variant="contained" color="primary"><Image style={{borderRadius: '5px'}} src="/images/GitHub-Mark.png" alt="GitHub Logo" width={16} height={16} />&nbsp;Submit an issue</Button></a>
-        </div>
-      </footer>
-        
+      
+        <Footer/>
       </div>
     </div>
   )
