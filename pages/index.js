@@ -42,7 +42,7 @@ export default function Home() {
   }
 
   return (
-    <>
+    <div style={{position: 'relative', minHeight: '100vh'}}>
 
       <Head/>
 
@@ -107,6 +107,6 @@ export default function Home() {
       
         <Footer/>
       </div>
-    </>
+    </div>
   )
 }

@@ -10,17 +10,20 @@
 .dbGroup {
   height: 100%;
   text-align: center;
-  background-color: #90acd0;
+  /* background-color: #90acd0; */
   position: sticky;
   top: 0;
-  margin-top: 50px;
+  /* margin-top: 50px; */
+  padding-top: 50px;
+  padding-left: 15px;
+  
   /* border-radius: 25px; */
   /* padding: 5px 25px 5px 25px; */
 }
 
 .formItem {
   margin: 10px;
-  text-align: center;
+  /* text-align: center; */
 }
 
 .t_databaseLogo {
@@ -58,4 +61,3 @@
   flex-wrap: wrap;
   gap: 25px;
 } */
-
