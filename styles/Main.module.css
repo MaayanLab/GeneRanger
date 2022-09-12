@@ -8,11 +8,14 @@
 }
 
 .dbGroup {
-  height: auto;
+  height: 100%;
   text-align: center;
   background-color: #90acd0;
-  border-radius: 25px;
-  padding: 5px 25px 5px 25px;
+  position: sticky;
+  top: 0;
+  margin-top: 50px;
+  /* border-radius: 25px; */
+  /* padding: 5px 25px 5px 25px; */
 }
 
 .formItem {
@@ -21,13 +24,13 @@
 }
 
 .t_databaseLogo {
-  width: auto;
-  height: 30px;
+  width: 150px;
+  height: auto;
 }
 
 .p_databaseLogo {
-  width: auto;
-  height: 30px;
+  width: 150px;
+  height: auto;
 }
 
 .logoLink {
@@ -46,7 +49,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  /* gap: 30px; */
 }
 
 /* .buttonDiv {
