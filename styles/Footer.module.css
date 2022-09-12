@@ -8,31 +8,31 @@
     padding-top: 15px;
     padding-bottom: 15px;
     gap: 25px;
-  }
+}
   
-  .footerLinks {
+.footerLinks {
     display: flex;
     flex-direction: column;
     text-align: left;
     gap: 5px;
-  }
-  
-  .githubButtons {
+}
+
+.githubButtons {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
-  }
-  
-  .link {
+}
+
+.link {
     text-decoration: none;
     color: black;
-  }
-  
-  .link:hover {
+}
+
+.link:hover {
     text-decoration: underline;
-  }
-  
-  .buttonLink {
+}
+
+.buttonLink {
     text-decoration: none;
-  }
+}

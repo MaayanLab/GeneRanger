@@ -290,7 +290,6 @@ export default function Dashboard(props) {
     }
 
     const [databases, setDatabases] = useState([true, true, true, true, true, true]);
-    // const [loading, setLoading] = useState(false);
 
     function updateDatabases(index) {
         let updatedArray = [...databases];
@@ -358,7 +357,7 @@ export default function Dashboard(props) {
 
     return (
 
-        <div className={styles.page}>
+        <>
 
             <Head/>
 
@@ -539,7 +538,7 @@ export default function Dashboard(props) {
             <Footer/>
 
             </div>
-        </div>
+        </>
       
     )
   }
