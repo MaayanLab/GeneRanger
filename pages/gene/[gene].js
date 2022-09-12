@@ -368,7 +368,7 @@ export default function Dashboard(props) {
             <div style={{display: 'flex', justifyContent: 'flex-start', width: '100%'}}>
 
                 <div className={styles.dbGroup}>
-                    <div>
+                    <div style={{marginBottom: '25px'}}>
                         <Autocomplete
                             disablePortal
                             options={ genes }
@@ -380,18 +380,20 @@ export default function Dashboard(props) {
                             loading == true ? <div style={{display: 'flex', justifyContent: 'center', marginTop: '15px'}}><CircularProgress/></div> : <></>
                             } */}
                     </div>
-                    <h2>Transcriptomics</h2>
-                    <FormGroup style={{alignItems: 'center'}}>
-                        <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(0)} defaultChecked />} label={<><a className={styles.logoLink} href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer"><img className={styles.t_databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/></a></>} labelPlacement="start"/>
-                        <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(1)} defaultChecked />} label={<><a className={styles.logoLink} href="https://maayanlab.cloud/archs4/" target="_blank" rel="noopener noreferrer"><img className={styles.t_databaseLogo} src="/images/archs4.png" alt="archs4 Logo"/></a></>} labelPlacement="start"/>
-                        <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(2)} defaultChecked />} label={<><a className={styles.logoLink} href="https://tabula-sapiens-portal.ds.czbiohub.org" target="_blank" rel="noopener noreferrer"><img className={styles.t_databaseLogo} style={{borderRadius: '8px'}} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo"/></a></>} labelPlacement="start"/>
-                    </FormGroup>
-                    <h2>Proteomics</h2>
-                    <FormGroup style={{alignItems: 'center'}}>
-                        <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(3)} defaultChecked />} label={<><a className={styles.logoLink} href="http://www.humanproteomemap.org" target="_blank" rel="noopener noreferrer"><img className={styles.p_databaseLogo} src="/images/HPM.gif" alt="HPM Logo"/></a></>} labelPlacement="start"/>
-                        <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(4)} defaultChecked />} label={<><a className={styles.logoLink} href="https://www.proteinatlas.org" target="_blank" rel="noopener noreferrer"><img className={styles.p_databaseLogo} src="/images/HPA.svg" alt="HPA Logo"/></a></>} labelPlacement="start"/>
-                        <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(5)} defaultChecked />} label={<><a className={styles.logoLink} href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer"><img className={styles.p_databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/></a></>} labelPlacement="start"/>
-                    </FormGroup>
+                    <div style={{backgroundColor: '#aec2d0', padding: '5px'}}>
+                        <h2>Transcriptomics</h2>
+                        <FormGroup style={{alignItems: 'center'}}>
+                            <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(0)} defaultChecked />} label={<><a className={styles.logoLink} href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer"><img className={styles.t_databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/></a></>} labelPlacement="start"/>
+                            <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(1)} defaultChecked />} label={<><a className={styles.logoLink} href="https://maayanlab.cloud/archs4/" target="_blank" rel="noopener noreferrer"><img className={styles.t_databaseLogo} src="/images/archs4.png" alt="archs4 Logo"/></a></>} labelPlacement="start"/>
+                            <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(2)} defaultChecked />} label={<><a className={styles.logoLink} href="https://tabula-sapiens-portal.ds.czbiohub.org" target="_blank" rel="noopener noreferrer"><img className={styles.t_databaseLogo} style={{borderRadius: '8px'}} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo"/></a></>} labelPlacement="start"/>
+                        </FormGroup>
+                        <h2>Proteomics</h2>
+                        <FormGroup style={{alignItems: 'center'}}>
+                            <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(3)} defaultChecked />} label={<><a className={styles.logoLink} href="http://www.humanproteomemap.org" target="_blank" rel="noopener noreferrer"><img className={styles.p_databaseLogo} src="/images/HPM.gif" alt="HPM Logo"/></a></>} labelPlacement="start"/>
+                            <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(4)} defaultChecked />} label={<><a className={styles.logoLink} href="https://www.proteinatlas.org" target="_blank" rel="noopener noreferrer"><img className={styles.p_databaseLogo} src="/images/HPA.svg" alt="HPA Logo"/></a></>} labelPlacement="start"/>
+                            <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(5)} defaultChecked />} label={<><a className={styles.logoLink} href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer"><img className={styles.p_databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/></a></>} labelPlacement="start"/>
+                        </FormGroup>
+                    </div>
                 </div>
 
                 <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', marginTop: '10px', gap: '10px', width: '100%'}}>
@@ -418,6 +420,7 @@ export default function Dashboard(props) {
                                                     layout={{width: '800', height: '1500', title: props.gene + ' (RNA-seq) GTEx', yaxis: {automargin: true}}}
                                                     config={{responsive: true}}
                                                     id={"gtex_transcriptomics"}
+                                                    style={{paddingBottom: '75px'}}
                                                 />
                                             </div>
                                             
@@ -436,6 +439,7 @@ export default function Dashboard(props) {
                                                     yaxis: {
                                                     automargin: true
                                                     }}}
+                                                    style={{paddingBottom: '75px'}}
                                                 />
                                             </div>
                                             
@@ -454,6 +458,7 @@ export default function Dashboard(props) {
                                                     yaxis: {
                                                     automargin: true
                                                     }}}
+                                                    style={{paddingBottom: '75px'}}
                                                 />
                                             </div>
                                             
@@ -478,6 +483,7 @@ export default function Dashboard(props) {
                                                         }
                                                     }
                                                     }}
+                                                    style={{paddingBottom: '75px'}}
                                                 />
                                             </div>
                                         : 
@@ -503,6 +509,7 @@ export default function Dashboard(props) {
                                                     }
                                                 }
                                                 }}  
+                                                style={{paddingBottom: '75px'}}
                                                 />
                                             </div>
                                         : 
@@ -527,6 +534,7 @@ export default function Dashboard(props) {
                                                         }
                                                     }
                                                     }}
+                                                    style={{paddingBottom: '75px'}}
                                                 />
                                             </div>
                                         : 

@@ -5,7 +5,7 @@
 
 .mainLogo {
     margin-left: 35px;
-    background-color: lightgray;
+    background-color: #cedae3;
     border-radius: 15px;
     padding: 3px;
 }
@@ -18,7 +18,7 @@
     padding: 25px 0px 25px 0px;
     gap: 30px;
     /* margin-bottom: 15px; */
-    background-color: #A0ACB8;
+    background-color: #8eaabe;
     width: 100%;
 }
 
