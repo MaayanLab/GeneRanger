@@ -1,14 +1,12 @@
-import Image from 'next/image';
 import { Responsive, WidthProvider } from "react-grid-layout";
 import { PrismaClient } from '@prisma/client';
 import dynamic from 'next/dynamic';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import React, { useState } from 'react';
-import styles from '../../styles/Home.module.css';
+import styles from '../../styles/Main.module.css';
 import { FormGroup, FormControlLabel, Switch, TextField, Button, Autocomplete } from '@mui/material';
 import genes from '../../json/genes.json';
-import CircularProgress from '@mui/material/CircularProgress';
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
@@ -22,17 +20,6 @@ import Head from '../../components/head';
 const Plot = dynamic(() => import('react-plotly.js'), {
 	ssr: false,
 });
-
-// const ResponsiveGridLayout = WidthProvider(Responsive);
-
-// const layout = [
-//     { i: "a", x: 0, y: 0, w: 2, h: 2 },
-//     { i: "b", x: 2, y: 0, w: 2, h: 2 },
-//     { i: "c", x: 4, y: 0, w: 2, h: 2 },
-//     { i: "d", x: 6, y: 0, w: 2, h: 2 },
-//     { i: "e", x: 8, y: 0, w: 2, h: 2 },
-//     { i: "f", x: 10, y: 0, w: 2, h: 2 }
-//   ];
 
 export async function getServerSideProps(context) {
 
@@ -323,9 +310,7 @@ export default function Dashboard(props) {
                     databases: databases
             }};
             router.push(href)
-            // setLoading(true)
         } else {
-            // setLoading(false)
         }
         
     }

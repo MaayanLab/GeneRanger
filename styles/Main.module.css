@@ -1,0 +1,67 @@
+.page {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.geneSymbol {
+  display: flex;
+  justify-content: center;
+}
+
+.formDiv {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  margin: 0px 25px 0px 25px;
+}
+
+.dbGroup {
+  height: auto;
+  text-align: center;
+  background-color: #90acd0;
+  border-radius: 25px;
+  padding: 5px 25px 5px 25px;
+}
+
+.formItem {
+  margin: 10px;
+  text-align: center;
+}
+
+.t_databaseLogo {
+  width: auto;
+  height: 30px;
+}
+
+.p_databaseLogo {
+  width: auto;
+  height: 30px;
+}
+
+.logoLink {
+  cursor: default;
+}
+
+.appyterLogo {
+  background-color: white;
+  border-radius: 4px;
+  width: auto;
+  height: 30px;
+  margin-left: 5px;
+}
+
+.mainDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.buttonDiv {
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+}
+

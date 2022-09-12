@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styles from '../styles/Home.module.css';
+import styles from '../styles/Footer.module.css';
 import Image from 'next/image';
 import { Button } from '@mui/material';
 

@@ -1,0 +1,31 @@
+.header {
+    text-align: left;
+    font-size: 35px;
+}
+
+.mainLogo {
+    margin-left: 35px;
+    background-color: lightgray;
+    border-radius: 15px;
+    padding: 3px;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 25px 0px 25px;
+    padding: 25px 0px 25px 0px;
+    gap: 30px;
+    margin-bottom: 15px;
+    background-color: #A0ACB8;
+    width: 100%;
+}
+
+.text {
+    text-align: left;
+    font-size: 20px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}

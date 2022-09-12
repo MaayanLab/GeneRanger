@@ -1,13 +1,14 @@
-import Head from 'next/head';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import React, { useState } from 'react';
-import styles from '../styles/Home.module.css';
+import styles from '../styles/Main.module.css';
 import { FormGroup, FormControlLabel, Switch, TextField, Button, Autocomplete } from '@mui/material';
 import genes from '../json/genes.json';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useRouter } from 'next/router'
 import Footer from '../components/footer';
+import Header from '../components/header';
+import Head from '../components/head';
 
 export default function Home() {
 
@@ -42,19 +43,12 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      <Head>
-        <title>Single Gene and Protein Expression Dashboard</title>
-        <link rel="icon" href="/images/logo.png" />
-      </Head>
+
+      <Head/>
 
       <div className={styles.mainDiv}>
 
-      <div className={styles.title}>
-        <img className={styles.mainLogo} src="/images/logo.png" alt="App Logo" width={150} height={"auto"} />
-        <h1 className={styles.header}>Gene and Protein Expression across Human Cells and Tissues</h1>
-      </div>
-      
-      <div className={styles.text}>This web app takes the input of a human gene and displays its expression across human cells and tissues utilizing a variety of processed datasets from healthy tissues. If the gene is not contained in one of the datasets, a plot will not be produced for that resource.</div>
+      <Header/>
 
     <div>
       <Autocomplete
