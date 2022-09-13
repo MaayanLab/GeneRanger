@@ -15,6 +15,7 @@ import Box from '@mui/material/Box';
 import Footer from '../../components/footer';
 import Header from '../../components/header';
 import Head from '../../components/head';
+import { styled } from '@mui/material/styles';
 
 const Plot = dynamic(() => import('react-plotly.js'), {
 	ssr: false,
@@ -358,6 +359,10 @@ export default function Dashboard(props) {
         setValue(newValue);
     };
 
+    const CustomTab = styled((props) => <Tab {...props} />)(({ theme }) => ({
+      textTransform: 'none',
+    }));
+
     return (
 
         <div style={{position: 'relative', minHeight: '100vh'}}>
@@ -405,12 +410,12 @@ export default function Dashboard(props) {
                             <Box sx={{ width: '100%' }}>
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                                        <Tab label="GTEx Transcriptomics" {...a11yProps(0)} />
-                                        <Tab label="ARCHS4" {...a11yProps(1)} />
-                                        <Tab label="Tabula Sapiens" {...a11yProps(2)} />
-                                        <Tab label="HPM" {...a11yProps(3)} />
-                                        <Tab label="HPA" {...a11yProps(4)} />
-                                        <Tab label="GTEx Proteomics" {...a11yProps(5)} />
+                                        <CustomTab label="GTEx Transcriptomics" {...a11yProps(0)} />
+                                        <CustomTab label="ARCHS4" {...a11yProps(1)} />
+                                        <CustomTab label="Tabula Sapiens" {...a11yProps(2)} />
+                                        <CustomTab label="HPM" {...a11yProps(3)} />
+                                        <CustomTab label="HPA" {...a11yProps(4)} />
+                                        <CustomTab label="GTEx Proteomics" {...a11yProps(5)} />
                                     </Tabs>
                                 </Box>
                                 <TabPanel value={value} index={0}>
