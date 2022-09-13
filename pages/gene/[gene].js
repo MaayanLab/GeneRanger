@@ -5,7 +5,7 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import React, { useState } from 'react';
 import styles from '../../styles/Main.module.css';
-import { FormGroup, FormControlLabel, Switch, TextField, Button, Autocomplete } from '@mui/material';
+import { FormGroup, FormControlLabel, Switch, TextField, Autocomplete, Container } from '@mui/material';
 import genes from '../../json/genes.json';
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types';
@@ -319,24 +319,26 @@ export default function Dashboard(props) {
     // For MUI tabs
 
     function TabPanel(props) {
-        const { children, value, index, ...other } = props;
-      
+        const {children, value, index, classes, ...other} = props;
+    
         return (
-          <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-          >
-            {value === index && (
-              <Box sx={{ p: 3 }}>
-                <Typography>{children}</Typography>
-              </Box>
-            )}
-          </div>
+            <div
+                role="tabpanel"
+                hidden={value !== index}
+                id={`simple-tabpanel-${index}`}
+                aria-labelledby={`simple-tab-${index}`}
+                {...other}
+            >
+                {value === index && (
+                    <Container>
+                        <Box>
+                            {children}
+                        </Box>
+                    </Container>
+                )}
+            </div>
         );
-      }
+    }
       
       TabPanel.propTypes = {
         children: PropTypes.node,
@@ -404,12 +406,12 @@ export default function Dashboard(props) {
                             <Box sx={{ width: '100%' }}>
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                                    <Tab label="GTEx Transcriptomics" {...a11yProps(0)} />
-                                    <Tab label="ARCHS4" {...a11yProps(1)} />
-                                    <Tab label="Tabula Sapiens" {...a11yProps(2)} />
-                                    <Tab label="HPM" {...a11yProps(3)} />
-                                    <Tab label="HPA" {...a11yProps(4)} />
-                                    <Tab label="GTEx Proteomics" {...a11yProps(5)} />
+                                        <Tab label="GTEx Transcriptomics" {...a11yProps(0)} />
+                                        <Tab label="ARCHS4" {...a11yProps(1)} />
+                                        <Tab label="Tabula Sapiens" {...a11yProps(2)} />
+                                        <Tab label="HPM" {...a11yProps(3)} />
+                                        <Tab label="HPA" {...a11yProps(4)} />
+                                        <Tab label="GTEx Proteomics" {...a11yProps(5)} />
                                     </Tabs>
                                 </Box>
                                 <TabPanel value={value} index={0}>
