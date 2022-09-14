@@ -102,6 +102,11 @@ export default function Dashboard(props) {
     let hpa = null;
     let gtex_proteomics = null;
 
+    // Replaces underscores and periods with spaces
+    function processNames(names) {
+        return names.map(name => name.replace(/_+/g, ' ').replaceAll('.', ' ').trim());
+    }
+
     if (props.databases[0] == "true") {
 
         let data = props.all_db_data.gtex_transcriptomics;
@@ -123,6 +128,7 @@ export default function Dashboard(props) {
             let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
             let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
             let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
+            let names = processNames(Object.keys(data[q1_index]).slice(3));
 
             gtex_transcriptomics = {
                 q1: q1,
@@ -132,7 +138,7 @@ export default function Dashboard(props) {
                 sd: Object.values(data[sd_index]).slice(3),
                 lowerfence: lowerfence,
                 upperfence: upperfence,
-                y: Object.keys(data[q1_index]).slice(3),
+                y: names,
                 orientation: 'h',
                 type: 'box'
             }
@@ -160,6 +166,7 @@ export default function Dashboard(props) {
             let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
             let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
             let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
+            let names = processNames(Object.keys(data[q1_index]).slice(3));
 
             archs4 = {
                 q1: q1,
@@ -169,7 +176,7 @@ export default function Dashboard(props) {
                 sd: Object.values(data[sd_index]).slice(3),
                 lowerfence: lowerfence,
                 upperfence: upperfence,
-                y: Object.keys(data[q1_index]).slice(3),
+                y: names,
                 orientation: 'h',
                 type: 'box'
             }
@@ -198,6 +205,7 @@ export default function Dashboard(props) {
             let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
             let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
             let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
+            let names = processNames(Object.keys(data[q1_index]).slice(3));
 
             tabula_sapiens = {
                 q1: q1,
@@ -207,7 +215,7 @@ export default function Dashboard(props) {
                 sd: Object.values(data[sd_index]).slice(3),
                 lowerfence: lowerfence,
                 upperfence: upperfence,
-                y: Object.keys(data[q1_index]).slice(3),
+                y: names,
                 orientation: 'h',
                 type: 'box'
             }
@@ -231,7 +239,7 @@ export default function Dashboard(props) {
 
             hpm = {
                 x: values,
-                y: tissues,
+                y: processNames(tissues),
                 type: "scatter",
                 mode: "markers",
                 marker: { color: '#1f77b4' },

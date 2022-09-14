@@ -96,194 +96,202 @@ export default function Dashboard(props) {
     let hpa = null;
     let gtex_proteomics = null;
 
-    if (props.databases[0] == "true") {
-
-        let data = props.all_db_data.gtex_transcriptomics;
-
-        if (data.length != 0) {
-
-            let mean_index = 1;
-            let sd_index = 2;
-            let min_index = 3;
-            let q1_index = 4;
-            let median_index = 5;
-            let q3_index = 6;
-            let max_index = 7;
-
-            let q1 = Object.values(data[q1_index]).slice(3);
-            let q3 = Object.values(data[q3_index]).slice(3);
-            let min = Object.values(data[min_index]).slice(3);
-            let max = Object.values(data[max_index]).slice(3);
-            let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
-            let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
-            let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
-
-            gtex_transcriptomics = {
-                q1: q1,
-                median: Object.values(data[median_index]).slice(3),
-                q3: q3,
-                mean: Object.values(data[mean_index]).slice(3),
-                sd: Object.values(data[sd_index]).slice(3),
-                lowerfence: lowerfence,
-                upperfence: upperfence,
-                y: Object.keys(data[q1_index]).slice(3),
-                orientation: 'h',
-                type: 'box'
-            }
-        }
-    }
-    
-    if (props.databases[1] == "true") {
-
-        let data = props.all_db_data.archs4;
-
-        if (data.length != 0) {
-
-            let mean_index = 1;
-            let sd_index = 2;
-            let min_index = 3;
-            let max_index = 4;
-            let q1_index = 5;
-            let median_index = 6;
-            let q3_index = 7;
-
-            let q1 = Object.values(data[q1_index]).slice(3);
-            let q3 = Object.values(data[q3_index]).slice(3);
-            let min = Object.values(data[min_index]).slice(3);
-            let max = Object.values(data[max_index]).slice(3);
-            let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
-            let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
-            let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
-
-            archs4 = {
-                q1: q1,
-                median: Object.values(data[median_index]).slice(3),
-                q3: q3,
-                mean: Object.values(data[mean_index]).slice(3),
-                sd: Object.values(data[sd_index]).slice(3),
-                lowerfence: lowerfence,
-                upperfence: upperfence,
-                y: Object.keys(data[q1_index]).slice(3),
-                orientation: 'h',
-                type: 'box'
-            }
-        }
-
-    }
-
-    if (props.databases[2] == "true") {
-
-        let data = props.all_db_data.tabula_sapiens;
-
-        if (data.length != 0) {
-
-            let mean_index = 1;
-            let sd_index = 2;
-            let min_index = 3;
-            let q1_index = 4;
-            let median_index = 5;
-            let q3_index = 6;
-            let max_index = 7;
-
-            let q1 = Object.values(data[q1_index]).slice(3);
-            let q3 = Object.values(data[q3_index]).slice(3);
-            let min = Object.values(data[min_index]).slice(3);
-            let max = Object.values(data[max_index]).slice(3);
-            let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
-            let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
-            let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
-
-            tabula_sapiens = {
-                q1: q1,
-                median: Object.values(data[median_index]).slice(3),
-                q3: q3,
-                mean: Object.values(data[mean_index]).slice(3),
-                sd: Object.values(data[sd_index]).slice(3),
-                lowerfence: lowerfence,
-                upperfence: upperfence,
-                y: Object.keys(data[q1_index]).slice(3),
-                orientation: 'h',
-                type: 'box'
-            }
-        }
-
-    }
-
-    if (props.databases[3] == "true") {
-
-        let data = props.all_db_data.hpm;
-
-        if (data.length != 0) {
-
-            let values = [];
-            let tissues = [];
-
-            for (let i = 0; i < data.length; i++) {
-                values.push(data[i].value)
-                tissues.push(data[i].tissue)
-            }
-
-            hpm = {
-                x: values,
-                y: tissues,
-                type: "scatter",
-                mode: "markers",
-                marker: { color: '#1f77b4' },
+      // Replaces underscores and periods with spaces
+      function processNames(names) {
+          return names.map(name => name.replace(/_+/g, ' ').replaceAll('.', ' ').trim());
+      }
+  
+      if (props.databases[0] == "true") {
+  
+          let data = props.all_db_data.gtex_transcriptomics;
+  
+          if (data.length != 0) {
+  
+              let mean_index = 1;
+              let sd_index = 2;
+              let min_index = 3;
+              let q1_index = 4;
+              let median_index = 5;
+              let q3_index = 6;
+              let max_index = 7;
+  
+              let q1 = Object.values(data[q1_index]).slice(3);
+              let q3 = Object.values(data[q3_index]).slice(3);
+              let min = Object.values(data[min_index]).slice(3);
+              let max = Object.values(data[max_index]).slice(3);
+              let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
+              let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
+              let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
+              let names = processNames(Object.keys(data[q1_index]).slice(3));
+  
+              gtex_transcriptomics = {
+                  q1: q1,
+                  median: Object.values(data[median_index]).slice(3),
+                  q3: q3,
+                  mean: Object.values(data[mean_index]).slice(3),
+                  sd: Object.values(data[sd_index]).slice(3),
+                  lowerfence: lowerfence,
+                  upperfence: upperfence,
+                  y: names,
+                  orientation: 'h',
+                  type: 'box'
               }
-        }
-    }
-
-    if (props.databases[4] == "true") {
-
-        let data = props.all_db_data.hpa;
-
-        if (data.length != 0) {
-
-            let levels = [];
-            let tissue_and_cells = [];
-
-            for (let i = 0; i < data.length; i++) {
-                levels.push(data[i].level)
-                tissue_and_cells.push(data[i].tissue + ', ' + data[i].cell_type)
-            }
-
-            hpa = {
-                x: levels,
-                y: tissue_and_cells,
-                // category_orders: {"Level": ["Not detected", "Low", "Medium", "High"]}, 
-                type: "scatter",
-                mode: "markers",
-                marker: { color: '#1f77b4' },
+          }
+      }
+      
+      if (props.databases[1] == "true") {
+  
+          let data = props.all_db_data.archs4;
+  
+          if (data.length != 0) {
+  
+              let mean_index = 1;
+              let sd_index = 2;
+              let min_index = 3;
+              let max_index = 4;
+              let q1_index = 5;
+              let median_index = 6;
+              let q3_index = 7;
+  
+              let q1 = Object.values(data[q1_index]).slice(3);
+              let q3 = Object.values(data[q3_index]).slice(3);
+              let min = Object.values(data[min_index]).slice(3);
+              let max = Object.values(data[max_index]).slice(3);
+              let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
+              let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
+              let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
+              let names = processNames(Object.keys(data[q1_index]).slice(3));
+  
+              archs4 = {
+                  q1: q1,
+                  median: Object.values(data[median_index]).slice(3),
+                  q3: q3,
+                  mean: Object.values(data[mean_index]).slice(3),
+                  sd: Object.values(data[sd_index]).slice(3),
+                  lowerfence: lowerfence,
+                  upperfence: upperfence,
+                  y: names,
+                  orientation: 'h',
+                  type: 'box'
               }
-        }
-
-    }
-
-    if (props.databases[5] == "true") {
-
-        let data = props.all_db_data.gtex_proteomics;
-
-        if (data.length != 0) {
-
-            let tissues = [];
-            let temp = {};
-            gtex_proteomics = [];
-
-            for (let i = 0; i < Object.keys(data).length; i++) {
-                if (!tissues.includes(data[i].tissue)) {
-                    tissues.push(data[i].tissue);
-                    if (temp.x != null) {
-                        gtex_proteomics.push(temp);
-                    }
-                    temp = {name: data[i].tissue, type: 'box', x: [data[i].value], marker: {color: '#1f77b4'}};
-                } else {
-                    temp.x.push(data[i].value);
+          }
+  
+      }
+  
+      if (props.databases[2] == "true") {
+  
+          let data = props.all_db_data.tabula_sapiens;
+  
+          if (data.length != 0) {
+  
+              let mean_index = 1;
+              let sd_index = 2;
+              let min_index = 3;
+              let q1_index = 4;
+              let median_index = 5;
+              let q3_index = 6;
+              let max_index = 7;
+  
+              let q1 = Object.values(data[q1_index]).slice(3);
+              let q3 = Object.values(data[q3_index]).slice(3);
+              let min = Object.values(data[min_index]).slice(3);
+              let max = Object.values(data[max_index]).slice(3);
+              let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
+              let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
+              let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
+              let names = processNames(Object.keys(data[q1_index]).slice(3));
+  
+              tabula_sapiens = {
+                  q1: q1,
+                  median: Object.values(data[median_index]).slice(3),
+                  q3: q3,
+                  mean: Object.values(data[mean_index]).slice(3),
+                  sd: Object.values(data[sd_index]).slice(3),
+                  lowerfence: lowerfence,
+                  upperfence: upperfence,
+                  y: names,
+                  orientation: 'h',
+                  type: 'box'
+              }
+          }
+  
+      }
+  
+      if (props.databases[3] == "true") {
+  
+          let data = props.all_db_data.hpm;
+  
+          if (data.length != 0) {
+  
+              let values = [];
+              let tissues = [];
+  
+              for (let i = 0; i < data.length; i++) {
+                  values.push(data[i].value)
+                  tissues.push(data[i].tissue)
+              }
+  
+              hpm = {
+                  x: values,
+                  y: processNames(tissues),
+                  type: "scatter",
+                  mode: "markers",
+                  marker: { color: '#1f77b4' },
                 }
-            }
-            gtex_proteomics.push(temp);
-        }
-
-    }
+          }
+      }
+  
+      if (props.databases[4] == "true") {
+  
+          let data = props.all_db_data.hpa;
+  
+          if (data.length != 0) {
+  
+              let levels = [];
+              let tissue_and_cells = [];
+  
+              for (let i = 0; i < data.length; i++) {
+                  levels.push(data[i].level)
+                  tissue_and_cells.push(data[i].tissue + ', ' + data[i].cell_type)
+              }
+  
+              hpa = {
+                  x: levels,
+                  y: tissue_and_cells,
+                  // category_orders: {"Level": ["Not detected", "Low", "Medium", "High"]}, 
+                  type: "scatter",
+                  mode: "markers",
+                  marker: { color: '#1f77b4' },
+                }
+          }
+  
+      }
+  
+      if (props.databases[5] == "true") {
+  
+          let data = props.all_db_data.gtex_proteomics;
+  
+          if (data.length != 0) {
+  
+              let tissues = [];
+              let temp = {};
+              gtex_proteomics = [];
+  
+              for (let i = 0; i < Object.keys(data).length; i++) {
+                  if (!tissues.includes(data[i].tissue)) {
+                      tissues.push(data[i].tissue);
+                      if (temp.x != null) {
+                          gtex_proteomics.push(temp);
+                      }
+                      temp = {name: data[i].tissue, type: 'box', x: [data[i].value], marker: {color: '#1f77b4'}};
+                  } else {
+                      temp.x.push(data[i].value);
+                  }
+              }
+              gtex_proteomics.push(temp);
+          }
+  
+      }
 
     const [databases, setDatabases] = useState([true, true, true, true, true, true]);
 
