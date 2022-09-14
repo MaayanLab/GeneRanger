@@ -18,6 +18,7 @@ import Head from '../components/head';
 import { styled } from '@mui/material/styles';
 import InfoIcon from '@mui/icons-material/Info';
 import IconButton from '@mui/material/IconButton';
+import GraphMissing from '../components/graphMissing';
 
 const Plot = dynamic(() => import('react-plotly.js'), {
 	ssr: false,
@@ -445,7 +446,7 @@ export default function Dashboard(props) {
                                                         layout={{width: '800', height: '1500', title: props.gene + ' (RNA-seq) GTEx', yaxis: {automargin: true},
                                                         xaxis: {
                                                             title: {
-                                                              text: 'RNA expression',
+                                                              text: 'RNA counts',
                                                             }
                                                         }}}
                                                         config={{responsive: true}}
@@ -455,7 +456,7 @@ export default function Dashboard(props) {
                                                 </div>
                                                 
                                             : 
-                                                <div>Nothing here...</div>
+                                                <GraphMissing/>
                                     }
                                 </TabPanel>
                                 <TabPanel value={value} index={1}>
@@ -471,7 +472,7 @@ export default function Dashboard(props) {
                                                         },
                                                         xaxis: {
                                                             title: {
-                                                              text: 'RNA expression',
+                                                              text: 'RNA counts',
                                                             }
                                                         }}}
                                                         // style={{paddingBottom: '75px'}}
@@ -479,7 +480,7 @@ export default function Dashboard(props) {
                                                 </div>
                                                 
                                             : 
-                                                <div>Nothing here...</div>
+                                                <GraphMissing/>
                                     }
                                 </TabPanel>
                                 <TabPanel value={value} index={2}>
@@ -495,7 +496,7 @@ export default function Dashboard(props) {
                                                         },
                                                         xaxis: {
                                                             title: {
-                                                              text: 'RNA expression',
+                                                              text: 'RNA counts',
                                                             }
                                                         }}}
                                                         // style={{paddingBottom: '75px'}}
@@ -503,7 +504,7 @@ export default function Dashboard(props) {
                                                 </div>
                                                 
                                             : 
-                                                <div>Nothing here...</div>
+                                                <GraphMissing/>
                                     }
                                 </TabPanel>
                                 <TabPanel value={value} index={3}>
@@ -527,7 +528,7 @@ export default function Dashboard(props) {
                                                     />
                                                 </div>
                                             : 
-                                                <div>Nothing here...</div>
+                                                <GraphMissing/>
                                     }
                                 </TabPanel>
                                 <TabPanel value={value} index={4}>
@@ -553,7 +554,7 @@ export default function Dashboard(props) {
                                                     />
                                                 </div>
                                             : 
-                                                <div>Nothing here...</div>
+                                                <GraphMissing/>
                                     }
                                 </TabPanel>
                                 <TabPanel value={value} index={5}>
@@ -578,7 +579,7 @@ export default function Dashboard(props) {
                                                     />
                                                 </div>
                                             : 
-                                                <div>Nothing here...</div>
+                                                <GraphMissing/>
                                     }
                                 </TabPanel>
                             </Box>
