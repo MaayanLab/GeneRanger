@@ -36,9 +36,9 @@
   height: auto;
 }
 
-.logoLink {
+/* .logoLink {
   cursor: default;
-}
+} */
 
 /* .appyterLogo {
   background-color: white;
@@ -61,3 +61,9 @@
   flex-wrap: wrap;
   gap: 25px;
 } */
+
+.dbLogo {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
