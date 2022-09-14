@@ -390,18 +390,20 @@ export default function Dashboard(props) {
                                 loading == true ? <div style={{display: 'flex', justifyContent: 'center', marginTop: '15px'}}><CircularProgress/></div> : <></>
                                 } */}
                         </div>
-                        <div style={{backgroundColor: '#aec2d0', padding: '5px'}}>
-                            <h2>Transcriptomics</h2>
+                        <div style={{backgroundColor: '#aec2d0', padding: '5px', borderRadius: '5px'}}>
                             <FormGroup style={{alignItems: 'center'}}>
                                 <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(0)} defaultChecked />} label={<div className={styles.dbLogo}><IconButton onClick={() =>  window.open('https://gtexportal.org/home/', '_blank')}><InfoIcon color='info'/></IconButton><img className={styles.t_databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/></div>} labelPlacement="start"/>
+                                <div className={styles.logoDesc}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</div>
                                 <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(1)} defaultChecked />} label={<div className={styles.dbLogo}><IconButton onClick={() =>  window.open('https://maayanlab.cloud/archs4/', '_blank')}><InfoIcon color='info'/></IconButton><img className={styles.t_databaseLogo} src="/images/archs4.png" alt="archs4 Logo"/></div>} labelPlacement="start"/>
+                                <div className={styles.logoDesc}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</div>
                                 <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(2)} defaultChecked />} label={<div className={styles.dbLogo}><IconButton onClick={() =>  window.open('https://tabula-sapiens-portal.ds.czbiohub.org', '_blank')}><InfoIcon color='info'/></IconButton><img className={styles.t_databaseLogo} style={{borderRadius: '8px'}} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo"/></div>} labelPlacement="start"/>
-                            </FormGroup>
-                            <h2>Proteomics</h2>
-                            <FormGroup style={{alignItems: 'center'}}>
+                                <div className={styles.logoDesc}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</div>
                                 <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(3)} defaultChecked />} label={<div className={styles.dbLogo}><IconButton onClick={() =>  window.open('http://www.humanproteomemap.org', '_blank')}><InfoIcon color='info'/></IconButton><img className={styles.p_databaseLogo} src="/images/HPM.gif" alt="HPM Logo"/></div>} labelPlacement="start"/>
-                                <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(4)} defaultChecked />} label={<div className={styles.dbLogo}><IconButton onClick={() =>  window.open('https://www.proteinatlas.org', '_blank')}><InfoIcon color='info'/></IconButton><img className={styles.p_databaseLogo} src="/images/HPA.svg" alt="HPA Logo"/></div>} labelPlacement="start"/>
+                                <div className={styles.logoDesc}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</div>
+                                <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(4)} defaultChecked />} label={<div className={styles.dbLogo}><IconButton onClick={() =>  window.open('https://www.proteinatlas.org', '_blank')}><InfoIcon color='info'/></IconButton><img className={styles.p_databaseLogo} style={{padding: '5px', marginLeft: '-5px', marginRight: '-5px', backgroundColor: '#8eaabe', borderRadius: '5px'}} src="/images/HPA.svg" alt="HPA Logo"/></div>} labelPlacement="start"/>
+                                <div className={styles.logoDesc}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</div>
                                 <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(5)} defaultChecked />} label={<div className={styles.dbLogo}><IconButton onClick={() =>  window.open('https://gtexportal.org/home/', '_blank')}><InfoIcon color='info'/></IconButton><img className={styles.p_databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/></div>} labelPlacement="start"/>
+                                <div className={styles.logoDesc}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</div>
                             </FormGroup>
                         </div>
                     </div>
