@@ -130,13 +130,35 @@ export default function Dashboard(props) {
             let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
             let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
             let names = processNames(Object.keys(data[q1_index]).slice(3));
+            let sd = Object.values(data[sd_index]).slice(3);
+            let median =Object.values(data[median_index]).slice(3);
+            let mean = Object.values(data[mean_index]).slice(3)
+
+            let arrays = [];
+            for (let i = 0; i < mean.length; i++) {
+                arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i]});
+            }
+
+            arrays.sort((a, b) => a.mean - b.mean);
+
+            for (let i = 0; i < mean.length; i++) {
+
+                q1[i] = arrays[i].q1;
+                median[i] = arrays[i].median;
+                q3[i] = arrays[i].q3;
+                mean[i] = arrays[i].mean;
+                sd[i] = arrays[i].sd;
+                lowerfence[i] = arrays[i].lowerfence;
+                upperfence[i] = arrays[i].upperfence;
+
+            }
 
             gtex_transcriptomics = {
                 q1: q1,
-                median: Object.values(data[median_index]).slice(3),
+                median: median,
                 q3: q3,
-                mean: Object.values(data[mean_index]).slice(3),
-                sd: Object.values(data[sd_index]).slice(3),
+                mean: mean,
+                sd: sd,
                 lowerfence: lowerfence,
                 upperfence: upperfence,
                 y: names,
@@ -168,13 +190,35 @@ export default function Dashboard(props) {
             let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
             let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
             let names = processNames(Object.keys(data[q1_index]).slice(3));
+            let median = Object.values(data[median_index]).slice(3);
+            let mean = Object.values(data[mean_index]).slice(3);
+            let sd = Object.values(data[sd_index]).slice(3);
+
+            let arrays = [];
+            for (let i = 0; i < mean.length; i++) {
+                arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i]});
+            }
+
+            arrays.sort((a, b) => a.mean - b.mean);
+
+            for (let i = 0; i < mean.length; i++) {
+
+                q1[i] = arrays[i].q1;
+                median[i] = arrays[i].median;
+                q3[i] = arrays[i].q3;
+                mean[i] = arrays[i].mean;
+                sd[i] = arrays[i].sd;
+                lowerfence[i] = arrays[i].lowerfence;
+                upperfence[i] = arrays[i].upperfence;
+
+            }
 
             archs4 = {
                 q1: q1,
-                median: Object.values(data[median_index]).slice(3),
+                median: median,
                 q3: q3,
-                mean: Object.values(data[mean_index]).slice(3),
-                sd: Object.values(data[sd_index]).slice(3),
+                mean: mean,
+                sd: sd,
                 lowerfence: lowerfence,
                 upperfence: upperfence,
                 y: names,
@@ -207,13 +251,35 @@ export default function Dashboard(props) {
             let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
             let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
             let names = processNames(Object.keys(data[q1_index]).slice(3));
+            let median = Object.values(data[median_index]).slice(3);
+            let mean = Object.values(data[mean_index]).slice(3);
+            let sd = Object.values(data[sd_index]).slice(3);
+
+            let arrays = [];
+            for (let i = 0; i < mean.length; i++) {
+                arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i]});
+            }
+
+            arrays.sort((a, b) => a.mean - b.mean);
+
+            for (let i = 0; i < mean.length; i++) {
+
+                q1[i] = arrays[i].q1;
+                median[i] = arrays[i].median;
+                q3[i] = arrays[i].q3;
+                mean[i] = arrays[i].mean;
+                sd[i] = arrays[i].sd;
+                lowerfence[i] = arrays[i].lowerfence;
+                upperfence[i] = arrays[i].upperfence;
+
+            }
 
             tabula_sapiens = {
                 q1: q1,
-                median: Object.values(data[median_index]).slice(3),
+                median: median,
                 q3: q3,
-                mean: Object.values(data[mean_index]).slice(3),
-                sd: Object.values(data[sd_index]).slice(3),
+                mean: mean,
+                sd: sd,
                 lowerfence: lowerfence,
                 upperfence: upperfence,
                 y: names,
