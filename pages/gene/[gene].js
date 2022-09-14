@@ -448,7 +448,12 @@ export default function Dashboard(props) {
                                                 <div id="gtex_transcriptomics">
                                                     <Plot
                                                         data={[gtex_transcriptomics]}
-                                                        layout={{width: '800', height: '1500', title: props.gene + ' (RNA-seq) GTEx', yaxis: {automargin: true}}}
+                                                        layout={{width: '800', height: '1500', title: props.gene + ' (RNA-seq) GTEx', yaxis: {automargin: true},
+                                                        xaxis: {
+                                                            title: {
+                                                              text: 'RNA expression',
+                                                            }
+                                                        }}}
                                                         config={{responsive: true}}
                                                         id={"gtex_transcriptomics"}
                                                         // style={{paddingBottom: '75px'}}
@@ -469,6 +474,11 @@ export default function Dashboard(props) {
                                                         layout={{width: '800', height: '1500', title: props.gene + ' (RNA-seq) ARCHS4',
                                                         yaxis: {
                                                         automargin: true
+                                                        },
+                                                        xaxis: {
+                                                            title: {
+                                                              text: 'RNA expression',
+                                                            }
                                                         }}}
                                                         // style={{paddingBottom: '75px'}}
                                                     />
@@ -488,6 +498,11 @@ export default function Dashboard(props) {
                                                         layout={{width: '800', height: '1500', title: props.gene + ' (RNA-seq) Tabula Sapiens',
                                                         yaxis: {
                                                         automargin: true
+                                                        },
+                                                        xaxis: {
+                                                            title: {
+                                                              text: 'RNA expression',
+                                                            }
                                                         }}}
                                                         // style={{paddingBottom: '75px'}}
                                                     />
