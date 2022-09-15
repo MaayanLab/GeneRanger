@@ -361,7 +361,17 @@ export default function Dashboard(props) {
                     temp.x.push(data[i].value);
                 }
             }
+
             gtex_proteomics.push(temp);
+
+            // Sorting
+
+            for (let i = 0; i < Object.keys(gtex_proteomics).length; i++) {
+                let mean = gtex_proteomics[i].x.reduce((a, b) => a + b, 0) / gtex_proteomics[i].x.length;
+                gtex_proteomics[i]['mean'] = mean;
+            }
+
+            gtex_proteomics.sort((a, b) => a.mean - b.mean);
         }
 
     }

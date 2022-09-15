@@ -284,81 +284,90 @@ export default function Dashboard(props) {
 
     }
   
-      if (props.databases[3] == "true") {
-  
-          let data = props.all_db_data.hpm;
-  
-          if (data.length != 0) {
-  
-              let values = [];
-              let tissues = [];
-  
-              for (let i = 0; i < data.length; i++) {
-                  values.push(data[i].value)
-                  tissues.push(data[i].tissue)
+    if (props.databases[3] == "true") {
+
+        let data = props.all_db_data.hpm;
+
+        if (data.length != 0) {
+
+            let values = [];
+            let tissues = [];
+
+            for (let i = 0; i < data.length; i++) {
+                values.push(data[i].value)
+                tissues.push(data[i].tissue)
+            }
+
+            hpm = {
+                x: values,
+                y: processNames(tissues),
+                type: "scatter",
+                mode: "markers",
+                marker: { color: '#1f77b4' },
               }
-  
-              hpm = {
-                  x: values,
-                  y: processNames(tissues),
-                  type: "scatter",
-                  mode: "markers",
-                  marker: { color: '#1f77b4' },
+        }
+    }
+
+    if (props.databases[4] == "true") {
+
+        let data = props.all_db_data.hpa;
+
+        if (data.length != 0) {
+
+            let levels = [];
+            let tissue_and_cells = [];
+
+            for (let i = 0; i < data.length; i++) {
+                levels.push(data[i].level)
+                tissue_and_cells.push(data[i].tissue + ', ' + data[i].cell_type)
+            }
+
+            hpa = {
+                x: levels,
+                y: tissue_and_cells,
+                // category_orders: {"Level": ["Not detected", "Low", "Medium", "High"]}, 
+                type: "scatter",
+                mode: "markers",
+                marker: { color: '#1f77b4' },
+              }
+        }
+
+    }
+
+    if (props.databases[5] == "true") {
+
+        let data = props.all_db_data.gtex_proteomics;
+
+        if (data.length != 0) {
+
+            let tissues = [];
+            let temp = {};
+            gtex_proteomics = [];
+
+            for (let i = 0; i < Object.keys(data).length; i++) {
+                if (!tissues.includes(data[i].tissue)) {
+                    tissues.push(data[i].tissue);
+                    if (temp.x != null) {
+                        gtex_proteomics.push(temp);
+                    }
+                    temp = {name: data[i].tissue, type: 'box', x: [data[i].value], marker: {color: '#1f77b4'}};
+                } else {
+                    temp.x.push(data[i].value);
                 }
-          }
-      }
-  
-      if (props.databases[4] == "true") {
-  
-          let data = props.all_db_data.hpa;
-  
-          if (data.length != 0) {
-  
-              let levels = [];
-              let tissue_and_cells = [];
-  
-              for (let i = 0; i < data.length; i++) {
-                  levels.push(data[i].level)
-                  tissue_and_cells.push(data[i].tissue + ', ' + data[i].cell_type)
-              }
-  
-              hpa = {
-                  x: levels,
-                  y: tissue_and_cells,
-                  // category_orders: {"Level": ["Not detected", "Low", "Medium", "High"]}, 
-                  type: "scatter",
-                  mode: "markers",
-                  marker: { color: '#1f77b4' },
-                }
-          }
-  
-      }
-  
-      if (props.databases[5] == "true") {
-  
-          let data = props.all_db_data.gtex_proteomics;
-  
-          if (data.length != 0) {
-  
-              let tissues = [];
-              let temp = {};
-              gtex_proteomics = [];
-  
-              for (let i = 0; i < Object.keys(data).length; i++) {
-                  if (!tissues.includes(data[i].tissue)) {
-                      tissues.push(data[i].tissue);
-                      if (temp.x != null) {
-                          gtex_proteomics.push(temp);
-                      }
-                      temp = {name: data[i].tissue, type: 'box', x: [data[i].value], marker: {color: '#1f77b4'}};
-                  } else {
-                      temp.x.push(data[i].value);
-                  }
-              }
-              gtex_proteomics.push(temp);
-          }
-  
-      }
+            }
+            gtex_proteomics.push(temp);
+
+            // Sorting
+
+            for (let i = 0; i < Object.keys(gtex_proteomics).length; i++) {
+                let mean = gtex_proteomics[i].x.reduce((a, b) => a + b, 0) / gtex_proteomics[i].x.length;
+                gtex_proteomics[i]['mean'] = mean;
+            }
+
+            gtex_proteomics.sort((a, b) => a.mean - b.mean);
+        }
+
+    }
 
     const [databases, setDatabases] = useState([true, true, true, true, true, true]);
 
