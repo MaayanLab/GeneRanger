@@ -556,199 +556,199 @@ export default function Dashboard(props) {
                                 </Tabs>
                             </Box>
                             {
-                                props.databases[0] === "true" 
-                                
-                                &&
-                                    
-                                (
-                                    <TabPanel value={value} index={getNextIndex()}>
-                                        {
-                                            gtex_transcriptomics != null 
-                                                ? 
-                                                    <div id="gtex_transcriptomics">
-                                                        <Plot
-                                                            data={[gtex_transcriptomics]}
-                                                            layout={{width: '800', height: '1500', title: props.gene + ' (RNA-seq) GTEx', yaxis: {automargin: true},
-                                                            xaxis: {
-                                                                title: {
-                                                                text: 'RNA counts',
-                                                                }
-                                                            }}}
-                                                            config={{responsive: true}}
-                                                            id={"gtex_transcriptomics"}
-                                                            // style={{paddingBottom: '75px'}}
-                                                        />
-                                                    </div>
-                                                    
-                                                : 
-                                                    <GraphMissing/>
-                                        }
-                                    </TabPanel>
-                                )
-                            }
-                            {
-                                props.databases[1] === "true" 
-                                
-                                &&
-                                    
-                                (
-                                    <TabPanel value={value} index={getNextIndex()}>
-                                        {
-                                            archs4 != null 
-                                                ? 
-                                                    <div id="archs4">
-                                                        <Plot
-                                                            data={[archs4]}
-                                                            layout={{width: '800', height: '1500', title: props.gene + ' (RNA-seq) ARCHS4',
-                                                            yaxis: {
-                                                            automargin: true
-                                                            },
-                                                            xaxis: {
-                                                                title: {
-                                                                text: 'RNA counts',
-                                                                }
-                                                            }}}
-                                                            // style={{paddingBottom: '75px'}}
-                                                        />
-                                                    </div>
-                                                    
-                                                : 
-                                                    <GraphMissing/>
-                                        }
-                                    </TabPanel>
-                                )
-                            }
-                            {
-                                props.databases[2] === "true" 
-                                
-                                &&
-                                    
-                                (
-                                    <TabPanel value={value} index={getNextIndex()}>
-                                        {
-                                            tabula_sapiens != null 
-                                                ? 
-                                                    <div id="tabula_sapiens">
-                                                        <Plot
-                                                            data={[tabula_sapiens]}
-                                                            layout={{width: '800', height: '1500', title: props.gene + ' (RNA-seq) Tabula Sapiens',
-                                                            yaxis: {
-                                                            automargin: true
-                                                            },
-                                                            xaxis: {
-                                                                title: {
-                                                                text: 'RNA counts',
-                                                                }
-                                                            }}}
-                                                            // style={{paddingBottom: '75px'}}
-                                                        />
-                                                    </div>
-                                                    
-                                                : 
-                                                    <GraphMissing/>
-                                        }
-                                    </TabPanel>
-                                )
-                            }
-                            {
-                                props.databases[3] === "true" 
-                                
-                                &&
-                                    
-                                (
-                                    <TabPanel value={value} index={getNextIndex()}>
-                                        {
-                                            hpm != null 
-                                                ? 
-                                                    <div id="hpm">
-                                                        <Plot
-                                                            data={[hpm]}
-                                                            layout={{width: '800', height: '1500', title: props.gene + ' (HPM)',
-                                                            yaxis: {
-                                                            automargin: true
-                                                            },
-                                                            xaxis: {
-                                                                title: {
-                                                                text: 'Average Spectral Counts',
-                                                                }
-                                                            }
-                                                            }}
-                                                            // style={{paddingBottom: '75px'}}
-                                                        />
-                                                    </div>
-                                                : 
-                                                    <GraphMissing/>
-                                        }
-                                    </TabPanel>
-                                )
-                            }
-                            {
-                                props.databases[4] === "true" 
-                                
-                                &&
-                                    
-                                (
-                                    <TabPanel value={value} index={getNextIndex()}>
-                                        {
-                                            hpa != null 
-                                                ? 
-                                                    <div id="hpa">
-                                                        <Plot
-                                                        data={[hpa]}
-                                                        layout={{width: '800', height: '1500', title: props.gene + ' (HPA)',
-                                                        yaxis: {
-                                                        automargin: true
-                                                        },
-                                                        xaxis: {
-                                                            "categoryorder": "array",
-                                                            "categoryarray":  ["Not detected", "Low", "Medium", "High"],
-                                                            title: {
-                                                                text: 'Tissue Expression Level',
-                                                            }
-                                                        }
-                                                        }}  
-                                                        // style={{paddingBottom: '75px'}}
-                                                        />
-                                                    </div>
-                                                : 
-                                                    <GraphMissing/>
-                                        }
-                                    </TabPanel>
-                                )
-                            }
-                            {
-                                props.databases[5] === "true" 
-                                
-                                &&
-                                    
-                                (
-                                    <TabPanel value={value} index={getNextIndex()}>
-                                        {
-                                            gtex_proteomics != null 
-                                                ? 
-                                                    <div id="gtex_proteomics">
-                                                        <Plot
-                                                            data={gtex_proteomics}
-                                                            layout={{width: '800', height: '1500', title: props.gene + ' (GTEx Proteomics)',
-                                                            showlegend: false,
-                                                            yaxis: {
-                                                            automargin: true
-                                                            },
-                                                            xaxis: {
-                                                                title: {
-                                                                    text: 'log2(relative abundance)',
-                                                                }
-                                                            }
-                                                            }}
-                                                            // style={{paddingBottom: '75px'}}
-                                                        />
-                                                    </div>
-                                                : 
-                                                    <GraphMissing/>
-                                        }
-                                    </TabPanel>
-                                )
-                            }
+                              props.databases[0] === "true" 
+                              
+                              &&
+                                  
+                              (
+                                  <TabPanel value={value} index={getNextIndex()}>
+                                      {
+                                          gtex_transcriptomics != null 
+                                              ? 
+                                                  <div id="gtex_transcriptomics">
+                                                      <Plot
+                                                          data={[gtex_transcriptomics]}
+                                                          layout={{width: '800', height: '1500', title: props.gene + ' (RNA-seq) GTEx', yaxis: {automargin: true},
+                                                          xaxis: {
+                                                              title: {
+                                                              text: 'RNA counts',
+                                                              }
+                                                          }}}
+                                                          config={{responsive: true}}
+                                                          id={"gtex_transcriptomics"}
+                                                          // style={{paddingBottom: '75px'}}
+                                                      />
+                                                  </div>
+                                                  
+                                              : 
+                                                  <GraphMissing/>
+                                      }
+                                  </TabPanel>
+                              )
+                          }
+                          {
+                              props.databases[1] === "true" 
+                              
+                              &&
+                                  
+                              (
+                                  <TabPanel value={value} index={getNextIndex()}>
+                                      {
+                                          archs4 != null 
+                                              ? 
+                                                  <div id="archs4">
+                                                      <Plot
+                                                          data={[archs4]}
+                                                          layout={{width: '800', height: '13000', title: props.gene + ' (RNA-seq) ARCHS4',
+                                                          yaxis: {
+                                                          automargin: true
+                                                          },
+                                                          xaxis: {
+                                                              title: {
+                                                              text: 'RNA counts',
+                                                              }
+                                                          }}}
+                                                          // style={{paddingBottom: '75px'}}
+                                                      />
+                                                  </div>
+                                                  
+                                              : 
+                                                  <GraphMissing/>
+                                      }
+                                  </TabPanel>
+                              )
+                          }
+                          {
+                              props.databases[2] === "true" 
+                              
+                              &&
+                                  
+                              (
+                                  <TabPanel value={value} index={getNextIndex()}>
+                                      {
+                                          tabula_sapiens != null 
+                                              ? 
+                                                  <div id="tabula_sapiens">
+                                                      <Plot
+                                                          data={[tabula_sapiens]}
+                                                          layout={{width: '800', height: '13000', title: props.gene + ' (RNA-seq) Tabula Sapiens',
+                                                          yaxis: {
+                                                          automargin: true
+                                                          },
+                                                          xaxis: {
+                                                              title: {
+                                                              text: 'RNA counts',
+                                                              }
+                                                          }}}
+                                                          // style={{paddingBottom: '75px'}}
+                                                      />
+                                                  </div>
+                                                  
+                                              : 
+                                                  <GraphMissing/>
+                                      }
+                                  </TabPanel>
+                              )
+                          }
+                          {
+                              props.databases[3] === "true" 
+                              
+                              &&
+                                  
+                              (
+                                  <TabPanel value={value} index={getNextIndex()}>
+                                      {
+                                          hpm != null 
+                                              ? 
+                                                  <div id="hpm">
+                                                      <Plot
+                                                          data={[hpm]}
+                                                          layout={{width: '800', height: '1000', title: props.gene + ' (HPM)',
+                                                          yaxis: {
+                                                          automargin: true
+                                                          },
+                                                          xaxis: {
+                                                              title: {
+                                                              text: 'Average Spectral Counts',
+                                                              }
+                                                          }
+                                                          }}
+                                                          // style={{paddingBottom: '75px'}}
+                                                      />
+                                                  </div>
+                                              : 
+                                                  <GraphMissing/>
+                                      }
+                                  </TabPanel>
+                              )
+                          }
+                          {
+                              props.databases[4] === "true" 
+                              
+                              &&
+                                  
+                              (
+                                  <TabPanel value={value} index={getNextIndex()}>
+                                      {
+                                          hpa != null 
+                                              ? 
+                                                  <div id="hpa">
+                                                      <Plot
+                                                      data={[hpa]}
+                                                      layout={{width: '800', height: '1500', title: props.gene + ' (HPA)',
+                                                      yaxis: {
+                                                      automargin: true
+                                                      },
+                                                      xaxis: {
+                                                          "categoryorder": "array",
+                                                          "categoryarray":  ["Not detected", "Low", "Medium", "High"],
+                                                          title: {
+                                                              text: 'Tissue Expression Level',
+                                                          }
+                                                      }
+                                                      }}  
+                                                      // style={{paddingBottom: '75px'}}
+                                                      />
+                                                  </div>
+                                              : 
+                                                  <GraphMissing/>
+                                      }
+                                  </TabPanel>
+                              )
+                          }
+                          {
+                              props.databases[5] === "true" 
+                              
+                              &&
+                                  
+                              (
+                                  <TabPanel value={value} index={getNextIndex()}>
+                                      {
+                                          gtex_proteomics != null 
+                                              ? 
+                                                  <div id="gtex_proteomics">
+                                                      <Plot
+                                                          data={gtex_proteomics}
+                                                          layout={{width: '800', height: '1500', title: props.gene + ' (GTEx Proteomics)',
+                                                          showlegend: false,
+                                                          yaxis: {
+                                                          automargin: true
+                                                          },
+                                                          xaxis: {
+                                                              title: {
+                                                                  text: 'log2(relative abundance)',
+                                                              }
+                                                          }
+                                                          }}
+                                                          // style={{paddingBottom: '75px'}}
+                                                      />
+                                                  </div>
+                                              : 
+                                                  <GraphMissing/>
+                                      }
+                                  </TabPanel>
+                              )
+                          }
                         </Box>
                       </div>
                     </div>

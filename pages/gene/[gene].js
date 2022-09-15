@@ -606,7 +606,7 @@ export default function Dashboard(props) {
                                                         <div id="archs4">
                                                             <Plot
                                                                 data={[archs4]}
-                                                                layout={{width: '800', height: '1500', title: props.gene + ' (RNA-seq) ARCHS4',
+                                                                layout={{width: '800', height: '13000', title: props.gene + ' (RNA-seq) ARCHS4',
                                                                 yaxis: {
                                                                 automargin: true
                                                                 },
@@ -638,7 +638,7 @@ export default function Dashboard(props) {
                                                         <div id="tabula_sapiens">
                                                             <Plot
                                                                 data={[tabula_sapiens]}
-                                                                layout={{width: '800', height: '1500', title: props.gene + ' (RNA-seq) Tabula Sapiens',
+                                                                layout={{width: '800', height: '13000', title: props.gene + ' (RNA-seq) Tabula Sapiens',
                                                                 yaxis: {
                                                                 automargin: true
                                                                 },
@@ -670,7 +670,7 @@ export default function Dashboard(props) {
                                                         <div id="hpm">
                                                             <Plot
                                                                 data={[hpm]}
-                                                                layout={{width: '800', height: '1500', title: props.gene + ' (HPM)',
+                                                                layout={{width: '800', height: '1000', title: props.gene + ' (HPM)',
                                                                 yaxis: {
                                                                 automargin: true
                                                                 },
