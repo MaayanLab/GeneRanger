@@ -423,12 +423,12 @@ export default function Dashboard(props) {
         value: PropTypes.number.isRequired,
       };
       
-      function a11yProps(index) {
-        return {
-          id: `simple-tab-${index}`,
-          'aria-controls': `simple-tabpanel-${index}`,
-        };
-      }
+    //   function a11yProps(index) {
+    //     return {
+    //       id: `simple-tab-${index}`,
+    //       'aria-controls': `simple-tabpanel-${index}`,
+    //     };
+    //   }
 
       const [value, setValue] = React.useState(0);
 
@@ -436,7 +436,7 @@ export default function Dashboard(props) {
         setValue(newValue);
     };
 
-    const CustomTab = styled((props) => <Tab {...props} />)(({ theme }) => ({
+    const CustomTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) => ({
       textTransform: 'none',
     }));
 
@@ -498,14 +498,14 @@ export default function Dashboard(props) {
                         
                         <div>
                             <Box sx={{ width: '100%' }}>
-                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                <Box>
                                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                                        <CustomTab label="GTEx Transcriptomics" {...a11yProps(0)} />
-                                        <CustomTab label="ARCHS4" {...a11yProps(1)} />
-                                        <CustomTab label="Tabula Sapiens" {...a11yProps(2)} />
-                                        <CustomTab label="HPM" {...a11yProps(3)} />
-                                        <CustomTab label="HPA" {...a11yProps(4)} />
-                                        <CustomTab label="GTEx Proteomics" {...a11yProps(5)} />
+                                        <CustomTab label="GTEx Transcriptomics"  />
+                                        <CustomTab label="ARCHS4" />
+                                        <CustomTab label="Tabula Sapiens" />
+                                        <CustomTab label="HPM" />
+                                        <CustomTab label="HPA" />
+                                        <CustomTab label="GTEx Proteomics" />
                                     </Tabs>
                                 </Box>
                                 <TabPanel value={value} index={0}>
