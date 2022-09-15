@@ -5,7 +5,7 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import React, { useState } from 'react';
 import styles from '../../styles/Main.module.css';
-import { FormGroup, FormControlLabel, Switch, TextField, Autocomplete, Container } from '@mui/material';
+import { FormGroup, FormControlLabel, Switch, TextField, Autocomplete, Container, Tooltip } from '@mui/material';
 import genes from '../../json/genes.json';
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types';
