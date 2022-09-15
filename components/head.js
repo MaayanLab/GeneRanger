@@ -7,7 +7,7 @@ export default class Header extends React.Component {
         return (
 
             <Head>
-                <title>Single Gene and Protein Expression Dashboard</title>
+                <title>GeneRanger</title>
                 <link rel="icon" href="/images/logo.png" />
             </Head>
                
