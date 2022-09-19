@@ -467,9 +467,6 @@ export default function Dashboard(props) {
         [`& .${tooltipClasses.tooltip}`]: {
           backgroundColor: '#8eaabe',
           width: 75,
-        //   color: 'rgba(0, 0, 0, 0.87)',
-        //   maxWidth: 220,
-        //   fontSize: theme.typography.pxToRem(12),
           border: '2px solid black',
         },
         [`& .${tooltipClasses.arrow}`]: {
@@ -490,7 +487,7 @@ export default function Dashboard(props) {
                 <div style={{display: 'flex', justifyContent: 'flex-start', width: '100%', paddingBottom: '150px'}}>
 
                     <div className={styles.dbGroup}>
-                        <div style={{marginBottom: '25px'}}>
+                        <div style={{marginBottom: '15px'}}>
                             <h2 style={{marginTop: '0px', marginBottom: '10px'}}>Insert gene of interest:</h2>
                             <Autocomplete
                                 disablePortal
@@ -503,10 +500,10 @@ export default function Dashboard(props) {
                                 loading == true ? <div style={{display: 'flex', justifyContent: 'center', marginTop: '15px'}}><CircularProgress/></div> : <></>
                                 } */}
                         </div>
-                        <div style={{width: '400px', display: 'flex', flexDirection: 'column', gap: '20px', backgroundColor: '#aec2d0', borderRadius: '5px', paddingTop: '10px', paddingBottom: '10px'}}>
+                        <div style={{width: '400px', display: 'flex', flexDirection: 'column', gap: '20px', backgroundColor: '#aec2d0', borderRadius: '5px', paddingTop: '20px', paddingBottom: '20px'}}>
 
                             <div>
-                              <div>Transcriptomics</div>
+                              <h3 style={{margin: '0'}}>Transcriptomics</h3>
                               <FormGroup style={{alignItems: 'center'}}>
 
                                   <FormControlLabel 
@@ -559,7 +556,7 @@ export default function Dashboard(props) {
                             </div>
                       
                             <div>
-                              <div>Proteomics</div>
+                              <h3 style={{margin: '0'}}>Proteomics</h3>
                               <FormGroup style={{alignItems: 'center'}}>
 
                                   <FormControlLabel 
