@@ -511,11 +511,11 @@ export default function Dashboard(props) {
                                     control={<Switch onChange={() => updateDatabases(0)} defaultChecked />} 
                                     label={
                                         <div className={styles.dbLogo}>
+                                            <img className={styles.databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://www.nature.com/articles/ng.2653" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
                                                 <IconButton onClick={() =>  window.open('https://gtexportal.org/home/', '_blank')}><InfoIcon color='info'/></IconButton>
                                             </HtmlTooltip>
-                                            <img className={styles.t_databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/>
                                         </div>
                                     } 
                                     labelPlacement="start"/>
@@ -527,11 +527,12 @@ export default function Dashboard(props) {
                                     control={<Switch onChange={() => updateDatabases(1)} defaultChecked />} 
                                     label={
                                         <div className={styles.dbLogo}>
+                                            <img className={styles.databaseLogo} src="/images/archs4.png" alt="archs4 Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://maayanlab.cloud/archs4/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://www.nature.com/articles/s41467-018-03751-6" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
                                                 <IconButton onClick={() =>  window.open('https://maayanlab.cloud/archs4/', '_blank')}><InfoIcon color='info'/></IconButton>
                                             </HtmlTooltip>
-                                            <img className={styles.t_databaseLogo} src="/images/archs4.png" alt="archs4 Logo"/></div>
+                                        </div>
                                     } 
                                     labelPlacement="start"/>
                                   
@@ -542,11 +543,12 @@ export default function Dashboard(props) {
                                     control={<Switch onChange={() => updateDatabases(2)} defaultChecked />} 
                                     label={
                                         <div className={styles.dbLogo}>
+                                            <img className={styles.databaseLogo} style={{borderRadius: '8px'}} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://tabula-sapiens-portal.ds.czbiohub.org" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://www.science.org/doi/10.1126/science.abl4896" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
                                                 <IconButton onClick={() =>  window.open('https://tabula-sapiens-portal.ds.czbiohub.org', '_blank')}><InfoIcon color='info'/></IconButton>
                                             </HtmlTooltip>
-                                            <img className={styles.t_databaseLogo} style={{borderRadius: '8px'}} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo"/></div>
+                                        </div>
                                     } 
                                     labelPlacement="start"/>
                                   
@@ -564,11 +566,12 @@ export default function Dashboard(props) {
                                     control={<Switch onChange={() => updateDatabases(3)} defaultChecked />} 
                                     label={
                                         <div className={styles.dbLogo}>
+                                            <img className={styles.databaseLogo} style={{width: '200px', marginRight: '0'}} src="/images/HPM.gif" alt="HPM Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="http://www.humanproteomemap.org" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/24870542/" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
                                                 <IconButton onClick={() =>  window.open('http://www.humanproteomemap.org', '_blank')}><InfoIcon color='info'/></IconButton>
                                             </HtmlTooltip>
-                                            <img className={styles.p_databaseLogo} src="/images/HPM.gif" alt="HPM Logo"/></div>
+                                        </div>
                                     } 
                                     labelPlacement="start"/>
                                   
@@ -579,11 +582,12 @@ export default function Dashboard(props) {
                                     control={<Switch onChange={() => updateDatabases(4)} defaultChecked />} 
                                     label={
                                         <div className={styles.dbLogo}>
+                                            <img className={styles.databaseLogo} style={{width: '200px', padding: '10px', marginLeft: '0px', marginRight: '-20px', backgroundColor: '#8eaabe', borderRadius: '5px'}} src="/images/HPA.svg" alt="HPA Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://www.proteinatlas.org" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/25613900/" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
                                                 <IconButton onClick={() =>  window.open('https://www.proteinatlas.org', '_blank')}><InfoIcon color='info'/></IconButton>
                                             </HtmlTooltip>
-                                            <img className={styles.p_databaseLogo} style={{padding: '5px', marginLeft: '-5px', marginRight: '-5px', backgroundColor: '#8eaabe', borderRadius: '5px'}} src="/images/HPA.svg" alt="HPA Logo"/></div>
+                                        </div>
                                     } 
                                     labelPlacement="start"/>
                                   
@@ -594,11 +598,12 @@ export default function Dashboard(props) {
                                     control={<Switch onChange={() => updateDatabases(5)} defaultChecked />} 
                                     label={
                                         <div className={styles.dbLogo}>
+                                            <img className={styles.databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://www.nature.com/articles/ng.2653" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
                                                 <IconButton onClick={() =>  window.open('https://gtexportal.org/home/', '_blank')}><InfoIcon color='info'/></IconButton>
                                             </HtmlTooltip>
-                                            <img className={styles.p_databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/></div>
+                                        </div>
                                     } 
                                     labelPlacement="start"/>
                                   

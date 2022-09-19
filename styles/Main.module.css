@@ -26,14 +26,10 @@
   /* text-align: center; */
 }
 
-.t_databaseLogo {
-  width: 150px;
+.databaseLogo {
+  width: 175px;
   height: auto;
-}
-
-.p_databaseLogo {
-  width: 150px;
-  height: auto;
+  margin-right: 25px;
 }
 
 /* .logoLink {
@@ -65,6 +61,7 @@
 .dbLogo {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 20px;
 }
 
