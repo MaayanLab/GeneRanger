@@ -5,7 +5,7 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import React, { useState } from 'react';
 import styles from '../../styles/Main.module.css';
-import { FormGroup, FormControlLabel, Switch, TextField, Autocomplete, Container, Tooltip, tooltipClasses } from '@mui/material';
+import { FormGroup, FormControlLabel, Switch, TextField, Autocomplete, Container, Tooltip, tooltipClasses, CircularProgress } from '@mui/material';
 import genes from '../../json/genes.json';
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types';
@@ -20,6 +20,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import IconButton from '@mui/material/IconButton';
 import GraphMissing from '../../components/graphMissing';
 import Zoom from '@mui/material/Zoom';
+import Backdrop from '@mui/material/Backdrop';
 
 const Plot = dynamic(() => import('react-plotly.js'), {
 	ssr: false,
@@ -396,15 +397,20 @@ export default function Dashboard(props) {
     const router = useRouter();
 
     function submitGene (gene) {
-            if (gene != null) {
+            
+        if (gene != null) {
+
+            setLoading(true);
             let href = {
                 pathname: "[gene]",
                 query: {
                     gene: gene,
                     databases: databases
             }};
-            router.push(href)
-        } else {
+            router.push(href).then(() => {
+                setLoading(false);    
+            })
+            
         }
         
     }
@@ -479,11 +485,22 @@ export default function Dashboard(props) {
         }
     }));
 
+    // For MUI loading icon
+
+    const [loading, setLoading] = React.useState(false);
+
     return (
 
         <div style={{position: 'relative', minHeight: '100vh'}}>
 
             <Head/>
+
+            <Backdrop
+              sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+              open={loading}
+            >
+              <CircularProgress variant="indeterminate" size="10rem"/>
+            </Backdrop>
 
             <div className={styles.mainDiv}>
 
