@@ -377,9 +377,19 @@ export default function Dashboard(props) {
 
     }
 
-    const [databases, setDatabases] = useState([true, true, true, true, true, true]);
 
-    let dbs = databases;
+    let previousDbs = [];
+    for (let i = 0; i < 6; i++) {
+        if (props.databases[i] == "true") {
+            previousDbs.push(true);
+        } else {
+            previousDbs.push(false);
+        }
+    }
+
+    const [databases, setDatabases] = useState(previousDbs);
+
+    let dbs = previousDbs;
 
     function updateDatabases(index) {
         let updatedArray = dbs;
@@ -508,7 +518,7 @@ export default function Dashboard(props) {
 
                                   <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => updateDatabases(0)} defaultChecked />} 
+                                    control={<Switch onChange={() => updateDatabases(0)} defaultChecked={databases[0]}/>} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/>
@@ -524,7 +534,7 @@ export default function Dashboard(props) {
 
                                   <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => updateDatabases(1)} defaultChecked />} 
+                                    control={<Switch onChange={() => updateDatabases(1)} defaultChecked={databases[1]} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} src="/images/archs4.png" alt="archs4 Logo"/>
@@ -540,7 +550,7 @@ export default function Dashboard(props) {
                                   
                                   <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => updateDatabases(2)} defaultChecked />} 
+                                    control={<Switch onChange={() => updateDatabases(2)} defaultChecked={databases[2]} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} style={{borderRadius: '8px'}} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo"/>
@@ -563,7 +573,7 @@ export default function Dashboard(props) {
 
                                   <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => updateDatabases(3)} defaultChecked />} 
+                                    control={<Switch onChange={() => updateDatabases(3)} defaultChecked={databases[3]} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} style={{width: '200px', marginRight: '0'}} src="/images/HPM.gif" alt="HPM Logo"/>
@@ -579,7 +589,7 @@ export default function Dashboard(props) {
                                   
                                   <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => updateDatabases(4)} defaultChecked />} 
+                                    control={<Switch onChange={() => updateDatabases(4)} defaultChecked={databases[4]} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} style={{width: '200px', padding: '10px', marginLeft: '0px', marginRight: '-20px', backgroundColor: '#8eaabe', borderRadius: '5px'}} src="/images/HPA.svg" alt="HPA Logo"/>
@@ -595,7 +605,7 @@ export default function Dashboard(props) {
                                   
                                   <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => updateDatabases(5)} defaultChecked />} 
+                                    control={<Switch onChange={() => updateDatabases(5)} defaultChecked={databases[5]} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/>
