@@ -378,35 +378,30 @@ export default function Dashboard(props) {
     }
 
 
-    let previousDbs = [];
+    let databases = [];
     for (let i = 0; i < 6; i++) {
         if (props.databases[i] == "true") {
-            previousDbs.push(true);
+            databases.push(true);
         } else {
-            previousDbs.push(false);
+            databases.push(false);
         }
     }
 
-    const [databases, setDatabases] = useState(previousDbs);
-
-    let dbs = previousDbs;
-
     function updateDatabases(index) {
-        let updatedArray = dbs;
+        let updatedArray = databases;
         updatedArray[index] = !updatedArray[index];
-        dbs = updatedArray;
+        databases = updatedArray;
     }
 
     const router = useRouter();
 
     function submitGene (gene) {
-            setDatabases(dbs)
             if (gene != null) {
             let href = {
                 pathname: "[gene]",
                 query: {
                     gene: gene,
-                    databases: dbs
+                    databases: databases
             }};
             router.push(href)
         } else {

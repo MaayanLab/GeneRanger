@@ -370,26 +370,23 @@ export default function Dashboard(props) {
 
     }
 
-    const [databases, setDatabases] = useState([true, true, true, true, true, true]);
-
-    let dbs = databases;
+    let databases = [true, true, true, true, true, true];
 
     function updateDatabases(index) {
-        let updatedArray = dbs;
+        let updatedArray = databases;
         updatedArray[index] = !updatedArray[index];
-        dbs = updatedArray;
+        databases = updatedArray;
     }
 
     const router = useRouter();
 
     function submitGene (gene) {
-            setDatabases(dbs)
             if (gene != null) {
             let href = {
                 pathname: "gene/[gene]",
                 query: {
                     gene: gene,
-                    databases: dbs
+                    databases: databases
             }};
             router.push(href)
         } else {
