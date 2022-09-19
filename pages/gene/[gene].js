@@ -5,7 +5,7 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import React, { useState } from 'react';
 import styles from '../../styles/Main.module.css';
-import { FormGroup, FormControlLabel, Switch, TextField, Autocomplete, Container, Tooltip } from '@mui/material';
+import { FormGroup, FormControlLabel, Switch, TextField, Autocomplete, Container, Tooltip, tooltipClasses } from '@mui/material';
 import genes from '../../json/genes.json';
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types';
@@ -19,6 +19,7 @@ import { styled } from '@mui/material/styles';
 import InfoIcon from '@mui/icons-material/Info';
 import IconButton from '@mui/material/IconButton';
 import GraphMissing from '../../components/graphMissing';
+import Zoom from '@mui/material/Zoom';
 
 const Plot = dynamic(() => import('react-plotly.js'), {
 	ssr: false,
@@ -458,6 +459,24 @@ export default function Dashboard(props) {
         return currTabIndex;
     }
 
+    // For MUI tooltip
+
+    const HtmlTooltip = styled(({ className, ...props }) => (
+        <Tooltip {...props} classes={{ popper: className }} />
+      ))(({ theme }) => ({
+        [`& .${tooltipClasses.tooltip}`]: {
+          backgroundColor: '#8eaabe',
+          width: 75,
+        //   color: 'rgba(0, 0, 0, 0.87)',
+        //   maxWidth: 220,
+        //   fontSize: theme.typography.pxToRem(12),
+          border: '2px solid black',
+        },
+        [`& .${tooltipClasses.arrow}`]: {
+            color: 'black',
+        }
+    }));
+
     return (
 
         <div style={{position: 'relative', minHeight: '100vh'}}>
@@ -488,24 +507,105 @@ export default function Dashboard(props) {
                             <div>
                               <div>Transcriptomics</div>
                               <FormGroup style={{alignItems: 'center'}}>
-                                  <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(0)} defaultChecked />} label={<div className={styles.dbLogo}><Tooltip placement="top" title={<div><a href="https://gtexportal.org/home/">Website</a> <br/> <a href="https://www.nature.com/articles/ng.2653">Publication</a></div>}><IconButton onClick={() =>  window.open('https://gtexportal.org/home/', '_blank')}><InfoIcon color='info'/></IconButton></Tooltip><img className={styles.t_databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/></div>} labelPlacement="start"/>
+
+                                  <FormControlLabel 
+                                    className={styles.formItem} 
+                                    control={<Switch onChange={() => updateDatabases(0)} defaultChecked />} 
+                                    label={
+                                        <div className={styles.dbLogo}>
+                                            <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
+                                                <div className={styles.tooltipText}><a href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://www.nature.com/articles/ng.2653" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
+                                                <IconButton onClick={() =>  window.open('https://gtexportal.org/home/', '_blank')}><InfoIcon color='info'/></IconButton>
+                                            </HtmlTooltip>
+                                            <img className={styles.t_databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/>
+                                        </div>
+                                    } 
+                                    labelPlacement="start"/>
+
                                   <div className={styles.logoDesc}>RNA-seq gene expression data</div>
-                                  <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(1)} defaultChecked />} label={<div className={styles.dbLogo}><Tooltip placement="top" title={<div><a href="https://maayanlab.cloud/archs4/">Website</a> <br/> <a href="https://www.nature.com/articles/s41467-018-03751-6">Publication</a></div>}><IconButton onClick={() =>  window.open('https://maayanlab.cloud/archs4/', '_blank')}><InfoIcon color='info'/></IconButton></Tooltip><img className={styles.t_databaseLogo} src="/images/archs4.png" alt="archs4 Logo"/></div>} labelPlacement="start"/>
+
+                                  <FormControlLabel 
+                                    className={styles.formItem} 
+                                    control={<Switch onChange={() => updateDatabases(1)} defaultChecked />} 
+                                    label={
+                                        <div className={styles.dbLogo}>
+                                            <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
+                                                <div className={styles.tooltipText}><a href="https://maayanlab.cloud/archs4/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://www.nature.com/articles/s41467-018-03751-6" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
+                                                <IconButton onClick={() =>  window.open('https://maayanlab.cloud/archs4/', '_blank')}><InfoIcon color='info'/></IconButton>
+                                            </HtmlTooltip>
+                                            <img className={styles.t_databaseLogo} src="/images/archs4.png" alt="archs4 Logo"/></div>
+                                    } 
+                                    labelPlacement="start"/>
+                                  
                                   <div className={styles.logoDesc}>RNA-seq data compiled from many publicly available databases</div>
-                                  <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(2)} defaultChecked />} label={<div className={styles.dbLogo}><Tooltip placement="top" title={<div><a href="https://tabula-sapiens-portal.ds.czbiohub.org">Website</a> <br/> <a href="https://www.science.org/doi/10.1126/science.abl4896">Publication</a></div>}><IconButton onClick={() =>  window.open('https://tabula-sapiens-portal.ds.czbiohub.org', '_blank')}><InfoIcon color='info'/></IconButton></Tooltip><img className={styles.t_databaseLogo} style={{borderRadius: '8px'}} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo"/></div>} labelPlacement="start"/>
+                                  
+                                  <FormControlLabel 
+                                    className={styles.formItem} 
+                                    control={<Switch onChange={() => updateDatabases(2)} defaultChecked />} 
+                                    label={
+                                        <div className={styles.dbLogo}>
+                                            <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
+                                                <div className={styles.tooltipText}><a href="https://tabula-sapiens-portal.ds.czbiohub.org" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://www.science.org/doi/10.1126/science.abl4896" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
+                                                <IconButton onClick={() =>  window.open('https://tabula-sapiens-portal.ds.czbiohub.org', '_blank')}><InfoIcon color='info'/></IconButton>
+                                            </HtmlTooltip>
+                                            <img className={styles.t_databaseLogo} style={{borderRadius: '8px'}} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo"/></div>
+                                    } 
+                                    labelPlacement="start"/>
+                                  
                                   <div className={styles.logoDesc}>Gene expression data gathered from single-cell transcriptomics</div>
+
                               </FormGroup>
                             </div>
                       
                             <div>
                               <div>Proteomics</div>
                               <FormGroup style={{alignItems: 'center'}}>
-                                  <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(3)} defaultChecked />} label={<div className={styles.dbLogo}><Tooltip placement="top" title={<div><a href="http://www.humanproteomemap.org">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/24870542/">Publication</a></div>}><IconButton onClick={() =>  window.open('http://www.humanproteomemap.org', '_blank')}><InfoIcon color='info'/></IconButton></Tooltip><img className={styles.p_databaseLogo} src="/images/HPM.gif" alt="HPM Logo"/></div>} labelPlacement="start"/>
+
+                                  <FormControlLabel 
+                                    className={styles.formItem} 
+                                    control={<Switch onChange={() => updateDatabases(3)} defaultChecked />} 
+                                    label={
+                                        <div className={styles.dbLogo}>
+                                            <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
+                                                <div className={styles.tooltipText}><a href="http://www.humanproteomemap.org" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/24870542/" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
+                                                <IconButton onClick={() =>  window.open('http://www.humanproteomemap.org', '_blank')}><InfoIcon color='info'/></IconButton>
+                                            </HtmlTooltip>
+                                            <img className={styles.p_databaseLogo} src="/images/HPM.gif" alt="HPM Logo"/></div>
+                                    } 
+                                    labelPlacement="start"/>
+                                  
                                   <div className={styles.logoDesc}>Protein expression levels</div>
-                                  <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(4)} defaultChecked />} label={<div className={styles.dbLogo}><Tooltip placement="top" title={<div><a href="https://www.proteinatlas.org">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/25613900/">Publication</a></div>}><IconButton onClick={() =>  window.open('https://www.proteinatlas.org', '_blank')}><InfoIcon color='info'/></IconButton></Tooltip><img className={styles.p_databaseLogo} style={{padding: '5px', marginLeft: '-5px', marginRight: '-5px', backgroundColor: '#8eaabe', borderRadius: '5px'}} src="/images/HPA.svg" alt="HPA Logo"/></div>} labelPlacement="start"/>
+                                  
+                                  <FormControlLabel 
+                                    className={styles.formItem} 
+                                    control={<Switch onChange={() => updateDatabases(4)} defaultChecked />} 
+                                    label={
+                                        <div className={styles.dbLogo}>
+                                            <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
+                                                <div className={styles.tooltipText}><a href="https://www.proteinatlas.org" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/25613900/" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
+                                                <IconButton onClick={() =>  window.open('https://www.proteinatlas.org', '_blank')}><InfoIcon color='info'/></IconButton>
+                                            </HtmlTooltip>
+                                            <img className={styles.p_databaseLogo} style={{padding: '5px', marginLeft: '-5px', marginRight: '-5px', backgroundColor: '#8eaabe', borderRadius: '5px'}} src="/images/HPA.svg" alt="HPA Logo"/></div>
+                                    } 
+                                    labelPlacement="start"/>
+                                  
                                   <div className={styles.logoDesc}>Protein average spectral counts</div>
-                                  <FormControlLabel className={styles.formItem} control={<Switch onChange={() => updateDatabases(5)} defaultChecked />} label={<div className={styles.dbLogo}><Tooltip placement="top" title={<div><a href="https://gtexportal.org/home/">Website</a> <br/> <a href="https://www.nature.com/articles/ng.2653">Publication</a></div>}><IconButton onClick={() =>  window.open('https://gtexportal.org/home/', '_blank')}><InfoIcon color='info'/></IconButton></Tooltip><img className={styles.p_databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/></div>} labelPlacement="start"/>
+                                  
+                                  <FormControlLabel 
+                                    className={styles.formItem} 
+                                    control={<Switch onChange={() => updateDatabases(5)} defaultChecked />} 
+                                    label={
+                                        <div className={styles.dbLogo}>
+                                            <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
+                                                <div className={styles.tooltipText}><a href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://www.nature.com/articles/ng.2653" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
+                                                <IconButton onClick={() =>  window.open('https://gtexportal.org/home/', '_blank')}><InfoIcon color='info'/></IconButton>
+                                            </HtmlTooltip>
+                                            <img className={styles.p_databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/></div>
+                                    } 
+                                    labelPlacement="start"/>
+                                  
                                   <div className={styles.logoDesc}>Protein log-transformed relative abundance</div>
+
                               </FormGroup>
                             </div>
                             

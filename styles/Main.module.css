@@ -73,3 +73,17 @@
   width: 80%;
   text-align: left;
 }
+
+.tooltipText {
+  text-align: center;
+}
+
+.tooltipText a {
+  text-decoration: none;
+  color: black;
+  font-size: 15px;
+}
+
+.tooltipText a:hover {
+  text-decoration: underline;
+}
