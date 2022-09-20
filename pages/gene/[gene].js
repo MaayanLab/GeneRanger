@@ -301,9 +301,18 @@ export default function Dashboard(props) {
             let values = [];
             let tissues = [];
 
+            let arrays = [];
             for (let i = 0; i < data.length; i++) {
-                values.push(data[i].value)
-                tissues.push(data[i].tissue)
+                arrays.push({'value': data[i].value, 'tissue': data[i].tissue});
+            }
+
+            arrays.sort((a, b) => a.value - b.value);
+
+            for (let i = 0; i < arrays.length; i++) {
+
+                values[i] = arrays[i].value;
+                tissues[i] = arrays[i].tissue;
+
             }
 
             hpm = {
@@ -325,9 +334,29 @@ export default function Dashboard(props) {
             let levels = [];
             let tissue_and_cells = [];
 
+            let not_detected = [];
+            let low = [];
+            let medium = [];
+            let high = [];
             for (let i = 0; i < data.length; i++) {
-                levels.push(data[i].level)
-                tissue_and_cells.push(data[i].tissue + ', ' + data[i].cell_type)
+                if (data[i].level == "Not detected") {
+                    not_detected.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
+                } else if (data[i].level == "Low") {
+                    low.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
+                } else if (data[i].level == "Medium") {
+                    medium.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
+                } else {
+                    high.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
+                }
+            }
+
+            let combined = not_detected.concat(low, medium, high);
+
+            for (let i = 0; i < combined.length; i++) {
+
+                levels[i] = combined[i].level;
+                tissue_and_cells[i] = combined[i].tissue_and_cell;
+
             }
 
             hpa = {
