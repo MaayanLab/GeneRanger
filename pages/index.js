@@ -550,7 +550,7 @@ export default function Dashboard(props) {
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} style={{borderRadius: '8px'}} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
-                                                <div className={styles.tooltipText}><a href="https://tabula-sapiens-portal.ds.czbiohub.org" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://www.science.org/doi/10.1126/science.abl4896" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
+                                                <div className={styles.tooltipText}><a href="https://tabula-sapiens-portal.ds.czbiohub.org" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/35549404/" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
                                                 <IconButton onClick={() =>  window.open('https://tabula-sapiens-portal.ds.czbiohub.org', '_blank')}><InfoIcon color='info'/></IconButton>
                                             </HtmlTooltip>
                                         </div>
