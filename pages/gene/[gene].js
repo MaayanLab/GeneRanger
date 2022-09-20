@@ -518,9 +518,7 @@ export default function Dashboard(props) {
                                 onChange={(event, value) => {submitGene(value)}}
                                 renderInput={(params) => <TextField {...params} label="Human Gene Symbol" />}
                                 />
-                                {/* {
-                                loading == true ? <div style={{display: 'flex', justifyContent: 'center', marginTop: '15px'}}><CircularProgress/></div> : <></>
-                                } */}
+
                         </div>
                         <div style={{width: '400px', display: 'flex', flexDirection: 'column', gap: '20px', backgroundColor: '#aec2d0', borderRadius: '5px', paddingTop: '20px', paddingBottom: '20px'}}>
 
@@ -536,7 +534,7 @@ export default function Dashboard(props) {
                                             <img className={styles.databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://www.nature.com/articles/ng.2653" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
-                                                <IconButton onClick={() =>  window.open('https://gtexportal.org/home/', '_blank')}><InfoIcon color='info'/></IconButton>
+                                                <IconButton><InfoIcon color='info'/></IconButton>
                                             </HtmlTooltip>
                                         </div>
                                     } 
@@ -552,7 +550,7 @@ export default function Dashboard(props) {
                                             <img className={styles.databaseLogo} src="/images/archs4.png" alt="archs4 Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://maayanlab.cloud/archs4/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://www.nature.com/articles/s41467-018-03751-6" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
-                                                <IconButton onClick={() =>  window.open('https://maayanlab.cloud/archs4/', '_blank')}><InfoIcon color='info'/></IconButton>
+                                                <IconButton><InfoIcon color='info'/></IconButton>
                                             </HtmlTooltip>
                                         </div>
                                     } 
@@ -568,7 +566,7 @@ export default function Dashboard(props) {
                                             <img className={styles.databaseLogo} style={{borderRadius: '8px'}} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://tabula-sapiens-portal.ds.czbiohub.org" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/35549404/" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
-                                                <IconButton onClick={() =>  window.open('https://tabula-sapiens-portal.ds.czbiohub.org', '_blank')}><InfoIcon color='info'/></IconButton>
+                                                <IconButton><InfoIcon color='info'/></IconButton>
                                             </HtmlTooltip>
                                         </div>
                                     } 
@@ -591,7 +589,7 @@ export default function Dashboard(props) {
                                             <img className={styles.databaseLogo} style={{width: '200px', marginRight: '0'}} src="/images/HPM.gif" alt="HPM Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="http://www.humanproteomemap.org" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/24870542/" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
-                                                <IconButton onClick={() =>  window.open('http://www.humanproteomemap.org', '_blank')}><InfoIcon color='info'/></IconButton>
+                                                <IconButton><InfoIcon color='info'/></IconButton>
                                             </HtmlTooltip>
                                         </div>
                                     } 
@@ -607,7 +605,7 @@ export default function Dashboard(props) {
                                             <img className={styles.databaseLogo} style={{width: '200px', padding: '10px', marginLeft: '0px', marginRight: '-20px', backgroundColor: '#8eaabe', borderRadius: '5px'}} src="/images/HPA.svg" alt="HPA Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://www.proteinatlas.org" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/25613900/" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
-                                                <IconButton onClick={() =>  window.open('https://www.proteinatlas.org', '_blank')}><InfoIcon color='info'/></IconButton>
+                                                <IconButton><InfoIcon color='info'/></IconButton>
                                             </HtmlTooltip>
                                         </div>
                                     } 
@@ -623,7 +621,7 @@ export default function Dashboard(props) {
                                             <img className={styles.databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://www.nature.com/articles/ng.2653" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
-                                                <IconButton onClick={() =>  window.open('https://gtexportal.org/home/', '_blank')}><InfoIcon color='info'/></IconButton>
+                                                <IconButton><InfoIcon color='info'/></IconButton>
                                             </HtmlTooltip>
                                         </div>
                                     } 
