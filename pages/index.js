@@ -554,7 +554,7 @@ export default function Dashboard(props) {
                                     } 
                                     labelPlacement="start"/>
 
-                                  <div className={styles.logoDesc}>RNA-seq gene expression data</div>
+                                  <div className={styles.logoDesc}>A database of RNA-seq data designed to study the relationship between genetic variation and gene expression across multiple tissues.  Each tissue’s RNA expression is represented by a box plot.</div>
 
                                   <FormControlLabel 
                                     className={styles.formItem} 
@@ -570,7 +570,7 @@ export default function Dashboard(props) {
                                     } 
                                     labelPlacement="start"/>
                                   
-                                  <div className={styles.logoDesc}>RNA-seq data compiled from many publicly available databases</div>
+                                  <div className={styles.logoDesc}>RNA-seq data from many public sources conveniently compiled into a single database.  Each tissue/cell’s RNA expression is represented by a box plot.</div>
                                   
                                   <FormControlLabel 
                                     className={styles.formItem} 
@@ -586,7 +586,7 @@ export default function Dashboard(props) {
                                     } 
                                     labelPlacement="start"/>
                                   
-                                  <div className={styles.logoDesc}>Gene expression data gathered from single-cell transcriptomics</div>
+                                  <div className={styles.logoDesc}>An atlas of RNA-seq data from nearly 500,000 cells created with single-cell transcriptomics.  Each tissue/cell’s RNA expression is represented by a box plot.</div>
 
                               </FormGroup>
                             </div>
@@ -609,7 +609,7 @@ export default function Dashboard(props) {
                                     } 
                                     labelPlacement="start"/>
                                   
-                                  <div className={styles.logoDesc}>Protein expression levels</div>
+                                  <div className={styles.logoDesc}>A draft map of the human proteome created with Fourier transform mass spectrometry.  Data are displayed as average spectral counts.</div>
                                   
                                   <FormControlLabel 
                                     className={styles.formItem} 
@@ -625,7 +625,7 @@ export default function Dashboard(props) {
                                     } 
                                     labelPlacement="start"/>
                                   
-                                  <div className={styles.logoDesc}>Protein average spectral counts</div>
+                                  <div className={styles.logoDesc}>A map of protein expression across 32 human tissues created with antibody profiling.  Proteins are categorized as either “not detected”, “low”, “medium”, or “high”.</div>
                                   
                                   <FormControlLabel 
                                     className={styles.formItem} 
@@ -641,7 +641,7 @@ export default function Dashboard(props) {
                                     } 
                                     labelPlacement="start"/>
                                   
-                                  <div className={styles.logoDesc}>Protein log-transformed relative abundance</div>
+                                  <div className={styles.logoDesc}>A database designed to study the relationship between genetic variation and gene expression across multiple tissues.  Data are displayed as protein log-transformed relative abundance in box-plot form.</div>
 
                               </FormGroup>
                             </div>
