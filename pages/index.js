@@ -554,7 +554,7 @@ export default function Dashboard(props) {
                                     } 
                                     labelPlacement="start"/>
 
-                                  <div className={styles.logoDesc}>A database of RNA-seq data designed to study the relationship between genetic variation and gene expression across multiple tissues.  Each tissue’s RNA expression is represented by a box plot.</div>
+                                  <div className={styles.logoDesc}>A database designed to study the relationship between genetic variation and gene expression across multiple tissues.  Each tissue’s RNA expression is represented by a box plot.</div>
 
                                   <FormControlLabel 
                                     className={styles.formItem} 
