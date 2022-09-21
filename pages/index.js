@@ -523,7 +523,7 @@ export default function Dashboard(props) {
 
                     <div className={styles.dbGroup}>
                         <div style={{marginBottom: '15px'}}>
-                            <h2 style={{marginTop: '0px', marginBottom: '10px'}}>Insert gene of interest:</h2>
+                            {/* <h2 style={{marginTop: '0px', marginBottom: '10px'}}>Insert gene of interest:</h2> */}
                             <Autocomplete
                                 disablePortal
                                 options={ genes }
