@@ -90,8 +90,6 @@ export async function getServerSideProps() {
 
 export default function Dashboard(props) {
 
-  console.log(props)
-
     let gtex_transcriptomics = null;
     let archs4 = null;
     let tabula_sapiens = null;
@@ -132,7 +130,7 @@ export default function Dashboard(props) {
 
             let arrays = [];
             for (let i = 0; i < mean.length; i++) {
-                arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i]});
+                arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i], 'name': names[i]});
             }
 
             arrays.sort((a, b) => a.mean - b.mean);
@@ -146,6 +144,7 @@ export default function Dashboard(props) {
                 sd[i] = arrays[i].sd;
                 lowerfence[i] = arrays[i].lowerfence;
                 upperfence[i] = arrays[i].upperfence;
+                names[i] = arrays[i].name;
 
             }
 
@@ -192,7 +191,7 @@ export default function Dashboard(props) {
 
             let arrays = [];
             for (let i = 0; i < mean.length; i++) {
-                arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i]});
+                arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i], 'name': names[i]});
             }
 
             arrays.sort((a, b) => a.mean - b.mean);
@@ -206,6 +205,7 @@ export default function Dashboard(props) {
                 sd[i] = arrays[i].sd;
                 lowerfence[i] = arrays[i].lowerfence;
                 upperfence[i] = arrays[i].upperfence;
+                names[i] = arrays[i].name;
 
             }
 
@@ -253,7 +253,7 @@ export default function Dashboard(props) {
 
             let arrays = [];
             for (let i = 0; i < mean.length; i++) {
-                arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i]});
+                arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i], 'name': names[i]});
             }
 
             arrays.sort((a, b) => a.mean - b.mean);
@@ -267,6 +267,7 @@ export default function Dashboard(props) {
                 sd[i] = arrays[i].sd;
                 lowerfence[i] = arrays[i].lowerfence;
                 upperfence[i] = arrays[i].upperfence;
+                names[i] = arrays[i].name;
 
             }
 
@@ -317,53 +318,53 @@ export default function Dashboard(props) {
               marker: { color: '#1f77b4' },
             }
       }
-  }
-
-  if (props.databases[4] == "true") {
-
-    let data = props.all_db_data.hpa;
-
-    if (data.length != 0) {
-
-        let levels = [];
-        let tissue_and_cells = [];
-
-        let not_detected = [];
-        let low = [];
-        let medium = [];
-        let high = [];
-        for (let i = 0; i < data.length; i++) {
-            if (data[i].level == "Not detected") {
-                not_detected.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
-            } else if (data[i].level == "Low") {
-                low.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
-            } else if (data[i].level == "Medium") {
-                medium.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
-            } else {
-                high.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
-            }
-        }
-
-        let combined = not_detected.concat(low, medium, high);
-
-        for (let i = 0; i < combined.length; i++) {
-
-            levels[i] = combined[i].level;
-            tissue_and_cells[i] = combined[i].tissue_and_cell;
-
-        }
-
-        hpa = {
-            x: levels,
-            y: tissue_and_cells,
-            // category_orders: {"Level": ["Not detected", "Low", "Medium", "High"]}, 
-            type: "scatter",
-            mode: "markers",
-            marker: { color: '#1f77b4' },
-          }
     }
 
-}
+    if (props.databases[4] == "true") {
+
+      let data = props.all_db_data.hpa;
+
+      if (data.length != 0) {
+
+          let levels = [];
+          let tissue_and_cells = [];
+
+          let not_detected = [];
+          let low = [];
+          let medium = [];
+          let high = [];
+          for (let i = 0; i < data.length; i++) {
+              if (data[i].level == "Not detected") {
+                  not_detected.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
+              } else if (data[i].level == "Low") {
+                  low.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
+              } else if (data[i].level == "Medium") {
+                  medium.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
+              } else {
+                  high.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
+              }
+          }
+
+          let combined = not_detected.concat(low, medium, high);
+
+          for (let i = 0; i < combined.length; i++) {
+
+              levels[i] = combined[i].level;
+              tissue_and_cells[i] = combined[i].tissue_and_cell;
+
+          }
+
+          hpa = {
+              x: levels,
+              y: tissue_and_cells,
+              // category_orders: {"Level": ["Not detected", "Low", "Medium", "High"]}, 
+              type: "scatter",
+              mode: "markers",
+              marker: { color: '#1f77b4' },
+            }
+      }
+
+    }
 
     if (props.databases[5] == "true") {
 

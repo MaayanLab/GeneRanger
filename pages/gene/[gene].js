@@ -138,7 +138,7 @@ export default function Dashboard(props) {
 
             let arrays = [];
             for (let i = 0; i < mean.length; i++) {
-                arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i]});
+                arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i], 'name': names[i]});
             }
 
             arrays.sort((a, b) => a.mean - b.mean);
@@ -152,6 +152,7 @@ export default function Dashboard(props) {
                 sd[i] = arrays[i].sd;
                 lowerfence[i] = arrays[i].lowerfence;
                 upperfence[i] = arrays[i].upperfence;
+                names[i] = arrays[i].name;
 
             }
 
@@ -198,7 +199,7 @@ export default function Dashboard(props) {
 
             let arrays = [];
             for (let i = 0; i < mean.length; i++) {
-                arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i]});
+                arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i], 'name': names[i]});
             }
 
             arrays.sort((a, b) => a.mean - b.mean);
@@ -212,6 +213,7 @@ export default function Dashboard(props) {
                 sd[i] = arrays[i].sd;
                 lowerfence[i] = arrays[i].lowerfence;
                 upperfence[i] = arrays[i].upperfence;
+                names[i] = arrays[i].name;
 
             }
 
@@ -259,7 +261,7 @@ export default function Dashboard(props) {
 
             let arrays = [];
             for (let i = 0; i < mean.length; i++) {
-                arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i]});
+                arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i], 'name': names[i]});
             }
 
             arrays.sort((a, b) => a.mean - b.mean);
@@ -273,6 +275,7 @@ export default function Dashboard(props) {
                 sd[i] = arrays[i].sd;
                 lowerfence[i] = arrays[i].lowerfence;
                 upperfence[i] = arrays[i].upperfence;
+                names[i] = arrays[i].name;
 
             }
 
