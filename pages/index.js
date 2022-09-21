@@ -26,7 +26,7 @@ const Plot = dynamic(() => import('react-plotly.js'), {
 	ssr: false,
 });
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
 
     const prisma = new PrismaClient();
 
