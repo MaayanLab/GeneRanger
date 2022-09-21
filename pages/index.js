@@ -586,7 +586,7 @@ export default function Dashboard(props) {
                                     } 
                                     labelPlacement="start"/>
                                   
-                                  <div className={styles.logoDesc}>An atlas of RNA-seq data from nearly 500,000 cells created with single-cell transcriptomics.  Each tissue/cell’s RNA expression is represented by a box plot.</div>
+                                  <div className={styles.logoDesc}>An atlas of RNA-seq data for over 400 cell types created with single-cell transcriptomics.  Each tissue/cell’s RNA expression is represented by a box plot.</div>
 
                               </FormGroup>
                             </div>
