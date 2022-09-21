@@ -32,64 +32,54 @@ export async function getServerSideProps(context) {
 
     let all_db_data = {};
 
-    if (context.query.databases[0] == "true") {
-        const gtex_transcriptomics = await prisma.gtex_transcriptomics.findMany({
-            where: {
-                name: context.query.gene,
-            },
-        });
-        Object.assign(all_db_data, {gtex_transcriptomics: gtex_transcriptomics});
-    }
-    
-    if (context.query.databases[1] == "true") {
-        const archs4 = await prisma.archs4.findMany({
-            where: {
-                name: context.query.gene,
-            },
-        });
-        Object.assign(all_db_data, {archs4: archs4});
-    }
+    const gtex_transcriptomics = await prisma.gtex_transcriptomics.findMany({
+        where: {
+            name: context.query.gene,
+        },
+    });
+    Object.assign(all_db_data, {gtex_transcriptomics: gtex_transcriptomics});
 
-    if (context.query.databases[2] == "true") {
-        const tabula_sapiens = await prisma.tabula_sapiens.findMany({
-            where: {
-                name: context.query.gene,
-            },
-        });
-        Object.assign(all_db_data, {tabula_sapiens: tabula_sapiens});
-    }
+    const archs4 = await prisma.archs4.findMany({
+        where: {
+            name: context.query.gene,
+        },
+    });
+    Object.assign(all_db_data, {archs4: archs4});
 
-    if (context.query.databases[3] == "true") {
-        const hpm = await prisma.hpm.findMany({
-            where: {
-                gene: context.query.gene,
-            },
-        });
-        Object.assign(all_db_data, {hpm: hpm});
-    }
+    const tabula_sapiens = await prisma.tabula_sapiens.findMany({
+        where: {
+            name: context.query.gene,
+        },
+    });
+    Object.assign(all_db_data, {tabula_sapiens: tabula_sapiens});
 
-    if (context.query.databases[4] == "true") {
-        const hpa = await prisma.hpa.findMany({
-            where: {
-                gene_name: context.query.gene,
-            },
-        });
-        Object.assign(all_db_data, {hpa: hpa});
-    }
+    const hpm = await prisma.hpm.findMany({
+        where: {
+            gene: context.query.gene,
+        },
+    });
+    Object.assign(all_db_data, {hpm: hpm});
 
-    if (context.query.databases[5] == "true") {
-        const gtex_proteomics = await prisma.gtex_proteomics.findMany({
-            where: {
-                gene_id: context.query.gene,
-            },
-        });
-        Object.assign(all_db_data, {gtex_proteomics: gtex_proteomics});
-    }
+    const hpa = await prisma.hpa.findMany({
+        where: {
+            gene_name: context.query.gene,
+        },
+    });
+    Object.assign(all_db_data, {hpa: hpa});
+
+
+    const gtex_proteomics = await prisma.gtex_proteomics.findMany({
+        where: {
+            gene_id: context.query.gene,
+        },
+    });
+    Object.assign(all_db_data, {gtex_proteomics: gtex_proteomics});
+ 
     
     return { 
         props: {
             gene: context.query.gene,
-            databases: context.query.databases, 
+            currDatabase: context.query.currDatabase, 
             all_db_data: all_db_data
         } 
     }
@@ -110,322 +100,303 @@ export default function Dashboard(props) {
         return names.map(name => name.replace(/_+/g, ' ').replaceAll('.', ' ').trim());
     }
 
-    if (props.databases[0] == "true") {
+    // Processing GTEx Transcriptomics
 
-        let data = props.all_db_data.gtex_transcriptomics;
+    let data = props.all_db_data.gtex_transcriptomics;
 
-        if (data.length != 0) {
+    if (data.length != 0) {
 
-            let mean_index = 1;
-            let sd_index = 2;
-            let min_index = 3;
-            let q1_index = 4;
-            let median_index = 5;
-            let q3_index = 6;
-            let max_index = 7;
+        let mean_index = 1;
+        let sd_index = 2;
+        let min_index = 3;
+        let q1_index = 4;
+        let median_index = 5;
+        let q3_index = 6;
+        let max_index = 7;
 
-            let q1 = Object.values(data[q1_index]).slice(3);
-            let q3 = Object.values(data[q3_index]).slice(3);
-            let min = Object.values(data[min_index]).slice(3);
-            let max = Object.values(data[max_index]).slice(3);
-            let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
-            let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
-            let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
-            let names = processNames(Object.keys(data[q1_index]).slice(3));
-            let sd = Object.values(data[sd_index]).slice(3);
-            let median =Object.values(data[median_index]).slice(3);
-            let mean = Object.values(data[mean_index]).slice(3)
+        let q1 = Object.values(data[q1_index]).slice(3);
+        let q3 = Object.values(data[q3_index]).slice(3);
+        let min = Object.values(data[min_index]).slice(3);
+        let max = Object.values(data[max_index]).slice(3);
+        let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
+        let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
+        let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
+        let names = processNames(Object.keys(data[q1_index]).slice(3));
+        let sd = Object.values(data[sd_index]).slice(3);
+        let median =Object.values(data[median_index]).slice(3);
+        let mean = Object.values(data[mean_index]).slice(3)
 
-            let arrays = [];
-            for (let i = 0; i < mean.length; i++) {
-                arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i], 'name': names[i]});
-            }
-
-            arrays.sort((a, b) => a.mean - b.mean);
-
-            for (let i = 0; i < mean.length; i++) {
-
-                q1[i] = arrays[i].q1;
-                median[i] = arrays[i].median;
-                q3[i] = arrays[i].q3;
-                mean[i] = arrays[i].mean;
-                sd[i] = arrays[i].sd;
-                lowerfence[i] = arrays[i].lowerfence;
-                upperfence[i] = arrays[i].upperfence;
-                names[i] = arrays[i].name;
-
-            }
-
-            gtex_transcriptomics = {
-                q1: q1,
-                median: median,
-                q3: q3,
-                mean: mean,
-                sd: sd,
-                lowerfence: lowerfence,
-                upperfence: upperfence,
-                y: names,
-                orientation: 'h',
-                type: 'box'
-            }
-        }
-    }
-    
-    if (props.databases[1] == "true") {
-
-        let data = props.all_db_data.archs4;
-
-        if (data.length != 0) {
-
-            let mean_index = 1;
-            let sd_index = 2;
-            let min_index = 3;
-            let max_index = 4;
-            let q1_index = 5;
-            let median_index = 6;
-            let q3_index = 7;
-
-            let q1 = Object.values(data[q1_index]).slice(3);
-            let q3 = Object.values(data[q3_index]).slice(3);
-            let min = Object.values(data[min_index]).slice(3);
-            let max = Object.values(data[max_index]).slice(3);
-            let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
-            let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
-            let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
-            let names = processNames(Object.keys(data[q1_index]).slice(3));
-            let median = Object.values(data[median_index]).slice(3);
-            let mean = Object.values(data[mean_index]).slice(3);
-            let sd = Object.values(data[sd_index]).slice(3);
-
-            let arrays = [];
-            for (let i = 0; i < mean.length; i++) {
-                arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i], 'name': names[i]});
-            }
-
-            arrays.sort((a, b) => a.mean - b.mean);
-
-            for (let i = 0; i < mean.length; i++) {
-
-                q1[i] = arrays[i].q1;
-                median[i] = arrays[i].median;
-                q3[i] = arrays[i].q3;
-                mean[i] = arrays[i].mean;
-                sd[i] = arrays[i].sd;
-                lowerfence[i] = arrays[i].lowerfence;
-                upperfence[i] = arrays[i].upperfence;
-                names[i] = arrays[i].name;
-
-            }
-
-            archs4 = {
-                q1: q1,
-                median: median,
-                q3: q3,
-                mean: mean,
-                sd: sd,
-                lowerfence: lowerfence,
-                upperfence: upperfence,
-                y: names,
-                orientation: 'h',
-                type: 'box'
-            }
+        let arrays = [];
+        for (let i = 0; i < mean.length; i++) {
+            arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i], 'name': names[i]});
         }
 
-    }
+        arrays.sort((a, b) => a.mean - b.mean);
 
-    if (props.databases[2] == "true") {
+        for (let i = 0; i < mean.length; i++) {
 
-        let data = props.all_db_data.tabula_sapiens;
+            q1[i] = arrays[i].q1;
+            median[i] = arrays[i].median;
+            q3[i] = arrays[i].q3;
+            mean[i] = arrays[i].mean;
+            sd[i] = arrays[i].sd;
+            lowerfence[i] = arrays[i].lowerfence;
+            upperfence[i] = arrays[i].upperfence;
+            names[i] = arrays[i].name;
 
-        if (data.length != 0) {
-
-            let mean_index = 1;
-            let sd_index = 2;
-            let min_index = 3;
-            let q1_index = 4;
-            let median_index = 5;
-            let q3_index = 6;
-            let max_index = 7;
-
-            let q1 = Object.values(data[q1_index]).slice(3);
-            let q3 = Object.values(data[q3_index]).slice(3);
-            let min = Object.values(data[min_index]).slice(3);
-            let max = Object.values(data[max_index]).slice(3);
-            let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
-            let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
-            let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
-            let names = processNames(Object.keys(data[q1_index]).slice(3));
-            let median = Object.values(data[median_index]).slice(3);
-            let mean = Object.values(data[mean_index]).slice(3);
-            let sd = Object.values(data[sd_index]).slice(3);
-
-            let arrays = [];
-            for (let i = 0; i < mean.length; i++) {
-                arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i], 'name': names[i]});
-            }
-
-            arrays.sort((a, b) => a.mean - b.mean);
-
-            for (let i = 0; i < mean.length; i++) {
-
-                q1[i] = arrays[i].q1;
-                median[i] = arrays[i].median;
-                q3[i] = arrays[i].q3;
-                mean[i] = arrays[i].mean;
-                sd[i] = arrays[i].sd;
-                lowerfence[i] = arrays[i].lowerfence;
-                upperfence[i] = arrays[i].upperfence;
-                names[i] = arrays[i].name;
-
-            }
-
-            tabula_sapiens = {
-                q1: q1,
-                median: median,
-                q3: q3,
-                mean: mean,
-                sd: sd,
-                lowerfence: lowerfence,
-                upperfence: upperfence,
-                y: names,
-                orientation: 'h',
-                type: 'box'
-            }
         }
 
-    }
-
-    if (props.databases[3] == "true") {
-
-        let data = props.all_db_data.hpm;
-
-        if (data.length != 0) {
-
-            let values = [];
-            let tissues = [];
-
-            let arrays = [];
-            for (let i = 0; i < data.length; i++) {
-                arrays.push({'value': data[i].value, 'tissue': data[i].tissue});
-            }
-
-            arrays.sort((a, b) => a.value - b.value);
-
-            for (let i = 0; i < arrays.length; i++) {
-
-                values[i] = arrays[i].value;
-                tissues[i] = arrays[i].tissue;
-
-            }
-
-            hpm = {
-                x: values,
-                y: processNames(tissues),
-                type: "scatter",
-                mode: "markers",
-                marker: { color: '#1f77b4' },
-              }
+        gtex_transcriptomics = {
+            q1: q1,
+            median: median,
+            q3: q3,
+            mean: mean,
+            sd: sd,
+            lowerfence: lowerfence,
+            upperfence: upperfence,
+            y: names,
+            orientation: 'h',
+            type: 'box'
         }
     }
 
-    if (props.databases[4] == "true") {
+    // Processing ARCHS4
 
-        let data = props.all_db_data.hpa;
+    data = props.all_db_data.archs4;
 
-        if (data.length != 0) {
+    if (data.length != 0) {
 
-            let levels = [];
-            let tissue_and_cells = [];
+        let mean_index = 1;
+        let sd_index = 2;
+        let min_index = 3;
+        let max_index = 4;
+        let q1_index = 5;
+        let median_index = 6;
+        let q3_index = 7;
 
-            let not_detected = [];
-            let low = [];
-            let medium = [];
-            let high = [];
-            for (let i = 0; i < data.length; i++) {
-                if (data[i].level == "Not detected") {
-                    not_detected.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
-                } else if (data[i].level == "Low") {
-                    low.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
-                } else if (data[i].level == "Medium") {
-                    medium.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
-                } else {
-                    high.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
+        let q1 = Object.values(data[q1_index]).slice(3);
+        let q3 = Object.values(data[q3_index]).slice(3);
+        let min = Object.values(data[min_index]).slice(3);
+        let max = Object.values(data[max_index]).slice(3);
+        let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
+        let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
+        let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
+        let names = processNames(Object.keys(data[q1_index]).slice(3));
+        let median = Object.values(data[median_index]).slice(3);
+        let mean = Object.values(data[mean_index]).slice(3);
+        let sd = Object.values(data[sd_index]).slice(3);
+
+        let arrays = [];
+        for (let i = 0; i < mean.length; i++) {
+            arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i], 'name': names[i]});
+        }
+
+        arrays.sort((a, b) => a.mean - b.mean);
+
+        for (let i = 0; i < mean.length; i++) {
+
+            q1[i] = arrays[i].q1;
+            median[i] = arrays[i].median;
+            q3[i] = arrays[i].q3;
+            mean[i] = arrays[i].mean;
+            sd[i] = arrays[i].sd;
+            lowerfence[i] = arrays[i].lowerfence;
+            upperfence[i] = arrays[i].upperfence;
+            names[i] = arrays[i].name;
+
+        }
+
+        archs4 = {
+            q1: q1,
+            median: median,
+            q3: q3,
+            mean: mean,
+            sd: sd,
+            lowerfence: lowerfence,
+            upperfence: upperfence,
+            y: names,
+            orientation: 'h',
+            type: 'box'
+        }
+    }
+
+
+
+    // Processing Tabula Sapiens
+
+    data = props.all_db_data.tabula_sapiens;
+
+    if (data.length != 0) {
+
+        let mean_index = 1;
+        let sd_index = 2;
+        let min_index = 3;
+        let q1_index = 4;
+        let median_index = 5;
+        let q3_index = 6;
+        let max_index = 7;
+
+        let q1 = Object.values(data[q1_index]).slice(3);
+        let q3 = Object.values(data[q3_index]).slice(3);
+        let min = Object.values(data[min_index]).slice(3);
+        let max = Object.values(data[max_index]).slice(3);
+        let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
+        let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
+        let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
+        let names = processNames(Object.keys(data[q1_index]).slice(3));
+        let median = Object.values(data[median_index]).slice(3);
+        let mean = Object.values(data[mean_index]).slice(3);
+        let sd = Object.values(data[sd_index]).slice(3);
+
+        let arrays = [];
+        for (let i = 0; i < mean.length; i++) {
+            arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i], 'name': names[i]});
+        }
+
+        arrays.sort((a, b) => a.mean - b.mean);
+
+        for (let i = 0; i < mean.length; i++) {
+
+            q1[i] = arrays[i].q1;
+            median[i] = arrays[i].median;
+            q3[i] = arrays[i].q3;
+            mean[i] = arrays[i].mean;
+            sd[i] = arrays[i].sd;
+            lowerfence[i] = arrays[i].lowerfence;
+            upperfence[i] = arrays[i].upperfence;
+            names[i] = arrays[i].name;
+
+        }
+
+        tabula_sapiens = {
+            q1: q1,
+            median: median,
+            q3: q3,
+            mean: mean,
+            sd: sd,
+            lowerfence: lowerfence,
+            upperfence: upperfence,
+            y: names,
+            orientation: 'h',
+            type: 'box'
+        }
+    }
+
+
+    // Processing HPM
+
+    data = props.all_db_data.hpm;
+
+    if (data.length != 0) {
+
+        let values = [];
+        let tissues = [];
+
+        let arrays = [];
+        for (let i = 0; i < data.length; i++) {
+            arrays.push({'value': data[i].value, 'tissue': data[i].tissue});
+        }
+
+        arrays.sort((a, b) => a.value - b.value);
+
+        for (let i = 0; i < arrays.length; i++) {
+
+            values[i] = arrays[i].value;
+            tissues[i] = arrays[i].tissue;
+
+        }
+
+        hpm = {
+            x: values,
+            y: processNames(tissues),
+            type: "scatter",
+            mode: "markers",
+            marker: { color: '#1f77b4' },
+            }
+    }
+
+
+    // Processing HPA
+
+    data = props.all_db_data.hpa;
+
+    if (data.length != 0) {
+
+        let levels = [];
+        let tissue_and_cells = [];
+
+        let not_detected = [];
+        let low = [];
+        let medium = [];
+        let high = [];
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].level == "Not detected") {
+                not_detected.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
+            } else if (data[i].level == "Low") {
+                low.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
+            } else if (data[i].level == "Medium") {
+                medium.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
+            } else {
+                high.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
+            }
+        }
+
+        let combined = not_detected.concat(low, medium, high);
+
+        for (let i = 0; i < combined.length; i++) {
+
+            levels[i] = combined[i].level;
+            tissue_and_cells[i] = combined[i].tissue_and_cell;
+
+        }
+
+        hpa = {
+            x: levels,
+            y: tissue_and_cells,
+            // category_orders: {"Level": ["Not detected", "Low", "Medium", "High"]}, 
+            type: "scatter",
+            mode: "markers",
+            marker: { color: '#1f77b4' },
+            }
+    }
+
+
+    // Processing GTEx Proteomics
+
+    data = props.all_db_data.gtex_proteomics;
+
+    if (data.length != 0) {
+
+        let tissues = [];
+        let temp = {};
+        gtex_proteomics = [];
+
+        for (let i = 0; i < Object.keys(data).length; i++) {
+            if (!tissues.includes(data[i].tissue)) {
+                tissues.push(data[i].tissue);
+                if (temp.x != null) {
+                    gtex_proteomics.push(temp);
                 }
+                temp = {name: data[i].tissue, type: 'box', x: [data[i].value], marker: {color: '#1f77b4'}};
+            } else {
+                temp.x.push(data[i].value);
             }
-
-            let combined = not_detected.concat(low, medium, high);
-
-            for (let i = 0; i < combined.length; i++) {
-
-                levels[i] = combined[i].level;
-                tissue_and_cells[i] = combined[i].tissue_and_cell;
-
-            }
-
-            hpa = {
-                x: levels,
-                y: tissue_and_cells,
-                // category_orders: {"Level": ["Not detected", "Low", "Medium", "High"]}, 
-                type: "scatter",
-                mode: "markers",
-                marker: { color: '#1f77b4' },
-              }
         }
 
-    }
+        gtex_proteomics.push(temp);
 
-    if (props.databases[5] == "true") {
+        // Sorting
 
-        let data = props.all_db_data.gtex_proteomics;
-
-        if (data.length != 0) {
-
-            let tissues = [];
-            let temp = {};
-            gtex_proteomics = [];
-
-            for (let i = 0; i < Object.keys(data).length; i++) {
-                if (!tissues.includes(data[i].tissue)) {
-                    tissues.push(data[i].tissue);
-                    if (temp.x != null) {
-                        gtex_proteomics.push(temp);
-                    }
-                    temp = {name: data[i].tissue, type: 'box', x: [data[i].value], marker: {color: '#1f77b4'}};
-                } else {
-                    temp.x.push(data[i].value);
-                }
-            }
-
-            gtex_proteomics.push(temp);
-
-            // Sorting
-
-            for (let i = 0; i < Object.keys(gtex_proteomics).length; i++) {
-                let mean = gtex_proteomics[i].x.reduce((a, b) => a + b, 0) / gtex_proteomics[i].x.length;
-                gtex_proteomics[i]['mean'] = mean;
-            }
-
-            gtex_proteomics.sort((a, b) => a.mean - b.mean);
+        for (let i = 0; i < Object.keys(gtex_proteomics).length; i++) {
+            let mean = gtex_proteomics[i].x.reduce((a, b) => a + b, 0) / gtex_proteomics[i].x.length;
+            gtex_proteomics[i]['mean'] = mean;
         }
 
+        gtex_proteomics.sort((a, b) => a.mean - b.mean);
     }
 
-
-    let databases = [];
-    for (let i = 0; i < 6; i++) {
-        if (props.databases[i] == "true") {
-            databases.push(true);
-        } else {
-            databases.push(false);
-        }
-    }
-
-    function updateDatabases(index) {
-        let updatedArray = databases;
-        updatedArray[index] = !updatedArray[index];
-        databases = updatedArray;
-    }
-
+    // Function for submitting data to the next page
+       
     const router = useRouter();
 
     function submitGene (gene) {
@@ -437,7 +408,7 @@ export default function Dashboard(props) {
                 pathname: "[gene]",
                 query: {
                     gene: gene,
-                    databases: databases
+                    currDatabase: currDatabase
             }};
             router.push(href).then(() => {
                 setLoading(false);    
@@ -476,31 +447,13 @@ export default function Dashboard(props) {
         index: PropTypes.number.isRequired,
         value: PropTypes.number.isRequired,
     };
-    
-//   function a11yProps(index) {
-//     return {
-//       id: `simple-tab-${index}`,
-//       'aria-controls': `simple-tabpanel-${index}`,
-//     };
-//   }
 
-    const [value, setValue] = React.useState(0);
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
+    // Used to keep track of which database's info should be displayed
+    const [currDatabase, setCurrDatabase] = React.useState(parseInt(props.currDatabase));
 
     const CustomTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) => ({
       textTransform: 'none',
     }));
-
-    let currTabIndex = -1;
-    
-    function getNextIndex () {
-        console.log(value);
-        currTabIndex++;
-        return currTabIndex;
-    }
 
     // For MUI tooltip
 
@@ -542,7 +495,6 @@ export default function Dashboard(props) {
 
                     <div className={styles.dbGroup}>
                         <div style={{marginBottom: '15px'}}>
-                            {/* <h2 style={{marginTop: '0px', marginBottom: '10px'}}>Insert gene of interest:</h2> */}
                             <Autocomplete
                                 disablePortal
                                 options={ genes }
@@ -560,7 +512,7 @@ export default function Dashboard(props) {
 
                                   <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => updateDatabases(0)} defaultChecked={databases[0]}/>} 
+                                    control={<Switch onChange={() => setCurrDatabase(0)} checked={currDatabase == 0}/>} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/>
@@ -576,7 +528,7 @@ export default function Dashboard(props) {
 
                                   <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => updateDatabases(1)} defaultChecked={databases[1]} />} 
+                                    control={<Switch onChange={() => setCurrDatabase(1)} checked={currDatabase == 1} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} src="/images/archs4.png" alt="archs4 Logo"/>
@@ -592,7 +544,7 @@ export default function Dashboard(props) {
                                   
                                   <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => updateDatabases(2)} defaultChecked={databases[2]} />} 
+                                    control={<Switch onChange={() => setCurrDatabase(2)} checked={currDatabase == 2} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} style={{borderRadius: '8px'}} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo"/>
@@ -615,7 +567,7 @@ export default function Dashboard(props) {
 
                                   <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => updateDatabases(3)} defaultChecked={databases[3]} />} 
+                                    control={<Switch onChange={() => setCurrDatabase(3)} checked={currDatabase == 3} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} style={{width: '200px', marginRight: '0'}} src="/images/HPM.gif" alt="HPM Logo"/>
@@ -631,7 +583,7 @@ export default function Dashboard(props) {
                                   
                                   <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => updateDatabases(4)} defaultChecked={databases[4]} />} 
+                                    control={<Switch onChange={() => setCurrDatabase(4)} checked={currDatabase == 4} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} style={{width: '200px', padding: '10px', marginLeft: '0px', marginRight: '-20px', backgroundColor: '#8eaabe', borderRadius: '5px'}} src="/images/HPA.svg" alt="HPA Logo"/>
@@ -647,7 +599,7 @@ export default function Dashboard(props) {
                                   
                                   <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => updateDatabases(5)} defaultChecked={databases[5]} />} 
+                                    control={<Switch onChange={() => setCurrDatabase(5)} checked={currDatabase == 5} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/>
@@ -672,245 +624,157 @@ export default function Dashboard(props) {
                         <div>
                             <Box sx={{ width: '100%' }}>
                                 <Box>
-                                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                                        {
-                                            props.databases[0] === "true" 
+                                    <Tabs value={currDatabase} onChange={(event, newValue) => {setCurrDatabase(newValue)}} aria-label="basic tabs example">
 
-                                            && 
+                                            <CustomTab label="GTEx Transcriptomics"  />
+                                            <CustomTab label="ARCHS4" />
+                                            <CustomTab label="Tabula Sapiens" />
+                                            <CustomTab label="HPM" />
+                                            <CustomTab label="HPA"  />
+                                            <CustomTab label="GTEx Proteomics"  />
 
-                                            (<CustomTab label="GTEx Transcriptomics"  />)
-                                        }
-                                        {
-                                            props.databases[1] === "true" 
-
-                                            && 
-
-                                            (<CustomTab label="ARCHS4" />)
-                                        }
-                                        {
-                                            props.databases[2] === "true" 
-
-                                            && 
-
-                                            (<CustomTab label="Tabula Sapiens" />)
-                                        }
-                                        {
-                                            props.databases[3] === "true" 
-
-                                            && 
-
-                                            (<CustomTab label="HPM" />)
-                                        }
-                                        {
-                                            props.databases[4] === "true" 
-
-                                            && 
-
-                                            (<CustomTab label="HPA"  />)
-                                        }
-                                        {
-                                            props.databases[5] === "true" 
-
-                                            && 
-
-                                            (<CustomTab label="GTEx Proteomics"  />)
-                                        } 
                                     </Tabs>
                                 </Box>
-                                {
-                                    props.databases[0] === "true" 
-                                    
-                                    &&
-                                        
-                                    (
-                                        <TabPanel value={value} index={getNextIndex()}>
-                                            {
-                                                gtex_transcriptomics != null 
-                                                    ? 
-                                                        <div id="gtex_transcriptomics">
-                                                            <Plot
-                                                                data={[gtex_transcriptomics]}
-                                                                layout={{width: '800', height: '1500', title: props.gene + ' (RNA-seq) GTEx', yaxis: {automargin: true},
-                                                                xaxis: {
-                                                                    title: {
-                                                                    text: 'RNA counts',
-                                                                    }
-                                                                }}}
-                                                                config={{responsive: true}}
-                                                                id={"gtex_transcriptomics"}
-                                                                // style={{paddingBottom: '75px'}}
-                                                            />
-                                                        </div>
-                                                        
-                                                    : 
-                                                        <GraphMissing/>
-                                            }
-                                        </TabPanel>
-                                    )
-                                }
-                                {
-                                    props.databases[1] === "true" 
-                                    
-                                    &&
-                                        
-                                    (
-                                        <TabPanel value={value} index={getNextIndex()}>
-                                            {
-                                                archs4 != null 
-                                                    ? 
-                                                        <div id="archs4">
-                                                            <Plot
-                                                                data={[archs4]}
-                                                                layout={{width: '800', height: '13000', title: props.gene + ' (RNA-seq) ARCHS4',
-                                                                yaxis: {
-                                                                automargin: true
-                                                                },
-                                                                xaxis: {
-                                                                    title: {
-                                                                    text: 'RNA counts',
-                                                                    }
-                                                                }}}
-                                                                // style={{paddingBottom: '75px'}}
-                                                            />
-                                                        </div>
-                                                        
-                                                    : 
-                                                        <GraphMissing/>
-                                            }
-                                        </TabPanel>
-                                    )
-                                }
-                                {
-                                    props.databases[2] === "true" 
-                                    
-                                    &&
-                                        
-                                    (
-                                        <TabPanel value={value} index={getNextIndex()}>
-                                            {
-                                                tabula_sapiens != null 
-                                                    ? 
-                                                        <div id="tabula_sapiens">
-                                                            <Plot
-                                                                data={[tabula_sapiens]}
-                                                                layout={{width: '800', height: '13000', title: props.gene + ' (RNA-seq) Tabula Sapiens',
-                                                                yaxis: {
-                                                                automargin: true
-                                                                },
-                                                                xaxis: {
-                                                                    title: {
-                                                                    text: 'RNA counts',
-                                                                    }
-                                                                }}}
-                                                                // style={{paddingBottom: '75px'}}
-                                                            />
-                                                        </div>
-                                                        
-                                                    : 
-                                                        <GraphMissing/>
-                                            }
-                                        </TabPanel>
-                                    )
-                                }
-                                {
-                                    props.databases[3] === "true" 
-                                    
-                                    &&
-                                        
-                                    (
-                                        <TabPanel value={value} index={getNextIndex()}>
-                                            {
-                                                hpm != null 
-                                                    ? 
-                                                        <div id="hpm">
-                                                            <Plot
-                                                                data={[hpm]}
-                                                                layout={{width: '800', height: '1000', title: props.gene + ' (HPM)',
-                                                                yaxis: {
-                                                                automargin: true
-                                                                },
-                                                                xaxis: {
-                                                                    title: {
-                                                                    text: 'Average Spectral Counts',
-                                                                    }
+                                    <TabPanel value={currDatabase} index={0}>
+                                        {
+                                            gtex_transcriptomics != null 
+                                                ? 
+                                                    <div id="gtex_transcriptomics">
+                                                        <Plot
+                                                            data={[gtex_transcriptomics]}
+                                                            layout={{width: '800', height: '1500', title: props.gene + ' (RNA-seq) GTEx', yaxis: {automargin: true},
+                                                            xaxis: {
+                                                                title: {
+                                                                text: 'RNA counts',
                                                                 }
-                                                                }}
-                                                                // style={{paddingBottom: '75px'}}
-                                                            />
-                                                        </div>
-                                                    : 
-                                                        <GraphMissing/>
-                                            }
-                                        </TabPanel>
-                                    )
-                                }
-                                {
-                                    props.databases[4] === "true" 
-                                    
-                                    &&
-                                        
-                                    (
-                                        <TabPanel value={value} index={getNextIndex()}>
-                                            {
-                                                hpa != null 
-                                                    ? 
-                                                        <div id="hpa">
-                                                            <Plot
-                                                            data={[hpa]}
-                                                            layout={{width: '800', height: '1500', title: props.gene + ' (HPA)',
+                                                            }}}
+                                                            config={{responsive: true}}
+                                                            id={"gtex_transcriptomics"}
+                                                        />
+                                                    </div>
+                                                    
+                                                : 
+                                                    <GraphMissing/>
+                                        }
+                                    </TabPanel>
+                                    <TabPanel value={currDatabase} index={1}>
+                                        {
+                                            archs4 != null 
+                                                ? 
+                                                    <div id="archs4">
+                                                        <Plot
+                                                            data={[archs4]}
+                                                            layout={{width: '800', height: '13000', title: props.gene + ' (RNA-seq) ARCHS4',
                                                             yaxis: {
                                                             automargin: true
                                                             },
                                                             xaxis: {
-                                                                "categoryorder": "array",
-                                                                "categoryarray":  ["Not detected", "Low", "Medium", "High"],
                                                                 title: {
-                                                                    text: 'Tissue Expression Level',
+                                                                text: 'RNA counts',
+                                                                }
+                                                            }}}
+                                                        />
+                                                    </div>
+                                                    
+                                                : 
+                                                    <GraphMissing/>
+                                        }
+                                    </TabPanel>
+                                    <TabPanel value={currDatabase} index={2}>
+                                        {
+                                            tabula_sapiens != null 
+                                                ? 
+                                                    <div id="tabula_sapiens">
+                                                        <Plot
+                                                            data={[tabula_sapiens]}
+                                                            layout={{width: '800', height: '13000', title: props.gene + ' (RNA-seq) Tabula Sapiens',
+                                                            yaxis: {
+                                                            automargin: true
+                                                            },
+                                                            xaxis: {
+                                                                title: {
+                                                                text: 'RNA counts',
+                                                                }
+                                                            }}}
+                                                        />
+                                                    </div>
+                                                    
+                                                : 
+                                                    <GraphMissing/>
+                                        }
+                                    </TabPanel>
+                                    <TabPanel value={currDatabase} index={3}>
+                                        {
+                                            hpm != null 
+                                                ? 
+                                                    <div id="hpm">
+                                                        <Plot
+                                                            data={[hpm]}
+                                                            layout={{width: '800', height: '1000', title: props.gene + ' (HPM)',
+                                                            yaxis: {
+                                                            automargin: true
+                                                            },
+                                                            xaxis: {
+                                                                title: {
+                                                                text: 'Average Spectral Counts',
                                                                 }
                                                             }
-                                                            }}  
-                                                            // style={{paddingBottom: '75px'}}
-                                                            />
-                                                        </div>
-                                                    : 
-                                                        <GraphMissing/>
-                                            }
-                                        </TabPanel>
-                                    )
-                                }
-                                {
-                                    props.databases[5] === "true" 
-                                    
-                                    &&
-                                        
-                                    (
-                                        <TabPanel value={value} index={getNextIndex()}>
-                                            {
-                                                gtex_proteomics != null 
-                                                    ? 
-                                                        <div id="gtex_proteomics">
-                                                            <Plot
-                                                                data={gtex_proteomics}
-                                                                layout={{width: '800', height: '1500', title: props.gene + ' (GTEx Proteomics)',
-                                                                showlegend: false,
-                                                                yaxis: {
-                                                                automargin: true
-                                                                },
-                                                                xaxis: {
-                                                                    title: {
-                                                                        text: 'log2(relative abundance)',
-                                                                    }
+                                                            }}
+                                                        />
+                                                    </div>
+                                                : 
+                                                    <GraphMissing/>
+                                        }
+                                    </TabPanel>
+                                    <TabPanel value={currDatabase} index={4}>
+                                        {
+                                            hpa != null 
+                                                ? 
+                                                    <div id="hpa">
+                                                        <Plot
+                                                        data={[hpa]}
+                                                        layout={{width: '800', height: '1500', title: props.gene + ' (HPA)',
+                                                        yaxis: {
+                                                        automargin: true
+                                                        },
+                                                        xaxis: {
+                                                            "categoryorder": "array",
+                                                            "categoryarray":  ["Not detected", "Low", "Medium", "High"],
+                                                            title: {
+                                                                text: 'Tissue Expression Level',
+                                                            }
+                                                        }
+                                                        }}
+                                                        />
+                                                    </div>
+                                                : 
+                                                    <GraphMissing/>
+                                        }
+                                    </TabPanel>
+                                    <TabPanel value={currDatabase} index={5}>
+                                        {
+                                            gtex_proteomics != null 
+                                                ? 
+                                                    <div id="gtex_proteomics">
+                                                        <Plot
+                                                            data={gtex_proteomics}
+                                                            layout={{width: '800', height: '1500', title: props.gene + ' (GTEx Proteomics)',
+                                                            showlegend: false,
+                                                            yaxis: {
+                                                            automargin: true
+                                                            },
+                                                            xaxis: {
+                                                                title: {
+                                                                    text: 'log2(relative abundance)',
                                                                 }
-                                                                }}
-                                                                // style={{paddingBottom: '75px'}}
-                                                            />
-                                                        </div>
-                                                    : 
-                                                        <GraphMissing/>
-                                            }
-                                        </TabPanel>
-                                    )
-                                }
+                                                            }
+                                                            }}
+                                                        />
+                                                    </div>
+                                                : 
+                                                    <GraphMissing/>
+                                        }
+                                    </TabPanel>
                             </Box>
                         </div>
                     </div>
