@@ -557,7 +557,7 @@ export default function Dashboard(props) {
                                     } 
                                     labelPlacement="start"/>
                                   
-                                  <div className={styles.logoDesc}>An atlas of RNA-seq data for over 400 cell types created with single-cell transcriptomics.  Each tissue/cell’s RNA expression is represented by a box plot.</div>
+                                  <div className={styles.logoDesc}>An atlas of RNA-seq data for over 400 cell types created with single-cell transcriptomics.  Each cell’s RNA expression is represented by a box plot.</div>
 
                               </FormGroup>
                             </div>
@@ -640,7 +640,9 @@ export default function Dashboard(props) {
                                         {
                                             gtex_transcriptomics != null 
                                                 ? 
-                                                    <div id="gtex_transcriptomics">
+                                                    <div style={{width: '800px'}}>
+                                                        <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
+                                                        <div>The Genotype-Tissue Expression (GTEx) project was created as a resource for use in studying the connection between genetic variation and gene expression in human tissues.  The goal was to create a database and associated tissue bank that would allow researchers to search for eQTLs (Expression quantitative trait loci) and discover their role in the formation of diseases.  By the end of 2015, the project increased to include approximately 900 post-mortem donors.  Using GTEx’s RNA-seq data, the following graph depicts the RNA expression of various tissues for the chosen gene.</div>
                                                         <Plot
                                                             data={[gtex_transcriptomics]}
                                                             layout={{width: '800', height: '1500', title: props.gene + ' (RNA-seq) GTEx', yaxis: {automargin: true},
@@ -662,7 +664,9 @@ export default function Dashboard(props) {
                                         {
                                             archs4 != null 
                                                 ? 
-                                                    <div id="archs4">
+                                                    <div style={{width: '800px'}}>
+                                                        <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
+                                                        <div>ARCHS4 is a collection of RNA-seq data—including 84,863 human samples—compiled from many publicly available databases.  Specifically, many FASTQ files from the Gene Expression Omnibus were aligned with a cloud-based infrastructure to form ARCHS4.  The following graph depicts the RNA expression of both tissues and cell lines.</div>
                                                         <Plot
                                                             data={[archs4]}
                                                             layout={{width: '800', height: '13000', title: props.gene + ' (RNA-seq) ARCHS4',
@@ -685,7 +689,9 @@ export default function Dashboard(props) {
                                         {
                                             tabula_sapiens != null 
                                                 ? 
-                                                    <div id="tabula_sapiens">
+                                                    <div style={{width: '800px'}}>
+                                                        <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
+                                                        <div>Tabula Sapiens is a human reference atlas created from nearly 500,000 cells across 24 different tissues and organs.  The sample donors came from a range of backgrounds, including ethnicity, gender, and medical history.  The purpose of this atlas is to analyze samples from the same individual, rather than have inconsistencies in age, environmental exposure, genetic background, and other features.  Using Tabula Sapien’s RNA-seq data, the following graph depicts the RNA expression of various cells for the chosen gene. </div>
                                                         <Plot
                                                             data={[tabula_sapiens]}
                                                             layout={{width: '800', height: '13000', title: props.gene + ' (RNA-seq) Tabula Sapiens',
@@ -708,7 +714,9 @@ export default function Dashboard(props) {
                                         {
                                             hpm != null 
                                                 ? 
-                                                    <div id="hpm">
+                                                    <div style={{width: '800px'}}>
+                                                        <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
+                                                        <div>The Human Proteome Map (HPM) is a draft map of the human proteome created using high resolution Fourier transform mass spectrometry.  Data was collected from the proteomic profiling of 30 human samples.  This allowed for the identification of proteins encoded by 17,294 genes, which account for ~84% of the total annotated protein-coding human genes.  The following graph depicts the average spectral count for the protein of the chosen gene across many cells and tissues.</div>
                                                         <Plot
                                                             data={[hpm]}
                                                             layout={{width: '800', height: '1000', title: props.gene + ' (HPM)',
@@ -731,7 +739,9 @@ export default function Dashboard(props) {
                                         {
                                             hpa != null 
                                                 ? 
-                                                    <div id="hpa">
+                                                    <div style={{width: '800px'}}>
+                                                        <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
+                                                        <div>The Human Protein Atlas is a map of protein expression across 32 human tissues created using microarray-based immunohistochemistry.  Samples of all major human tissues and organs were analyzed based on 24,028 antibodies corresponding to 16,975 protein-encoding genes.  The following graph depicts the protein expression level across many cells and tissues.   </div>
                                                         <Plot
                                                         data={[hpa]}
                                                         layout={{width: '800', height: '1500', title: props.gene + ' (HPA)',
@@ -756,7 +766,9 @@ export default function Dashboard(props) {
                                         {
                                             gtex_proteomics != null 
                                                 ? 
-                                                    <div id="gtex_proteomics">
+                                                    <div style={{width: '800px'}}>
+                                                        <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
+                                                        <div>The Genotype-Tissue Expression (GTEx) project was created as a resource for use in studying the connection between genetic variation and gene expression in human tissues.  The goal was to create a database and associated tissue bank that would allow researchers to search for eQTLs (Expression quantitative trait loci) and discover their role in the formation of diseases.  By the end of 2015, the project increased to include approximately 900 post-mortem donors.  Using GTEx’s proteomics data, the following graph depicts the protein log-transformed relative abundance of various tissues for the chosen gene.</div>
                                                         <Plot
                                                             data={gtex_proteomics}
                                                             layout={{width: '800', height: '1500', title: props.gene + ' (GTEx Proteomics)',
