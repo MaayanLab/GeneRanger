@@ -87,8 +87,9 @@ export async function getServerSideProps() {
     ids = ids.substring(ids.indexOf('<Id>'), ids.lastIndexOf('</Id>')).replaceAll('</Id>', ',').replaceAll('<Id>', '').replace(/(\r\n|\n|\r)/gm, "");
     const esummary_res = await fetch(esummary_url + ids);
     let NCBI_data = await esummary_res.text();
-    let slicedStr = NCBI_data.substring(NCBI_data.indexOf('<Name>' + defaultGene + '</Name>'));
-    NCBI_data = slicedStr.substring(slicedStr.indexOf('<Summary>'), slicedStr.indexOf('</Summary>')).replaceAll('<Summary>', '');
+    let slicedStr = NCBI_data.substring(NCBI_data.indexOf('<Name>' + context.query.gene + '</Name>'));
+    slicedStr = slicedStr.substring(slicedStr.indexOf('<Summary>'), slicedStr.indexOf('</Summary>')).replaceAll('<Summary>', '');
+    NCBI_data = slicedStr.substring(0, slicedStr.lastIndexOf('[') - 1);
 
     // If there isn't an NCBI description
     if (NCBI_data == "") NCBI_data = 'No gene description available.'
