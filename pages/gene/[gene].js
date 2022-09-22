@@ -90,6 +90,9 @@ export async function getServerSideProps(context) {
     slicedStr = slicedStr.substring(slicedStr.indexOf('<Summary>'), slicedStr.indexOf('</Summary>')).replaceAll('<Summary>', '');
     NCBI_data = slicedStr.substring(0, slicedStr.lastIndexOf('[') - 1);
 
+    // Converting character entities
+    NCBI_data = NCBI_data.replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&').replaceAll('&quot;', '"').replaceAll('&apos;', '\'').replaceAll('&copy;', '©').replaceAll('&reg;', '®');
+
     // If there isn't an NCBI description
     if (NCBI_data == "") NCBI_data = 'No gene description available.'
     
@@ -105,8 +108,6 @@ export async function getServerSideProps(context) {
 }
 
 export default function Dashboard(props) {
-
-    console.log(props.NCBI_data)
 
     let gtex_transcriptomics = null;
     let archs4 = null;
