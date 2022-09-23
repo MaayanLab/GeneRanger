@@ -188,7 +188,6 @@ export default function Dashboard(props) {
     if (data.length != 0) {
 
         let mean_index = 1;
-        let sd_index = 2;
         let min_index = 3;
         let max_index = 4;
         let q1_index = 5;
@@ -205,11 +204,10 @@ export default function Dashboard(props) {
         let names = processNames(Object.keys(data[q1_index]).slice(3));
         let median = Object.values(data[median_index]).slice(3);
         let mean = Object.values(data[mean_index]).slice(3);
-        let sd = Object.values(data[sd_index]).slice(3);
 
         let arrays = [];
         for (let i = 0; i < mean.length; i++) {
-            arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i], 'name': names[i]});
+            arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i], 'name': names[i]});
         }
 
         arrays.sort((a, b) => a.mean - b.mean);
@@ -220,7 +218,6 @@ export default function Dashboard(props) {
             median[i] = arrays[i].median;
             q3[i] = arrays[i].q3;
             mean[i] = arrays[i].mean;
-            sd[i] = arrays[i].sd;
             lowerfence[i] = arrays[i].lowerfence;
             upperfence[i] = arrays[i].upperfence;
             names[i] = arrays[i].name;
@@ -232,7 +229,6 @@ export default function Dashboard(props) {
             median: median,
             q3: q3,
             mean: mean,
-            sd: sd,
             lowerfence: lowerfence,
             upperfence: upperfence,
             y: names,
