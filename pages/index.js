@@ -496,6 +496,7 @@ export default function Dashboard(props) {
     let NCBI_entrez = 'https://www.ncbi.nlm.nih.gov/gene/?term=' + props.gene;
     let GeneCards = 'https://www.genecards.org/cgi-bin/carddisp.pl?gene=' + props.gene;
     let Harmonizome = 'https://maayanlab.cloud/Harmonizome/gene/' + props.gene;
+    let ARCHS4_link = 'https://maayanlab.cloud/archs4/gene/' + props.gene;
 
     return (
 
@@ -674,7 +675,8 @@ export default function Dashboard(props) {
                                                                         <br/>
                                                                         <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">NCBI Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                                                         <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome</a>
+                                                                        <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4</a>
                                                                     </>
                                                                     
                                                         }
@@ -711,7 +713,8 @@ export default function Dashboard(props) {
                                                                         <br/>
                                                                         <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">NCBI Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                                                         <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome</a>
+                                                                        <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4</a>
                                                                     </>
                                                                     
                                                         }
@@ -749,7 +752,8 @@ export default function Dashboard(props) {
                                                                         <br/>
                                                                         <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">NCBI Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                                                         <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome</a>
+                                                                        <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4</a>
                                                                     </>
                                                                     
                                                         }
@@ -787,7 +791,8 @@ export default function Dashboard(props) {
                                                                         <br/>
                                                                         <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">NCBI Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                                                         <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome</a>
+                                                                        <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4</a>
                                                                     </>
                                                                     
                                                         }
@@ -825,7 +830,8 @@ export default function Dashboard(props) {
                                                                         <br/>
                                                                         <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">NCBI Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                                                         <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome</a>
+                                                                        <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4</a>
                                                                     </>
                                                                     
                                                         }
@@ -865,7 +871,8 @@ export default function Dashboard(props) {
                                                                         <br/>
                                                                         <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">NCBI Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                                                         <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome</a>
+                                                                        <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4</a>
                                                                     </>
                                                                     
                                                         }
