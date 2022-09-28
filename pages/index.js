@@ -672,7 +672,7 @@ export default function Dashboard(props) {
                                                                     <div style={{textAlign: 'center'}}>{props.NCBI_data}</div>
                                                                 :
                                                                     <>
-                                                                        <div><b>Short description (from NCBI's Gene Database):</b> {props.NCBI_data}</div>
+                                                                        <div><b>Short description (from NCBI&apos;s Gene Database):</b> {props.NCBI_data}</div>
                                                                         <br/>
                                                                         <div><b>Gene pages on other sites:</b></div>
                                                                         <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
@@ -712,7 +712,7 @@ export default function Dashboard(props) {
                                                                     <div style={{textAlign: 'center'}}>{props.NCBI_data}</div>
                                                                 :
                                                                     <>
-                                                                        <div><b>Short description (from NCBI's Gene Database):</b> {props.NCBI_data}</div>
+                                                                        <div><b>Short description (from NCBI&apos;s Gene Database):</b> {props.NCBI_data}</div>
                                                                         <br/>
                                                                         <div><b>Gene pages on other sites:</b></div>
                                                                         <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
@@ -753,7 +753,7 @@ export default function Dashboard(props) {
                                                                     <div style={{textAlign: 'center'}}>{props.NCBI_data}</div>
                                                                 :
                                                                     <>
-                                                                        <div><b>Short description (from NCBI's Gene Database):</b> {props.NCBI_data}</div>
+                                                                        <div><b>Short description (from NCBI&apos;s Gene Database):</b> {props.NCBI_data}</div>
                                                                         <br/>
                                                                         <div><b>Gene pages on other sites:</b></div>
                                                                         <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
@@ -794,7 +794,7 @@ export default function Dashboard(props) {
                                                                     <div style={{textAlign: 'center'}}>{props.NCBI_data}</div>
                                                                 :
                                                                     <>
-                                                                        <div><b>Short description (from NCBI's Gene Database):</b> {props.NCBI_data}</div>
+                                                                        <div><b>Short description (from NCBI&apos;s Gene Database):</b> {props.NCBI_data}</div>
                                                                         <br/>
                                                                         <div><b>Gene pages on other sites:</b></div>
                                                                         <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
@@ -835,7 +835,7 @@ export default function Dashboard(props) {
                                                                     <div style={{textAlign: 'center'}}>{props.NCBI_data}</div>
                                                                 :
                                                                     <>
-                                                                        <div><b>Short description (from NCBI's Gene Database):</b> {props.NCBI_data}</div>
+                                                                        <div><b>Short description (from NCBI&apos;s Gene Database):</b> {props.NCBI_data}</div>
                                                                         <br/>
                                                                         <div><b>Gene pages on other sites:</b></div>
                                                                         <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
@@ -878,7 +878,7 @@ export default function Dashboard(props) {
                                                                     <div style={{textAlign: 'center'}}>{props.NCBI_data}</div>
                                                                 :
                                                                     <>
-                                                                        <div><b>Short description (from NCBI's Gene Database):</b> {props.NCBI_data}</div>
+                                                                        <div><b>Short description (from NCBI&apos;s Gene Database):</b> {props.NCBI_data}</div>
                                                                         <br/>
                                                                         <div><b>Gene pages on other sites:</b></div>
                                                                         <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
