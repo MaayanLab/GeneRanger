@@ -497,6 +497,7 @@ export default function Dashboard(props) {
     let GeneCards = 'https://www.genecards.org/cgi-bin/carddisp.pl?gene=' + props.gene;
     let Harmonizome = 'https://maayanlab.cloud/Harmonizome/gene/' + props.gene;
     let ARCHS4_link = 'https://maayanlab.cloud/archs4/gene/' + props.gene;
+    let GDLPA = 'https://cfde-gene-pages.cloud/gene/' + props.gene +'?CF=false&PS=true&Ag=true&gene=false&variant=false';
 
     return (
 
@@ -671,19 +672,20 @@ export default function Dashboard(props) {
                                                                     <div style={{textAlign: 'center'}}>{props.NCBI_data}</div>
                                                                 :
                                                                     <>
-                                                                        <div><b>NCBI Description:</b> {props.NCBI_data}</div>
+                                                                        <div><b>Short description (from NCBI's Gene Database):</b> {props.NCBI_data}</div>
                                                                         <br/>
-                                                                        <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">NCBI Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <div><b>Gene pages on other sites:</b></div>
+                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                                                         <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4</a>
+                                                                        <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <a style={{textDecoration: 'none'}} href={GDLPA} target="_blank" rel="noopener noreferrer">GDLPA</a>
                                                                     </>
-                                                                    
                                                         }
                                                         
                                                         <Plot
                                                             data={[gtex_transcriptomics]}
-                                                            layout={{width: '800', height: '1500', title: props.gene + ' (RNA-seq) GTEx', yaxis: {automargin: true},
+                                                            layout={{width: '800', height: '1500', title: props.gene + ' Expression across GTEx Tissues (RNA-seq)', yaxis: {automargin: true},
                                                             xaxis: {
                                                                 title: {
                                                                 text: 'RNA counts',
@@ -710,18 +712,20 @@ export default function Dashboard(props) {
                                                                     <div style={{textAlign: 'center'}}>{props.NCBI_data}</div>
                                                                 :
                                                                     <>
-                                                                        <div><b>NCBI Description:</b> {props.NCBI_data}</div>
+                                                                        <div><b>Short description (from NCBI's Gene Database):</b> {props.NCBI_data}</div>
                                                                         <br/>
-                                                                        <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">NCBI Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <div><b>Gene pages on other sites:</b></div>
+                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                                                         <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4</a>
+                                                                        <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <a style={{textDecoration: 'none'}} href={GDLPA} target="_blank" rel="noopener noreferrer">GDLPA</a>
                                                                     </>
                                                                     
                                                         }
                                                         <Plot
                                                             data={[archs4]}
-                                                            layout={{width: '800', height: '13000', title: props.gene + ' (RNA-seq) ARCHS4',
+                                                            layout={{width: '800', height: '13000', title: props.gene + ' Expression across ARCHS4 Cells & Tissues (RNA-seq)',
                                                             yaxis: {
                                                                 automargin: true
                                                             },
@@ -749,18 +753,20 @@ export default function Dashboard(props) {
                                                                     <div style={{textAlign: 'center'}}>{props.NCBI_data}</div>
                                                                 :
                                                                     <>
-                                                                        <div><b>NCBI Description:</b> {props.NCBI_data}</div>
+                                                                        <div><b>Short description (from NCBI's Gene Database):</b> {props.NCBI_data}</div>
                                                                         <br/>
-                                                                        <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">NCBI Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <div><b>Gene pages on other sites:</b></div>
+                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                                                         <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4</a>
+                                                                        <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <a style={{textDecoration: 'none'}} href={GDLPA} target="_blank" rel="noopener noreferrer">GDLPA</a>
                                                                     </>
                                                                     
                                                         }
                                                         <Plot
                                                             data={[tabula_sapiens]}
-                                                            layout={{width: '800', height: '13000', title: props.gene + ' (RNA-seq) Tabula Sapiens',
+                                                            layout={{width: '800', height: '13000', title: props.gene + ' Expression across Tabula Sapiens Cells (RNA-seq)',
                                                             yaxis: {
                                                             automargin: true
                                                             },
@@ -788,18 +794,20 @@ export default function Dashboard(props) {
                                                                     <div style={{textAlign: 'center'}}>{props.NCBI_data}</div>
                                                                 :
                                                                     <>
-                                                                        <div><b>NCBI Description:</b> {props.NCBI_data}</div>
+                                                                        <div><b>Short description (from NCBI's Gene Database):</b> {props.NCBI_data}</div>
                                                                         <br/>
-                                                                        <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">NCBI Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <div><b>Gene pages on other sites:</b></div>
+                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                                                         <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4</a>
+                                                                        <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <a style={{textDecoration: 'none'}} href={GDLPA} target="_blank" rel="noopener noreferrer">GDLPA</a>
                                                                     </>
                                                                     
                                                         }
                                                         <Plot
                                                             data={[hpm]}
-                                                            layout={{width: '800', height: '1000', title: props.gene + ' (HPM)',
+                                                            layout={{width: '800', height: '1000', title: props.gene + ' Protein Expression across HPM Cells & Tissues',
                                                             yaxis: {
                                                             automargin: true
                                                             },
@@ -827,18 +835,20 @@ export default function Dashboard(props) {
                                                                     <div style={{textAlign: 'center'}}>{props.NCBI_data}</div>
                                                                 :
                                                                     <>
-                                                                        <div><b>NCBI Description:</b> {props.NCBI_data}</div>
+                                                                        <div><b>Short description (from NCBI's Gene Database):</b> {props.NCBI_data}</div>
                                                                         <br/>
-                                                                        <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">NCBI Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <div><b>Gene pages on other sites:</b></div>
+                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                                                         <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4</a>
+                                                                        <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <a style={{textDecoration: 'none'}} href={GDLPA} target="_blank" rel="noopener noreferrer">GDLPA</a>
                                                                     </>
                                                                     
                                                         }
                                                         <Plot
                                                         data={[hpa]}
-                                                        layout={{width: '800', height: '1750', title: props.gene + ' (HPA)',
+                                                        layout={{width: '800', height: '1750', title: props.gene + ' Protein Expression across HPA Cells & Tissues',
                                                         yaxis: {
                                                         automargin: true
                                                         },
@@ -868,18 +878,20 @@ export default function Dashboard(props) {
                                                                     <div style={{textAlign: 'center'}}>{props.NCBI_data}</div>
                                                                 :
                                                                     <>
-                                                                        <div><b>NCBI Description:</b> {props.NCBI_data}</div>
+                                                                        <div><b>Short description (from NCBI's Gene Database):</b> {props.NCBI_data}</div>
                                                                         <br/>
-                                                                        <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">NCBI Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <div><b>Gene pages on other sites:</b></div>
+                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                                                         <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4</a>
+                                                                        <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                        <a style={{textDecoration: 'none'}} href={GDLPA} target="_blank" rel="noopener noreferrer">GDLPA</a>
                                                                     </>
                                                                     
                                                         }
                                                         <Plot
                                                             data={gtex_proteomics}
-                                                            layout={{width: '800', height: '1500', title: props.gene + ' (GTEx Proteomics)',
+                                                            layout={{width: '800', height: '1500', title: props.gene + ' Protein Expression across GTEx Tissues',
                                                             showlegend: false,
                                                             yaxis: {
                                                             automargin: true
