@@ -643,8 +643,7 @@ export default function Dashboard(props) {
                             
                         </div>
                     </div>
-
-                    <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', marginTop: '10px', gap: '10px', width: '100%'}}>
+                    <div style={{display: 'flex', alignItems: 'center', alignContent: 'center', justifyContent: 'center', flexDirection: 'column', marginTop: '10px', gap: '10px', width: '1200px'}}>
                         
                         <div>
                             <Box sx={{ width: '100%' }}>
