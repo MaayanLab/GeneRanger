@@ -21,6 +21,9 @@ import IconButton from '@mui/material/IconButton';
 import GraphMissing from '../components/graphMissing';
 import Zoom from '@mui/material/Zoom';
 import Backdrop from '@mui/material/Backdrop';
+import Drawer from '@mui/material/Drawer';
+import Button from '@mui/material/Button';
+import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 
 const Plot = dynamic(() => import('react-plotly.js'), {
 	ssr: false,
@@ -491,6 +494,139 @@ export default function Dashboard(props) {
 
     const [loading, setLoading] = React.useState(false);
 
+    // For MUI Drawer
+
+    const [drawerState, setDrawerState] = React.useState(false);
+    
+    const toggleDrawer = (open) => (event) => {
+        setDrawerState(open);
+    };
+    
+    const drawerContents = (
+        <Box
+            sx={{ width: 420 }}
+            // onClick={toggleDrawer(false)}
+            // onKeyDown={toggleDrawer(false)}
+        >
+            <div className={styles.drawerDiv}>
+                        
+                <div style={{width: '400px', display: 'flex', flexDirection: 'column', gap: '20px'}}>
+
+                    <div>
+                        <h3 style={{margin: '0'}}>Transcriptomics</h3>
+                        <FormGroup style={{alignItems: 'center'}}>
+
+                            <FormControlLabel 
+                            className={styles.formItem} 
+                            control={<Switch onChange={() => setCurrDatabase(0)} checked={currDatabase == 0}/>} 
+                            label={
+                                <div className={styles.dbLogo}>
+                                    <img className={styles.databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/>
+                                    <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
+                                        <div className={styles.tooltipText}><a href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://www.nature.com/articles/ng.2653" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
+                                        <IconButton><InfoIcon color='info'/></IconButton>
+                                    </HtmlTooltip>
+                                </div>
+                            } 
+                            labelPlacement="start"/>
+
+                            <div className={styles.logoDesc}>A database designed to study the relationship between genetic variation and gene expression across multiple tissues.  Each tissue’s RNA expression is represented by a box plot.</div>
+
+                            <FormControlLabel 
+                            className={styles.formItem} 
+                            control={<Switch onChange={() => setCurrDatabase(1)} checked={currDatabase == 1} />} 
+                            label={
+                                <div className={styles.dbLogo}>
+                                    <img className={styles.databaseLogo} src="/images/archs4.png" alt="archs4 Logo"/>
+                                    <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
+                                        <div className={styles.tooltipText}><a href="https://maayanlab.cloud/archs4/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://www.nature.com/articles/s41467-018-03751-6" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
+                                        <IconButton><InfoIcon color='info'/></IconButton>
+                                    </HtmlTooltip>
+                                </div>
+                            } 
+                            labelPlacement="start"/>
+                            
+                            <div className={styles.logoDesc}>RNA-seq data from many public sources conveniently compiled into a single database.  Each tissue/cell’s RNA expression is represented by a box plot.</div>
+                            
+                            <FormControlLabel 
+                            className={styles.formItem} 
+                            control={<Switch onChange={() => setCurrDatabase(2)} checked={currDatabase == 2} />} 
+                            label={
+                                <div className={styles.dbLogo}>
+                                    <img className={styles.databaseLogo} style={{borderRadius: '8px'}} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo"/>
+                                    <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
+                                        <div className={styles.tooltipText}><a href="https://tabula-sapiens-portal.ds.czbiohub.org" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/35549404/" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
+                                        <IconButton><InfoIcon color='info'/></IconButton>
+                                    </HtmlTooltip>
+                                </div>
+                            } 
+                            labelPlacement="start"/>
+                            
+                            <div className={styles.logoDesc}>An atlas of RNA-seq data for over 400 cell types created with single-cell transcriptomics.  Each cell’s RNA expression is represented by a box plot.</div>
+
+                        </FormGroup>
+                    </div>
+                
+                    <div>
+                        <h3 style={{margin: '0'}}>Proteomics</h3>
+                        <FormGroup style={{alignItems: 'center'}}>
+
+                            <FormControlLabel 
+                            className={styles.formItem} 
+                            control={<Switch onChange={() => setCurrDatabase(3)} checked={currDatabase == 3} />} 
+                            label={
+                                <div className={styles.dbLogo}>
+                                    <img className={styles.databaseLogo} style={{width: '200px', marginRight: '0'}} src="/images/HPM.gif" alt="HPM Logo"/>
+                                    <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
+                                        <div className={styles.tooltipText}><a href="http://www.humanproteomemap.org" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/24870542/" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
+                                        <IconButton><InfoIcon color='info'/></IconButton>
+                                    </HtmlTooltip>
+                                </div>
+                            } 
+                            labelPlacement="start"/>
+                            
+                            <div className={styles.logoDesc}>A draft map of the human proteome created with Fourier transform mass spectrometry.  Data are displayed as average spectral counts.</div>
+                            
+                            <FormControlLabel 
+                            className={styles.formItem} 
+                            control={<Switch onChange={() => setCurrDatabase(4)} checked={currDatabase == 4} />} 
+                            label={
+                                <div className={styles.dbLogo}>
+                                    <img className={styles.databaseLogo} style={{width: '200px', padding: '10px', marginLeft: '0px', marginRight: '-20px', backgroundColor: '#8eaabe', borderRadius: '5px'}} src="/images/HPA.svg" alt="HPA Logo"/>
+                                    <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
+                                        <div className={styles.tooltipText}><a href="https://www.proteinatlas.org" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/25613900/" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
+                                        <IconButton><InfoIcon color='info'/></IconButton>
+                                    </HtmlTooltip>
+                                </div>
+                            } 
+                            labelPlacement="start"/>
+                            
+                            <div className={styles.logoDesc}>A map of protein expression across 32 human tissues created with antibody profiling.  Proteins are categorized as either “not detected”, “low”, “medium”, or “high”.</div>
+                            
+                            <FormControlLabel 
+                            className={styles.formItem} 
+                            control={<Switch onChange={() => setCurrDatabase(5)} checked={currDatabase == 5} />} 
+                            label={
+                                <div className={styles.dbLogo}>
+                                    <img className={styles.databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/>
+                                    <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
+                                        <div className={styles.tooltipText}><a href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://www.nature.com/articles/ng.2653" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
+                                        <IconButton><InfoIcon color='info'/></IconButton>
+                                    </HtmlTooltip>
+                                </div>
+                            } 
+                            labelPlacement="start"/>
+                            
+                            <div className={styles.logoDesc}>A database designed to study the relationship between genetic variation and gene expression across multiple tissues.  Data are displayed as protein log-transformed relative abundance in box-plot form.</div>
+
+                        </FormGroup>
+                    </div>
+                    
+                </div>
+            </div>
+        </Box>
+    );
+
     // Gene links
 
     let NCBI_entrez = 'https://www.ncbi.nlm.nih.gov/gene/?term=' + props.gene;
@@ -517,6 +653,17 @@ export default function Dashboard(props) {
                 <Header/>
 
                 <div style={{display: 'flex', justifyContent: 'flex-start', width: '100%', paddingBottom: '150px'}}>
+
+                    <div className={styles.drawerButtonDiv}>
+                        <Button onClick={toggleDrawer(true)}><DoubleArrowIcon style={{transform: 'scale(2)'}} /></Button>
+                        <Drawer
+                            anchor={'left'}
+                            open={drawerState}
+                            onClose={toggleDrawer(false)}
+                        >
+                        {drawerContents}
+                        </Drawer>
+                    </div>
 
                     <div className={styles.dbGroup}>
                         <div style={{marginBottom: '15px'}}>
@@ -645,6 +792,17 @@ export default function Dashboard(props) {
                     </div>
                     <div style={{display: 'flex', alignItems: 'center', alignContent: 'center', justifyContent: 'center', flexDirection: 'column', marginTop: '10px', gap: '10px', width: '1200px'}}>
                         
+                        <div className={styles.secondAutocomplete} style={{marginTop: '15px'}}>
+                            <Autocomplete
+                                disablePortal
+                                options={ genes }
+                                sx={{ width: 400 }}
+                                onChange={(event, value) => {submitGene(value)}}
+                                renderInput={(params) => <TextField {...params} label="Human Gene Symbol" />}
+                                />
+
+                        </div>
+
                         <div>
                             <Box sx={{ width: '100%' }}>
                                 <Box>

@@ -30,6 +30,6 @@
 
 @media only screen and (max-width: 700px) {
     .text {
-      display: none;
+        display: none;
     }
-  }
+}
