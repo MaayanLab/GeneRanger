@@ -504,7 +504,7 @@ export default function Dashboard(props) {
     
     const drawerContents = (
         <Box
-            sx={{ width: 420 }}
+            sx={{ width: '420px', height: '100%' }}
             // onClick={toggleDrawer(false)}
             // onKeyDown={toggleDrawer(false)}
         >
@@ -652,7 +652,7 @@ export default function Dashboard(props) {
 
                 <Header/>
 
-                <div style={{display: 'flex', justifyContent: 'flex-start', width: '100%', paddingBottom: '150px'}}>
+                <div className={styles.mainFlexbox}>
 
                     <div className={styles.drawerButtonDiv}>
                         <Button onClick={toggleDrawer(true)}><DoubleArrowIcon style={{transform: 'scale(2)'}} /></Button>
@@ -791,7 +791,7 @@ export default function Dashboard(props) {
                         </div>
                     </div>
 
-                    <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', marginTop: '10px', gap: '10px', width: '1200px'}}>
+                    <div className={styles.graphFlexbox}>
                         
                         <div className={styles.secondAutocomplete} style={{marginTop: '15px'}}>
                             <Autocomplete
@@ -1070,7 +1070,7 @@ export default function Dashboard(props) {
                         </div>
                     </div>
                 </div>
-            
+                
                 <Footer/>
 
             </div>
