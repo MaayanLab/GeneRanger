@@ -505,7 +505,7 @@ export default function Dashboard(props) {
     
     const drawerContents = (
         <Box
-            sx={{ width: '420px', height: '100%' }}
+            sx={{ width: '375px', height: '100%' }}
             // onClick={toggleDrawer(false)}
             // onKeyDown={toggleDrawer(false)}
         >
@@ -514,7 +514,7 @@ export default function Dashboard(props) {
                 <div style={{width: '400px', display: 'flex', flexDirection: 'column', gap: '20px'}}>
 
                     <div>
-                        <Button onClick={toggleDrawer(false)}><KeyboardDoubleArrowLeftIcon style={{transform: 'scale(3)', position: 'absolute', left: '-150px'}} /></Button>
+                        <Button onClick={toggleDrawer(false)}><KeyboardDoubleArrowLeftIcon style={{transform: 'scale(3)', position: 'absolute', top: '5px', left: '-140px'}} /></Button>
                         <h3 style={{margin: '0'}}>Transcriptomics</h3>
                         <FormGroup style={{alignItems: 'center'}}>
 
