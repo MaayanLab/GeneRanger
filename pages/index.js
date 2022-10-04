@@ -19,6 +19,7 @@ import { styled } from '@mui/material/styles';
 import InfoIcon from '@mui/icons-material/Info';
 import IconButton from '@mui/material/IconButton';
 import GraphMissing from '../components/graphMissing';
+import GeneDescription from '../components/geneDescription';
 import Zoom from '@mui/material/Zoom';
 import Backdrop from '@mui/material/Backdrop';
 import Drawer from '@mui/material/Drawer';
@@ -823,23 +824,7 @@ export default function Dashboard(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        {
-                                                            props.NCBI_data == 'No gene description available.'
-                                                                ?
-                                                                    <div style={{textAlign: 'center'}}>{props.NCBI_data}</div>
-                                                                :
-                                                                    <>
-                                                                        <div><b>Short description (from NCBI&apos;s Gene Database):</b> {props.NCBI_data}</div>
-                                                                        <br/>
-                                                                        <div><b>Gene pages on other sites:</b></div>
-                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={GDLPA} target="_blank" rel="noopener noreferrer">GDLPA</a>
-                                                                    </>
-                                                                    
-                                                        }
+                                                        <GeneDescription NCBI_data={props.NCBI_data} gene={props.gene} />
                                                         <div style={{height: '1500px'}}>
                                                             <Plot
                                                                 data={[gtex_transcriptomics]}
@@ -866,23 +851,7 @@ export default function Dashboard(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        {
-                                                            props.NCBI_data == 'No gene description available.'
-                                                                ?
-                                                                    <div style={{textAlign: 'center'}}>{props.NCBI_data}</div>
-                                                                :
-                                                                    <>
-                                                                        <div><b>Short description (from NCBI&apos;s Gene Database):</b> {props.NCBI_data}</div>
-                                                                        <br/>
-                                                                        <div><b>Gene pages on other sites:</b></div>
-                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={GDLPA} target="_blank" rel="noopener noreferrer">GDLPA</a>
-                                                                    </>
-                                                                    
-                                                        }
+                                                        <GeneDescription NCBI_data={props.NCBI_data} gene={props.gene} />
                                                         <div style={{height: '13000px'}}>
                                                             <Plot
                                                                 data={[archs4]}
@@ -911,23 +880,7 @@ export default function Dashboard(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        {
-                                                            props.NCBI_data == 'No gene description available.'
-                                                                ?
-                                                                    <div style={{textAlign: 'center'}}>{props.NCBI_data}</div>
-                                                                :
-                                                                    <>
-                                                                        <div><b>Short description (from NCBI&apos;s Gene Database):</b> {props.NCBI_data}</div>
-                                                                        <br/>
-                                                                        <div><b>Gene pages on other sites:</b></div>
-                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={GDLPA} target="_blank" rel="noopener noreferrer">GDLPA</a>
-                                                                    </>
-                                                                    
-                                                        }
+                                                        <GeneDescription NCBI_data={props.NCBI_data} gene={props.gene} />
                                                         <div style={{height: '13000px'}}>
                                                             <Plot
                                                                 data={[tabula_sapiens]}
@@ -956,23 +909,7 @@ export default function Dashboard(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        {
-                                                            props.NCBI_data == 'No gene description available.'
-                                                                ?
-                                                                    <div style={{textAlign: 'center'}}>{props.NCBI_data}</div>
-                                                                :
-                                                                    <>
-                                                                        <div><b>Short description (from NCBI&apos;s Gene Database):</b> {props.NCBI_data}</div>
-                                                                        <br/>
-                                                                        <div><b>Gene pages on other sites:</b></div>
-                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={GDLPA} target="_blank" rel="noopener noreferrer">GDLPA</a>
-                                                                    </>
-                                                                    
-                                                        }
+                                                        <GeneDescription NCBI_data={props.NCBI_data} gene={props.gene} />
                                                         <div style={{height: '1000px'}}>
                                                             <Plot
                                                                 data={[hpm]}
@@ -1001,23 +938,7 @@ export default function Dashboard(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        {
-                                                            props.NCBI_data == 'No gene description available.'
-                                                                ?
-                                                                    <div style={{textAlign: 'center'}}>{props.NCBI_data}</div>
-                                                                :
-                                                                    <>
-                                                                        <div><b>Short description (from NCBI&apos;s Gene Database):</b> {props.NCBI_data}</div>
-                                                                        <br/>
-                                                                        <div><b>Gene pages on other sites:</b></div>
-                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={GDLPA} target="_blank" rel="noopener noreferrer">GDLPA</a>
-                                                                    </>
-                                                                    
-                                                        }
+                                                        <GeneDescription NCBI_data={props.NCBI_data} gene={props.gene} />
                                                         <div style={{height: '1750px'}}>
                                                             <Plot
                                                                 data={[hpa]}
@@ -1048,23 +969,7 @@ export default function Dashboard(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        {
-                                                            props.NCBI_data == 'No gene description available.'
-                                                                ?
-                                                                    <div style={{textAlign: 'center'}}>{props.NCBI_data}</div>
-                                                                :
-                                                                    <>
-                                                                        <div><b>Short description (from NCBI&apos;s Gene Database):</b> {props.NCBI_data}</div>
-                                                                        <br/>
-                                                                        <div><b>Gene pages on other sites:</b></div>
-                                                                        <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">Entrez Gene&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                        <a style={{textDecoration: 'none'}} href={GDLPA} target="_blank" rel="noopener noreferrer">GDLPA</a>
-                                                                    </>
-                                                                    
-                                                        }
+                                                        <GeneDescription NCBI_data={props.NCBI_data} gene={props.gene} />
                                                         <div style={{height: '1500px'}}>
                                                             <Plot
                                                                 data={gtex_proteomics}
