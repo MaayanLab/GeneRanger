@@ -628,14 +628,6 @@ export default function Dashboard(props) {
         </Box>
     );
 
-    // Gene links
-
-    let NCBI_entrez = 'https://www.ncbi.nlm.nih.gov/gene/?term=' + props.gene;
-    let GeneCards = 'https://www.genecards.org/cgi-bin/carddisp.pl?gene=' + props.gene;
-    let Harmonizome = 'https://maayanlab.cloud/Harmonizome/gene/' + props.gene;
-    let ARCHS4_link = 'https://maayanlab.cloud/archs4/gene/' + props.gene;
-    let GDLPA = 'https://cfde-gene-pages.cloud/gene/' + props.gene +'?CF=false&PS=true&Ag=true&gene=false&variant=false';
-
     return (
 
         <div style={{position: 'relative', minHeight: '100vh'}}>
