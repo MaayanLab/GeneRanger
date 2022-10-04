@@ -1,4 +1,5 @@
 import * as React from 'react';
+import styles from '../styles/GeneDescription.module.css';
 
 function GeneDescription({NCBI_data, gene}) {
 
@@ -23,13 +24,12 @@ function GeneDescription({NCBI_data, gene}) {
                             <div><b>Gene pages on other sites:</b></div>
                             <br/>
                             <div style={{display: 'flex', flexWrap: 'wrap', gap: '25px'}}>
-                                <a style={{textDecoration: 'none'}} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4</a>
-                                <a style={{textDecoration: 'none'}} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome</a>
-                                <a style={{textDecoration: 'none'}} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">Entrez Gene</a>
-                                <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards</a>
-                                <a style={{textDecoration: 'none'}} href={GDLPA} target="_blank" rel="noopener noreferrer">GDLPA</a>
+                                <a className={styles.geneLink} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4</a>
+                                <a className={styles.geneLink} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome</a>
+                                <a className={styles.geneLink} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">Entrez Gene</a>
+                                <a className={styles.geneLink} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards</a>
+                                <a className={styles.geneLink} href={GDLPA} target="_blank" rel="noopener noreferrer">GDLPA</a>
                             </div>
-                            <br/>
                         </>
                         
             }
