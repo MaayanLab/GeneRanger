@@ -25,9 +25,11 @@
 .drawerDiv {
   height: 100%;
   text-align: center;
-  padding-top: 15px;
+  /* padding-top: 15px; */
+  /* padding-bottom: 15px; */
   font-size: 20px;
   background-color: #aec2d0;
+  overflow-x: hidden;
 }
 
 .formItem {

@@ -663,9 +663,7 @@ export default function Dashboard(props) {
                             open={drawerState}
                             onClose={toggleDrawer(false)}
                         >
-                            <div style={{height: '500%', backgroundColor: '#aec2d0'}}>
-                                {drawerContents}
-                            </div>
+                            {drawerContents}
                         </Drawer>
                     </div>
 
