@@ -23,7 +23,8 @@ import Zoom from '@mui/material/Zoom';
 import Backdrop from '@mui/material/Backdrop';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
-import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 
 const Plot = dynamic(() => import('react-plotly.js'), {
 	ssr: false,
@@ -513,6 +514,7 @@ export default function Dashboard(props) {
                 <div style={{width: '400px', display: 'flex', flexDirection: 'column', gap: '20px'}}>
 
                     <div>
+                        <Button onClick={toggleDrawer(false)}><KeyboardDoubleArrowLeftIcon style={{transform: 'scale(3)', position: 'absolute', left: '-150px'}} /></Button>
                         <h3 style={{margin: '0'}}>Transcriptomics</h3>
                         <FormGroup style={{alignItems: 'center'}}>
 
@@ -655,7 +657,7 @@ export default function Dashboard(props) {
                 <div className={styles.mainFlexbox}>
 
                     <div className={styles.drawerButtonDiv}>
-                        <Button onClick={toggleDrawer(true)}><DoubleArrowIcon style={{transform: 'scale(2)'}} /></Button>
+                        <Button onClick={toggleDrawer(true)}><KeyboardDoubleArrowRightIcon style={{transform: 'scale(3)'}} /></Button>
                         <Drawer
                             anchor={'left'}
                             open={drawerState}
