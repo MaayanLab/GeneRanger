@@ -796,17 +796,17 @@ export default function Dashboard(props) {
                             <Autocomplete
                                 disablePortal
                                 options={ genes }
-                                sx={{ width: 400 }}
+                                sx={{ width: 250 }}
                                 onChange={(event, value) => {submitGene(value)}}
                                 renderInput={(params) => <TextField {...params} label="Human Gene Symbol" />}
                                 />
 
                         </div>
 
-                        <div style={{marginLeft: '25px', marginRight: '25px'}}>
+                        <div style={{width: '100%'}}>
                             <Box sx={{ width: '100%' }}>
-                                <Box>
-                                    <Tabs value={currDatabase} onChange={(event, newValue) => {setCurrDatabase(newValue)}} aria-label="basic tabs example">
+                                <Box className={styles.tabsBox}>
+                                    <Tabs value={currDatabase} onChange={(event, newValue) => {setCurrDatabase(newValue)}} aria-label="basic tabs example" variant="fullWidth" centered>
 
                                             <CustomTab label="GTEx Transcriptomics"  />
                                             <CustomTab label="ARCHS4" />
@@ -817,7 +817,7 @@ export default function Dashboard(props) {
 
                                     </Tabs>
                                 </Box>
-                                    <TabPanel value={currDatabase} index={0}>
+                                    <TabPanel style={{width: '100%'}} value={currDatabase} index={0}>
                                         {
                                             gtex_transcriptomics != null 
                                                 ? 
@@ -840,7 +840,7 @@ export default function Dashboard(props) {
                                                                     </>
                                                                     
                                                         }
-                                                        <div style={{width: 'auto', height: '1500px'}}>
+                                                        <div style={{height: '1500px'}}>
                                                             <Plot
                                                                 data={[gtex_transcriptomics]}
                                                                 layout={{title: props.gene + ' Expression across GTEx Tissues (RNA-seq)', yaxis: {automargin: true},
@@ -883,7 +883,7 @@ export default function Dashboard(props) {
                                                                     </>
                                                                     
                                                         }
-                                                        <div style={{width: 'auto', height: '13000px'}}>
+                                                        <div style={{height: '13000px'}}>
                                                             <Plot
                                                                 data={[archs4]}
                                                                 layout={{title: props.gene + ' Expression across ARCHS4 Cells & Tissues (RNA-seq)',
@@ -928,7 +928,7 @@ export default function Dashboard(props) {
                                                                     </>
                                                                     
                                                         }
-                                                        <div style={{width: 'auto', height: '13000px'}}>
+                                                        <div style={{height: '13000px'}}>
                                                             <Plot
                                                                 data={[tabula_sapiens]}
                                                                 layout={{title: props.gene + ' Expression across Tabula Sapiens Cells (RNA-seq)',
@@ -973,7 +973,7 @@ export default function Dashboard(props) {
                                                                     </>
                                                                     
                                                         }
-                                                        <div style={{width: 'auto', height: '1000px'}}>
+                                                        <div style={{height: '1000px'}}>
                                                             <Plot
                                                                 data={[hpm]}
                                                                 layout={{title: props.gene + ' Protein Expression across HPM Cells & Tissues',
@@ -1018,7 +1018,7 @@ export default function Dashboard(props) {
                                                                     </>
                                                                     
                                                         }
-                                                        <div style={{width: 'auto', height: '1750px'}}>
+                                                        <div style={{height: '1750px'}}>
                                                             <Plot
                                                                 data={[hpa]}
                                                                 layout={{title: props.gene + ' Protein Expression across HPA Cells & Tissues',
@@ -1065,7 +1065,7 @@ export default function Dashboard(props) {
                                                                     </>
                                                                     
                                                         }
-                                                        <div style={{width: 'auto', height: '1500px'}}>
+                                                        <div style={{height: '1500px'}}>
                                                             <Plot
                                                                 data={gtex_proteomics}
                                                                 layout={{title: props.gene + ' Protein Expression across GTEx Tissues',

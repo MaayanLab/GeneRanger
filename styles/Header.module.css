@@ -32,4 +32,7 @@
     .text {
         display: none;
     }
+    .mainLogo{
+        margin-left: 0px;
+    }
 }

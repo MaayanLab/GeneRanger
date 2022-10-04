@@ -112,7 +112,7 @@
   flex-direction: column;
   margin-top: 10px;
   gap: 10px;
-  width: 1200px;
+  width: 100%;
 }
 
 .mainFlexbox {
@@ -128,7 +128,7 @@
   }
 }
 
-@media only screen and (max-width: 1150px) {
+@media only screen and (max-width: 1000px) {
   .dbGroup {
     display: none;
   }
@@ -136,9 +136,19 @@
     display: block;
     position: fixed;
     margin-top: 40px;
+    left: 0;
     z-index: 1;
   }
   .secondAutocomplete {
     display: block;
+  }
+  .mainFlexbox {
+    justify-content: center;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .tabsBox{
+    display: none;
   }
 }
