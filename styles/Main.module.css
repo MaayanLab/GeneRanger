@@ -128,14 +128,14 @@
   }
 }
 
-@media only screen and (max-width: 1250px) {
+@media only screen and (max-width: 1150px) {
   .dbGroup {
     display: none;
   }
   .drawerButtonDiv {
     display: block;
     position: fixed;
-    margin-top: 150px;
+    margin-top: 40px;
     z-index: 1;
   }
   .secondAutocomplete {

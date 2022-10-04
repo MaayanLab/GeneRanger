@@ -803,7 +803,7 @@ export default function Dashboard(props) {
 
                         </div>
 
-                        <div>
+                        <div style={{marginLeft: '25px', marginRight: '25px'}}>
                             <Box sx={{ width: '100%' }}>
                                 <Box>
                                     <Tabs value={currDatabase} onChange={(event, newValue) => {setCurrDatabase(newValue)}} aria-label="basic tabs example">
