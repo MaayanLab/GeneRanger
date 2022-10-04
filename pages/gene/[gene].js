@@ -790,7 +790,6 @@ export default function Dashboard(props) {
                             
                         </div>
                     </div>
-
                     <div className={styles.graphFlexbox}>
                         
                         <div className={styles.secondAutocomplete} style={{marginTop: '15px'}}>
@@ -822,7 +821,7 @@ export default function Dashboard(props) {
                                         {
                                             gtex_transcriptomics != null 
                                                 ? 
-                                                    <div style={{width: '800px'}}>
+                                                    <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
                                                         {
                                                             props.NCBI_data == 'No gene description available.'
@@ -839,20 +838,23 @@ export default function Dashboard(props) {
                                                                         <a style={{textDecoration: 'none'}} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                                                         <a style={{textDecoration: 'none'}} href={GDLPA} target="_blank" rel="noopener noreferrer">GDLPA</a>
                                                                     </>
+                                                                    
                                                         }
-                                                        
-                                                        <Plot
-                                                            data={[gtex_transcriptomics]}
-                                                            layout={{width: '800', height: '1500', title: props.gene + ' Expression across GTEx Tissues (RNA-seq)', yaxis: {automargin: true},
-                                                            xaxis: {
-                                                                title: {
-                                                                text: 'RNA counts',
-                                                                }
-                                                            }}}
-                                                            config={{responsive: true}}
-                                                            id={"gtex_transcriptomics"}
-                                                        />
-                                                    </div>
+                                                        <div style={{width: 'auto', height: '1500px'}}>
+                                                            <Plot
+                                                                data={[gtex_transcriptomics]}
+                                                                layout={{title: props.gene + ' Expression across GTEx Tissues (RNA-seq)', yaxis: {automargin: true},
+                                                                xaxis: {
+                                                                    title: {
+                                                                    text: 'RNA counts',
+                                                                    }
+                                                                }}}
+                                                                style={{width: '100%', height: '100%'}}
+                                                                config={{responsive: true}}
+                                                                id={"gtex_transcriptomics"}
+                                                            />
+                                                        </div>
+                                                    </>
                                                     
                                                 : 
                                                     <GraphMissing/>
@@ -862,7 +864,7 @@ export default function Dashboard(props) {
                                         {
                                             archs4 != null 
                                                 ? 
-                                                    <div style={{width: '800px'}}>
+                                                    <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
                                                         {
                                                             props.NCBI_data == 'No gene description available.'
@@ -881,19 +883,23 @@ export default function Dashboard(props) {
                                                                     </>
                                                                     
                                                         }
-                                                        <Plot
-                                                            data={[archs4]}
-                                                            layout={{width: '800', height: '13000', title: props.gene + ' Expression across ARCHS4 Cells & Tissues (RNA-seq)',
-                                                            yaxis: {
+                                                        <div style={{width: 'auto', height: '13000px'}}>
+                                                            <Plot
+                                                                data={[archs4]}
+                                                                layout={{title: props.gene + ' Expression across ARCHS4 Cells & Tissues (RNA-seq)',
+                                                                yaxis: {
                                                                 automargin: true
-                                                            },
-                                                            xaxis: {
-                                                                title: {
-                                                                text: 'RNA counts',
-                                                                }
-                                                            }}}
-                                                        />
-                                                    </div>
+                                                                },
+                                                                xaxis: {
+                                                                    title: {
+                                                                    text: 'RNA counts',
+                                                                    }
+                                                                }}}
+                                                                style={{width: '100%', height: '100%'}}
+                                                                config={{responsive: true}}
+                                                            />
+                                                        </div>
+                                                    </>
                                                     
                                                 : 
                                                     <GraphMissing/>
@@ -903,7 +909,7 @@ export default function Dashboard(props) {
                                         {
                                             tabula_sapiens != null 
                                                 ? 
-                                                    <div style={{width: '800px'}}>
+                                                    <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
                                                         {
                                                             props.NCBI_data == 'No gene description available.'
@@ -922,19 +928,23 @@ export default function Dashboard(props) {
                                                                     </>
                                                                     
                                                         }
-                                                        <Plot
-                                                            data={[tabula_sapiens]}
-                                                            layout={{width: '800', height: '13000', title: props.gene + ' Expression across Tabula Sapiens Cells (RNA-seq)',
-                                                            yaxis: {
-                                                            automargin: true
-                                                            },
-                                                            xaxis: {
-                                                                title: {
-                                                                text: 'RNA counts',
-                                                                }
-                                                            }}}
-                                                        />
-                                                    </div>
+                                                        <div style={{width: 'auto', height: '13000px'}}>
+                                                            <Plot
+                                                                data={[tabula_sapiens]}
+                                                                layout={{title: props.gene + ' Expression across Tabula Sapiens Cells (RNA-seq)',
+                                                                yaxis: {
+                                                                automargin: true
+                                                                },
+                                                                xaxis: {
+                                                                    title: {
+                                                                    text: 'RNA counts',
+                                                                    }
+                                                                }}}
+                                                                style={{width: '100%', height: '100%'}}
+                                                                config={{responsive: true}}
+                                                            />
+                                                        </div>
+                                                    </>
                                                     
                                                 : 
                                                     <GraphMissing/>
@@ -944,7 +954,7 @@ export default function Dashboard(props) {
                                         {
                                             hpm != null 
                                                 ? 
-                                                    <div style={{width: '800px'}}>
+                                                    <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
                                                         {
                                                             props.NCBI_data == 'No gene description available.'
@@ -963,20 +973,24 @@ export default function Dashboard(props) {
                                                                     </>
                                                                     
                                                         }
-                                                        <Plot
-                                                            data={[hpm]}
-                                                            layout={{width: '800', height: '1000', title: props.gene + ' Protein Expression across HPM Cells & Tissues',
-                                                            yaxis: {
-                                                            automargin: true
-                                                            },
-                                                            xaxis: {
-                                                                title: {
-                                                                text: 'Average Spectral Counts',
+                                                        <div style={{width: 'auto', height: '1000px'}}>
+                                                            <Plot
+                                                                data={[hpm]}
+                                                                layout={{title: props.gene + ' Protein Expression across HPM Cells & Tissues',
+                                                                yaxis: {
+                                                                automargin: true
+                                                                },
+                                                                xaxis: {
+                                                                    title: {
+                                                                    text: 'Average Spectral Counts',
+                                                                    }
                                                                 }
-                                                            }
-                                                            }}
-                                                        />
-                                                    </div>
+                                                                }}
+                                                                style={{width: '100%', height: '100%'}}
+                                                                config={{responsive: true}}
+                                                            />
+                                                        </div>
+                                                    </>
                                                 : 
                                                     <GraphMissing/>
                                         }
@@ -985,7 +999,7 @@ export default function Dashboard(props) {
                                         {
                                             hpa != null 
                                                 ? 
-                                                    <div style={{width: '800px'}}>
+                                                    <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
                                                         {
                                                             props.NCBI_data == 'No gene description available.'
@@ -1004,22 +1018,26 @@ export default function Dashboard(props) {
                                                                     </>
                                                                     
                                                         }
-                                                        <Plot
-                                                        data={[hpa]}
-                                                        layout={{width: '800', height: '1750', title: props.gene + ' Protein Expression across HPA Cells & Tissues',
-                                                        yaxis: {
-                                                        automargin: true
-                                                        },
-                                                        xaxis: {
-                                                            "categoryorder": "array",
-                                                            "categoryarray":  ["Not detected", "Low", "Medium", "High"],
-                                                            title: {
-                                                                text: 'Tissue Expression Level',
-                                                            }
-                                                        }
-                                                        }}
-                                                        />
-                                                    </div>
+                                                        <div style={{width: 'auto', height: '1750px'}}>
+                                                            <Plot
+                                                                data={[hpa]}
+                                                                layout={{title: props.gene + ' Protein Expression across HPA Cells & Tissues',
+                                                                yaxis: {
+                                                                automargin: true
+                                                                },
+                                                                xaxis: {
+                                                                    "categoryorder": "array",
+                                                                    "categoryarray":  ["Not detected", "Low", "Medium", "High"],
+                                                                    title: {
+                                                                        text: 'Tissue Expression Level',
+                                                                    }
+                                                                }
+                                                                }}
+                                                                style={{width: '100%', height: '100%'}}
+                                                                config={{responsive: true}}
+                                                            />
+                                                        </div>
+                                                    </>
                                                 : 
                                                     <GraphMissing/>
                                         }
@@ -1028,7 +1046,7 @@ export default function Dashboard(props) {
                                         {
                                             gtex_proteomics != null 
                                                 ? 
-                                                    <div style={{width: '800px'}}>
+                                                    <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
                                                         {
                                                             props.NCBI_data == 'No gene description available.'
@@ -1047,21 +1065,25 @@ export default function Dashboard(props) {
                                                                     </>
                                                                     
                                                         }
-                                                        <Plot
-                                                            data={gtex_proteomics}
-                                                            layout={{width: '800', height: '1500', title: props.gene + ' Protein Expression across GTEx Tissues',
-                                                            showlegend: false,
-                                                            yaxis: {
-                                                            automargin: true
-                                                            },
-                                                            xaxis: {
-                                                                title: {
-                                                                    text: 'log2(relative abundance)',
+                                                        <div style={{width: 'auto', height: '1500px'}}>
+                                                            <Plot
+                                                                data={gtex_proteomics}
+                                                                layout={{title: props.gene + ' Protein Expression across GTEx Tissues',
+                                                                showlegend: false,
+                                                                yaxis: {
+                                                                automargin: true
+                                                                },
+                                                                xaxis: {
+                                                                    title: {
+                                                                        text: 'log2(relative abundance)',
+                                                                    }
                                                                 }
-                                                            }
-                                                            }}
-                                                        />
-                                                    </div>
+                                                                }}
+                                                                style={{width: '100%', height: '100%'}}
+                                                                config={{responsive: true}}
+                                                            />
+                                                        </div>
+                                                    </>
                                                 : 
                                                     <GraphMissing/>
                                         }
@@ -1070,7 +1092,7 @@ export default function Dashboard(props) {
                         </div>
                     </div>
                 </div>
-                
+            
                 <Footer/>
 
             </div>
