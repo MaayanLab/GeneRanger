@@ -26,6 +26,7 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import useWindowDimensions from '../../hooks/useWindowDimensions';
 
 const Plot = dynamic(() => import('react-plotly.js'), {
 	ssr: false,
@@ -168,7 +169,7 @@ export default function Dashboard(props) {
             sd[i] = arrays[i].sd;
             lowerfence[i] = arrays[i].lowerfence;
             upperfence[i] = arrays[i].upperfence;
-            names[i] = arrays[i].name;
+            names[i] = '<span style = "font-size: 10px">' + arrays[i].name + '</span>';
 
         }
 
@@ -225,7 +226,7 @@ export default function Dashboard(props) {
             mean[i] = arrays[i].mean;
             lowerfence[i] = arrays[i].lowerfence;
             upperfence[i] = arrays[i].upperfence;
-            names[i] = arrays[i].name;
+            names[i] = '<span style = "font-size: 10px">' + arrays[i].name + '</span>';
 
         }
 
@@ -286,7 +287,7 @@ export default function Dashboard(props) {
             sd[i] = arrays[i].sd;
             lowerfence[i] = arrays[i].lowerfence;
             upperfence[i] = arrays[i].upperfence;
-            names[i] = arrays[i].name;
+            names[i] = '<span style = "font-size: 10px">' + arrays[i].name + '</span>';
 
         }
 
@@ -324,7 +325,7 @@ export default function Dashboard(props) {
         for (let i = 0; i < arrays.length; i++) {
 
             values[i] = arrays[i].value;
-            tissues[i] = arrays[i].tissue;
+            tissues[i] = '<span style = "font-size: 10px">' + arrays[i].tissue + '</span>';
 
         }
 
@@ -353,13 +354,13 @@ export default function Dashboard(props) {
         let high = [];
         for (let i = 0; i < data.length; i++) {
             if (data[i].level == "Not detected") {
-                not_detected.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
+                not_detected.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ',<br>' + data[i].cell_type});
             } else if (data[i].level == "Low") {
-                low.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
+                low.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ',<br>' + data[i].cell_type});
             } else if (data[i].level == "Medium") {
-                medium.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
+                medium.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ',<br>' + data[i].cell_type});
             } else {
-                high.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ', ' + data[i].cell_type});
+                high.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ',<br>' + data[i].cell_type});
             }
         }
 
@@ -415,6 +416,11 @@ export default function Dashboard(props) {
         }
 
         gtex_proteomics.sort((a, b) => a.mean - b.mean);
+
+        // Adding span to names
+        for(let i = 0; i < Object.keys(gtex_proteomics).length; i++) {
+            gtex_proteomics[i].name = '<span style = "font-size: 10px">' + gtex_proteomics[i].name + '</span>';
+        }
     }
 
     // Function for submitting data to the next page
@@ -628,6 +634,26 @@ export default function Dashboard(props) {
         </Box>
     );
 
+    // Making graph titles responsive on mobile
+
+    const { height, width } = useWindowDimensions();
+
+    let gtex_transcriptomics_title = props.gene + ' Expression across GTEx Tissues (RNA-seq)';
+    let archs4_title = props.gene + ' Expression across ARCHS4 Cells & Tissues (RNA-seq)';
+    let tabula_sapiens_title = props.gene + ' Expression across Tabula Sapiens Cells (RNA-seq)';
+    let hpm_title = props.gene + ' Protein Expression across HPM Cells & Tissues';
+    let hpa_title = props.gene + ' Protein Expression across HPA Cells & Tissues';
+    let gtex_proteomics_title = props.gene + ' Protein Expression across GTEx Tissues';
+
+    if (width < 520) {
+        gtex_transcriptomics_title = props.gene + ' Expression across GTEx<br>Tissues (RNA-seq)';
+        archs4_title = props.gene + ' Expression across ARCHS4<br>Cells & Tissues (RNA-seq)';
+        tabula_sapiens_title = props.gene + ' Expression across Tabula Sapiens<br>Cells (RNA-seq)';
+        hpm_title = props.gene + ' Protein Expression across HPM<br>Cells & Tissues';
+        hpa_title = props.gene + ' Protein Expression across HPA<br>Cells & Tissues';
+        gtex_proteomics_title = props.gene + ' Protein Expression across GTEx<br>Tissues';
+    }
+
     return (
 
         <div style={{position: 'relative', minHeight: '100vh'}}>
@@ -820,7 +846,7 @@ export default function Dashboard(props) {
                                                         <div style={{height: '1500px'}}>
                                                             <Plot
                                                                 data={[gtex_transcriptomics]}
-                                                                layout={{title: props.gene + ' Expression across GTEx Tissues (RNA-seq)', yaxis: {automargin: true},
+                                                                layout={{title: gtex_transcriptomics_title, yaxis: {automargin: true},
                                                                 xaxis: {
                                                                     title: {
                                                                     text: 'RNA counts',
@@ -847,7 +873,7 @@ export default function Dashboard(props) {
                                                         <div style={{height: '13000px'}}>
                                                             <Plot
                                                                 data={[archs4]}
-                                                                layout={{title: props.gene + ' Expression across ARCHS4 Cells & Tissues (RNA-seq)',
+                                                                layout={{title: archs4_title,
                                                                 yaxis: {
                                                                 automargin: true
                                                                 },
@@ -876,7 +902,7 @@ export default function Dashboard(props) {
                                                         <div style={{height: '13000px'}}>
                                                             <Plot
                                                                 data={[tabula_sapiens]}
-                                                                layout={{title: props.gene + ' Expression across Tabula Sapiens Cells (RNA-seq)',
+                                                                layout={{title: tabula_sapiens_title,
                                                                 yaxis: {
                                                                 automargin: true
                                                                 },
@@ -905,7 +931,7 @@ export default function Dashboard(props) {
                                                         <div style={{height: '1000px'}}>
                                                             <Plot
                                                                 data={[hpm]}
-                                                                layout={{title: props.gene + ' Protein Expression across HPM Cells & Tissues',
+                                                                layout={{title: hpm_title,
                                                                 yaxis: {
                                                                 automargin: true
                                                                 },
@@ -931,10 +957,10 @@ export default function Dashboard(props) {
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
                                                         <GeneDescription NCBI_data={props.NCBI_data} gene={props.gene} />
-                                                        <div style={{height: '1750px'}}>
+                                                        <div style={{height: '4500px'}}>
                                                             <Plot
                                                                 data={[hpa]}
-                                                                layout={{title: props.gene + ' Protein Expression across HPA Cells & Tissues',
+                                                                layout={{title: hpa_title,
                                                                 yaxis: {
                                                                 automargin: true
                                                                 },
@@ -965,7 +991,7 @@ export default function Dashboard(props) {
                                                         <div style={{height: '1500px'}}>
                                                             <Plot
                                                                 data={gtex_proteomics}
-                                                                layout={{title: props.gene + ' Protein Expression across GTEx Tissues',
+                                                                layout={{title: gtex_proteomics_title,
                                                                 showlegend: false,
                                                                 yaxis: {
                                                                 automargin: true
