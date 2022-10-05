@@ -26,7 +26,7 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
-import useWindowDimensions from '../hooks/useWindowDimensions';
+import useWindowWidth from '../hooks/useWindowWidth';
 
 const Plot = dynamic(() => import('react-plotly.js'), {
 	ssr: false,
@@ -117,7 +117,7 @@ export default function Dashboard(props) {
 
     // Making graph titles and y-axis text responsive on mobile
 
-    const { height, width } = useWindowDimensions();
+    const width = useWindowWidth();
 
     let fontSize = 15; // This is used in the data processing below
     let gtex_transcriptomics_title = props.gene + ' Expression across GTEx Tissues (RNA-seq)';
