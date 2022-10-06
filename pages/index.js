@@ -964,7 +964,7 @@ export default function Dashboard(props) {
                                                                 data={[hpa]}
                                                                 layout={{title: hpa_title,
                                                                 yaxis: {
-                                                                automargin: true
+                                                                automargin: true,autorange: true,boundmode: 'soft',
                                                                 },
                                                                 xaxis: {
                                                                     "categoryorder": "array",

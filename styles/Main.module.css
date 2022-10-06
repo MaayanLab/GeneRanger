@@ -10,23 +10,15 @@
 .dbGroup {
   height: 100%;
   text-align: center;
-  /* background-color: #90acd0; */
-  /* position: sticky;
-  top: 0; */
-  /* margin-top: 50px; */
   padding-top: 30px;
   padding-left: 15px;
   font-size: 20px;
-  /* border-radius: 25px; */
-  /* padding: 5px 25px 5px 25px; */
   margin-right: 20px;
 }
 
 .drawer {
   height: 100%;
   text-align: center;
-  /* padding-top: 15px; */
-  /* padding-bottom: 15px; */
   font-size: 20px;
   background-color: #aec2d0;
   overflow-x: hidden;
@@ -36,7 +28,6 @@
 
 .formItem {
   margin: 10px;
-  /* text-align: center; */
 }
 
 .databaseLogo {
@@ -44,18 +35,6 @@
   height: auto;
   margin-right: 25px;
 }
-
-/* .logoLink {
-  cursor: default;
-} */
-
-/* .appyterLogo {
-  background-color: white;
-  border-radius: 4px;
-  width: auto;
-  height: 30px;
-  margin-left: 5px;
-} */
 
 .mainDiv {
   display: flex;
