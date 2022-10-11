@@ -113,7 +113,7 @@ export async function getServerSideProps(context) {
 
 }
 
-export default function Dashboard(props) {
+export default function Page(props) {
 
     // Making graph titles and y-axis text responsive on mobile
 

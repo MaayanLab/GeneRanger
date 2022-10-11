@@ -1,0 +1,15 @@
+  .mainDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 150px;
+  }
+  
+  .horizontalFlexbox {
+    display: flex;
+    justify-content: center;
+    /* flex-wrap: wrap; */
+    align-items: center;
+    gap: 25px;
+  }
