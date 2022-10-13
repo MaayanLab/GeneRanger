@@ -1,5 +1,4 @@
 import pandas as pd
-from sqlalchemy import create_engine
 import statistics
 import numpy as np
 
@@ -12,7 +11,7 @@ print("Loaded sample_info.csv")
 # Links sample to sample_collection_site and lineage_subtype
 cell_lines = {}
 
-# All possible sample_collection_sites and lineage_subtype
+# All possible sample_collection_sites and lineage_subtypes
 all_scs_and_ls = []
 
 for i in range(len(df)):
@@ -25,7 +24,6 @@ for i in range(len(df)):
     if ((ls != "nan") and ls not in all_scs_and_ls):
         all_scs_and_ls.append(ls)
 
-# df = pd.read_csv('CCLE_RNAseq_reads.csv', nrows=5) # REMEMBER TO GET RID OF NROWS LATER
 df = pd.read_csv('CCLE_RNAseq_reads.csv')
 
 print("Loaded CCLE_RNAseq_reads.csv")
@@ -37,7 +35,7 @@ gene_data = {}
 
 genes = list(df.columns.values)
 genes.pop(0) # Removes "Unnamed: 0" from the actual gene names
-gene_symbols = list() # CHECK FOR SYMBOLS IN OTHER FORMATS
+gene_symbols = list()
 
 # Removing transcript information from gene name
 for x in range(len(genes)):
@@ -62,7 +60,7 @@ for i in range(len(df)):
         gene = gene_symbols[j]
         value = sub_df.iloc[j+1]
         if gene in row_gene_data:
-            row_gene_data[gene] = row_gene_data[gene] + value
+            row_gene_data[gene] = max(row_gene_data[gene], value)
         else:
             row_gene_data[gene] = value
 
@@ -110,8 +108,6 @@ for i in range(len(unique_gene_symbols)):
     desc.append("50%")
     desc.append("75%")
     desc.append("max")
-
-
 
 # Setting up values
 col_num = 0
