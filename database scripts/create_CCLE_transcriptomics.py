@@ -21,7 +21,7 @@ for i in range(len(df)):
     cell_lines[df.loc[i, "DepMap_ID"]] = [scs, ls]
     if (scs not in all_scs_and_ls):
         all_scs_and_ls.append(scs)
-    if ((ls != "nan") and ls not in all_scs_and_ls):
+    if ((str(ls) != "nan") and ls not in all_scs_and_ls):
         all_scs_and_ls.append(ls)
 
 df = pd.read_csv('CCLE_RNAseq_reads.csv')
