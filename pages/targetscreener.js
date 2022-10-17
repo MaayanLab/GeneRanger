@@ -17,31 +17,41 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
+import { useRouter } from 'next/router'
 
 export default function Page() {
 
     const [level, setLevel] = React.useState('Gene Level');
-    const [uploadOption, setUploadOption] = React.useState('Upload');
-
-    const [upload, setUpload] = React.useState(true);
-    const [locate, setLocate] = React.useState(false);
-    const [passthrough, setPassthrough] = React.useState(false);
 
     const [file, setFile] = React.useState("");
-
-    const [tissueBackground, setTissueBackground] = React.useState("Precomputed");
-
-    const [backgroundLevel, setBackgroundLevel] = React.useState("Gene Level");
-    const [rnaSeqType, setRnaSeqType] = React.useState("Bulk RNA-seq");
-    
-    const [backgroundUploadOption, setBackgroundUploadOption] = React.useState('Upload');
-    const [backgroundFile, setBackgroundFile] = React.useState("");
 
     const [membraneGenes, setMembraneGenes] = React.useState("Yes");
     const [backgroundDistribution, setBackgroundDistribution] = React.useState("Yes");
     const [showProteinProfiles, setShowProteinProfiles] = React.useState("Yes");
 
     const [precomputedBackground, setPrecomputedBackground] = React.useState(0);
+
+    const router = useRouter();
+
+    function submit() {
+            
+        if (file != "") {
+
+            // setLoading(true);
+            let href = {
+                pathname: "targetscreenerresults",
+                query: {
+                    membraneGenes: membraneGenes,
+                    backgroundDistribution: backgroundDistribution,
+                    showProteinProfiles: showProteinProfiles
+            }};
+            router.push(href).then(() => {
+                // setLoading(false);    
+            })
+            
+        }
+        
+    }
 
     return (
 
@@ -71,7 +81,7 @@ export default function Page() {
                                 </label>
                                 <div>{file}</div>
                                 <div>Load example:</div>
-                                <div>Download example:</div>
+                                <div>Download example: <a href="../files/GSE49155-patient.tsv" download="GSE49155-patient.tsv">GSE49155-lung-squamous-cell-carcinoma.tsv</a></div>
                             </div>
                 </div>
 
@@ -149,6 +159,8 @@ export default function Page() {
                         </ToggleButtonGroup>
                     </div>
                 </div>
+
+                <Button variant="contained" color="primary" onClick={submit}>Submit</Button>
 
                 <Footer/>
             </div>
