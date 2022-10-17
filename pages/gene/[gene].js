@@ -25,6 +25,7 @@ import Backdrop from '@mui/material/Backdrop';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import MenuIcon from '@mui/icons-material/Menu';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import useWindowWidth from '../../hooks/useWindowWidth';
 
 const Plot = dynamic(() => import('react-plotly.js'), {
@@ -683,6 +684,12 @@ export default function Page(props) {
                         >
                             {drawerContents}
                         </Drawer>
+                    </div>
+
+                    <div className={styles.upArrowButton}>
+                        <Tooltip title="Return to Top" placement="left">
+                            <IconButton onClick={() => {window.scrollTo({top: 0, behavior: 'smooth'})}} color="primary"> <ArrowUpwardIcon style={{transform: 'scale(2)'}}/></IconButton>
+                        </Tooltip>
                     </div>
 
                     <div className={styles.dbGroup}>
