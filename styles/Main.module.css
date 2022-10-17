@@ -113,9 +113,9 @@
   }
   .drawerButtonDiv {
     display: block;
-    position: fixed;
-    margin-top: 40px;
-    left: 0;
+    position: absolute;
+    margin-top: 30px;
+    left: 5px;
     z-index: 1;
   }
   .secondAutocomplete {
