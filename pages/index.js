@@ -499,11 +499,7 @@ export default function Page(props) {
     };
 
     // Used to keep track of which database's info should be displayed
-    const [currDatabase, setCurrDatabase] = React.useState(0); 
-
-    const CustomTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) => ({
-      textTransform: 'none',
-    }));
+    const [currDatabase, setCurrDatabase] = React.useState(0);
 
     // For MUI tooltip
 
@@ -833,14 +829,48 @@ export default function Page(props) {
                             <Box sx={{ width: '100%' }}>
                                 <Box className={styles.tabsBox}>
                                     <Tabs value={currDatabase} onChange={(event, newValue) => {setCurrDatabase(newValue)}} aria-label="basic tabs example" variant="fullWidth" centered>
-
-                                            <CustomTab label="GTEx Transcriptomics"  />
-                                            <CustomTab label="ARCHS4" />
-                                            <CustomTab label="Tabula Sapiens" />
-                                            <CustomTab label="HPM" />
-                                            <CustomTab label="HPA"  />
-                                            <CustomTab label="GTEx Proteomics"  />
-
+                                        {
+                                            (currDatabase == 0)
+                                                ?
+                                                    <Tab icon={<img className={styles.tabLogo} alt="GTEx logo" src="/images/GTEx.png" />} />
+                                                :
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="GTEx logo" src="/images/GTEx.png" />} />
+                                        }
+                                        {
+                                            (currDatabase == 1)
+                                                ?
+                                                    <Tab icon={<img className={styles.tabLogo} alt="ARCHS4 logo" src="/images/archs4.png" />} />
+                                                :
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="ARCHS4 logo" src="/images/archs4.png" />} />
+                                        }
+                                        {
+                                            (currDatabase == 2)
+                                                ?
+                                                    <Tab icon={<img className={styles.tabLogo} alt="Tabula Sapiens logo" src="/images/tabula_sapiens.png" />} />
+                                                :
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="Tabula Sapiens logo" src="/images/tabula_sapiens.png" />} />
+                                        }
+                                        {
+                                            (currDatabase == 3)
+                                                ?
+                                                    <Tab icon={<img className={styles.tabLogo} alt="HPM logo" src="/images/HPM.gif" />} />
+                                                :
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="HPM logo" src="/images/HPM.gif" />} />
+                                        }
+                                        {
+                                            (currDatabase == 4)
+                                                ?
+                                                    <Tab icon={<img className={styles.tabLogo} alt="HPA logo" src="/images/HPA.svg" />} />
+                                                :
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="HPA logo" src="/images/HPA.svg" />} />
+                                        }
+                                        {
+                                            (currDatabase == 5)
+                                                ?
+                                                    <Tab icon={<img className={styles.tabLogo} alt="GTEx logo" src="/images/GTEx.png" />} />
+                                                :
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="GTEx logo" src="/images/GTEx.png" />} />
+                                        }
                                     </Tabs>
                                 </Box>
                                     <TabPanel style={{width: '100%'}} value={currDatabase} index={0}>
