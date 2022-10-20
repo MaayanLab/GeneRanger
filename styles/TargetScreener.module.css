@@ -13,3 +13,16 @@
     align-items: center;
     gap: 25px;
   }
+
+  .verticalFlexbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* flex-wrap: wrap; */
+    align-items: center;
+    gap: 25px;
+  }
+
+  .darkOnHover:hover {
+    background-color: #9ebfd7;
+  }
