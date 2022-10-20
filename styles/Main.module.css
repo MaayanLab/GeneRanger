@@ -11,7 +11,7 @@
   height: 100%;
   text-align: center;
   padding-top: 30px;
-  padding-left: 15px;
+  padding-left: 50px;
   font-size: 20px;
   margin-right: 20px;
 }
@@ -90,15 +90,29 @@
   align-items: center;
   flex-direction: column;
   margin-top: 10px;
+  margin-right: 50px;
   gap: 10px;
-  width: 100%;
+}
+
+.dbMenu {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #aec2d0;
+  border-radius: 5px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .mainFlexbox {
   display: flex;
   justify-content: flex-start;
   width: 100%;
+  padding-top: 15px;
   padding-bottom: 150px;
+  /* margin-left: 75px; */
+  gap: 25px;
 }
 
 .upArrowButton {
@@ -140,6 +154,10 @@
   }
   .mainFlexbox {
     justify-content: center;
+  }
+  .graphFlexbox {
+    width: 90%;
+    margin-right: 0px;
   }
 }
 

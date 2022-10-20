@@ -699,7 +699,7 @@ export default function Page(props) {
                                 />
 
                         </div>
-                        <div style={{width: '400px', display: 'flex', flexDirection: 'column', gap: '20px', backgroundColor: '#aec2d0', borderRadius: '5px', paddingTop: '20px', paddingBottom: '20px'}}>
+                        <div className={styles.dbMenu}>
 
                             <div>
                               <h3 style={{margin: '0'}}>Transcriptomics</h3>
