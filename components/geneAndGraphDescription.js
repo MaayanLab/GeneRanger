@@ -1,7 +1,8 @@
+import { PropaneSharp } from '@mui/icons-material';
 import * as React from 'react';
 import styles from '../styles/GeneDescription.module.css';
 
-function GeneDescription({NCBI_data, gene}) {
+function GeneAndGraphDescription({NCBI_data, gene, database, database_desc}) {
 
     // Gene links
 
@@ -30,6 +31,8 @@ function GeneDescription({NCBI_data, gene}) {
                                 <a className={styles.geneLink} href={GeneCards} target="_blank" rel="noopener noreferrer">GeneCards</a>
                                 <a className={styles.geneLink} href={GDLPA} target="_blank" rel="noopener noreferrer">GDLPA</a>
                             </div>
+                            <br/>
+                            <div><b>{database}:</b> {database_desc}</div>
                         </>
                         
             }
@@ -37,5 +40,5 @@ function GeneDescription({NCBI_data, gene}) {
     );
 }
 
-export default GeneDescription;
+export default GeneAndGraphDescription;
 

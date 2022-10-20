@@ -19,7 +19,7 @@ import { styled } from '@mui/material/styles';
 import InfoIcon from '@mui/icons-material/Info';
 import IconButton from '@mui/material/IconButton';
 import GraphMissing from '../../components/graphMissing';
-import GeneDescription from '../../components/geneDescription';
+import GeneAndGraphDescription from '../../components/geneAndGraphDescription';
 import Zoom from '@mui/material/Zoom';
 import Backdrop from '@mui/material/Backdrop';
 import Drawer from '@mui/material/Drawer';
@@ -880,7 +880,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneDescription NCBI_data={props.NCBI_data} gene={props.gene} />
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'GTEx'} database_desc={"A database designed to study the relationship between genetic variation and gene expression across multiple tissues. Each tissue’s RNA expression is represented by a box plot."}/>
                                                         <div style={{height: '1500px'}}>
                                                             <Plot
                                                                 data={[gtex_transcriptomics]}
@@ -907,7 +907,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneDescription NCBI_data={props.NCBI_data} gene={props.gene} />
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'ARCHS4'} database_desc={"RNA-seq data from many public sources conveniently compiled into a single database. Each tissue/cell’s RNA expression is represented by a box plot."}/>
                                                         <div style={{height: '13000px'}}>
                                                             <Plot
                                                                 data={[archs4]}
@@ -936,7 +936,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneDescription NCBI_data={props.NCBI_data} gene={props.gene} />
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'Tabula Sapiens'} database_desc={"An atlas of RNA-seq data for over 400 cell types created with single-cell transcriptomics. Each cell’s RNA expression is represented by a box plot."}/>
                                                         <div style={{height: '13000px'}}>
                                                             <Plot
                                                                 data={[tabula_sapiens]}
@@ -965,7 +965,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneDescription NCBI_data={props.NCBI_data} gene={props.gene} />
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'Human Proteome Map'} database_desc={"A draft map of the human proteome created with Fourier transform mass spectrometry. Data are displayed as average spectral counts."}/>
                                                         <div style={{height: '1000px'}}>
                                                             <Plot
                                                                 data={[hpm]}
@@ -994,7 +994,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneDescription NCBI_data={props.NCBI_data} gene={props.gene} />
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'Human Protein Atlas'} database_desc={"A map of protein expression across 32 human tissues created with antibody profiling. Proteins are categorized as either “not detected”, “low”, “medium”, or “high”."}/>
                                                         <div style={{height: '4500px'}}>
                                                             <Plot
                                                                 data={[hpa]}
@@ -1025,7 +1025,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneDescription NCBI_data={props.NCBI_data} gene={props.gene} />
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'GTEx'} database_desc={"A database designed to study the relationship between genetic variation and gene expression across multiple tissues. Data are displayed as protein log-transformed relative abundance in box-plot form."}/>
                                                         <div style={{height: '1500px'}}>
                                                             <Plot
                                                                 data={gtex_proteomics}
