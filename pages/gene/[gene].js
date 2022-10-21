@@ -547,7 +547,7 @@ export default function Page(props) {
                         control={<Switch onChange={() => setCurrDatabase(0)} checked={currDatabase == 0}/>} 
                         label={
                             <div className={styles.dbLogo}>
-                                <img className={styles.databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/>
+                                <img className={styles.databaseLogo} src="/images/GTEx_transcriptomics.png" alt="GTEx Logo"/>
                                 <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
                                     <div className={styles.tooltipText}><a href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://www.nature.com/articles/ng.2653" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
                                     <IconButton><InfoIcon color='info'/></IconButton>
@@ -634,7 +634,7 @@ export default function Page(props) {
                         control={<Switch onChange={() => setCurrDatabase(5)} checked={currDatabase == 5} />} 
                         label={
                             <div className={styles.dbLogo}>
-                                <img className={styles.databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/>
+                                <img className={styles.databaseLogo} src="/images/GTEx_proteomics.png" alt="GTEx Logo"/>
                                 <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
                                     <div className={styles.tooltipText}><a href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://www.nature.com/articles/ng.2653" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
                                     <IconButton><InfoIcon color='info'/></IconButton>
@@ -710,7 +710,7 @@ export default function Page(props) {
                                     control={<Switch onChange={() => setCurrDatabase(0)} checked={currDatabase == 0}/>} 
                                     label={
                                         <div className={styles.dbLogo}>
-                                            <img className={styles.databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/>
+                                            <img className={styles.databaseLogo} src="/images/GTEx_transcriptomics.png" alt="GTEx Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://www.nature.com/articles/ng.2653" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
                                                 <IconButton><InfoIcon color='info'/></IconButton>
@@ -797,7 +797,7 @@ export default function Page(props) {
                                     control={<Switch onChange={() => setCurrDatabase(5)} checked={currDatabase == 5} />} 
                                     label={
                                         <div className={styles.dbLogo}>
-                                            <img className={styles.databaseLogo} src="/images/GTEx.png" alt="GTEx Logo"/>
+                                            <img className={styles.databaseLogo} src="/images/GTEx_proteomics.png" alt="GTEx Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://gtexportal.org/home/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://www.nature.com/articles/ng.2653" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
                                                 <IconButton><InfoIcon color='info'/></IconButton>
@@ -833,9 +833,9 @@ export default function Page(props) {
                                         {
                                             (currDatabase == 0)
                                                 ?
-                                                    <Tab icon={<img className={styles.tabLogo} alt="GTEx logo" src="/images/GTEx.png" />} />
+                                                    <Tab icon={<img className={styles.tabLogo} alt="GTEx logo" src="/images/GTEx_transcriptomics.png" />} />
                                                 :
-                                                    <Tab icon={<img className={styles.grayTabLogo} alt="GTEx logo" src="/images/GTEx.png" />} />
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="GTEx logo" src="/images/GTEx_transcriptomics.png" />} />
                                         }
                                         {
                                             (currDatabase == 1)
@@ -868,9 +868,9 @@ export default function Page(props) {
                                         {
                                             (currDatabase == 5)
                                                 ?
-                                                    <Tab icon={<img className={styles.tabLogo} alt="GTEx logo" src="/images/GTEx.png" />} />
+                                                    <Tab icon={<img className={styles.tabLogo} alt="GTEx logo" src="/images/GTEx_proteomics.png" />} />
                                                 :
-                                                    <Tab icon={<img className={styles.grayTabLogo} alt="GTEx logo" src="/images/GTEx.png" />} />
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="GTEx logo" src="/images/GTEx_proteomics.png" />} />
                                         }
                                     </Tabs>
                                 </Box>
