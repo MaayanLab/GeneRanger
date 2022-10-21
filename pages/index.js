@@ -144,6 +144,8 @@ export default function Page(props) {
     let hpa = null;
     let gtex_proteomics = null;
 
+    let hpa_length = 0;
+
     // Replaces underscores and periods with spaces
     function processNames(names) {
         return names.map(name => name.replace(/_+/g, ' ').replaceAll('.', ' ').trim());
@@ -394,6 +396,8 @@ export default function Page(props) {
             tissue_and_cells[i] = '<span style="font-size:' + fontSize + 'px">' + combined[i].tissue_and_cell + '</span>';
 
         }
+
+        hpa_length = combined.length;
 
         hpa = {
             x: levels,
@@ -999,7 +1003,8 @@ export default function Page(props) {
                                                                 data={[hpa]}
                                                                 layout={{title: hpa_title,
                                                                 yaxis: {
-                                                                automargin: true,autorange: true,boundmode: 'soft',
+                                                                    automargin: true,
+                                                                    range: [-0.5, hpa_length]
                                                                 },
                                                                 xaxis: {
                                                                     "categoryorder": "array",
