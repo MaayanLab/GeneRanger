@@ -6,19 +6,16 @@ df = pd.read_csv('protein_quant_current_normalized.csv')
 
 print("Loaded protein_quant_current_normalized.csv")
 
-# Removing unnecessary columns.  These two dataframes will be recombined later
-gene_df = df[["Gene_Symbol"]] # Gene names
+# Removing unnecessary columns.  These two important dataframes will be recombined later
+gene_df = df[["Gene_Symbol", "Protein_Id"]] # Protein ID and Gene names
 values = df.iloc[:, 48:] # Tissue names and values
 
-tissues = list(values.columns.values)
+col_titles = list(values.columns.values)
 
-# Removing extra info from tissue names
-for i in range(len(tissues)):
-    tissue = tissues[i]
-    tissues[i] = tissue[tissue.find("_")+1:tissue.rfind("_")]
-
-for i in range(len(tissues)):
-    values.rename(columns={values.columns[i]: tissues[i]},inplace=True)
+for i in range(len(col_titles)):
+    title = col_titles[i]
+    col_titles[i] = title[:title.rfind("_")] # Removing extra info from tissue names
+    values.rename(columns={values.columns[i]: col_titles[i]},inplace=True) # Renaming the actual dataframe
 
 values.sort_index(axis=1, inplace=True)
 
@@ -29,6 +26,8 @@ print("Sorted and processed tissue names")
 
 # Extracted data that will be inserted into the final dataframe
 gene_names = [None] * (len(df) * (len(df.columns) - 1))
+protein_ids = [None] * (len(df) * (len(df.columns) - 1))
+cell_lines = [None] * (len(df) * (len(df.columns) - 1))
 tissues = [None] * (len(df) * (len(df.columns) - 1))
 values = [None] * (len(df) * (len(df.columns) - 1))
 
@@ -38,17 +37,24 @@ for i in range(len(df)):
 
     sub_df = df.iloc[i]
     gene = sub_df.iloc[0]
+    protein_id = sub_df.iloc[1]
 
-    for i in range(len(df.columns) - 1):
+    for j in range(len(df.columns) - 2):
         print("Working on row " + str(count+1) + " of 4808635")
         gene_names[count] = gene
-        tissues[count] = df.columns[i+1]
-        values[count] = sub_df.iloc[i+1]
+        protein_ids[count] = protein_id
+
+        cell_line_and_tissue = df.columns[j+2]
+
+        cell_lines[count] = cell_line_and_tissue[:cell_line_and_tissue.find('_')]
+        tissues[count] = cell_line_and_tissue[cell_line_and_tissue.find('_') + 1:]
+
+        values[count] = sub_df.iloc[j+2]
         count = count + 1
 
 print("Processed data")
 
-final_df_data = {'name': gene_names, "tissue": tissues, "value": values}
+final_df_data = {'name': gene_names, 'protein_id': protein_ids, "cell_line": cell_lines, "tissue": tissues, "value": values}
 
 final_df = pd.DataFrame(final_df_data)
 
