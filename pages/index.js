@@ -32,92 +32,113 @@ const Plot = dynamic(() => import('react-plotly.js'), {
 	ssr: false,
 });
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
 
-    const prisma = new PrismaClient();
+    if (process.env.DATABASE_URL === undefined) {
 
-    let all_db_data = {};
+        return { props: {}, revalidate: 1 };
 
-    let defaultGene = 'A2M';
+    } else {
 
-    const gtex_transcriptomics = await prisma.gtex_transcriptomics.findMany({
-        where: {
-            name: defaultGene,
-        },
-    });
-    Object.assign(all_db_data, {gtex_transcriptomics: gtex_transcriptomics});
+        const prisma = new PrismaClient();
 
-    const archs4 = await prisma.archs4.findMany({
-        where: {
-            name: defaultGene,
-        },
-    });
-    Object.assign(all_db_data, {archs4: archs4});
+        let all_db_data = {};
 
-    const tabula_sapiens = await prisma.tabula_sapiens.findMany({
-        where: {
-            name: defaultGene,
-        },
-    });
-    Object.assign(all_db_data, {tabula_sapiens: tabula_sapiens});
+        let defaultGene = 'A2M';
 
-    const hpm = await prisma.hpm.findMany({
-        where: {
-            gene: defaultGene,
-        },
-    });
-    Object.assign(all_db_data, {hpm: hpm});
+        const gtex_transcriptomics = await prisma.gtex_transcriptomics.findMany({
+            where: {
+                name: defaultGene,
+            },
+        });
+        Object.assign(all_db_data, {gtex_transcriptomics: gtex_transcriptomics});
 
-    const hpa = await prisma.hpa.findMany({
-        where: {
-            gene_name: defaultGene,
-        },
-    });
-    Object.assign(all_db_data, {hpa: hpa});
+        const archs4 = await prisma.archs4.findMany({
+            where: {
+                name: defaultGene,
+            },
+        });
+        Object.assign(all_db_data, {archs4: archs4});
+
+        const tabula_sapiens = await prisma.tabula_sapiens.findMany({
+            where: {
+                name: defaultGene,
+            },
+        });
+        Object.assign(all_db_data, {tabula_sapiens: tabula_sapiens});
+
+        const hpm = await prisma.hpm.findMany({
+            where: {
+                gene: defaultGene,
+            },
+        });
+        Object.assign(all_db_data, {hpm: hpm});
+
+        const hpa = await prisma.hpa.findMany({
+            where: {
+                gene_name: defaultGene,
+            },
+        });
+        Object.assign(all_db_data, {hpa: hpa});
 
 
-    const gtex_proteomics = await prisma.gtex_proteomics.findMany({
-        where: {
-            gene_id: defaultGene,
-        },
-    });
-    Object.assign(all_db_data, {gtex_proteomics: gtex_proteomics});
+        const gtex_proteomics = await prisma.gtex_proteomics.findMany({
+            where: {
+                gene_id: defaultGene,
+            },
+        });
+        Object.assign(all_db_data, {gtex_proteomics: gtex_proteomics});
 
-    // Getting NCBI gene description
+        // Getting NCBI gene description
 
-    let esearch_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gene&term=' + defaultGene + '[gene%20name]+human[organism]';
-    let esummary_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gene&id=';
+        let esearch_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gene&term=' + defaultGene + '[gene%20name]+human[organism]';
+        let esummary_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gene&id=';
 
-    const esearch_res = await fetch(esearch_url);
-    let ids = await esearch_res.text();
-    ids = ids.substring(ids.indexOf('<Id>'), ids.lastIndexOf('</Id>')).replaceAll('</Id>', ',').replaceAll('<Id>', '').replace(/(\r\n|\n|\r)/gm, "");
-    const esummary_res = await fetch(esummary_url + ids);
-    let NCBI_data = await esummary_res.text();
-    let slicedStr = NCBI_data.substring(NCBI_data.indexOf('<Name>' + defaultGene + '</Name>'));
-    slicedStr = slicedStr.substring(slicedStr.indexOf('<Summary>'), slicedStr.indexOf('</Summary>')).replaceAll('<Summary>', '');
-    NCBI_data = slicedStr.substring(0, slicedStr.lastIndexOf('[') - 1);
+        const esearch_res = await fetch(esearch_url);
+        let ids = await esearch_res.text();
+        ids = ids.substring(ids.indexOf('<Id>'), ids.lastIndexOf('</Id>')).replaceAll('</Id>', ',').replaceAll('<Id>', '').replace(/(\r\n|\n|\r)/gm, "");
+        const esummary_res = await fetch(esummary_url + ids);
+        let NCBI_data = await esummary_res.text();
+        let slicedStr = NCBI_data.substring(NCBI_data.indexOf('<Name>' + defaultGene + '</Name>'));
+        slicedStr = slicedStr.substring(slicedStr.indexOf('<Summary>'), slicedStr.indexOf('</Summary>')).replaceAll('<Summary>', '');
+        NCBI_data = slicedStr.substring(0, slicedStr.lastIndexOf('[') - 1);
 
-    // Converting character entities
-    NCBI_data = NCBI_data.replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&').replaceAll('&quot;', '"').replaceAll('&apos;', '\'').replaceAll('&copy;', '©').replaceAll('&reg;', '®');
+        // Converting character entities
+        NCBI_data = NCBI_data.replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&').replaceAll('&quot;', '"').replaceAll('&apos;', '\'').replaceAll('&copy;', '©').replaceAll('&reg;', '®');
 
-    // If there isn't an NCBI description
-    if (NCBI_data == "") NCBI_data = 'No gene description available.'
-    
-    return { 
-        props: {
-            gene: defaultGene,
-            all_db_data: all_db_data,
-            NCBI_data: NCBI_data
-        } 
+        // If there isn't an NCBI description
+        if (NCBI_data == "") NCBI_data = 'No gene description available.'
+        
+        return { 
+            props: {
+                gene: defaultGene,
+                all_db_data: all_db_data,
+                NCBI_data: NCBI_data
+            } ,
+            revalidate: false
+        }
     }
 
 }
 
 export default function Page(props) {
 
+    const router = useRouter();
+
+    // For MUI Drawer
+    const [drawerState, setDrawerState] = React.useState(false);
+
+    // For MUI loading icon
+    const [loading, setLoading] = React.useState(false);
+
+    // Used to keep track of which database's info should be displayed
+    const [currDatabase, setCurrDatabase] = React.useState(0);
+
     // Making graph titles and y-axis text responsive on mobile
 
     const width = useWindowWidth();
+
+    if (process.env.DATABASE_URL === undefined) return null;
 
     let fontSize = 15; // This is used in the data processing below
     let gtex_transcriptomics_title = props.gene + ' Expression across GTEx Tissues (RNA-seq)';
@@ -450,8 +471,6 @@ export default function Page(props) {
     }
 
     // Function for submitting data to the next page
-       
-    const router = useRouter();
 
     function submitGene (gene) {
             
@@ -502,9 +521,6 @@ export default function Page(props) {
         value: PropTypes.number.isRequired,
     };
 
-    // Used to keep track of which database's info should be displayed
-    const [currDatabase, setCurrDatabase] = React.useState(0);
-
     // For MUI tooltip
 
     const HtmlTooltip = styled(({ className, ...props }) => (
@@ -520,13 +536,7 @@ export default function Page(props) {
         }
     }));
 
-    // For MUI loading icon
-
-    const [loading, setLoading] = React.useState(false);
-
     // For MUI Drawer
-
-    const [drawerState, setDrawerState] = React.useState(false);
     
     const toggleDrawer = (open) => (event) => {
         setDrawerState(open);
