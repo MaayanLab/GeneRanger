@@ -130,7 +130,6 @@ export default function Page(props) {
 
     const width = useWindowWidth();
 
-
     let fontSize = 15; // This is used in the data processing below
     let gtex_transcriptomics_title = props.gene + ' Expression across GTEx Tissues (RNA-seq)';
     let archs4_title = props.gene + ' Expression across ARCHS4 Cells & Tissues (RNA-seq)';
@@ -278,8 +277,6 @@ export default function Page(props) {
             type: 'box'
         }
     }
-
-
 
     // Processing Tabula Sapiens
 

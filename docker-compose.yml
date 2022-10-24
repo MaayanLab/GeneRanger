@@ -1,8 +1,0 @@
-version: '2'
-services:
-  generanger:
-    build: .
-    platform: linux/x86_64
-    env_file: .env
-    ports:
-      - 3000:3000
