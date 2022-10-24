@@ -13,6 +13,10 @@ COPY . .
 
 EXPOSE 3000
 
-RUN npm run build
+RUN npx prisma generate
 
-ENTRYPOINT ["npm", "start"]
+# RUN npm run build
+RUN set -x && chmod +x ./entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]
+
+# ENTRYPOINT ["npm", "start"]

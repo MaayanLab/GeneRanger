@@ -34,12 +34,6 @@ const Plot = dynamic(() => import('react-plotly.js'), {
 
 export async function getStaticProps() {
 
-    if (process.env.DATABASE_URL === undefined) {
-
-        return { props: {}, revalidate: 1 };
-
-    } else {
-
         const prisma = new PrismaClient();
 
         let all_db_data = {};
@@ -114,10 +108,8 @@ export async function getStaticProps() {
                 gene: defaultGene,
                 all_db_data: all_db_data,
                 NCBI_data: NCBI_data
-            } ,
-            revalidate: false
+            } 
         }
-    }
 
 }
 
@@ -138,7 +130,6 @@ export default function Page(props) {
 
     const width = useWindowWidth();
 
-    if (process.env.DATABASE_URL === undefined) return null;
 
     let fontSize = 15; // This is used in the data processing below
     let gtex_transcriptomics_title = props.gene + ' Expression across GTEx Tissues (RNA-seq)';
