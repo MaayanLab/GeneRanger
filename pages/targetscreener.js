@@ -92,166 +92,175 @@ export default function Page() {
 
                 <h1>Target Screener</h1>
 
-                <div>Tumor RNA-seq expression vectors</div>
+                <div style={{flexWrap: 'wrap', gap: '50px'}} className={styles.horizontalFlexbox}>
 
-                <div className={styles.horizontalFlexbox}>
-                    <div style={{alignItems: 'flex-end'}} className={styles.verticalFlexbox}>
-                        <Button onClick={() => setFile("GSE49155-lung-squamous-cell-carcinoma.tsv")} className={styles.darkOnHover} variant="outlined" endIcon={<HelpOutlineIcon />}>
-                            Load example file
-                        </Button>
-                        <a style={{textDecoration: 'none'}} href="../files/GSE49155-patient.tsv" download="GSE49155-patient.tsv">
-                            <Button className={styles.darkOnHover} variant="outlined" endIcon={<DownloadIcon />}>
-                                Download example file
-                            </Button>
-                        </a>
-                        <Button className={styles.darkOnHover} onClick={(event) => {setAnchorEl(event.currentTarget)}} variant="outlined" endIcon={<HelpOutlineIcon />}>
-                            File specifications
-                        </Button>
-                        <Popover
-                            open={Boolean(anchorEl)}
-                            anchorEl={anchorEl}
-                            onClose={() => {setAnchorEl(null)}}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'center',
-                            }}
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'center',
-                            }}
-                        >
-                            <TableContainer component={Paper}>
-                                <Typography
-                                    sx={{ textAlign: 'center' }}
-                                    variant="h6"
-                                    >
-                                    File should be a tsv/csv of the following form:
-                                </Typography>
-                                <Table sx={{ width: 500 }} size="small">
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell></TableCell>
-                                            <TableCell align="right"><b>Replicate 1</b></TableCell>
-                                            <TableCell align="right"><b>Replicate 2</b></TableCell>
-                                            <TableCell align="right"><b>...</b></TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {rows.map((row) => (
-                                            <TableRow key={row.name}>
-                                                <TableCell><b>{row.name}</b></TableCell>
-                                                <TableCell align="right">{row.rep1}</TableCell>
-                                                <TableCell align="right">{row.rep2}</TableCell>
-                                                <TableCell align="right">{row.rep3}</TableCell>
-                                            </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
-                        </Popover>
-                    </div>
                     <div className={styles.verticalFlexbox}>
-                        <input
-                            style={{ display: "none" }}
-                            id="fileUpload"
-                            type="file"
-                            onChange={(e) => setFile(e.target.files[0].name)}
-                        />
-                        <label htmlFor="fileUpload">
-                            <Button variant="contained" color="primary" component="span">
-                                Upload File
-                            </Button>
-                        </label>
-                        <Button onClick={() => setFile("")} variant="contained" color="primary" component="span">
-                            Clear Chosen File             
-                        </Button>
+                        <div className={styles.verticalFlexbox}>
+                            <div style={{width: '350px'}}>Whether the tumor RNA-seq expression vectors is at the level of transcripts or genes:</div>
+                            <ToggleButtonGroup
+                                color="primary"
+                                value={level}
+                                exclusive
+                                onChange={(event, newValue) => {if (newValue !== null) setLevel(newValue) }}
+                                >
+                                <ToggleButton value="Gene Level">Gene Level</ToggleButton>
+                                <ToggleButton value="Transcript Level">Transcript Level</ToggleButton>
+                            </ToggleButtonGroup>
+                        </div>
+
+                        <div className={styles.verticalFlexbox}>
+                            <div>Normal tissue background:</div>
+
+                            <div className={styles.horizontalFlexbox}>
+                                <Box sx={{ width: 390 }}>
+                                    <FormControl fullWidth>
+                                        <Select
+                                        value={precomputedBackground}
+                                        onChange={(event) => setPrecomputedBackground(event.target.value)}
+                                        >
+                                            <MenuItem value={0}>GTEx (bulk RNA-seq) - Gene</MenuItem>
+                                            <MenuItem value={1}>GTEx (bulk RNA-seq) - Transcript</MenuItem>
+                                            <MenuItem value={2}>ARCHS4 Anatomy (bulk RNA-seq) - Transcript</MenuItem>
+                                            <MenuItem value={3}>ARCHS4 Extra (bulk RNA-seq) - Gene</MenuItem>
+                                            <MenuItem value={4}>ARCHS4 Extra (bulk RNA-seq) - Transcript</MenuItem>
+                                            <MenuItem value={5}>Tabula Sapiens (scRNA-seq) - Gene</MenuItem>
+                                            <MenuItem value={6}>Human Cell Atlas (scRNA-seq) - Gene</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </Box>
+                            </div>                                        
+                        </div>
                     </div>
-                </div>
 
-                <div>Chosen file:</div>
-                <div>{file == "" ? "None" : file}</div>
+                    <div className={styles.verticalFlexbox}>
 
-                <div style={{alignItems: 'flex-end'}} className={styles.verticalFlexbox}>
-                    <div className={styles.horizontalFlexbox}>
-                        <div style={{width: '250px'}}>Whether the tumor RNA-seq expression vectors is at the level of transcripts or genes:</div>
-                        <ToggleButtonGroup
-                            color="primary"
-                            value={level}
-                            exclusive
-                            onChange={(event, newValue) => {if (newValue !== null) setLevel(newValue) }}
-                            >
-                            <ToggleButton value="Gene Level">Gene Level</ToggleButton>
-                            <ToggleButton value="Transcript Level">Transcript Level</ToggleButton>
-                        </ToggleButtonGroup>
-                    </div>
-
-                    <div className={styles.horizontalFlexbox}>
-                        <div>Normal tissue background:</div>
+                        <div>Tumor RNA-seq expression vectors</div>
 
                         <div className={styles.horizontalFlexbox}>
-                            <Box sx={{ width: 390 }}>
-                                <FormControl fullWidth>
-                                    <Select
-                                    value={precomputedBackground}
-                                    onChange={(event) => setPrecomputedBackground(event.target.value)}
-                                    >
-                                        <MenuItem value={0}>GTEx (bulk RNA-seq) - Gene</MenuItem>
-                                        <MenuItem value={1}>GTEx (bulk RNA-seq) - Transcript</MenuItem>
-                                        <MenuItem value={2}>ARCHS4 Anatomy (bulk RNA-seq) - Transcript</MenuItem>
-                                        <MenuItem value={3}>ARCHS4 Extra (bulk RNA-seq) - Gene</MenuItem>
-                                        <MenuItem value={4}>ARCHS4 Extra (bulk RNA-seq) - Transcript</MenuItem>
-                                        <MenuItem value={5}>Tabula Sapiens (scRNA-seq) - Gene</MenuItem>
-                                        <MenuItem value={6}>Human Cell Atlas (scRNA-seq) - Gene</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Box>
-                        </div>                                        
-                    </div>
-                    
+                            <div style={{alignItems: 'flex-end'}} className={styles.verticalFlexbox}>
+                                <Button onClick={() => setFile("GSE49155-lung-squamous-cell-carcinoma.tsv")} className={styles.darkOnHover} variant="outlined" endIcon={<HelpOutlineIcon />}>
+                                    Load example file
+                                </Button>
+                                <a style={{textDecoration: 'none'}} href="../files/GSE49155-patient.tsv" download="GSE49155-patient.tsv">
+                                    <Button className={styles.darkOnHover} variant="outlined" endIcon={<DownloadIcon />}>
+                                        Download example file
+                                    </Button>
+                                </a>
+                                <Button className={styles.darkOnHover} onClick={(event) => {setAnchorEl(event.currentTarget)}} variant="outlined" endIcon={<HelpOutlineIcon />}>
+                                    File specifications
+                                </Button>
+                                <Popover
+                                    open={Boolean(anchorEl)}
+                                    anchorEl={anchorEl}
+                                    onClose={() => {setAnchorEl(null)}}
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'center',
+                                    }}
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'center',
+                                    }}
+                                >
+                                    <TableContainer component={Paper}>
+                                        <Typography
+                                            sx={{ textAlign: 'center' }}
+                                            variant="h6"
+                                            >
+                                            File should be a tsv/csv of the following form:
+                                        </Typography>
+                                        <Table sx={{ width: 500 }} size="small">
+                                            <TableHead>
+                                                <TableRow>
+                                                    <TableCell></TableCell>
+                                                    <TableCell align="right"><b>Replicate 1</b></TableCell>
+                                                    <TableCell align="right"><b>Replicate 2</b></TableCell>
+                                                    <TableCell align="right"><b>...</b></TableCell>
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                {rows.map((row) => (
+                                                    <TableRow key={row.name}>
+                                                        <TableCell><b>{row.name}</b></TableCell>
+                                                        <TableCell align="right">{row.rep1}</TableCell>
+                                                        <TableCell align="right">{row.rep2}</TableCell>
+                                                        <TableCell align="right">{row.rep3}</TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                </Popover>
+                            </div>
+                            <div className={styles.verticalFlexbox}>
+                                <input
+                                    style={{ display: "none" }}
+                                    id="fileUpload"
+                                    type="file"
+                                    onChange={(e) => setFile(e.target.files[0].name)}
+                                />
+                                <label htmlFor="fileUpload">
+                                    <Button variant="contained" color="primary" component="span">
+                                        Upload File
+                                    </Button>
+                                </label>
+                                <Button onClick={() => setFile("")} variant="contained" color="primary" component="span">
+                                    Clear Chosen File             
+                                </Button>
+                            </div>
+                        </div>
 
-                    <div className={styles.horizontalFlexbox}>
-                        <div>Prioritize membrane genes:</div>
-                        <ToggleButtonGroup
-                            color="primary"
-                            value={membraneGenes}
-                            exclusive
-                            onChange={(event, newValue) => {if (newValue !== null) setMembraneGenes(newValue) }}
-                            >
-                            <ToggleButton value="Yes">Yes</ToggleButton>
-                            <ToggleButton value="No">No</ToggleButton>
-                        </ToggleButtonGroup>
+                        <div>Chosen file:</div>
+                        <div>{file == "" ? "None" : file}</div>
+
                     </div>
 
-                    <div className={styles.horizontalFlexbox}>
-                        <div>Normalize to background distribution:</div>
-                        <ToggleButtonGroup
-                            color="primary"
-                            value={backgroundDistribution}
-                            exclusive
-                            onChange={(event, newValue) => {if (newValue !== null) setBackgroundDistribution(newValue) }}
-                            >
-                            <ToggleButton value="Yes">Yes</ToggleButton>
-                            <ToggleButton value="No">No</ToggleButton>
-                        </ToggleButtonGroup>
+                    <div style={{alignItems: 'flex-start'}} className={styles.verticalFlexbox}>
+                        <div className={styles.horizontalFlexbox}>
+                            <ToggleButtonGroup
+                                color="primary"
+                                value={membraneGenes}
+                                exclusive
+                                onChange={(event, newValue) => {if (newValue !== null) setMembraneGenes(newValue) }}
+                                >
+                                <ToggleButton value="Yes">Yes</ToggleButton>
+                                <ToggleButton value="No">No</ToggleButton>
+                            </ToggleButtonGroup>
+                            <div>Prioritize membrane genes</div>
+                        </div>
+
+                        <div className={styles.horizontalFlexbox}>
+                            <ToggleButtonGroup
+                                color="primary"
+                                value={backgroundDistribution}
+                                exclusive
+                                onChange={(event, newValue) => {if (newValue !== null) setBackgroundDistribution(newValue) }}
+                                >
+                                <ToggleButton value="Yes">Yes</ToggleButton>
+                                <ToggleButton value="No">No</ToggleButton>
+                            </ToggleButtonGroup>
+                            <div>Normalize to background distribution</div>
+                        </div>
+
+                        <div className={styles.horizontalFlexbox}>
+                            <ToggleButtonGroup
+                                color="primary"
+                                value={showProteinProfiles}
+                                exclusive
+                                onChange={(event, newValue) => {if (newValue !== null) setShowProteinProfiles(newValue) }}
+                                >
+                                <ToggleButton value="Yes">Yes</ToggleButton>
+                                <ToggleButton value="No">No</ToggleButton>
+                            </ToggleButtonGroup>
+                            <div>Show protein expression profiles of gene candidates</div>
+                        </div>
                     </div>
 
-                    <div className={styles.horizontalFlexbox}>
-                        <div>Show protein expression profiles of gene candidates:</div>
-                        <ToggleButtonGroup
-                            color="primary"
-                            value={showProteinProfiles}
-                            exclusive
-                            onChange={(event, newValue) => {if (newValue !== null) setShowProteinProfiles(newValue) }}
-                            >
-                            <ToggleButton value="Yes">Yes</ToggleButton>
-                            <ToggleButton value="No">No</ToggleButton>
-                        </ToggleButtonGroup>
-                    </div>
+                        
 
-                </div>
+                </div>  
                 
-
-                <Button variant="contained" color="primary" onClick={submit}>Submit</Button>
+                <Button style={{marginTop: '25px'}} variant="contained" color="primary" onClick={submit}>Submit</Button>
 
                 <Footer/>
             </div>
