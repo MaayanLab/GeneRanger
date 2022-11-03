@@ -3,3 +3,14 @@ html, body {
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+.ytick text { font-size: 60% !important}
+.gtitle { font-size: 100% !important}
+
+@media (max-width:520px) {
+    .ytick text { font-size: 30% !important}
+    .gtitle { font-size:  63% !important}
+}
+  
+
+    

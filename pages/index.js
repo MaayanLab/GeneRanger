@@ -26,7 +26,6 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import MenuIcon from '@mui/icons-material/Menu';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import useWindowWidth from '../hooks/useWindowWidth';
 
 const Plot = dynamic(() => import('react-plotly.js'), {
 	ssr: false,
@@ -126,27 +125,12 @@ export default function Page(props) {
     // Used to keep track of which database's info should be displayed
     const [currDatabase, setCurrDatabase] = React.useState(0);
 
-    // Making graph titles and y-axis text responsive on mobile
-
-    const width = useWindowWidth();
-
-    let fontSize = 15; // This is used in the data processing below
     let gtex_transcriptomics_title = props.gene + ' Expression across GTEx Tissues (RNA-seq)';
     let archs4_title = props.gene + ' Expression across ARCHS4 Cells & Tissues (RNA-seq)';
     let tabula_sapiens_title = props.gene + ' Expression across Tabula Sapiens Cells (RNA-seq)';
     let hpm_title = props.gene + ' Protein Expression across HPM Cells & Tissues';
     let hpa_title = props.gene + ' Protein Expression across HPA Cells & Tissues';
     let gtex_proteomics_title = props.gene + ' Protein Expression across GTEx Tissues';
-
-    if (width < 520) {
-        fontSize = 10;
-        gtex_transcriptomics_title = props.gene + ' Expression across GTEx<br>Tissues (RNA-seq)';
-        archs4_title = props.gene + ' Expression across ARCHS4<br>Cells & Tissues (RNA-seq)';
-        tabula_sapiens_title = props.gene + ' Expression across Tabula Sapiens<br>Cells (RNA-seq)';
-        hpm_title = props.gene + ' Protein Expression across HPM<br>Cells & Tissues';
-        hpa_title = props.gene + ' Protein Expression across HPA<br>Cells & Tissues';
-        gtex_proteomics_title = props.gene + ' Protein Expression across GTEx<br>Tissues';
-    }
 
     let gtex_transcriptomics = null;
     let archs4 = null;
@@ -204,7 +188,7 @@ export default function Page(props) {
             sd[i] = arrays[i].sd;
             lowerfence[i] = arrays[i].lowerfence;
             upperfence[i] = arrays[i].upperfence;
-            names[i] = '<span style = "font-size: ' + fontSize + 'px">' + arrays[i].name + '</span>';
+            names[i] = arrays[i].name;
 
         }
 
@@ -261,7 +245,7 @@ export default function Page(props) {
             mean[i] = arrays[i].mean;
             lowerfence[i] = arrays[i].lowerfence;
             upperfence[i] = arrays[i].upperfence;
-            names[i] = '<span style = "font-size: ' + fontSize + 'px">' + arrays[i].name + '</span>';
+            names[i] = arrays[i].name;
 
         }
 
@@ -320,7 +304,7 @@ export default function Page(props) {
             sd[i] = arrays[i].sd;
             lowerfence[i] = arrays[i].lowerfence;
             upperfence[i] = arrays[i].upperfence;
-            names[i] = '<span style = "font-size: ' + fontSize + 'px">' + arrays[i].name + '</span>';
+            names[i] = arrays[i].name;
 
         }
 
@@ -358,7 +342,7 @@ export default function Page(props) {
         for (let i = 0; i < arrays.length; i++) {
 
             values[i] = arrays[i].value;
-            tissues[i] = '<span style = "font-size:' + fontSize + 'px">' + arrays[i].tissue + '</span>';
+            tissues[i] = arrays[i].tissue;
 
         }
 
@@ -402,7 +386,7 @@ export default function Page(props) {
         for (let i = 0; i < combined.length; i++) {
 
             levels[i] = combined[i].level;
-            tissue_and_cells[i] = '<span style="font-size:' + fontSize + 'px">' + combined[i].tissue_and_cell + '</span>';
+            tissue_and_cells[i] = combined[i].tissue_and_cell;
 
         }
 
@@ -454,7 +438,7 @@ export default function Page(props) {
 
         // Adding span to names
         for(let i = 0; i < Object.keys(gtex_proteomics).length; i++) {
-            gtex_proteomics[i].name = '<span style = "font-size:' + fontSize + 'px">' + gtex_proteomics[i].name + '</span>';
+            gtex_proteomics[i].name = gtex_proteomics[i].name;
         }
     }
 
