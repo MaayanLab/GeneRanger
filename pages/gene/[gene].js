@@ -578,6 +578,22 @@ export default function Page(props) {
                         
                         <div className={styles.logoDesc}>An atlas of RNA-seq data for over 400 cell types created with single-cell transcriptomics.  Each cell’s RNA expression is represented by a box plot.</div>
 
+                        <FormControlLabel 
+                        className={styles.formItem} 
+                        control={<Switch onChange={() => setCurrDatabase(3)} checked={currDatabase == 3} />} 
+                        label={
+                            <div className={styles.dbLogo}>
+                                <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/cclelogo.jpeg" alt="CCLE Logo"/>
+                                <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
+                                    <div className={styles.tooltipText}><a href="https://sites.broadinstitute.org/ccle/" target="_blank" rel="noopener noreferrer">Website</a></div>}>
+                                    <IconButton><InfoIcon color='info'/></IconButton>
+                                </HtmlTooltip>
+                            </div>
+                        } 
+                        labelPlacement="start"/>
+                        
+                        <div className={styles.logoDesc}>CCLE description goes here</div>
+
                     </FormGroup>
                 </div>
             
@@ -587,7 +603,7 @@ export default function Page(props) {
 
                         <FormControlLabel 
                         className={styles.formItem} 
-                        control={<Switch onChange={() => setCurrDatabase(3)} checked={currDatabase == 3} />} 
+                        control={<Switch onChange={() => setCurrDatabase(4)} checked={currDatabase == 4} />} 
                         label={
                             <div className={styles.dbLogo}>
                                 <img className={styles.databaseLogo} style={{width: '200px', marginRight: '0'}} src="/images/HPM.gif" alt="HPM Logo"/>
@@ -603,7 +619,7 @@ export default function Page(props) {
                         
                         <FormControlLabel 
                         className={styles.formItem} 
-                        control={<Switch onChange={() => setCurrDatabase(4)} checked={currDatabase == 4} />} 
+                        control={<Switch onChange={() => setCurrDatabase(5)} checked={currDatabase == 5} />} 
                         label={
                             <div className={styles.dbLogo}>
                                 <img className={styles.databaseLogo} style={{width: '200px', padding: '10px', marginLeft: '0px', marginRight: '-20px', backgroundColor: '#8eaabe', borderRadius: '5px'}} src="/images/HPA.svg" alt="HPA Logo"/>
@@ -619,7 +635,7 @@ export default function Page(props) {
                         
                         <FormControlLabel 
                         className={styles.formItem} 
-                        control={<Switch onChange={() => setCurrDatabase(5)} checked={currDatabase == 5} />} 
+                        control={<Switch onChange={() => setCurrDatabase(6)} checked={currDatabase == 6} />} 
                         label={
                             <div className={styles.dbLogo}>
                                 <img className={styles.databaseLogo} src="/images/GTEx_proteomics.png" alt="GTEx Logo"/>
@@ -633,6 +649,21 @@ export default function Page(props) {
                         
                         <div className={styles.logoDesc}>A database designed to study the relationship between genetic variation and gene expression across multiple tissues.  Data are displayed as protein log-transformed relative abundance in box-plot form.</div>
 
+                        <FormControlLabel 
+                        className={styles.formItem} 
+                        control={<Switch onChange={() => setCurrDatabase(7)} checked={currDatabase == 7} />} 
+                        label={
+                            <div className={styles.dbLogo}>
+                                <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/cclelogo.jpeg" alt="CCLE Logo"/>
+                                <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
+                                    <div className={styles.tooltipText}><a href="https://sites.broadinstitute.org/ccle/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/31978347/" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
+                                    <IconButton><InfoIcon color='info'/></IconButton>
+                                </HtmlTooltip>
+                            </div>
+                        } 
+                        labelPlacement="start"/>
+                        
+                        <div className={styles.logoDesc}>CCLE description goes here</div>
                     </FormGroup>
                 </div>
                 
@@ -741,6 +772,22 @@ export default function Page(props) {
                                   
                                   <div className={styles.logoDesc}>An atlas of RNA-seq data for over 400 cell types created with single-cell transcriptomics.  Each cell’s RNA expression is represented by a box plot.</div>
 
+                                  <FormControlLabel 
+                                    className={styles.formItem} 
+                                    control={<Switch onChange={() => setCurrDatabase(3)} checked={currDatabase == 3} />} 
+                                    label={
+                                        <div className={styles.dbLogo}>
+                                            <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/cclelogo.jpeg" alt="CCLE Logo"/>
+                                            <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
+                                                <div className={styles.tooltipText}><a href="https://sites.broadinstitute.org/ccle/" target="_blank" rel="noopener noreferrer">Website</a></div>}>
+                                                <IconButton><InfoIcon color='info'/></IconButton>
+                                            </HtmlTooltip>
+                                        </div>
+                                    } 
+                                    labelPlacement="start"/>
+                                    
+                                    <div className={styles.logoDesc}>CCLE description goes here</div>
+
                               </FormGroup>
                             </div>
                       
@@ -750,7 +797,7 @@ export default function Page(props) {
 
                                   <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => setCurrDatabase(3)} checked={currDatabase == 3} />} 
+                                    control={<Switch onChange={() => setCurrDatabase(4)} checked={currDatabase == 4} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} style={{width: '200px', marginRight: '0'}} src="/images/HPM.gif" alt="HPM Logo"/>
@@ -766,7 +813,7 @@ export default function Page(props) {
                                   
                                   <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => setCurrDatabase(4)} checked={currDatabase == 4} />} 
+                                    control={<Switch onChange={() => setCurrDatabase(5)} checked={currDatabase == 5} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} style={{width: '200px', padding: '10px', marginLeft: '0px', marginRight: '-20px', backgroundColor: '#8eaabe', borderRadius: '5px'}} src="/images/HPA.svg" alt="HPA Logo"/>
@@ -782,7 +829,7 @@ export default function Page(props) {
                                   
                                   <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => setCurrDatabase(5)} checked={currDatabase == 5} />} 
+                                    control={<Switch onChange={() => setCurrDatabase(6)} checked={currDatabase == 6} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} src="/images/GTEx_proteomics.png" alt="GTEx Logo"/>
@@ -796,6 +843,21 @@ export default function Page(props) {
                                   
                                   <div className={styles.logoDesc}>A database designed to study the relationship between genetic variation and gene expression across multiple tissues.  Data are displayed as protein log-transformed relative abundance in box-plot form.</div>
 
+                                  <FormControlLabel 
+                                    className={styles.formItem} 
+                                    control={<Switch onChange={() => setCurrDatabase(7)} checked={currDatabase == 7} />} 
+                                    label={
+                                        <div className={styles.dbLogo}>
+                                            <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/cclelogo.jpeg" alt="CCLE Logo"/>
+                                            <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
+                                                <div className={styles.tooltipText}><a href="https://sites.broadinstitute.org/ccle/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/31978347/" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
+                                                <IconButton><InfoIcon color='info'/></IconButton>
+                                            </HtmlTooltip>
+                                        </div>
+                                    } 
+                                    labelPlacement="start"/>
+                                    
+                                    <div className={styles.logoDesc}>CCLE description goes here</div>
                               </FormGroup>
                             </div>
                             
@@ -842,23 +904,37 @@ export default function Page(props) {
                                         {
                                             (currDatabase == 3)
                                                 ?
+                                                    <Tab icon={<img className={styles.tabLogo} alt="CCLE logo" src="/images/cclelogo.jpeg" />} />
+                                                :
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="CCLE logo" src="/images/cclelogo.jpeg" />} />
+                                        }
+                                        {
+                                            (currDatabase == 4)
+                                                ?
                                                     <Tab icon={<img className={styles.tabLogo} alt="HPM logo" src="/images/HPM.gif" />} />
                                                 :
                                                     <Tab icon={<img className={styles.grayTabLogo} alt="HPM logo" src="/images/HPM.gif" />} />
                                         }
                                         {
-                                            (currDatabase == 4)
+                                            (currDatabase == 5)
                                                 ?
                                                     <Tab icon={<img className={styles.tabLogo} alt="HPA logo" src="/images/HPA.svg" />} />
                                                 :
                                                     <Tab icon={<img className={styles.grayTabLogo} alt="HPA logo" src="/images/HPA.svg" />} />
                                         }
                                         {
-                                            (currDatabase == 5)
+                                            (currDatabase == 6)
                                                 ?
                                                     <Tab icon={<img className={styles.tabLogo} alt="GTEx logo" src="/images/GTEx_proteomics.png" />} />
                                                 :
                                                     <Tab icon={<img className={styles.grayTabLogo} alt="GTEx logo" src="/images/GTEx_proteomics.png" />} />
+                                        }
+                                        {
+                                            (currDatabase == 7)
+                                                ?
+                                                    <Tab icon={<img className={styles.tabLogo} alt="CCLE logo" src="/images/cclelogo.jpeg" />} />
+                                                :
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="CCLE logo" src="/images/cclelogo.jpeg" />} />
                                         }
                                     </Tabs>
                                 </Box>
@@ -949,6 +1025,11 @@ export default function Page(props) {
                                     </TabPanel>
                                     <TabPanel value={currDatabase} index={3}>
                                         {
+                                            <div>This is where CCLE transcriptomics will go</div>
+                                        }
+                                    </TabPanel>
+                                    <TabPanel value={currDatabase} index={4}>
+                                        {
                                             hpm != null 
                                                 ? 
                                                     <>
@@ -976,7 +1057,7 @@ export default function Page(props) {
                                                     <GraphMissing/>
                                         }
                                     </TabPanel>
-                                    <TabPanel value={currDatabase} index={4}>
+                                    <TabPanel value={currDatabase} index={5}>
                                         {
                                             hpa != null 
                                                 ? 
@@ -1008,7 +1089,7 @@ export default function Page(props) {
                                                     <GraphMissing/>
                                         }
                                     </TabPanel>
-                                    <TabPanel value={currDatabase} index={5}>
+                                    <TabPanel value={currDatabase} index={6}>
                                         {
                                             gtex_proteomics != null 
                                                 ? 
@@ -1036,6 +1117,11 @@ export default function Page(props) {
                                                     </>
                                                 : 
                                                     <GraphMissing/>
+                                        }
+                                    </TabPanel>
+                                    <TabPanel value={currDatabase} index={7}>
+                                        {
+                                            <div>This is where CCLE proteomics will go</div>
                                         }
                                     </TabPanel>
                             </Box>
