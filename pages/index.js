@@ -31,84 +31,32 @@ const Plot = dynamic(() => import('react-plotly.js'), {
 	ssr: false,
 });
 
+const getData = async (geneName) => {
+    const input = { gene: geneName };
+    let res  = await fetch('https://generanger.dev.maayanlab.cloud/api/data', {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(input),
+    }).catch((err) => {
+        console.log(err);
+    }) 
+    let data = await res.json();
+    return data;
+}
+
 export async function getStaticProps() {
 
-        const prisma = new PrismaClient();
-
-        let all_db_data = {};
-
-        let defaultGene = 'A2M';
-
-        const gtex_transcriptomics = await prisma.gtex_transcriptomics.findMany({
-            where: {
-                name: defaultGene,
-            },
-        });
-        Object.assign(all_db_data, {gtex_transcriptomics: gtex_transcriptomics});
-
-        const archs4 = await prisma.archs4.findMany({
-            where: {
-                name: defaultGene,
-            },
-        });
-        Object.assign(all_db_data, {archs4: archs4});
-
-        const tabula_sapiens = await prisma.tabula_sapiens.findMany({
-            where: {
-                name: defaultGene,
-            },
-        });
-        Object.assign(all_db_data, {tabula_sapiens: tabula_sapiens});
-
-        const hpm = await prisma.hpm.findMany({
-            where: {
-                gene: defaultGene,
-            },
-        });
-        Object.assign(all_db_data, {hpm: hpm});
-
-        const hpa = await prisma.hpa.findMany({
-            where: {
-                gene_name: defaultGene,
-            },
-        });
-        Object.assign(all_db_data, {hpa: hpa});
-
-
-        const gtex_proteomics = await prisma.gtex_proteomics.findMany({
-            where: {
-                gene_id: defaultGene,
-            },
-        });
-        Object.assign(all_db_data, {gtex_proteomics: gtex_proteomics});
-
-        // Getting NCBI gene description
-
-        let esearch_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gene&term=' + defaultGene + '[gene%20name]+human[organism]';
-        let esummary_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gene&id=';
-
-        const esearch_res = await fetch(esearch_url);
-        let ids = await esearch_res.text();
-        ids = ids.substring(ids.indexOf('<Id>'), ids.lastIndexOf('</Id>')).replaceAll('</Id>', ',').replaceAll('<Id>', '').replace(/(\r\n|\n|\r)/gm, "");
-        const esummary_res = await fetch(esummary_url + ids);
-        let NCBI_data = await esummary_res.text();
-        let slicedStr = NCBI_data.substring(NCBI_data.indexOf('<Name>' + defaultGene + '</Name>'));
-        slicedStr = slicedStr.substring(slicedStr.indexOf('<Summary>'), slicedStr.indexOf('</Summary>')).replaceAll('<Summary>', '');
-        NCBI_data = slicedStr.substring(0, slicedStr.lastIndexOf('[') - 1);
-
-        // Converting character entities
-        NCBI_data = NCBI_data.replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&').replaceAll('&quot;', '"').replaceAll('&apos;', '\'').replaceAll('&copy;', '©').replaceAll('&reg;', '®');
-
-        // If there isn't an NCBI description
-        if (NCBI_data == "") NCBI_data = 'No gene description available.'
+    let data = await getData('A2M');
         
-        return { 
-            props: {
-                gene: defaultGene,
-                all_db_data: all_db_data,
-                NCBI_data: NCBI_data
-            } 
-        }
+    return { 
+        props: {
+            gene: 'A2M',
+            all_db_data: data.allData.all_db_data,
+            NCBI_data: data.allData.NCBI_data
+        } 
+    }
 
 }
 
