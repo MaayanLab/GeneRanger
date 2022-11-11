@@ -103,9 +103,10 @@ export async function getServerSideProps(context) {
     return { 
         props: {
             gene: context.query.gene,
+            currDatabase: context.query.currDatabase, 
             all_db_data: all_db_data,
             NCBI_data: NCBI_data
-        } 
+        }
     }
 
 }
