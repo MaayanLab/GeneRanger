@@ -37,6 +37,7 @@ const getData = async (geneName) => {
         method: 'POST', 
         headers: {
             'Content-Type': 'application/json',
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9',
         },
         body: JSON.stringify(input),
     }).catch((err) => {
