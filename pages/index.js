@@ -33,7 +33,7 @@ const Plot = dynamic(() => import('react-plotly.js'), {
 
 const getData = async (geneName) => {
     const input = { gene: geneName };
-    let res  = await fetch('https://generanger.dev.maayanlab.cloud/api/data', {
+    let res  = await fetch('/api/data', {
         method: 'POST', 
         headers: {
             'Content-Type': 'application/json',
