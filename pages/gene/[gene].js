@@ -582,7 +582,7 @@ export default function Page(props) {
                         control={<Switch onChange={() => setCurrDatabase(3)} checked={currDatabase == 3} />} 
                         label={
                             <div className={styles.dbLogo}>
-                                <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/cclelogo.jpeg" alt="CCLE Logo"/>
+                                <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/CCLE_transcriptomics.jpeg" alt="CCLE Logo"/>
                                 <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
                                     <div className={styles.tooltipText}><a href="https://sites.broadinstitute.org/ccle/" target="_blank" rel="noopener noreferrer">Website</a></div>}>
                                     <IconButton><InfoIcon color='info'/></IconButton>
@@ -653,7 +653,7 @@ export default function Page(props) {
                         control={<Switch onChange={() => setCurrDatabase(7)} checked={currDatabase == 7} />} 
                         label={
                             <div className={styles.dbLogo}>
-                                <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/cclelogo.jpeg" alt="CCLE Logo"/>
+                                <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/CCLE_proteomics.jpeg" alt="CCLE Logo"/>
                                 <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
                                     <div className={styles.tooltipText}><a href="https://sites.broadinstitute.org/ccle/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/31978347/" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
                                     <IconButton><InfoIcon color='info'/></IconButton>
@@ -776,7 +776,7 @@ export default function Page(props) {
                                     control={<Switch onChange={() => setCurrDatabase(3)} checked={currDatabase == 3} />} 
                                     label={
                                         <div className={styles.dbLogo}>
-                                            <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/cclelogo.jpeg" alt="CCLE Logo"/>
+                                            <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/CCLE_transcriptomics.jpeg" alt="CCLE Logo"/>
                                             <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://sites.broadinstitute.org/ccle/" target="_blank" rel="noopener noreferrer">Website</a></div>}>
                                                 <IconButton><InfoIcon color='info'/></IconButton>
@@ -847,7 +847,7 @@ export default function Page(props) {
                                     control={<Switch onChange={() => setCurrDatabase(7)} checked={currDatabase == 7} />} 
                                     label={
                                         <div className={styles.dbLogo}>
-                                            <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/cclelogo.jpeg" alt="CCLE Logo"/>
+                                            <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/CCLE_proteomics.jpeg" alt="CCLE Logo"/>
                                             <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://sites.broadinstitute.org/ccle/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/31978347/" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
                                                 <IconButton><InfoIcon color='info'/></IconButton>
@@ -903,9 +903,9 @@ export default function Page(props) {
                                         {
                                             (currDatabase == 3)
                                                 ?
-                                                    <Tab icon={<img className={styles.tabLogo} alt="CCLE logo" src="/images/cclelogo.jpeg" />} />
+                                                    <Tab icon={<img className={styles.tabLogo} alt="CCLE logo" src="/images/CCLE_transcriptomics.jpeg" />} />
                                                 :
-                                                    <Tab icon={<img className={styles.grayTabLogo} alt="CCLE logo" src="/images/cclelogo.jpeg" />} />
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="CCLE logo" src="/images/CCLE_transcriptomics.jpeg" />} />
                                         }
                                         {
                                             (currDatabase == 4)
@@ -931,9 +931,9 @@ export default function Page(props) {
                                         {
                                             (currDatabase == 7)
                                                 ?
-                                                    <Tab icon={<img className={styles.tabLogo} alt="CCLE logo" src="/images/cclelogo.jpeg" />} />
+                                                    <Tab icon={<img className={styles.tabLogo} alt="CCLE logo" src="/images/CCLE_proteomics.jpeg" />} />
                                                 :
-                                                    <Tab icon={<img className={styles.grayTabLogo} alt="CCLE logo" src="/images/cclelogo.jpeg" />} />
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="CCLE logo" src="/images/CCLE_proteomics.jpeg" />} />
                                         }
                                     </Tabs>
                                 </Box>
