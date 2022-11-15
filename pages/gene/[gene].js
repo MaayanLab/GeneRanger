@@ -35,77 +35,118 @@ export async function getServerSideProps(context) {
 
     const prisma = new PrismaClient();
 
-    let all_db_data = {};
+    let gene_desc = await prisma.$queryRaw`select * from gene where gene.symbol = ${context.query.gene}`
+    gene_desc = gene_desc[0].description;
 
-    const gtex_transcriptomics = await prisma.gtex_transcriptomics.findMany({
-        where: {
-            name: context.query.gene,
-        },
-    });
-    Object.assign(all_db_data, {gtex_transcriptomics: gtex_transcriptomics});
+    let all_db_data = await prisma.$queryRaw
+    `
+        select
+            d.dbname,
+            jsonb_object_agg(
+                d.label,
+                (
+                    select jsonb_object_agg(
+                        d2.description,
+                        coalesce(to_jsonb(d2.num_value), to_jsonb(d2.str_value))
+                    )
+                    from data d2
+                    where d2.dbname = d.dbname
+                    and d2.label = d.label
+                    and d2.gene = d.gene
+                    group by d2.gene, d2.dbname
+                )
+            ) as df
+        from data d
+        where d.gene = ${context.query.gene}
+        group by d.dbname;
+    `
 
-    const archs4 = await prisma.archs4.findMany({
-        where: {
-            name: context.query.gene,
-        },
-    });
-    Object.assign(all_db_data, {archs4: archs4});
+    let sorted_data = {};
 
-    const tabula_sapiens = await prisma.tabula_sapiens.findMany({
-        where: {
-            name: context.query.gene,
-        },
-    });
-    Object.assign(all_db_data, {tabula_sapiens: tabula_sapiens});
+    for (let i in all_db_data) {
+        let db = all_db_data[i].dbname;
+        let df = all_db_data[i].df;
+        if (db == 'GTEx_transcriptomics' || db == 'ARCHS4' || db == 'Tabula_Sapiens' || db == 'GTEx_proteomics') {
+            const descriptions = Object.keys(df.mean);
+            descriptions.sort((a, b) => df.mean[a] - df.mean[b]);
+            let names = descriptions;
+            names = names.map(name => name.replace(/_+/g, ' ').replaceAll('.', ' ').replace('-', ' ').trim());
+            const q1 = descriptions.map(description => df.q1[description]);
+            const median = descriptions.map(description => df.median[description]);
+            const q3 = descriptions.map(description => df.q3[description]);
+            const mean = descriptions.map(description => df.mean[description]);
+            const std = descriptions.map(description => df.std[description]);
+            const upperfence = descriptions.map(description => df.upperfence[description]);
+            const lowerfence = descriptions.map(description => df.lowerfence[description]);
+    
+            let data;
 
-    const hpm = await prisma.hpm.findMany({
-        where: {
-            gene: context.query.gene,
-        },
-    });
-    Object.assign(all_db_data, {hpm: hpm});
+            if (db == 'ARCHS4') {
+                data = {
+                    q1: q1,
+                    median: median,
+                    q3: q3,
+                    mean: mean,
+                    lowerfence: lowerfence,
+                    upperfence: upperfence,
+                    y: names,
+                    orientation: 'h',
+                    type: 'box'
+                }
+            } else {
+                data = {
+                    q1: q1,
+                    median: median,
+                    q3: q3,
+                    mean: mean,
+                    sd: std,
+                    lowerfence: lowerfence,
+                    upperfence: upperfence,
+                    y: names,
+                    orientation: 'h',
+                    type: 'box'
+                }
+            }
+            
 
-    const hpa = await prisma.hpa.findMany({
-        where: {
-            gene_name: context.query.gene,
-        },
-    });
-    Object.assign(all_db_data, {hpa: hpa});
+            Object.assign(sorted_data, {[db]: data});
 
+        } else if (db == 'HPM' || db == 'HPA' || db == 'CCLE_transcriptomics' || db == 'CCLE_proteomics') {
+            let descriptions = Object.keys(df.value);
+            if (db == 'HPA') {
+                const qualitative_map = {'Not detected': 0, 'Low': 1, 'Medium': 2, 'High': 3}
+                descriptions.sort((a, b) => qualitative_map[df.value[a]] - qualitative_map[df.value[b]]);
+            } else {
+                descriptions.sort((a, b) => df.value[a] - df.value[b]);
+            }  
 
-    const gtex_proteomics = await prisma.gtex_proteomics.findMany({
-        where: {
-            gene_id: context.query.gene,
-        },
-    });
-    Object.assign(all_db_data, {gtex_proteomics: gtex_proteomics});
+            const levels = descriptions.map(description => df.value[description]);
 
-    // Getting NCBI gene description
+            if (db == 'HPA') {
+                descriptions = descriptions.map(description => description.replace('\n', ' '));
+            }
 
-    let esearch_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gene&term=' + context.query.gene + '[gene%20name]+human[organism]';
-    let esummary_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gene&id=';
+            const names = descriptions;
 
-    const esearch_res = await fetch(esearch_url);
-    let ids = await esearch_res.text();
-    ids = ids.substring(ids.indexOf('<Id>'), ids.lastIndexOf('</Id>')).replaceAll('</Id>', ',').replaceAll('<Id>', '').replace(/(\r\n|\n|\r)/gm, "");
-    const esummary_res = await fetch(esummary_url + ids);
-    let NCBI_data = await esummary_res.text();
-    let slicedStr = NCBI_data.substring(NCBI_data.indexOf('<Name>' + context.query.gene + '</Name>'));
-    slicedStr = slicedStr.substring(slicedStr.indexOf('<Summary>'), slicedStr.indexOf('</Summary>')).replaceAll('<Summary>', '');
-    NCBI_data = slicedStr.substring(0, slicedStr.lastIndexOf('[') - 1);
+            let data = {
+                x: levels,
+                y: names,
+                type: "scatter",
+                mode: "markers",
+                marker: { color: '#1f77b4' },
+            }
+            
+            Object.assign(sorted_data, {[db]: data});
 
-    // Converting character entities
-    NCBI_data = NCBI_data.replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&').replaceAll('&quot;', '"').replaceAll('&apos;', '\'').replaceAll('&copy;', '©').replaceAll('&reg;', '®');
-
-    // If there isn't an NCBI description
-    if (NCBI_data == "") NCBI_data = 'No gene description available.'
+        }
+    }
     
     return { 
         props: {
             gene: context.query.gene,
             currDatabase: context.query.currDatabase, 
-            all_db_data: all_db_data,
-            NCBI_data: NCBI_data
+            sorted_data: sorted_data,
+            NCBI_data: gene_desc
         }
     }
 
@@ -119,317 +160,38 @@ export default function Page(props) {
     let hpm_title = props.gene + ' Protein Expression across HPM Cells & Tissues';
     let hpa_title = props.gene + ' Protein Expression across HPA Cells & Tissues';
     let gtex_proteomics_title = props.gene + ' Protein Expression across GTEx Tissues';
+    let ccle_transcriptomics_title = props.gene + ' Expression across CCLE Cell Lines';
+    let ccle_proteomics_title = props.gene + ' Protein Expression across CCLE Cell Lines';
 
-    let gtex_transcriptomics = null;
-    let archs4 = null;
-    let tabula_sapiens = null;
-    let hpm = null;
-    let hpa = null;
-    let gtex_proteomics = null;
+    let gtex_transcriptomics = null, archs4 = null, tabula_sapiens = null, hpm = null, hpa = null, gtex_proteomics = null, ccle_transcriptomics = null, ccle_proteomics = null;
+    let hpa_length = 0, ccle_transcriptomics_length = 0, ccle_proteomics_length = 0;
 
-    let hpa_length = 0;
-
-    // Replaces underscores and periods with spaces
-    function processNames(names) {
-        return names.map(name => name.replace(/_+/g, ' ').replaceAll('.', ' ').trim());
+    if (Object.keys(props.sorted_data).includes('GTEx_transcriptomics')) {
+        gtex_transcriptomics = props.sorted_data.GTEx_transcriptomics;
     }
-
-    // Processing GTEx Transcriptomics
-
-    let data = props.all_db_data.gtex_transcriptomics;
-
-    if (data.length != 0) {
-
-        let mean_index = 1;
-        let sd_index = 2;
-        let min_index = 3;
-        let q1_index = 4;
-        let median_index = 5;
-        let q3_index = 6;
-        let max_index = 7;
-
-        let q1 = Object.values(data[q1_index]).slice(3);
-        let q3 = Object.values(data[q3_index]).slice(3);
-        let min = Object.values(data[min_index]).slice(3);
-        let max = Object.values(data[max_index]).slice(3);
-        let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
-        let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
-        let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
-        let names = processNames(Object.keys(data[q1_index]).slice(3));
-        let sd = Object.values(data[sd_index]).slice(3);
-        let median =Object.values(data[median_index]).slice(3);
-        let mean = Object.values(data[mean_index]).slice(3)
-
-        let arrays = [];
-        for (let i = 0; i < mean.length; i++) {
-            arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i], 'name': names[i]});
-        }
-
-        arrays.sort((a, b) => a.mean - b.mean);
-
-        for (let i = 0; i < mean.length; i++) {
-
-            q1[i] = arrays[i].q1;
-            median[i] = arrays[i].median;
-            q3[i] = arrays[i].q3;
-            mean[i] = arrays[i].mean;
-            sd[i] = arrays[i].sd;
-            lowerfence[i] = arrays[i].lowerfence;
-            upperfence[i] = arrays[i].upperfence;
-            names[i] = arrays[i].name;
-
-        }
-
-        gtex_transcriptomics = {
-            q1: q1,
-            median: median,
-            q3: q3,
-            mean: mean,
-            sd: sd,
-            lowerfence: lowerfence,
-            upperfence: upperfence,
-            y: names,
-            orientation: 'h',
-            type: 'box'
-        }
+    if (Object.keys(props.sorted_data).includes('ARCHS4')) {
+        archs4 = props.sorted_data.ARCHS4;
+    } 
+    if (Object.keys(props.sorted_data).includes('Tabula_Sapiens')) {
+        tabula_sapiens = props.sorted_data.Tabula_Sapiens;
+    } 
+    if (Object.keys(props.sorted_data).includes('HPM')) {
+        hpm = props.sorted_data.HPM;
+    } 
+    if (Object.keys(props.sorted_data).includes('HPA')) {
+        hpa = props.sorted_data.HPA;
+        hpa_length = Object.keys(hpa.y).length;
+    } 
+    if (Object.keys(props.sorted_data).includes('GTEx_proteomics')) {
+        gtex_proteomics = props.sorted_data.GTEx_proteomics;
     }
-
-    // Processing ARCHS4
-
-    data = props.all_db_data.archs4;
-
-    if (data.length != 0) {
-
-        let mean_index = 1;
-        let min_index = 3;
-        let max_index = 4;
-        let q1_index = 5;
-        let median_index = 6;
-        let q3_index = 7;
-
-        let q1 = Object.values(data[q1_index]).slice(3);
-        let q3 = Object.values(data[q3_index]).slice(3);
-        let min = Object.values(data[min_index]).slice(3);
-        let max = Object.values(data[max_index]).slice(3);
-        let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
-        let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
-        let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
-        let names = processNames(Object.keys(data[q1_index]).slice(3));
-        let median = Object.values(data[median_index]).slice(3);
-        let mean = Object.values(data[mean_index]).slice(3);
-
-        let arrays = [];
-        for (let i = 0; i < mean.length; i++) {
-            arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i], 'name': names[i]});
-        }
-
-        arrays.sort((a, b) => a.mean - b.mean);
-
-        for (let i = 0; i < mean.length; i++) {
-
-            q1[i] = arrays[i].q1;
-            median[i] = arrays[i].median;
-            q3[i] = arrays[i].q3;
-            mean[i] = arrays[i].mean;
-            lowerfence[i] = arrays[i].lowerfence;
-            upperfence[i] = arrays[i].upperfence;
-            names[i] = arrays[i].name;
-
-        }
-
-        archs4 = {
-            q1: q1,
-            median: median,
-            q3: q3,
-            mean: mean,
-            lowerfence: lowerfence,
-            upperfence: upperfence,
-            y: names,
-            orientation: 'h',
-            type: 'box'
-        }
+    if (Object.keys(props.sorted_data).includes('CCLE_transcriptomics')) {
+        ccle_transcriptomics = props.sorted_data.CCLE_transcriptomics;
+        ccle_transcriptomics_length = Object.keys(ccle_transcriptomics.y).length;
     }
-
-
-
-    // Processing Tabula Sapiens
-
-    data = props.all_db_data.tabula_sapiens;
-
-    if (data.length != 0) {
-
-        let mean_index = 1;
-        let sd_index = 2;
-        let min_index = 3;
-        let q1_index = 4;
-        let median_index = 5;
-        let q3_index = 6;
-        let max_index = 7;
-
-        let q1 = Object.values(data[q1_index]).slice(3);
-        let q3 = Object.values(data[q3_index]).slice(3);
-        let min = Object.values(data[min_index]).slice(3);
-        let max = Object.values(data[max_index]).slice(3);
-        let IQR = Object.values(data[q3_index]).slice(3).map((value, index) => value - q1[index]);
-        let lowerfence = min.map((value, index) => Math.max(value, q1.map((value, index) => value - (1.5 * IQR[index]))[index]));
-        let upperfence = max.map((value, index) => Math.min(value, q3.map((value, index) => value + (1.5 * IQR[index]))[index]));
-        let names = processNames(Object.keys(data[q1_index]).slice(3));
-        let median = Object.values(data[median_index]).slice(3);
-        let mean = Object.values(data[mean_index]).slice(3);
-        let sd = Object.values(data[sd_index]).slice(3);
-
-        let arrays = [];
-        for (let i = 0; i < mean.length; i++) {
-            arrays.push({'q1': q1[i], 'median': median[i], 'q3': q3[i], 'mean': mean[i], 'sd': sd[i], 'lowerfence': lowerfence[i], 'upperfence': upperfence[i], 'name': names[i]});
-        }
-
-        arrays.sort((a, b) => a.mean - b.mean);
-
-        for (let i = 0; i < mean.length; i++) {
-
-            q1[i] = arrays[i].q1;
-            median[i] = arrays[i].median;
-            q3[i] = arrays[i].q3;
-            mean[i] = arrays[i].mean;
-            sd[i] = arrays[i].sd;
-            lowerfence[i] = arrays[i].lowerfence;
-            upperfence[i] = arrays[i].upperfence;
-            names[i] = arrays[i].name;
-
-        }
-
-        tabula_sapiens = {
-            q1: q1,
-            median: median,
-            q3: q3,
-            mean: mean,
-            sd: sd,
-            lowerfence: lowerfence,
-            upperfence: upperfence,
-            y: names,
-            orientation: 'h',
-            type: 'box'
-        }
-    }
-
-
-    // Processing HPM
-
-    data = props.all_db_data.hpm;
-
-    if (data.length != 0) {
-
-        let values = [];
-        let tissues = [];
-
-        let arrays = [];
-        for (let i = 0; i < data.length; i++) {
-            arrays.push({'value': data[i].value, 'tissue': data[i].tissue});
-        }
-
-        arrays.sort((a, b) => a.value - b.value);
-
-        for (let i = 0; i < arrays.length; i++) {
-
-            values[i] = arrays[i].value;
-            tissues[i] = arrays[i].tissue;
-
-        }
-
-        hpm = {
-            x: values,
-            y: processNames(tissues),
-            type: "scatter",
-            mode: "markers",
-            marker: { color: '#1f77b4' },
-            }
-    }
-
-
-    // Processing HPA
-
-    data = props.all_db_data.hpa;
-
-    if (data.length != 0) {
-
-        let levels = [];
-        let tissue_and_cells = [];
-
-        let not_detected = [];
-        let low = [];
-        let medium = [];
-        let high = [];
-        for (let i = 0; i < data.length; i++) {
-            if (data[i].level == "Not detected") {
-                not_detected.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ',<br>' + data[i].cell_type});
-            } else if (data[i].level == "Low") {
-                low.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ',<br>' + data[i].cell_type});
-            } else if (data[i].level == "Medium") {
-                medium.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ',<br>' + data[i].cell_type});
-            } else {
-                high.push({'level': data[i].level, 'tissue_and_cell': data[i].tissue + ',<br>' + data[i].cell_type});
-            }
-        }
-
-        let combined = not_detected.concat(low, medium, high);
-
-        for (let i = 0; i < combined.length; i++) {
-
-            levels[i] = combined[i].level;
-            tissue_and_cells[i] = combined[i].tissue_and_cell;
-
-        }
-
-        hpa_length = combined.length;
-
-        hpa = {
-            x: levels,
-            y: tissue_and_cells,
-            // category_orders: {"Level": ["Not detected", "Low", "Medium", "High"]}, 
-            type: "scatter",
-            mode: "markers",
-            marker: { color: '#1f77b4' },
-            }
-    }
-
-
-    // Processing GTEx Proteomics
-
-    data = props.all_db_data.gtex_proteomics;
-
-    if (data.length != 0) {
-
-        let tissues = [];
-        let temp = {};
-        gtex_proteomics = [];
-
-        for (let i = 0; i < Object.keys(data).length; i++) {
-            if (!tissues.includes(data[i].tissue)) {
-                tissues.push(data[i].tissue);
-                if (temp.x != null) {
-                    gtex_proteomics.push(temp);
-                }
-                temp = {name: data[i].tissue, type: 'box', x: [data[i].value], marker: {color: '#1f77b4'}};
-            } else {
-                temp.x.push(data[i].value);
-            }
-        }
-
-        gtex_proteomics.push(temp);
-
-        // Sorting
-
-        for (let i = 0; i < Object.keys(gtex_proteomics).length; i++) {
-            let mean = gtex_proteomics[i].x.reduce((a, b) => a + b, 0) / gtex_proteomics[i].x.length;
-            gtex_proteomics[i]['mean'] = mean;
-        }
-
-        gtex_proteomics.sort((a, b) => a.mean - b.mean);
-
-        // Adding span to names
-        for(let i = 0; i < Object.keys(gtex_proteomics).length; i++) {
-            gtex_proteomics[i].name = gtex_proteomics[i].name;
-        }
+    if (Object.keys(props.sorted_data).includes('CCLE_proteomics')) {
+        ccle_proteomics = props.sorted_data.CCLE_proteomics;
+        ccle_proteomics_length = Object.keys(ccle_proteomics.y).length;
     }
 
     // Function for submitting data to the next page
@@ -1024,7 +786,32 @@ export default function Page(props) {
                                     </TabPanel>
                                     <TabPanel value={currDatabase} index={3}>
                                         {
-                                            <div>This is where CCLE transcriptomics will go</div>
+                                            ccle_transcriptomics != null 
+                                                ? 
+                                                    <>
+                                                        <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'CCLE'} database_desc={"CCLE description would go here"}/>
+                                                        <div style={{height: '50000px'}}>
+                                                            <Plot
+                                                                data={[ccle_transcriptomics]}
+                                                                layout={{title: ccle_transcriptomics_title,
+                                                                    yaxis: {
+                                                                        automargin: true,
+                                                                        range: [-0.5, ccle_transcriptomics_length]
+                                                                    },
+                                                                xaxis: {
+                                                                    title: {
+                                                                    text: '',
+                                                                    }
+                                                                }
+                                                                }}
+                                                                style={{width: '100%', height: '100%'}}
+                                                                config={{responsive: true}}
+                                                            />
+                                                        </div>
+                                                    </>
+                                                : 
+                                                    <GraphMissing/>
                                         }
                                     </TabPanel>
                                     <TabPanel value={currDatabase} index={4}>
@@ -1097,7 +884,7 @@ export default function Page(props) {
                                                         <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'GTEx'} database_desc={"A database designed to study the relationship between genetic variation and gene expression across multiple tissues. Data are displayed as protein log-transformed relative abundance in box-plot form."}/>
                                                         <div style={{height: '1500px'}}>
                                                             <Plot
-                                                                data={gtex_proteomics}
+                                                                data={[gtex_proteomics]}
                                                                 layout={{title: gtex_proteomics_title,
                                                                 showlegend: false,
                                                                 yaxis: {
@@ -1105,10 +892,9 @@ export default function Page(props) {
                                                                 },
                                                                 xaxis: {
                                                                     title: {
-                                                                        text: 'log2(relative abundance)',
+                                                                    text: 'log2(relative abundance)',
                                                                     }
-                                                                }
-                                                                }}
+                                                                }}}
                                                                 style={{width: '100%', height: '100%'}}
                                                                 config={{responsive: true}}
                                                             />
@@ -1120,7 +906,32 @@ export default function Page(props) {
                                     </TabPanel>
                                     <TabPanel value={currDatabase} index={7}>
                                         {
-                                            <div>This is where CCLE proteomics will go</div>
+                                            ccle_proteomics != null 
+                                                ? 
+                                                    <>
+                                                        <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'CCLE'} database_desc={"CCLE description would go here"}/>
+                                                        <div style={{height: '10000px'}}>
+                                                            <Plot
+                                                                data={[ccle_proteomics]}
+                                                                layout={{title: ccle_proteomics_title,
+                                                                yaxis: {
+                                                                    automargin: true,
+                                                                    range: [-0.5, ccle_proteomics_length]
+                                                                },
+                                                                xaxis: {
+                                                                    title: {
+                                                                    text: '',
+                                                                    }
+                                                                }
+                                                                }}
+                                                                style={{width: '100%', height: '100%'}}
+                                                                config={{responsive: true}}
+                                                            />
+                                                        </div>
+                                                    </>
+                                                : 
+                                                    <GraphMissing/>
                                         }
                                     </TabPanel>
                             </Box>
