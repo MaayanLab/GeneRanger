@@ -38,28 +38,30 @@ export async function getStaticProps() {
     let defaultGene = 'A2M';
 
     let gene_desc = await prisma.$queryRaw`select * from gene where gene.symbol = ${defaultGene}`
-    gene_desc = gene_desc[0].description;
+    if (gene_desc.length != 0) {
+        gene_desc = gene_desc[0].description;
+    } else {
+        gene_desc = "No gene description available."
+    }
 
     let all_db_data = await prisma.$queryRaw
     `
+        with cte as (
+            select
+            d.dbname,
+            d.label,
+            jsonb_object_agg(
+                d.description,
+                coalesce(to_jsonb(d.num_value), to_jsonb(d.str_value))
+            ) as df
+            from data d
+            where d.gene = ${defaultGene}
+            group by d.dbname, d.label
+        )
         select
             d.dbname,
-            jsonb_object_agg(
-                d.label,
-                (
-                    select jsonb_object_agg(
-                        d2.description,
-                        coalesce(to_jsonb(d2.num_value), to_jsonb(d2.str_value))
-                    )
-                    from data d2
-                    where d2.dbname = d.dbname
-                    and d2.label = d.label
-                    and d2.gene = d.gene
-                    group by d2.gene, d2.dbname
-                )
-            ) as df
-        from data d
-        where d.gene = ${defaultGene}
+            jsonb_object_agg(d.label, d.df) as df
+        from cte d
         group by d.dbname;
     `
 
