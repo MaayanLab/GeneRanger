@@ -166,30 +166,30 @@ export default function Page(props) {
     let gtex_transcriptomics = null, archs4 = null, tabula_sapiens = null, hpm = null, hpa = null, gtex_proteomics = null, ccle_transcriptomics = null, ccle_proteomics = null;
     let hpa_length = 0, ccle_transcriptomics_length = 0, ccle_proteomics_length = 0;
 
-    if (Object.keys(props.sorted_data).includes('GTEx_transcriptomics')) {
+    if ('GTEx_transcriptomics' in props.sorted_data) {
         gtex_transcriptomics = props.sorted_data.GTEx_transcriptomics;
     }
-    if (Object.keys(props.sorted_data).includes('ARCHS4')) {
+    if ('ARCHS4' in props.sorted_data) {
         archs4 = props.sorted_data.ARCHS4;
     } 
-    if (Object.keys(props.sorted_data).includes('Tabula_Sapiens')) {
+    if ('Tabula_Sapiens' in props.sorted_data) {
         tabula_sapiens = props.sorted_data.Tabula_Sapiens;
     } 
-    if (Object.keys(props.sorted_data).includes('HPM')) {
+    if ('HPM' in props.sorted_data) {
         hpm = props.sorted_data.HPM;
     } 
-    if (Object.keys(props.sorted_data).includes('HPA')) {
+    if ('HPA' in props.sorted_data) {
         hpa = props.sorted_data.HPA;
         hpa_length = Object.keys(hpa.y).length;
     } 
-    if (Object.keys(props.sorted_data).includes('GTEx_proteomics')) {
+    if ('GTEx_proteomics' in props.sorted_data) {
         gtex_proteomics = props.sorted_data.GTEx_proteomics;
     }
-    if (Object.keys(props.sorted_data).includes('CCLE_transcriptomics')) {
+    if ('CCLE_transcriptomics' in props.sorted_data) {
         ccle_transcriptomics = props.sorted_data.CCLE_transcriptomics;
         ccle_transcriptomics_length = Object.keys(ccle_transcriptomics.y).length;
     }
-    if (Object.keys(props.sorted_data).includes('CCLE_proteomics')) {
+    if ('CCLE_proteomics' in props.sorted_data) {
         ccle_proteomics = props.sorted_data.CCLE_proteomics;
         ccle_proteomics_length = Object.keys(ccle_proteomics.y).length;
     }
