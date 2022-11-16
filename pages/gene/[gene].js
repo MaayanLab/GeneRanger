@@ -804,7 +804,7 @@ export default function Page(props) {
                                                                     },
                                                                 xaxis: {
                                                                     title: {
-                                                                    text: '',
+                                                                    text: 'TPM',
                                                                     }
                                                                 }
                                                                 }}
@@ -924,7 +924,7 @@ export default function Page(props) {
                                                                 },
                                                                 xaxis: {
                                                                     title: {
-                                                                    text: '',
+                                                                    text: 'Normalized Protein Quantity',
                                                                     }
                                                                 }
                                                                 }}
