@@ -126,7 +126,7 @@ export async function getServerSideProps(context) {
             const levels = descriptions.map(description => df.value[description]);
 
             if (db == 'HPA') {
-                descriptions = descriptions.map(description => description.replace('\n', ' '));
+                descriptions = descriptions.map(description => description.replace('\n', '<br>'));
             }
 
             const names = descriptions;

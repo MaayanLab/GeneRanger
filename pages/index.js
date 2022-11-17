@@ -127,7 +127,7 @@ export async function getStaticProps() {
             const levels = descriptions.map(description => df.value[description]);
 
             if (db == 'HPA') {
-                descriptions = descriptions.map(description => description.replace('\n', ' '));
+                descriptions = descriptions.map(description => description.replace('\n', '<br>'));
             }
 
             const names = descriptions;
@@ -156,8 +156,6 @@ export async function getStaticProps() {
 }
 
 export default function Page(props) {
-
-    console.log(props)
 
     // For MUI Drawer
     const [drawerState, setDrawerState] = React.useState(false);
