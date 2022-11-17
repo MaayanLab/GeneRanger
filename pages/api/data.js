@@ -3,148 +3,233 @@ import { PrismaClient } from '@prisma/client';
 export default async function handler(req, res) {
 
     if (req.method === 'POST') {
-        const prisma = new PrismaClient();
 
         const { gene } = req.body
 
-        let all_db_data = {};
+        const prisma = new PrismaClient();
 
-        const gtex_transcriptomics = await prisma.gtex_transcriptomics.findMany({
-            where: {
-                name: gene,
-            },
-        });
-        Object.assign(all_db_data, {gtex_transcriptomics: gtex_transcriptomics});
+        let gene_desc = await prisma.$queryRaw`select * from gene where gene.symbol = ${gene}`
+        if (gene_desc.length != 0) {
+            gene_desc = gene_desc[0].description;
+        } else {
+            gene_desc = "No gene description available."
+        }
+        
+        let all_db_data = await prisma.$queryRaw
+        `
+            with cte as (
+                select
+                d.dbname,
+                d.label,
+                jsonb_object_agg(
+                    d.description,
+                    coalesce(to_jsonb(d.num_value), to_jsonb(d.str_value))
+                ) as df
+                from data d
+                where d.gene = ${gene}
+                group by d.dbname, d.label
+            )
+            select
+                d.dbname,
+                jsonb_object_agg(d.label, d.df) as df
+            from cte d
+            group by d.dbname;
+        `
 
-        const archs4 = await prisma.archs4.findMany({
-            where: {
-                name: gene,
-            },
-        });
-        Object.assign(all_db_data, {archs4: archs4});
+        let sorted_data = {};
 
-        const tabula_sapiens = await prisma.tabula_sapiens.findMany({
-            where: {
-                name: gene,
-            },
-        });
-        Object.assign(all_db_data, {tabula_sapiens: tabula_sapiens});
+        for (let i in all_db_data) {
+            let db = all_db_data[i].dbname;
+            let df = all_db_data[i].df;
+            if (db == 'GTEx_transcriptomics' || db == 'ARCHS4' || db == 'Tabula_Sapiens' || db == 'GTEx_proteomics') {
+                const descriptions = Object.keys(df.mean);
+                descriptions.sort((a, b) => df.mean[a] - df.mean[b]);
+                let names = descriptions;
+                names = names.map(name => name.replace(/_+/g, ' ').replaceAll('.', ' ').replace('-', ' ').trim());
+                const q1 = descriptions.map(description => df.q1[description]);
+                const median = descriptions.map(description => df.median[description]);
+                const q3 = descriptions.map(description => df.q3[description]);
+                const mean = descriptions.map(description => df.mean[description]);
+                const std = descriptions.map(description => df.std[description]);
+                const upperfence = descriptions.map(description => df.upperfence[description]);
+                const lowerfence = descriptions.map(description => df.lowerfence[description]);
+        
+                let data;
 
-        const hpm = await prisma.hpm.findMany({
-            where: {
-                gene: gene,
-            },
-        });
-        Object.assign(all_db_data, {hpm: hpm});
+                if (db == 'ARCHS4') {
+                    data = {
+                        q1: q1,
+                        median: median,
+                        q3: q3,
+                        mean: mean,
+                        lowerfence: lowerfence,
+                        upperfence: upperfence,
+                        y: names,
+                        orientation: 'h',
+                        type: 'box'
+                    }
+                } else {
+                    data = {
+                        q1: q1,
+                        median: median,
+                        q3: q3,
+                        mean: mean,
+                        sd: std,
+                        lowerfence: lowerfence,
+                        upperfence: upperfence,
+                        y: names,
+                        orientation: 'h',
+                        type: 'box'
+                    }
+                }
+                
 
-        const hpa = await prisma.hpa.findMany({
-            where: {
-                gene_name: gene,
-            },
-        });
-        Object.assign(all_db_data, {hpa: hpa});
+                Object.assign(sorted_data, {[db]: data});
 
+            } else if (db == 'HPM' || db == 'HPA' || db == 'CCLE_transcriptomics' || db == 'CCLE_proteomics') {
+                let descriptions = Object.keys(df.value);
+                if (db == 'HPA') {
+                    const qualitative_map = {'Not detected': 0, 'Low': 1, 'Medium': 2, 'High': 3}
+                    descriptions.sort((a, b) => qualitative_map[df.value[a]] - qualitative_map[df.value[b]]);
+                } else {
+                    descriptions.sort((a, b) => df.value[a] - df.value[b]);
+                }  
 
-        const gtex_proteomics = await prisma.gtex_proteomics.findMany({
-            where: {
-                gene_id: gene,
-            },
-        });
-        Object.assign(all_db_data, {gtex_proteomics: gtex_proteomics});
+                const levels = descriptions.map(description => df.value[description]);
 
-        // Getting NCBI gene description
+                if (db == 'HPA') {
+                    descriptions = descriptions.map(description => description.replace('\n', '<br>'));
+                }
 
-        let esearch_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gene&term=' + gene + '[gene%20name]+human[organism]';
-        let esummary_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gene&id=';
+                const names = descriptions;
 
-        const esearch_res = await fetch(esearch_url);
-        let ids = await esearch_res.text();
-        ids = ids.substring(ids.indexOf('<Id>'), ids.lastIndexOf('</Id>')).replaceAll('</Id>', ',').replaceAll('<Id>', '').replace(/(\r\n|\n|\r)/gm, "");
-        const esummary_res = await fetch(esummary_url + ids);
-        let NCBI_data = await esummary_res.text();
-        let slicedStr = NCBI_data.substring(NCBI_data.indexOf('<Name>' + gene + '</Name>'));
-        slicedStr = slicedStr.substring(slicedStr.indexOf('<Summary>'), slicedStr.indexOf('</Summary>')).replaceAll('<Summary>', '');
-        NCBI_data = slicedStr.substring(0, slicedStr.lastIndexOf('[') - 1);
+                let data = {
+                    x: levels,
+                    y: names,
+                    type: "scatter",
+                    mode: "markers",
+                    marker: { color: '#1f77b4' },
+                }
+                
+                Object.assign(sorted_data, {[db]: data});
 
-        // Converting character entities
-        NCBI_data = NCBI_data.replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&').replaceAll('&quot;', '"').replaceAll('&apos;', '\'').replaceAll('&copy;', '©').replaceAll('&reg;', '®');
+            }
+        }
 
-        // If there isn't an NCBI description
-        if (NCBI_data == "") NCBI_data = 'No gene description available.'
-
-        res.status(200).json({ allData: {NCBI_data, all_db_data}  });
+        res.status(200).json({ allData: {'gene': gene, 'sorted_data': sorted_data, 'NCBI_data': gene_desc}  });
 
     } else if(req.method === 'GET') {
 
         const prisma = new PrismaClient();
 
-        const gene = 'A2M'
+        let gene_desc = await prisma.$queryRaw`select * from gene where gene.symbol = 'A2M'`
+        if (gene_desc.length != 0) {
+            gene_desc = gene_desc[0].description;
+        } else {
+            gene_desc = "No gene description available."
+        }
+        
+        let all_db_data = await prisma.$queryRaw
+        `
+            with cte as (
+                select
+                d.dbname,
+                d.label,
+                jsonb_object_agg(
+                    d.description,
+                    coalesce(to_jsonb(d.num_value), to_jsonb(d.str_value))
+                ) as df
+                from data d
+                where d.gene = 'A2M'
+                group by d.dbname, d.label
+            )
+            select
+                d.dbname,
+                jsonb_object_agg(d.label, d.df) as df
+            from cte d
+            group by d.dbname;
+        `
 
-        let all_db_data = {};
+        let sorted_data = {};
 
-        const gtex_transcriptomics = await prisma.gtex_transcriptomics.findMany({
-            where: {
-                name: gene,
-            },
-        });
-        Object.assign(all_db_data, {gtex_transcriptomics: gtex_transcriptomics});
+        for (let i in all_db_data) {
+            let db = all_db_data[i].dbname;
+            let df = all_db_data[i].df;
+            if (db == 'GTEx_transcriptomics' || db == 'ARCHS4' || db == 'Tabula_Sapiens' || db == 'GTEx_proteomics') {
+                const descriptions = Object.keys(df.mean);
+                descriptions.sort((a, b) => df.mean[a] - df.mean[b]);
+                let names = descriptions;
+                names = names.map(name => name.replace(/_+/g, ' ').replaceAll('.', ' ').replace('-', ' ').trim());
+                const q1 = descriptions.map(description => df.q1[description]);
+                const median = descriptions.map(description => df.median[description]);
+                const q3 = descriptions.map(description => df.q3[description]);
+                const mean = descriptions.map(description => df.mean[description]);
+                const std = descriptions.map(description => df.std[description]);
+                const upperfence = descriptions.map(description => df.upperfence[description]);
+                const lowerfence = descriptions.map(description => df.lowerfence[description]);
+        
+                let data;
 
-        const archs4 = await prisma.archs4.findMany({
-            where: {
-                name: gene,
-            },
-        });
-        Object.assign(all_db_data, {archs4: archs4});
+                if (db == 'ARCHS4') {
+                    data = {
+                        q1: q1,
+                        median: median,
+                        q3: q3,
+                        mean: mean,
+                        lowerfence: lowerfence,
+                        upperfence: upperfence,
+                        y: names,
+                        orientation: 'h',
+                        type: 'box'
+                    }
+                } else {
+                    data = {
+                        q1: q1,
+                        median: median,
+                        q3: q3,
+                        mean: mean,
+                        sd: std,
+                        lowerfence: lowerfence,
+                        upperfence: upperfence,
+                        y: names,
+                        orientation: 'h',
+                        type: 'box'
+                    }
+                }
+                
 
-        const tabula_sapiens = await prisma.tabula_sapiens.findMany({
-            where: {
-                name: gene,
-            },
-        });
-        Object.assign(all_db_data, {tabula_sapiens: tabula_sapiens});
+                Object.assign(sorted_data, {[db]: data});
 
-        const hpm = await prisma.hpm.findMany({
-            where: {
-                gene: gene,
-            },
-        });
-        Object.assign(all_db_data, {hpm: hpm});
+            } else if (db == 'HPM' || db == 'HPA' || db == 'CCLE_transcriptomics' || db == 'CCLE_proteomics') {
+                let descriptions = Object.keys(df.value);
+                if (db == 'HPA') {
+                    const qualitative_map = {'Not detected': 0, 'Low': 1, 'Medium': 2, 'High': 3}
+                    descriptions.sort((a, b) => qualitative_map[df.value[a]] - qualitative_map[df.value[b]]);
+                } else {
+                    descriptions.sort((a, b) => df.value[a] - df.value[b]);
+                }  
 
-        const hpa = await prisma.hpa.findMany({
-            where: {
-                gene_name: gene,
-            },
-        });
-        Object.assign(all_db_data, {hpa: hpa});
+                const levels = descriptions.map(description => df.value[description]);
 
+                if (db == 'HPA') {
+                    descriptions = descriptions.map(description => description.replace('\n', '<br>'));
+                }
 
-        const gtex_proteomics = await prisma.gtex_proteomics.findMany({
-            where: {
-                gene_id: gene,
-            },
-        });
-        Object.assign(all_db_data, {gtex_proteomics: gtex_proteomics});
+                const names = descriptions;
 
-        // Getting NCBI gene description
+                let data = {
+                    x: levels,
+                    y: names,
+                    type: "scatter",
+                    mode: "markers",
+                    marker: { color: '#1f77b4' },
+                }
+                
+                Object.assign(sorted_data, {[db]: data});
 
-        let esearch_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gene&term=' + gene + '[gene%20name]+human[organism]';
-        let esummary_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gene&id=';
+            }
+        }
 
-        const esearch_res = await fetch(esearch_url);
-        let ids = await esearch_res.text();
-        ids = ids.substring(ids.indexOf('<Id>'), ids.lastIndexOf('</Id>')).replaceAll('</Id>', ',').replaceAll('<Id>', '').replace(/(\r\n|\n|\r)/gm, "");
-        const esummary_res = await fetch(esummary_url + ids);
-        let NCBI_data = await esummary_res.text();
-        let slicedStr = NCBI_data.substring(NCBI_data.indexOf('<Name>' + gene + '</Name>'));
-        slicedStr = slicedStr.substring(slicedStr.indexOf('<Summary>'), slicedStr.indexOf('</Summary>')).replaceAll('<Summary>', '');
-        NCBI_data = slicedStr.substring(0, slicedStr.lastIndexOf('[') - 1);
-
-        // Converting character entities
-        NCBI_data = NCBI_data.replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&').replaceAll('&quot;', '"').replaceAll('&apos;', '\'').replaceAll('&copy;', '©').replaceAll('&reg;', '®');
-
-        // If there isn't an NCBI description
-        if (NCBI_data == "") NCBI_data = 'No gene description available.'
-
-        res.status(200).json({ allData: {NCBI_data, all_db_data}  });
+        res.status(200).json({ allData: {'gene': 'A2M', 'sorted_data': sorted_data, 'NCBI_data': gene_desc}  });
     }
 }
