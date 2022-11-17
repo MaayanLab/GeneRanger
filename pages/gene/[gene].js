@@ -42,7 +42,6 @@ export async function getServerSideProps(context) {
         gene_desc = "No gene description available."
     }
     
-
     let all_db_data = await prisma.$queryRaw
     `
         with cte as (

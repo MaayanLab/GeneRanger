@@ -627,7 +627,7 @@ export default function Page(props) {
                         </div>
                     </div>
                     <div className={styles.graphFlexbox}>
-                        
+
                         <div className={styles.secondAutocomplete} style={{marginTop: '15px'}}>
                             <Autocomplete
                                 disablePortal
