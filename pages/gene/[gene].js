@@ -72,7 +72,6 @@ export async function getServerSideProps(context) {
             const descriptions = Object.keys(df.mean);
             descriptions.sort((a, b) => df.mean[a] - df.mean[b]);
             let names = descriptions;
-            names = names.map(name => name.replace(/_+/g, ' ').replaceAll('.', ' ').replace('-', ' ').trim());
             const q1 = descriptions.map(description => df.q1[description]);
             const median = descriptions.map(description => df.median[description]);
             const q3 = descriptions.map(description => df.q3[description]);
@@ -80,6 +79,14 @@ export async function getServerSideProps(context) {
             const std = descriptions.map(description => df.std[description]);
             const upperfence = descriptions.map(description => df.upperfence[description]);
             const lowerfence = descriptions.map(description => df.lowerfence[description]);
+
+            // Dealing with dashes and underscores in the names
+            if (db == 'ARCHS4') {
+                names = names.map(name => name.replace('-', ' - '));
+            }
+            if (db == 'Tabula_Sapiens') {
+                names = names.map(name => name.replace(/_+/g, ' ').replace('-', ' - '));
+            }
     
             let data;
 
