@@ -502,7 +502,7 @@ def calcValues(group):
             ['GTEx_proteomics', gene, description, 'q1', q1, 'NULL'],
             ['GTEx_proteomics', gene, description, 'median', median, 'NULL'],
             ['GTEx_proteomics', gene, description, 'q3', q3, 'NULL'],
-            ['GTEx_proteomics', gene, description, 'maximum', maximum, 'NULL'],
+            ['GTEx_proteomics', gene, description, 'max', maximum, 'NULL'],
             ['GTEx_proteomics', gene, description, 'lowerfence', lowerfence, 'NULL'],
             ['GTEx_proteomics', gene, description, 'upperfence', upperfence, 'NULL'],]
     return pd.DataFrame(data, columns=['dbname', 'gene', 'description', 'label', 'num_value', 'str_value'])
