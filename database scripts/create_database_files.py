@@ -557,7 +557,8 @@ df = df.rename(columns={'name': 'gene', 'cell_line': 'description', 'value': 'nu
 df.insert(0, "dbname", ['CCLE_proteomics']*(len(df)), True)
 df.insert(3, "label", ['value']*(len(df)), True)
 df.insert(5, "str_value", ['NULL']*(len(df)), True)
-df['num_value'] = df['num_value'].fillna(0)
+
+df = df.dropna()
 
 df.to_csv("CCLE_proteomics_final.tsv", sep = "\t", index=False)
 

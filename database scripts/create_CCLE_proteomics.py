@@ -58,6 +58,8 @@ final_df_data = {'name': gene_names, 'protein_id': protein_ids, "cell_line": cel
 
 final_df = pd.DataFrame(final_df_data)
 
+final_df = final_df.dropna()
+
 print('Inserted data into dataframe')
 
 final_df.to_csv("CCLE_proteomics.tsv", sep = "\t")
