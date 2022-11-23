@@ -8,7 +8,7 @@ export default async function handler(req, res) {
 
         const prisma = new PrismaClient();
 
-        let gene_desc = await prisma.$queryRaw`select * from gene where gene.symbol = ${gene}`
+        let gene_desc = await prisma.$queryRaw`select * from gene_info where gene_info.symbol = ${gene}`
         if (gene_desc.length != 0) {
             gene_desc = gene_desc[0].description;
         } else {
@@ -17,23 +17,9 @@ export default async function handler(req, res) {
         
         let all_db_data = await prisma.$queryRaw
         `
-            with cte as (
-                select
-                d.dbname,
-                d.label,
-                jsonb_object_agg(
-                    d.description,
-                    coalesce(to_jsonb(d.num_value), to_jsonb(d.str_value))
-                ) as df
-                from data d
-                where d.gene = ${gene}
-                group by d.dbname, d.label
-            )
-            select
-                d.dbname,
-                jsonb_object_agg(d.label, d.df) as df
-            from cte d
-            group by d.dbname;
+            select d.dbname, d.values as df
+            from data_complete d
+            where d.gene = ${gene};
         `
 
         let sorted_data = {};
@@ -122,7 +108,7 @@ export default async function handler(req, res) {
 
         const prisma = new PrismaClient();
 
-        let gene_desc = await prisma.$queryRaw`select * from gene where gene.symbol = 'A2M'`
+        let gene_desc = await prisma.$queryRaw`select * from gene_info where gene_info.symbol = 'A2M'`
         if (gene_desc.length != 0) {
             gene_desc = gene_desc[0].description;
         } else {
@@ -131,23 +117,9 @@ export default async function handler(req, res) {
         
         let all_db_data = await prisma.$queryRaw
         `
-            with cte as (
-                select
-                d.dbname,
-                d.label,
-                jsonb_object_agg(
-                    d.description,
-                    coalesce(to_jsonb(d.num_value), to_jsonb(d.str_value))
-                ) as df
-                from data d
-                where d.gene = 'A2M'
-                group by d.dbname, d.label
-            )
-            select
-                d.dbname,
-                jsonb_object_agg(d.label, d.df) as df
-            from cte d
-            group by d.dbname;
+            select d.dbname, d.values as df
+            from data_complete d
+            where d.gene = 'A2M';
         `
 
         let sorted_data = {};
