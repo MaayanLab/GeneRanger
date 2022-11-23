@@ -1,0 +1,9 @@
+# private environment variables for DB config
+.env
+# data of the database
+data
+# ingest work files
+input
+ingest
+preprocessed
+__pycache__
