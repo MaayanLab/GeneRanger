@@ -41,7 +41,7 @@ export async function getServerSideProps(context) {
     } else {
         gene_desc = "No gene description available."
     }
-    
+
     let all_db_data = await prisma.$queryRaw
     `
         with cte as (
@@ -53,7 +53,7 @@ export async function getServerSideProps(context) {
                 coalesce(to_jsonb(d.num_value), to_jsonb(d.str_value))
             ) as df
             from data d
-            where d.gene = ${context.query.gene}
+            where d.gene = ${context.query.gene}::gene_type
             group by d.dbname, d.label
         )
         select

@@ -55,7 +55,7 @@ export async function getStaticProps() {
                 coalesce(to_jsonb(d.num_value), to_jsonb(d.str_value))
             ) as df
             from data d
-            where d.gene = ${defaultGene}
+            where d.gene = ${defaultGene}::gene_type
             group by d.dbname, d.label
         )
         select
