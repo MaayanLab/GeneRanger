@@ -13,6 +13,11 @@ ensure-db: check-deps ensure-env
 pg-shell: check-deps ensure-db
 	psql $(shell dotenv get DATABASE_URL)
 
+.PHONY: pg-dump
+pg-dump: check-deps ensure-db
+	mkdir -p preprocessed
+	pg_dump -Fc --no-acl --no-owner $(shell dotenv get DATABASE_URL) > preprocessed/db.dump
+
 .PHONY: create-db
 create-db: ensure-env
 	docker-compose up -d db
@@ -21,6 +26,10 @@ create-db: ensure-env
 docker-pg-shell: check-deps ensure-db
 	docker-compose exec db psql $(shell dotenv get DATABASE_URL)
 
+.PHONY: docker-pg-dump
+docker-pg-dump:
+	mkdir -p preprocessed
+	docker-compose exec db pg_dump -Fc --no-acl --no-owner $(shell dotenv get DATABASE_URL) > preprocessed/db.dump
 
 # INPUT FILES
 
