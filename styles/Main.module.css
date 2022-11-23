@@ -118,8 +118,8 @@
 .upArrowButton {
   position: fixed;
   bottom: 20px;
-  right: 15px;
-  margin-bottom: 95px;
+  right: 10px;
+  margin-bottom: 215px;
   z-index: 4;
 }
 
@@ -132,7 +132,7 @@
   opacity: 0.25;
 }
 
-@media only screen and (max-width: 760px) {
+@media only screen and (max-width: 615px) {
   .mainFlexbox {
     padding-bottom: 250px;
   }
