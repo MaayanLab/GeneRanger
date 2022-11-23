@@ -183,7 +183,7 @@ export default function Page(props) {
     let ccle_proteomics_title = props.gene + ' Protein Expression across CCLE Cell Lines';
 
     let gtex_transcriptomics = null, archs4 = null, tabula_sapiens = null, hpm = null, hpa = null, gtex_proteomics = null, ccle_transcriptomics = null, ccle_proteomics = null;
-    let hpa_length = 0, ccle_transcriptomics_length = 0, ccle_proteomics_length = 0;
+    let hpa_length = 0, gtex_proteomics_length = 0, ccle_transcriptomics_length = 0, ccle_proteomics_length = 0;
 
     if ('GTEx_transcriptomics' in props.sorted_data) {
         gtex_transcriptomics = props.sorted_data.GTEx_transcriptomics;
@@ -203,6 +203,7 @@ export default function Page(props) {
     } 
     if ('GTEx_proteomics' in props.sorted_data) {
         gtex_proteomics = props.sorted_data.GTEx_proteomics;
+        gtex_proteomics_length = Object.keys(gtex_proteomics.y).length;
     }
     if ('CCLE_transcriptomics' in props.sorted_data) {
         ccle_transcriptomics = props.sorted_data.CCLE_transcriptomics;
@@ -891,7 +892,7 @@ export default function Page(props) {
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
                                                         <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'GTEx'} database_desc={"A database designed to study the relationship between genetic variation and gene expression across multiple tissues. Data are displayed as protein log-transformed relative abundance in box-plot form."}/>
-                                                        <div style={{height: '1500px'}}>
+                                                        <div style={{height: (gtex_proteomics_length * 50).toString() + 'px'}}>
                                                             <Plot
                                                                 data={[gtex_proteomics]}
                                                                 layout={{title: gtex_proteomics_title,
@@ -920,7 +921,7 @@ export default function Page(props) {
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
                                                         <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'CCLE'} database_desc={"CCLE description would go here"}/>
-                                                        <div style={{height: '10000px'}}>
+                                                        <div style={{height: (ccle_proteomics_length * 25).toString() + 'px'}}>
                                                             <Plot
                                                                 data={[ccle_proteomics]}
                                                                 layout={{title: ccle_proteomics_title,
