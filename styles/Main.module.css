@@ -132,13 +132,19 @@
   opacity: 0.25;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 760px) {
   .mainFlexbox {
     padding-bottom: 250px;
   }
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 760px) {
+  .tabsBox{
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 1250px) {
   .dbGroup {
     display: none;
   }
@@ -158,11 +164,5 @@
   .graphFlexbox {
     width: 90%;
     margin-right: 0px;
-  }
-}
-
-@media only screen and (max-width: 600px) {
-  .tabsBox{
-    display: none;
   }
 }
