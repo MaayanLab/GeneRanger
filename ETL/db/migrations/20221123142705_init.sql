@@ -14,16 +14,12 @@ create extension if not exists "uuid-ossp";
 create table gene_info (
   id integer primary key,
   symbol varchar,
+  synonyms jsonb,
   chromosome varchar,
   map_location varchar,
   description varchar,
   type_of_gene varchar,
   summary text
-);
-create table gene_info_xref (
-  id integer references gene_info (id),
-  xref varchar,
-  primary key (id, xref)
 );
 
 -- our data

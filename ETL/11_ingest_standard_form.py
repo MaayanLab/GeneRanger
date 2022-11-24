@@ -28,16 +28,13 @@ def load_standard(con, df, name):
   # load ncbi genes to do gene mapping
   with con.cursor() as cur:
     cur.execute('''
-      select symbol, string_agg(gene_info_xref.xref, '\t')
-      from gene_info
-      left join gene_info_xref on gene_info.id = gene_info_xref.id
-      group by gene_info.id;
+      select symbol, synonyms
+      from gene_info;
     ''')
-    # TODO: worry about duplicate mappings
     ncbi_genes = {
-      xref: symbol
-      for symbol, xrefs in cur.fetchall()
-      for xref in [symbol] + (xrefs.split('\t') if xrefs else [])
+      synonym: symbol
+      for symbol, synonyms in cur.fetchall()
+      for synonym in [symbol] + (synonyms if synonyms else [])
     }
 
   # map our genes with aggregation
