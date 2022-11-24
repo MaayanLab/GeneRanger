@@ -1,5 +1,6 @@
 #%%
 import os
+import re
 import click
 import numpy as np
 import pandas as pd
@@ -39,7 +40,7 @@ def load_standard(con, df, name):
 
   # map our genes with aggregation
   #  step 1 { current_gene: mapped_gene, ... }
-  gene_mapping = {gene: ncbi_genes.get(gene, gene) for gene in df.index}
+  gene_mapping = {gene: ncbi_genes.get(re.sub(r'^(.+)(\.\d+)$', r'\1', gene), gene) for gene in df.index}
 
   #  step 2 { mapped_gene: [current_gene, ...] }
   gene_mapping_inv = {}
