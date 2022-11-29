@@ -1,6 +1,7 @@
 #%%
 import os
 import re
+import json
 import click
 import numpy as np
 import pandas as pd
@@ -120,7 +121,14 @@ def load_standard(con, df, name):
       gene=gene_lookup[gene],
       # We move description to the index [label, description]
       #  the json will thus be of the form { label: { description: value, ... }, ... }
-      values=values.unstack('label').to_json(), 
+      values=json.dumps({
+        label: {
+          description: value
+          for description, value in description_values.items()
+          if not pd.isna(value)
+        }
+        for label, description_values in values.unstack('label').to_dict().items()
+      }),
     )
     for gene, values in tqdm(df.iterrows(), total=df.shape[0], desc='Uploading') # progress bar
   ))
