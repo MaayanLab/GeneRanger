@@ -86,8 +86,8 @@ def load_standard(con, df, name):
         })
         new_d.columns.name = 'label'
       IRQ = new_d['q3'] - new_d['q1']
-      new_d['lowerfence'] = np.minimum(new_d['q1'] - 1.5*IRQ, new_d['min'])
-      new_d['upperfence'] = np.maximum(new_d['q3'] + 1.5*IRQ, new_d['max'])
+      new_d['lowerfence'] = np.maximum(new_d['q1'] - 1.5*IRQ, new_d['min'])
+      new_d['upperfence'] = np.minimum(new_d['q3'] + 1.5*IRQ, new_d['max'])
       mapped[mapping] = new_d.stack('label')
 
   # assemble augmented dataframe
