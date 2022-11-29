@@ -5,7 +5,7 @@ df_summary = pd.read_csv('input/Homo_sapiens.gene_summary.tsv', sep='\t')
 
 df = df.dropna(subset=['GeneID'])
 df['GeneID'] = df['GeneID'].astype(str)
-df_summary = df.dropna(subset=['GeneID'])
+df_summary = df_summary.dropna(subset=['GeneID'])
 df_summary['GeneID'] = df_summary['GeneID'].astype(str)
 
 df_out = pd.merge(

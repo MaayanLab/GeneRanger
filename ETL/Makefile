@@ -120,7 +120,7 @@ preprocess: preprocessed/Homo_sapiens.gene_info.complete.tsv preprocessed/hpa.ts
 
 
 # INGEST
-ingest/gene_info: input/Homo_sapiens.gene_info.complete.tsv
+ingest/gene_info: preprocessed/Homo_sapiens.gene_info.complete.tsv
 	make PYTHON=$(PYTHON) ensure-db
 	mkdir -p ingest
 	$(PYTHON) 10_ingest_gene_info.py && touch ingest/gene_info

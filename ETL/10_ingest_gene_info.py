@@ -9,7 +9,7 @@ from df2pg import copy_from_records
 import dotenv; dotenv.load_dotenv()
 
 #%%
-df = pd.read_csv('input/Homo_sapiens.gene_info.complete.tsv', sep='\t', index_col=0)
+df = pd.read_csv('preprocessed/Homo_sapiens.gene_info.complete.tsv', sep='\t', index_col=0)
 
 #%%
 df = df[df['type_of_gene'] == 'protein-coding']
