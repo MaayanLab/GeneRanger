@@ -13,7 +13,7 @@ df.index = pd.MultiIndex.from_arrays([genes, labels], names=['gene', 'label'])
 # rename format column names
 expr = re.compile(r'^(?P<cell_line>[^_]+)_(?P<tissue>[^_]+)_.+$')
 df.columns = [
-  f"{m['cell_line']} - {m['tissue']}"
+  f"{m['cell_line']}"
   for col in df.columns
   for m in (expr.match(col),)
 ]
