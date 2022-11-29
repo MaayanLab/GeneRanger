@@ -39,7 +39,7 @@ export async function getStaticProps() {
 
     let gene_desc = await prisma.$queryRaw`select * from gene_info where gene_info.symbol = ${defaultGene}`
     if (gene_desc.length != 0) {
-        gene_desc = gene_desc[0].description;
+        gene_desc = gene_desc[0].summary;
     } else {
         gene_desc = "No gene description available."
     }
