@@ -36,7 +36,7 @@ docker-pg-dump:
 ## NCBI descriptions
 input/Homo_sapiens.gene_info.gz:
 	mkdir -p input
-	curl -o $@ https://ftp.ncbi.nlm.nih.gov/gene/DATA/GENE_INFO/Mammalia/Homo_sapiens.gene_info.gz
+	curl -L -o $@ https://ftp.ncbi.nlm.nih.gov/gene/DATA/GENE_INFO/Mammalia/Homo_sapiens.gene_info.gz
 
 ## NCBI Summaries
 input/Homo_sapiens.gene_summary.tsv: input/Homo_sapiens.gene_info.gz
@@ -46,45 +46,45 @@ input/Homo_sapiens.gene_summary.tsv: input/Homo_sapiens.gene_info.gz
 ## CCLE proteomics
 input/protein_quant_current_normalized.csv.gz:
 	mkdir -p input
-	curl -o $@ https://gygi.hms.harvard.edu/data/ccle/protein_quant_current_normalized.csv.gz
+	curl -L -o $@ https://gygi.hms.harvard.edu/data/ccle/protein_quant_current_normalized.csv.gz
 
 ## CCLE transcriptomics: https://depmap.org/portal/download/
 input/CCLE_RNAseq_reads.csv:
 	mkdir -p input
-	curl -o $@ https://ndownloader.figshare.com/files/34989958
+	curl -L -o $@ https://ndownloader.figshare.com/files/34989958
 input/CCLE_sample_info.csv:
 	mkdir -p input
-	curl -o $@ https://ndownloader.figshare.com/files/35020903
+	curl -L -o $@ https://ndownloader.figshare.com/files/35020903
 
 ## GTEx transcriptomics:
 input/gtex-gene-stats.tsv:
 	mkdir -p input
-	curl -o $@ https://appyters.maayanlab.cloud/storage/Tumor_Gene_Target_Screener/gtex-gene-stats.tsv
+	curl -L -o $@ https://appyters.maayanlab.cloud/storage/Tumor_Gene_Target_Screener/gtex-gene-stats.tsv
 
 ## ARCHS4:
 input/archs4-gene-stats.tsv:
 	mkdir -p input
-	curl -o $@ https://appyters.maayanlab.cloud/storage/Tumor_Gene_Target_Screener/archs4-gene-stats.tsv
+	curl -L -o $@ https://appyters.maayanlab.cloud/storage/Tumor_Gene_Target_Screener/archs4-gene-stats.tsv
 
 ## Tabula Sapiens
 input/ts_10x_cell-ontology-class_donors_tissue-labels_v1.tsv:
 	mkdir -p input
-	curl -o $@ https://appyters.maayanlab.cloud/storage/Tumor_Gene_Target_Screener/ts_10x_cell-ontology-class_donors_tissue-labels_v1.tsv
+	curl -L -o $@ https://appyters.maayanlab.cloud/storage/Tumor_Gene_Target_Screener/ts_10x_cell-ontology-class_donors_tissue-labels_v1.tsv
 
 ## HPM
 input/hpm.tsv:
 	mkdir -p input
-	curl -o $@ https://appyters.maayanlab.cloud/storage/Tumor_Gene_Target_Screener/hpm.tsv
+	curl -L -o $@ https://appyters.maayanlab.cloud/storage/Tumor_Gene_Target_Screener/hpm.tsv
 
 ## HPA
 input/hpa.tsv:
 	mkdir -p input
-	curl -o $@ https://appyters.maayanlab.cloud/storage/Tumor_Gene_Target_Screener/hpa.tsv
+	curl -L -o $@ https://appyters.maayanlab.cloud/storage/Tumor_Gene_Target_Screener/hpa.tsv
 
 ## GTEx proteomics
 input/gtex_proteomics.tsv:
 	mkdir -p input
-	curl -o $@ https://appyters.maayanlab.cloud/storage/Tumor_Gene_Target_Screener/gtex_proteomics.tsv
+	curl -L -o $@ https://appyters.maayanlab.cloud/storage/Tumor_Gene_Target_Screener/gtex_proteomics.tsv
 
 .PHONY: fetch
 fetch: input/Homo_sapiens.gene_info.gz input/Homo_sapiens.gene_summary.tsv input/protein_quant_current_normalized.csv.gz input/CCLE_RNAseq_reads.csv input/CCLE_sample_info.csv input/gtex-gene-stats.tsv input/archs4-gene-stats.tsv input/ts_10x_cell-ontology-class_donors_tissue-labels_v1.tsv input/hpm.tsv input/hpa.tsv input/gtex_proteomics.tsv
@@ -99,7 +99,7 @@ preprocessed/hpa.tsv: input/hpa.tsv
 	mkdir -p preprocessed/
 	$(PYTHON) 00_preprocess_hpa.py
 
-preprocessed/hpm.tsv: input/hpa.tsv
+preprocessed/hpm.tsv: input/hpm.tsv
 	mkdir -p preprocessed/
 	$(PYTHON) 00_preprocess_hpm.py
 
