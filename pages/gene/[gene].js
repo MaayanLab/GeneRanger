@@ -35,32 +35,18 @@ export async function getServerSideProps(context) {
 
     const prisma = new PrismaClient();
 
-    let gene_desc = await prisma.$queryRaw`select * from gene where gene.symbol = ${context.query.gene}`
+    let gene_desc = await prisma.$queryRaw`select * from gene_info where gene_info.symbol = ${context.query.gene}`
     if (gene_desc.length != 0) {
-        gene_desc = gene_desc[0].description;
+        gene_desc = gene_desc[0].summary;
     } else {
         gene_desc = "No gene description available."
     }
 
     let all_db_data = await prisma.$queryRaw
     `
-        with cte as (
-            select
-            d.dbname,
-            d.label,
-            jsonb_object_agg(
-                d.description,
-                coalesce(to_jsonb(d.num_value), to_jsonb(d.str_value))
-            ) as df
-            from data d
-            where d.gene = ${context.query.gene}::gene_type
-            group by d.dbname, d.label
-        )
-        select
-            d.dbname,
-            jsonb_object_agg(d.label, d.df) as df
-        from cte d
-        group by d.dbname;
+        select d.dbname, d.values as df
+        from data_complete d
+        where d.gene = ${context.query.gene};
     `
 
     let sorted_data = {};
@@ -72,13 +58,13 @@ export async function getServerSideProps(context) {
             const descriptions = Object.keys(df.mean);
             descriptions.sort((a, b) => df.mean[a] - df.mean[b]);
             let names = descriptions;
-            const q1 = descriptions.map(description => df.q1[description]);
-            const median = descriptions.map(description => df.median[description]);
-            const q3 = descriptions.map(description => df.q3[description]);
-            const mean = descriptions.map(description => df.mean[description]);
-            const std = descriptions.map(description => df.std[description]);
-            const upperfence = descriptions.map(description => df.upperfence[description]);
-            const lowerfence = descriptions.map(description => df.lowerfence[description]);
+            const q1 = descriptions.map(description => df.q1[description] || null);
+            const median = descriptions.map(description => df.median[description] || null);
+            const q3 = descriptions.map(description => df.q3[description] || null);
+            const mean = descriptions.map(description => df.mean[description] || null);
+            const std = descriptions.map(description => df.std[description] || null);
+            const upperfence = descriptions.map(description => df.upperfence[description] || null);
+            const lowerfence = descriptions.map(description => df.lowerfence[description] || null);
 
             // Dealing with dashes and underscores in the names
             if (db == 'ARCHS4') {
