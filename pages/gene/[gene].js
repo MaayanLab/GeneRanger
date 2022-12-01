@@ -41,14 +41,14 @@ export async function getServerSideProps(context) {
         if (gene_desc.indexOf('[') != -1) {
             gene_desc = gene_desc.substring(0, gene_desc.lastIndexOf('[') - 1)
         }
-        if (gene_desc.indexOf('(') != -1) {
-            gene_desc = gene_desc.substring(0, gene_desc.lastIndexOf('(') - 1)
-        } 
         if (context.query.gene == 'GUCA1A' && gene_desc.indexOf('provided') != -1) {
             gene_desc = gene_desc.substring(0, gene_desc.indexOf('provided') - 1)
         }
         if (gene_desc == 'nan') {
             gene_desc = "No gene description available."
+        }
+        if (gene_desc != '' && gene_desc.slice(-1) != '.') {
+            gene_desc = gene_desc + '.';
         }
     } else {
         gene_desc = "No gene description available."
