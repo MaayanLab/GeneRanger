@@ -149,6 +149,15 @@ export async function getServerSideProps(context) {
 
 export default function Page(props) {
 
+    let GTEx_transcriptomics_desc = 'GTEx transcriptomics provides bulk RNA-seq data for 54 human tissues collected from postmortem donors. The GTEx database was designed to study the relationship between genetic variation and gene expression across multiple human tissues.';
+    let ARCHS4_desc = 'ARCHS4, developed by the Ma’ayan Lab, contains over 1 million samples of uniformly processed RNA-seq data from the Gene Expression Omnibus (GEO). The samples were aligned using kallisto with an efficient parallelized cloud workflow.';
+    let Tabula_Sapiens_desc = 'Tabula Sapiens is a gene expression atlas created from single cell RNA-seq data collected from multiple tissues of 16 postmortem donors. The processed data contains average expression of each human gene in 486 cell types.';
+    let CCLE_transcriptomics_desc = 'The Cancer Cell Line Encyclopedia (CCLE) transcriptomics dataset contains gene expression data collected with RNA-seq from over 1000 human pan-cancer cell lines.';
+    let HPM_desc = 'The Human Protein Map (HPM) contains data from LC-MS/MS proteomics profiling protein expression in 30 human tissues collected from 17 adult postmortem donors.';
+    let HPA_desc = 'The Human Protein Atlas (HPA) contains protein expression data from 44 normal human tissues derived from antibody-based protein profiling using immunohistochemistry.';
+    let GTEx_proteomics_desc = 'The GTEx proteomics dataset has relative protein levels for more than 12,000 proteins across 32 normal human tissues. The data was collected using tandem mass tag (TMT) proteomics to profile tissues collected from 14 postmortem donors.';
+    let CCLE_proteomics_desc = 'The Cancer Cell Line Encyclopedia (CCLE) proteomics dataset contain protein expression in 375 pan-cancer cell lines. Data was collected by quantitative multiplex mass spectrometry proteomics.';
+
     let gtex_transcriptomics_title = props.gene + ' Expression across GTEx Tissues (RNA-seq)';
     let archs4_title = props.gene + ' Expression across ARCHS4 Cells & Tissues (RNA-seq)';
     let tabula_sapiens_title = props.gene + ' Expression across Tabula Sapiens Cells (RNA-seq)';
@@ -301,7 +310,7 @@ export default function Page(props) {
                         } 
                         labelPlacement="start"/>
 
-                        <div className={styles.logoDesc}>A database designed to study the relationship between genetic variation and gene expression across multiple tissues.  Each tissue’s RNA expression is represented by a box plot.</div>
+                        <div className={styles.logoDesc}>{GTEx_transcriptomics_desc}</div>
 
                         <FormControlLabel 
                         className={styles.formItem} 
@@ -317,7 +326,7 @@ export default function Page(props) {
                         } 
                         labelPlacement="start"/>
                         
-                        <div className={styles.logoDesc}>RNA-seq data from many public sources conveniently compiled into a single database.  Each tissue/cell’s RNA expression is represented by a box plot.</div>
+                        <div className={styles.logoDesc}>{ARCHS4_desc}</div>
                         
                         <FormControlLabel 
                         className={styles.formItem} 
@@ -333,7 +342,7 @@ export default function Page(props) {
                         } 
                         labelPlacement="start"/>
                         
-                        <div className={styles.logoDesc}>An atlas of RNA-seq data for over 400 cell types created with single-cell transcriptomics.  Each cell’s RNA expression is represented by a box plot.</div>
+                        <div className={styles.logoDesc}>{Tabula_Sapiens_desc}</div>
 
                         <FormControlLabel 
                         className={styles.formItem} 
@@ -349,7 +358,7 @@ export default function Page(props) {
                         } 
                         labelPlacement="start"/>
                         
-                        <div className={styles.logoDesc}>CCLE description goes here</div>
+                        <div className={styles.logoDesc}>{CCLE_transcriptomics_desc}</div>
 
                     </FormGroup>
                 </div>
@@ -372,7 +381,7 @@ export default function Page(props) {
                         } 
                         labelPlacement="start"/>
                         
-                        <div className={styles.logoDesc}>A draft map of the human proteome created with Fourier transform mass spectrometry.  Data are displayed as average spectral counts.</div>
+                        <div className={styles.logoDesc}>{HPM_desc}</div>
                         
                         <FormControlLabel 
                         className={styles.formItem} 
@@ -388,7 +397,7 @@ export default function Page(props) {
                         } 
                         labelPlacement="start"/>
                         
-                        <div className={styles.logoDesc}>A map of protein expression across 32 human tissues created with antibody profiling.  Proteins are categorized as either “not detected”, “low”, “medium”, or “high”.</div>
+                        <div className={styles.logoDesc}>{HPA_desc}</div>
                         
                         <FormControlLabel 
                         className={styles.formItem} 
@@ -404,7 +413,7 @@ export default function Page(props) {
                         } 
                         labelPlacement="start"/>
                         
-                        <div className={styles.logoDesc}>A database designed to study the relationship between genetic variation and gene expression across multiple tissues.  Data are displayed as protein log-transformed relative abundance in box-plot form.</div>
+                        <div className={styles.logoDesc}>{GTEx_proteomics_desc}</div>
 
                         <FormControlLabel 
                         className={styles.formItem} 
@@ -420,7 +429,7 @@ export default function Page(props) {
                         } 
                         labelPlacement="start"/>
                         
-                        <div className={styles.logoDesc}>CCLE description goes here</div>
+                        <div className={styles.logoDesc}>{CCLE_proteomics_desc}</div>
                     </FormGroup>
                 </div>
                 
@@ -481,7 +490,7 @@ export default function Page(props) {
                               <h3 style={{margin: '0'}}>Transcriptomics</h3>
                               <FormGroup style={{alignItems: 'center'}}>
 
-                                  <FormControlLabel 
+                                    <FormControlLabel 
                                     className={styles.formItem} 
                                     control={<Switch onChange={() => setCurrDatabase(0)} checked={currDatabase == 0}/>} 
                                     label={
@@ -495,9 +504,9 @@ export default function Page(props) {
                                     } 
                                     labelPlacement="start"/>
 
-                                  <div className={styles.logoDesc}>A database designed to study the relationship between genetic variation and gene expression across multiple tissues.  Each tissue’s RNA expression is represented by a box plot.</div>
+                                    <div className={styles.logoDesc}>{GTEx_transcriptomics_desc}</div>
 
-                                  <FormControlLabel 
+                                    <FormControlLabel 
                                     className={styles.formItem} 
                                     control={<Switch onChange={() => setCurrDatabase(1)} checked={currDatabase == 1} />} 
                                     label={
@@ -510,10 +519,10 @@ export default function Page(props) {
                                         </div>
                                     } 
                                     labelPlacement="start"/>
-                                  
-                                  <div className={styles.logoDesc}>RNA-seq data from many public sources conveniently compiled into a single database.  Each tissue/cell’s RNA expression is represented by a box plot.</div>
-                                  
-                                  <FormControlLabel 
+                                    
+                                    <div className={styles.logoDesc}>{ARCHS4_desc}</div>
+                                    
+                                    <FormControlLabel 
                                     className={styles.formItem} 
                                     control={<Switch onChange={() => setCurrDatabase(2)} checked={currDatabase == 2} />} 
                                     label={
@@ -526,16 +535,16 @@ export default function Page(props) {
                                         </div>
                                     } 
                                     labelPlacement="start"/>
-                                  
-                                  <div className={styles.logoDesc}>An atlas of RNA-seq data for over 400 cell types created with single-cell transcriptomics.  Each cell’s RNA expression is represented by a box plot.</div>
+                                    
+                                    <div className={styles.logoDesc}>{Tabula_Sapiens_desc}</div>
 
-                                  <FormControlLabel 
+                                    <FormControlLabel 
                                     className={styles.formItem} 
                                     control={<Switch onChange={() => setCurrDatabase(3)} checked={currDatabase == 3} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/CCLE_transcriptomics.jpeg" alt="CCLE Logo"/>
-                                            <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
+                                            <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://sites.broadinstitute.org/ccle/" target="_blank" rel="noopener noreferrer">Website</a></div>}>
                                                 <IconButton><InfoIcon color='info'/></IconButton>
                                             </HtmlTooltip>
@@ -543,16 +552,16 @@ export default function Page(props) {
                                     } 
                                     labelPlacement="start"/>
                                     
-                                    <div className={styles.logoDesc}>CCLE description goes here</div>
+                                    <div className={styles.logoDesc}>{CCLE_transcriptomics_desc}</div>
 
-                              </FormGroup>
+                                </FormGroup>
                             </div>
-                      
+                        
                             <div>
-                              <h3 style={{margin: '0'}}>Proteomics</h3>
-                              <FormGroup style={{alignItems: 'center'}}>
+                                <h3 style={{margin: '0'}}>Proteomics</h3>
+                                <FormGroup style={{alignItems: 'center'}}>
 
-                                  <FormControlLabel 
+                                    <FormControlLabel 
                                     className={styles.formItem} 
                                     control={<Switch onChange={() => setCurrDatabase(4)} checked={currDatabase == 4} />} 
                                     label={
@@ -565,10 +574,10 @@ export default function Page(props) {
                                         </div>
                                     } 
                                     labelPlacement="start"/>
-                                  
-                                  <div className={styles.logoDesc}>A draft map of the human proteome created with Fourier transform mass spectrometry.  Data are displayed as average spectral counts.</div>
-                                  
-                                  <FormControlLabel 
+                                    
+                                    <div className={styles.logoDesc}>{HPM_desc}</div>
+                                    
+                                    <FormControlLabel 
                                     className={styles.formItem} 
                                     control={<Switch onChange={() => setCurrDatabase(5)} checked={currDatabase == 5} />} 
                                     label={
@@ -581,10 +590,10 @@ export default function Page(props) {
                                         </div>
                                     } 
                                     labelPlacement="start"/>
-                                  
-                                  <div className={styles.logoDesc}>A map of protein expression across 32 human tissues created with antibody profiling.  Proteins are categorized as either “not detected”, “low”, “medium”, or “high”.</div>
-                                  
-                                  <FormControlLabel 
+                                    
+                                    <div className={styles.logoDesc}>{HPA_desc}</div>
+                                    
+                                    <FormControlLabel 
                                     className={styles.formItem} 
                                     control={<Switch onChange={() => setCurrDatabase(6)} checked={currDatabase == 6} />} 
                                     label={
@@ -597,16 +606,16 @@ export default function Page(props) {
                                         </div>
                                     } 
                                     labelPlacement="start"/>
-                                  
-                                  <div className={styles.logoDesc}>A database designed to study the relationship between genetic variation and gene expression across multiple tissues.  Data are displayed as protein log-transformed relative abundance in box-plot form.</div>
+                                    
+                                    <div className={styles.logoDesc}>{GTEx_proteomics_desc}</div>
 
-                                  <FormControlLabel 
+                                    <FormControlLabel 
                                     className={styles.formItem} 
                                     control={<Switch onChange={() => setCurrDatabase(7)} checked={currDatabase == 7} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/CCLE_proteomics.jpeg" alt="CCLE Logo"/>
-                                            <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
+                                            <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://sites.broadinstitute.org/ccle/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/31978347/" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
                                                 <IconButton><InfoIcon color='info'/></IconButton>
                                             </HtmlTooltip>
@@ -614,8 +623,8 @@ export default function Page(props) {
                                     } 
                                     labelPlacement="start"/>
                                     
-                                    <div className={styles.logoDesc}>CCLE description goes here</div>
-                              </FormGroup>
+                                    <div className={styles.logoDesc}>{CCLE_proteomics_desc}</div>
+                                </FormGroup>
                             </div>
                             
                         </div>
@@ -701,7 +710,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'GTEx'} database_desc={"A database designed to study the relationship between genetic variation and gene expression across multiple tissues. Each tissue’s RNA expression is represented by a box plot."}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'GTEx Transcriptomics'} database_desc={GTEx_transcriptomics_desc}/>
                                                         <div style={{height: '1500px'}}>
                                                             <Plot
                                                                 data={[gtex_transcriptomics]}
@@ -728,7 +737,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'ARCHS4'} database_desc={"RNA-seq data from many public sources conveniently compiled into a single database. Each tissue/cell’s RNA expression is represented by a box plot."}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'ARCHS4'} database_desc={ARCHS4_desc}/>
                                                         <div style={{height: '13000px'}}>
                                                             <Plot
                                                                 data={[archs4]}
@@ -757,7 +766,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'Tabula Sapiens'} database_desc={"An atlas of RNA-seq data for over 400 cell types created with single-cell transcriptomics. Each cell’s RNA expression is represented by a box plot."}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'Tabula Sapiens'} database_desc={Tabula_Sapiens_desc}/>
                                                         <div style={{height: '13000px'}}>
                                                             <Plot
                                                                 data={[tabula_sapiens]}
@@ -786,7 +795,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'CCLE'} database_desc={"CCLE description would go here"}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'CCLE Transcriptomics'} database_desc={CCLE_transcriptomics_desc}/>
                                                         <div style={{height: '50000px'}}>
                                                             <Plot
                                                                 data={[ccle_transcriptomics]}
@@ -816,7 +825,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'Human Proteome Map'} database_desc={"A draft map of the human proteome created with Fourier transform mass spectrometry. Data are displayed as average spectral counts."}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'Human Proteome Map'} database_desc={HPM_desc}/>
                                                         <div style={{height: '1000px'}}>
                                                             <Plot
                                                                 data={[hpm]}
@@ -845,7 +854,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'Human Protein Atlas'} database_desc={"A map of protein expression across 32 human tissues created with antibody profiling. Proteins are categorized as either “not detected”, “low”, “medium”, or “high”."}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'Human Protein Atlas'} database_desc={HPA_desc}/>
                                                         <div style={{height: '4500px'}}>
                                                             <Plot
                                                                 data={[hpa]}
@@ -877,7 +886,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'GTEx'} database_desc={"A database designed to study the relationship between genetic variation and gene expression across multiple tissues. Data are displayed as protein log-transformed relative abundance in box-plot form."}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'GTEx Proteomics'} database_desc={GTEx_proteomics_desc}/>
                                                         <div style={{height: (gtex_proteomics_length * 50).toString() + 'px'}}>
                                                             <Plot
                                                                 data={[gtex_proteomics]}
@@ -906,7 +915,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'CCLE'} database_desc={"CCLE description would go here"}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'CCLE Proteomics'} database_desc={CCLE_proteomics_desc}/>
                                                         <div style={{height: (ccle_proteomics_length * 25).toString() + 'px'}}>
                                                             <Plot
                                                                 data={[ccle_proteomics]}
