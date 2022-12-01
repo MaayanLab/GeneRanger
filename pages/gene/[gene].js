@@ -38,6 +38,18 @@ export async function getServerSideProps(context) {
     let gene_desc = await prisma.$queryRaw`select * from gene_info where gene_info.symbol = ${context.query.gene}`
     if (gene_desc.length != 0) {
         gene_desc = gene_desc[0].summary;
+        if (gene_desc.indexOf('[') != -1) {
+            gene_desc = gene_desc.substring(0, gene_desc.lastIndexOf('[') - 1)
+        }
+        if (gene_desc.indexOf('(') != -1) {
+            gene_desc = gene_desc.substring(0, gene_desc.lastIndexOf('(') - 1)
+        } 
+        if (context.query.gene == 'GUCA1A' && gene_desc.indexOf('provided') != -1) {
+            gene_desc = gene_desc.substring(0, gene_desc.indexOf('provided') - 1)
+        }
+        if (gene_desc == 'nan') {
+            gene_desc = "No gene description available."
+        }
     } else {
         gene_desc = "No gene description available."
     }
