@@ -310,7 +310,23 @@ export default function Page(props) {
 
                         <FormControlLabel 
                         className={styles.formItem} 
-                        control={<Switch onChange={() => setCurrDatabase(0)} checked={currDatabase == 0}/>} 
+                        control={<Switch onChange={() => setCurrDatabase(0)} checked={currDatabase == 0} />} 
+                        label={
+                            <div className={styles.dbLogo}>
+                                <img className={styles.databaseLogo} src="/images/archs4.png" alt="archs4 Logo"/>
+                                <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
+                                    <div className={styles.tooltipText}><a href="https://maayanlab.cloud/archs4/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/29636450/" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
+                                    <IconButton><InfoIcon color='info'/></IconButton>
+                                </HtmlTooltip>
+                            </div>
+                        } 
+                        labelPlacement="start"/>
+                        
+                        <div className={styles.logoDesc}>{ARCHS4_desc}</div>
+
+                        <FormControlLabel 
+                        className={styles.formItem} 
+                        control={<Switch onChange={() => setCurrDatabase(1)} checked={currDatabase == 1}/>} 
                         label={
                             <div className={styles.dbLogo}>
                                 <img className={styles.databaseLogo} src="/images/GTEx_transcriptomics.png" alt="GTEx Logo"/>
@@ -324,21 +340,7 @@ export default function Page(props) {
 
                         <div className={styles.logoDesc}>{GTEx_transcriptomics_desc}</div>
 
-                        <FormControlLabel 
-                        className={styles.formItem} 
-                        control={<Switch onChange={() => setCurrDatabase(1)} checked={currDatabase == 1} />} 
-                        label={
-                            <div className={styles.dbLogo}>
-                                <img className={styles.databaseLogo} src="/images/archs4.png" alt="archs4 Logo"/>
-                                <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
-                                    <div className={styles.tooltipText}><a href="https://maayanlab.cloud/archs4/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/29636450/" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
-                                    <IconButton><InfoIcon color='info'/></IconButton>
-                                </HtmlTooltip>
-                            </div>
-                        } 
-                        labelPlacement="start"/>
                         
-                        <div className={styles.logoDesc}>{ARCHS4_desc}</div>
                         
                         <FormControlLabel 
                         className={styles.formItem} 
@@ -504,23 +506,7 @@ export default function Page(props) {
 
                                     <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => setCurrDatabase(0)} checked={currDatabase == 0}/>} 
-                                    label={
-                                        <div className={styles.dbLogo}>
-                                            <img className={styles.databaseLogo} src="/images/GTEx_transcriptomics.png" alt="GTEx Logo"/>
-                                            <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
-                                                <div className={styles.tooltipText}><a href="https://gtexportal.org/home" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/23715323/" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
-                                                <IconButton><InfoIcon color='info'/></IconButton>
-                                            </HtmlTooltip>
-                                        </div>
-                                    } 
-                                    labelPlacement="start"/>
-
-                                    <div className={styles.logoDesc}>{GTEx_transcriptomics_desc}</div>
-
-                                    <FormControlLabel 
-                                    className={styles.formItem} 
-                                    control={<Switch onChange={() => setCurrDatabase(1)} checked={currDatabase == 1} />} 
+                                    control={<Switch onChange={() => setCurrDatabase(0)} checked={currDatabase == 0} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} src="/images/archs4.png" alt="archs4 Logo"/>
@@ -533,6 +519,22 @@ export default function Page(props) {
                                     labelPlacement="start"/>
                                     
                                     <div className={styles.logoDesc}>{ARCHS4_desc}</div>
+
+                                    <FormControlLabel 
+                                    className={styles.formItem} 
+                                    control={<Switch onChange={() => setCurrDatabase(1)} checked={currDatabase == 1}/>} 
+                                    label={
+                                        <div className={styles.dbLogo}>
+                                            <img className={styles.databaseLogo} src="/images/GTEx_transcriptomics.png" alt="GTEx Logo"/>
+                                            <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
+                                                <div className={styles.tooltipText}><a href="https://gtexportal.org/home" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/23715323/" target="_blank" rel="noopener noreferrer">Publication</a></div>}>
+                                                <IconButton><InfoIcon color='info'/></IconButton>
+                                            </HtmlTooltip>
+                                        </div>
+                                    } 
+                                    labelPlacement="start"/>
+
+                                    <div className={styles.logoDesc}>{GTEx_transcriptomics_desc}</div>
                                     
                                     <FormControlLabel 
                                     className={styles.formItem} 
@@ -661,16 +663,16 @@ export default function Page(props) {
                                         {
                                             (currDatabase == 0)
                                                 ?
-                                                    <Tab icon={<img className={styles.tabLogo} alt="GTEx logo" src="/images/GTEx_transcriptomics.png" />} />
+                                                    <Tab icon={<img className={styles.tabLogo} alt="ARCHS4 logo" src="/images/archs4.png" />} />
                                                 :
-                                                    <Tab icon={<img className={styles.grayTabLogo} alt="GTEx logo" src="/images/GTEx_transcriptomics.png" />} />
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="ARCHS4 logo" src="/images/archs4.png" />} />
                                         }
                                         {
                                             (currDatabase == 1)
                                                 ?
-                                                    <Tab icon={<img className={styles.tabLogo} alt="ARCHS4 logo" src="/images/archs4.png" />} />
+                                                    <Tab icon={<img className={styles.tabLogo} alt="GTEx logo" src="/images/GTEx_transcriptomics.png" />} />
                                                 :
-                                                    <Tab icon={<img className={styles.grayTabLogo} alt="ARCHS4 logo" src="/images/archs4.png" />} />
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="GTEx logo" src="/images/GTEx_transcriptomics.png" />} />
                                         }
                                         {
                                             (currDatabase == 2)
@@ -716,34 +718,7 @@ export default function Page(props) {
                                         }
                                     </Tabs>
                                 </Box>
-                                    <TabPanel style={{width: '100%'}} value={currDatabase} index={0}>
-                                        {
-                                            gtex_transcriptomics != null 
-                                                ? 
-                                                    <>
-                                                        <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'GTEx Transcriptomics'} database_desc={GTEx_transcriptomics_desc}/>
-                                                        <div style={{height: '1500px'}}>
-                                                            <Plot
-                                                                data={[gtex_transcriptomics]}
-                                                                layout={{title: gtex_transcriptomics_title, yaxis: {automargin: true},
-                                                                xaxis: {
-                                                                    title: {
-                                                                    text: 'RNA counts',
-                                                                    }
-                                                                }}}
-                                                                style={{width: '100%', height: '100%'}}
-                                                                config={{responsive: true}}
-                                                                id={"gtex_transcriptomics"}
-                                                            />
-                                                        </div>
-                                                    </>
-                                                    
-                                                : 
-                                                    <GraphMissing/>
-                                        }
-                                    </TabPanel>
-                                    <TabPanel value={currDatabase} index={1}>
+                                    <TabPanel value={currDatabase} index={0}>
                                         {
                                             archs4 != null 
                                                 ? 
@@ -764,6 +739,33 @@ export default function Page(props) {
                                                                 }}}
                                                                 style={{width: '100%', height: '100%'}}
                                                                 config={{responsive: true}}
+                                                            />
+                                                        </div>
+                                                    </>
+                                                    
+                                                : 
+                                                    <GraphMissing/>
+                                        }
+                                    </TabPanel>
+                                    <TabPanel style={{width: '100%'}} value={currDatabase} index={1}>
+                                        {
+                                            gtex_transcriptomics != null 
+                                                ? 
+                                                    <>
+                                                        <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'GTEx Transcriptomics'} database_desc={GTEx_transcriptomics_desc}/>
+                                                        <div style={{height: '1500px'}}>
+                                                            <Plot
+                                                                data={[gtex_transcriptomics]}
+                                                                layout={{title: gtex_transcriptomics_title, yaxis: {automargin: true},
+                                                                xaxis: {
+                                                                    title: {
+                                                                    text: 'RNA counts',
+                                                                    }
+                                                                }}}
+                                                                style={{width: '100%', height: '100%'}}
+                                                                config={{responsive: true}}
+                                                                id={"gtex_transcriptomics"}
                                                             />
                                                         </div>
                                                     </>
