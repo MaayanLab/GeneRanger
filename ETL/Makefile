@@ -26,10 +26,6 @@ create-db: ensure-env
 docker-pg-shell: check-deps ensure-db
 	docker-compose exec db psql $(shell dotenv get DATABASE_URL)
 
-.PHONY: docker-pg-dump
-docker-pg-dump:
-	mkdir -p preprocessed
-	docker-compose exec db pg_dump -Fc --no-acl --no-owner $(shell dotenv get DATABASE_URL) > preprocessed/db.dump
 
 # INPUT FILES
 
@@ -184,3 +180,16 @@ check-deps:
 	@which dotenv > /dev/null || (echo "Install python-dotenv, see https://pypi.org/project/python-dotenv/" && exit 1)
 	@which curl > /dev/null || (echo "Install curl, see https://curl.se/" && exit 1)
 	@bash -c "[[ \"$$($(PYTHON) -V)\" =~ \"Python 3\" ]] || (echo 'python3 is missing, maybe you need to override PYTHON' && exit 1)"
+
+
+.PHONY: docker-pg-dump
+docker-pg-dump: preprocessed/db.dump
+
+preprocessed/db.dump:
+	mkdir -p preprocessed
+	docker-compose exec -T db pg_dump -Fc --no-acl --no-owner $(shell dotenv get DATABASE_URL) > preprocessed/db.dump
+
+.PHONY: dokku-import
+dokku-import: preprocessed/db.dump
+	ssh -T dokku@ssh.dev.maayanlab.cloud postgres:import generanger < preprocessed/db.dump
+	rm preprocessed/db.dump
