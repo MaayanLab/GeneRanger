@@ -33,6 +33,15 @@ const Plot = dynamic(() => import('react-plotly.js'), {
 
 export async function getServerSideProps(context) {
 
+    if (context.query.currDatabase == undefined) {
+        return {
+            redirect: {
+                destination: '/gene/' + context.query.gene +'?currDatabase=0',
+                permanent: false,
+            }
+        }
+    }
+
     const prisma = new PrismaClient();
 
     let gene_desc = await prisma.$queryRaw`select * from gene_info where gene_info.symbol = ${context.query.gene}`
@@ -147,7 +156,7 @@ export async function getServerSideProps(context) {
 
         }
     }
-    
+
     return { 
         props: {
             gene: context.query.gene,
@@ -256,10 +265,9 @@ export default function Page(props) {
         ccle_proteomics_length = Object.keys(ccle_proteomics.y).length;
     }
 
-    // Function for submitting data to the next page
-       
     const router = useRouter();
-
+    
+    // Function for submitting data to the next page
     function submitGene (gene) {
             
         if (gene != null) {
@@ -277,6 +285,16 @@ export default function Page(props) {
             
         }
         
+    }
+
+    function updateURL(db) {
+        let href = {
+            pathname: "[gene]",
+            query: {
+                gene: props.gene,
+                currDatabase: db
+        }};
+        router.push(href, undefined, { shallow: true, scroll: false } );
     }
 
     // For MUI tabs
@@ -355,7 +373,7 @@ export default function Page(props) {
 
                         <FormControlLabel 
                         className={styles.formItem} 
-                        control={<Switch onChange={() => setCurrDatabase(0)} checked={currDatabase == 0} />} 
+                        control={<Switch onChange={() => {setCurrDatabase(0); updateURL(0)}} checked={currDatabase == 0} />} 
                         label={
                             <div className={styles.dbLogo}>
                                 <img className={styles.databaseLogo} src="/images/archs4.png" alt="archs4 Logo"/>
@@ -371,7 +389,7 @@ export default function Page(props) {
 
                         <FormControlLabel 
                         className={styles.formItem} 
-                        control={<Switch onChange={() => setCurrDatabase(1)} checked={currDatabase == 1}/>} 
+                        control={<Switch onChange={() => {setCurrDatabase(1); updateURL(1)}} checked={currDatabase == 1}/>} 
                         label={
                             <div className={styles.dbLogo}>
                                 <img className={styles.databaseLogo} src="/images/GTEx_transcriptomics.png" alt="GTEx Logo"/>
@@ -389,7 +407,7 @@ export default function Page(props) {
                         
                         <FormControlLabel 
                         className={styles.formItem} 
-                        control={<Switch onChange={() => setCurrDatabase(2)} checked={currDatabase == 2} />} 
+                        control={<Switch onChange={() => {setCurrDatabase(2); updateURL(2)}} checked={currDatabase == 2} />} 
                         label={
                             <div className={styles.dbLogo}>
                                 <img className={styles.databaseLogo} style={{borderRadius: '8px'}} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo"/>
@@ -405,7 +423,7 @@ export default function Page(props) {
 
                         <FormControlLabel 
                         className={styles.formItem} 
-                        control={<Switch onChange={() => setCurrDatabase(3)} checked={currDatabase == 3} />} 
+                        control={<Switch onChange={() => {setCurrDatabase(3); updateURL(3)}} checked={currDatabase == 3} />} 
                         label={
                             <div className={styles.dbLogo}>
                                 <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/CCLE_transcriptomics.jpeg" alt="CCLE Logo"/>
@@ -428,7 +446,7 @@ export default function Page(props) {
 
                         <FormControlLabel 
                         className={styles.formItem} 
-                        control={<Switch onChange={() => setCurrDatabase(4)} checked={currDatabase == 4} />} 
+                        control={<Switch onChange={() => {setCurrDatabase(4); updateURL(4)}} checked={currDatabase == 4} />} 
                         label={
                             <div className={styles.dbLogo}>
                                 <img className={styles.databaseLogo} style={{width: '200px', marginRight: '0'}} src="/images/HPM.gif" alt="HPM Logo"/>
@@ -444,7 +462,7 @@ export default function Page(props) {
                         
                         <FormControlLabel 
                         className={styles.formItem} 
-                        control={<Switch onChange={() => setCurrDatabase(5)} checked={currDatabase == 5} />} 
+                        control={<Switch onChange={() => {setCurrDatabase(5); updateURL(5)}} checked={currDatabase == 5} />} 
                         label={
                             <div className={styles.dbLogo}>
                                 <img className={styles.databaseLogo} style={{width: '200px', padding: '10px', marginLeft: '0px', marginRight: '-20px', backgroundColor: '#8eaabe', borderRadius: '5px'}} src="/images/HPA.svg" alt="HPA Logo"/>
@@ -460,7 +478,7 @@ export default function Page(props) {
                         
                         <FormControlLabel 
                         className={styles.formItem} 
-                        control={<Switch onChange={() => setCurrDatabase(6)} checked={currDatabase == 6} />} 
+                        control={<Switch onChange={() => {setCurrDatabase(6); updateURL(6)}} checked={currDatabase == 6} />} 
                         label={
                             <div className={styles.dbLogo}>
                                 <img className={styles.databaseLogo} src="/images/GTEx_proteomics.png" alt="GTEx Logo"/>
@@ -476,7 +494,7 @@ export default function Page(props) {
 
                         <FormControlLabel 
                         className={styles.formItem} 
-                        control={<Switch onChange={() => setCurrDatabase(7)} checked={currDatabase == 7} />} 
+                        control={<Switch onChange={() => {setCurrDatabase(7); updateURL(7)}} checked={currDatabase == 7} />} 
                         label={
                             <div className={styles.dbLogo}>
                                 <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/CCLE_proteomics.jpeg" alt="CCLE Logo"/>
@@ -551,7 +569,7 @@ export default function Page(props) {
 
                                     <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => setCurrDatabase(0)} checked={currDatabase == 0} />} 
+                                    control={<Switch onChange={() => {setCurrDatabase(0); updateURL(0)}} checked={currDatabase == 0} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} src="/images/archs4.png" alt="archs4 Logo"/>
@@ -567,7 +585,7 @@ export default function Page(props) {
 
                                     <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => setCurrDatabase(1)} checked={currDatabase == 1}/>} 
+                                    control={<Switch onChange={() => {setCurrDatabase(1); updateURL(1)}} checked={currDatabase == 1}/>} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} src="/images/GTEx_transcriptomics.png" alt="GTEx Logo"/>
@@ -585,7 +603,7 @@ export default function Page(props) {
                                     
                                     <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => setCurrDatabase(2)} checked={currDatabase == 2} />} 
+                                    control={<Switch onChange={() => {setCurrDatabase(2); updateURL(2)}} checked={currDatabase == 2} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} style={{borderRadius: '8px'}} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo"/>
@@ -601,7 +619,7 @@ export default function Page(props) {
 
                                     <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => setCurrDatabase(3)} checked={currDatabase == 3} />} 
+                                    control={<Switch onChange={() => {setCurrDatabase(3); updateURL(3)}} checked={currDatabase == 3} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/CCLE_transcriptomics.jpeg" alt="CCLE Logo"/>
@@ -624,7 +642,7 @@ export default function Page(props) {
 
                                     <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => setCurrDatabase(4)} checked={currDatabase == 4} />} 
+                                    control={<Switch onChange={() => {setCurrDatabase(4); updateURL(4)}} checked={currDatabase == 4} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} style={{width: '200px', marginRight: '0'}} src="/images/HPM.gif" alt="HPM Logo"/>
@@ -640,7 +658,7 @@ export default function Page(props) {
                                     
                                     <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => setCurrDatabase(5)} checked={currDatabase == 5} />} 
+                                    control={<Switch onChange={() => {setCurrDatabase(5); updateURL(5)}} checked={currDatabase == 5} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} style={{width: '200px', padding: '10px', marginLeft: '0px', marginRight: '-20px', backgroundColor: '#8eaabe', borderRadius: '5px'}} src="/images/HPA.svg" alt="HPA Logo"/>
@@ -656,7 +674,7 @@ export default function Page(props) {
                                     
                                     <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => setCurrDatabase(6)} checked={currDatabase == 6} />} 
+                                    control={<Switch onChange={() => {setCurrDatabase(6); updateURL(6)}} checked={currDatabase == 6} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} src="/images/GTEx_proteomics.png" alt="GTEx Logo"/>
@@ -672,7 +690,7 @@ export default function Page(props) {
 
                                     <FormControlLabel 
                                     className={styles.formItem} 
-                                    control={<Switch onChange={() => setCurrDatabase(7)} checked={currDatabase == 7} />} 
+                                    control={<Switch onChange={() => {setCurrDatabase(7); updateURL(7)}} checked={currDatabase == 7} />} 
                                     label={
                                         <div className={styles.dbLogo}>
                                             <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/CCLE_proteomics.jpeg" alt="CCLE Logo"/>
@@ -706,7 +724,7 @@ export default function Page(props) {
                         <div style={{width: '100%'}}>
                             <Box sx={{ width: '100%' }}>
                                 <Box className={styles.tabsBox}>
-                                    <Tabs value={currDatabase} onChange={(event, newValue) => {setCurrDatabase(newValue)}} aria-label="basic tabs example" variant="fullWidth" centered>
+                                    <Tabs value={currDatabase} onChange={(event, newValue) => {setCurrDatabase(newValue); updateURL(newValue)}} aria-label="basic tabs example" variant="fullWidth" centered>
                                         {
                                             (currDatabase == 0)
                                                 ?
