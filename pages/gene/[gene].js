@@ -161,14 +161,32 @@ export async function getServerSideProps(context) {
 
 export default function Page(props) {
 
+    let ARCHS4_link = <a href="https://maayanlab.cloud/archs4" target="_blank" rel="noopener noreferrer">ARCHS4</a>;
+    let GTEx_transcriptomics_link = <a href="https://gtexportal.org/home" target="_blank" rel="noopener noreferrer">GTEx transcriptomics</a>;
+    let Tabula_Sapiens_link = <a href="https://tabula-sapiens-portal.ds.czbiohub.org/" target="_blank" rel="noopener noreferrer">Tabula Sapiens</a>;
+    let CCLE_transcriptomics_link = <a href="https://sites.broadinstitute.org/ccle/" target="_blank" rel="noopener noreferrer">Cancer Cell Line Encyclopedia (CCLE)</a>;
+    let HPM_link = <a href="http://www.humanproteomemap.org/" target="_blank" rel="noopener noreferrer">Human Proteome Map (HPM)</a>;
+    let HPA_link = <a href="https://www.proteinatlas.org/" target="_blank" rel="noopener noreferrer">Human Protein Atlas (HPA)</a>;
+    let GTEx_proteomics_link = <a href="https://tsomics.shinyapps.io/RNA_vs_protein/" target="_blank" rel="noopener noreferrer">GTEx proteomics</a>;
+    let CCLE_proteomics_link = <a href="https://gygi.hms.harvard.edu/" target="_blank" rel="noopener noreferrer">Cancer Cell Line Encyclopedia (CCLE)</a>;
+
     let ARCHS4_str = 'ARCHS4, developed by the Ma’ayan Lab, contains over 1 million samples of uniformly processed RNA-seq data from the Gene Expression Omnibus (GEO). The samples were aligned using kallisto with an efficient parallelized cloud workflow.';
     let GTEx_transcriptomics_str = 'GTEx transcriptomics provides bulk RNA-seq data for 54 human tissues collected from postmortem donors. The GTEx database was designed to study the relationship between genetic variation and gene expression across multiple human tissues.';
     let Tabula_Sapiens_str = 'Tabula Sapiens is a gene expression atlas created from single cell RNA-seq data collected from multiple tissues of 16 postmortem donors. The processed data contains average expression of each human gene in 486 cell types.';
     let CCLE_transcriptomics_str = 'The Cancer Cell Line Encyclopedia (CCLE) transcriptomics dataset contains gene expression data collected with RNA-seq from over 1000 human pan-cancer cell lines.';
-    let HPM_str = 'The Human Protein Map (HPM) contains data from LC-MS/MS proteomics profiling protein expression in 30 human tissues collected from 17 adult postmortem donors.';
+    let HPM_str = 'The Human Proteome Map (HPM) contains data from LC-MS/MS proteomics profiling protein expression in 30 human tissues collected from 17 adult postmortem donors.';
     let HPA_str = 'The Human Protein Atlas (HPA) contains protein expression data from 44 normal human tissues derived from antibody-based protein profiling using immunohistochemistry.';
     let GTEx_proteomics_str = 'The GTEx proteomics dataset has relative protein levels for more than 12,000 proteins across 32 normal human tissues. The data was collected using tandem mass tag (TMT) proteomics to profile tissues collected from 14 postmortem donors.';
     let CCLE_proteomics_str = 'The Cancer Cell Line Encyclopedia (CCLE) proteomics dataset contains protein expression in 375 pan-cancer cell lines. Data was collected by quantitative multiplex mass spectrometry proteomics.';
+
+    let ARCHS4_str_m = ', developed by the Ma’ayan Lab, contains over 1 million samples of uniformly processed RNA-seq data from the Gene Expression Omnibus (GEO). The samples were aligned using kallisto with an efficient parallelized cloud workflow.';
+    let GTEx_transcriptomics_str_m = ' provides bulk RNA-seq data for 54 human tissues collected from postmortem donors. The GTEx database was designed to study the relationship between genetic variation and gene expression across multiple human tissues.';
+    let Tabula_Sapiens_str_m = ' is a gene expression atlas created from single cell RNA-seq data collected from multiple tissues of 16 postmortem donors. The processed data contains average expression of each human gene in 486 cell types.';
+    let CCLE_transcriptomics_str_m = ' transcriptomics dataset contains gene expression data collected with RNA-seq from over 1000 human pan-cancer cell lines.';
+    let HPM_str_m = ' contains data from LC-MS/MS proteomics profiling protein expression in 30 human tissues collected from 17 adult postmortem donors.';
+    let HPA_str_m = ' contains protein expression data from 44 normal human tissues derived from antibody-based protein profiling using immunohistochemistry.';
+    let GTEx_proteomics_str_m = ' dataset has relative protein levels for more than 12,000 proteins across 32 normal human tissues. The data was collected using tandem mass tag (TMT) proteomics to profile tissues collected from 14 postmortem donors.';
+    let CCLE_proteomics_str_m = ' proteomics dataset contains protein expression in 375 pan-cancer cell lines. Data was collected by quantitative multiplex mass spectrometry proteomics.';
 
     let ARCHS4_links = <><a href="https://maayanlab.cloud/archs4" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/29636450/" target="_blank" rel="noopener noreferrer">citation</a></>
     let GTEx_transcriptomics_links = <><a href="https://gtexportal.org/home" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/23715323/" target="_blank" rel="noopener noreferrer">citation</a></>
@@ -179,15 +197,23 @@ export default function Page(props) {
     let GTEx_proteomics_links = <><a href="https://tsomics.shinyapps.io/RNA_vs_protein/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/32916130/" target="_blank" rel="noopener noreferrer">citation</a></>
     let CCLE_proteomics_links = <><a href="https://gygi.hms.harvard.edu/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/31978347/" target="_blank" rel="noopener noreferrer">citation</a></>
 
-    let ARCHS4_desc = <>{ARCHS4_str} <span style={{whiteSpace: 'nowrap'}}>{ARCHS4_links}</span></>;
-    let GTEx_transcriptomics_desc = <>{GTEx_transcriptomics_str} <span style={{whiteSpace: 'nowrap'}}>{GTEx_transcriptomics_links}</span></>;
-    let Tabula_Sapiens_desc = <>{Tabula_Sapiens_str} <span style={{whiteSpace: 'nowrap'}}>{Tabula_Sapiens_links}</span></>;
-    let CCLE_transcriptomics_desc = <>{CCLE_transcriptomics_str} <span style={{whiteSpace: 'nowrap'}}>{CCLE_transcriptomics_links}</span></>;
-    let HPM_desc = <>{HPM_str} <span style={{whiteSpace: 'nowrap'}}>{HPM_links}</span></>;
-    let HPA_desc = <>{HPA_str} <span style={{whiteSpace: 'nowrap'}}>{HPA_links}</span></>;
-    let GTEx_proteomics_desc = <>{GTEx_proteomics_str} <span style={{whiteSpace: 'nowrap'}}>{GTEx_proteomics_links}</span></>;
-    let CCLE_proteomics_desc = <>{CCLE_proteomics_str} <span style={{whiteSpace: 'nowrap'}}>{CCLE_proteomics_links}</span></>;
+    let ARCHS4_desc = <>{ARCHS4_link}{ARCHS4_str_m} <span style={{whiteSpace: 'nowrap'}}>{ARCHS4_links}</span></>;
+    let GTEx_transcriptomics_desc = <>{GTEx_transcriptomics_link}{GTEx_transcriptomics_str_m} <span style={{whiteSpace: 'nowrap'}}>{GTEx_transcriptomics_links}</span></>;
+    let Tabula_Sapiens_desc = <>{Tabula_Sapiens_link}{Tabula_Sapiens_str_m} <span style={{whiteSpace: 'nowrap'}}>{Tabula_Sapiens_links}</span></>;
+    let CCLE_transcriptomics_desc = <>The {CCLE_transcriptomics_link}{CCLE_transcriptomics_str_m} <span style={{whiteSpace: 'nowrap'}}>{CCLE_transcriptomics_links}</span></>;
+    let HPM_desc = <>The {HPM_link}{HPM_str_m} <span style={{whiteSpace: 'nowrap'}}>{HPM_links}</span></>;
+    let HPA_desc = <>The {HPA_link}{HPA_str_m} <span style={{whiteSpace: 'nowrap'}}>{HPA_links}</span></>;
+    let GTEx_proteomics_desc = <>The {GTEx_proteomics_link}{GTEx_proteomics_str_m} <span style={{whiteSpace: 'nowrap'}}>{GTEx_proteomics_links}</span></>;
+    let CCLE_proteomics_desc = <>The {CCLE_proteomics_link}{CCLE_proteomics_str_m} <span style={{whiteSpace: 'nowrap'}}>{CCLE_proteomics_links}</span></>;
 
+    let ARCHS4_desc_d = <>{ARCHS4_str} <span style={{whiteSpace: 'nowrap'}}>{ARCHS4_links}</span></>;
+    let GTEx_transcriptomics_desc_d = <>{GTEx_transcriptomics_str} <span style={{whiteSpace: 'nowrap'}}>{GTEx_transcriptomics_links}</span></>;
+    let Tabula_Sapiens_desc_d = <>{Tabula_Sapiens_str} <span style={{whiteSpace: 'nowrap'}}>{Tabula_Sapiens_links}</span></>;
+    let CCLE_transcriptomics_desc_d = <>{CCLE_transcriptomics_str} <span style={{whiteSpace: 'nowrap'}}>{CCLE_transcriptomics_links}</span></>;
+    let HPM_desc_d = <>{HPM_str} <span style={{whiteSpace: 'nowrap'}}>{HPM_links}</span></>;
+    let HPA_desc_d = <>{HPA_str} <span style={{whiteSpace: 'nowrap'}}>{HPA_links}</span></>;
+    let GTEx_proteomics_desc_d = <>{GTEx_proteomics_str} <span style={{whiteSpace: 'nowrap'}}>{GTEx_proteomics_links}</span></>;
+    let CCLE_proteomics_desc_d = <>{CCLE_proteomics_str} <span style={{whiteSpace: 'nowrap'}}>{CCLE_proteomics_links}</span></>;
 
     let archs4_title = props.gene + ' Expression across ARCHS4 Cells & Tissues (RNA-seq)';
     let gtex_transcriptomics_title = props.gene + ' Expression across GTEx Tissues (RNA-seq)';
@@ -745,7 +771,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'ARCHS4'} database_desc={ARCHS4_desc}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={ARCHS4_link} database_desc={ARCHS4_desc_d}/>
                                                         <div style={{height: '13000px'}}>
                                                             <Plot
                                                                 data={[archs4]}
@@ -774,7 +800,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'GTEx Transcriptomics'} database_desc={GTEx_transcriptomics_desc}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={GTEx_transcriptomics_link} database_desc={GTEx_transcriptomics_desc_d}/>
                                                         <div style={{height: '1500px'}}>
                                                             <Plot
                                                                 data={[gtex_transcriptomics]}
@@ -801,7 +827,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'Tabula Sapiens'} database_desc={Tabula_Sapiens_desc}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={Tabula_Sapiens_link} database_desc={Tabula_Sapiens_desc_d}/>
                                                         <div style={{height: '13000px'}}>
                                                             <Plot
                                                                 data={[tabula_sapiens]}
@@ -830,7 +856,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'CCLE Transcriptomics'} database_desc={CCLE_transcriptomics_desc}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={CCLE_transcriptomics_link} database_desc={CCLE_transcriptomics_desc_d}/>
                                                         <div style={{height: '50000px'}}>
                                                             <Plot
                                                                 data={[ccle_transcriptomics]}
@@ -860,7 +886,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'Human Proteome Map'} database_desc={HPM_desc}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={HPM_link} database_desc={HPM_desc_d}/>
                                                         <div style={{height: '1000px'}}>
                                                             <Plot
                                                                 data={[hpm]}
@@ -889,7 +915,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'Human Protein Atlas'} database_desc={HPA_desc}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={HPA_link} database_desc={HPA_desc_d}/>
                                                         <div style={{height: '4500px'}}>
                                                             <Plot
                                                                 data={[hpa]}
@@ -921,7 +947,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'GTEx Proteomics'} database_desc={GTEx_proteomics_desc}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={GTEx_proteomics_link} database_desc={GTEx_proteomics_desc_d}/>
                                                         <div style={{height: (gtex_proteomics_length * 50).toString() + 'px'}}>
                                                             <Plot
                                                                 data={[gtex_proteomics]}
@@ -950,7 +976,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={'CCLE Proteomics'} database_desc={CCLE_proteomics_desc}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={CCLE_proteomics_link} database_desc={CCLE_proteomics_desc_d}/>
                                                         <div style={{height: (ccle_proteomics_length * 25).toString() + 'px'}}>
                                                             <Plot
                                                                 data={[ccle_proteomics]}

@@ -20,7 +20,7 @@ function GeneAndGraphDescription({NCBI_data, gene, database, database_desc}) {
                         <div style={{textAlign: 'center'}}>{NCBI_data}</div>
                     :
                         <> */}
-                            <div><b>Short description (from NCBI&apos;s Gene Database):</b> {NCBI_data}</div>
+                            <div><b>Short description (from <a href={NCBI_entrez} target="_blank" rel="noopener noreferrer">NCBI&apos;s Gene Database</a>):</b> {NCBI_data}</div>
                             <br/>
                             <div><b>Gene pages on other sites:</b></div>
                             <br/>
