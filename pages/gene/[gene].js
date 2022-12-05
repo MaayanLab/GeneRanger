@@ -33,10 +33,10 @@ const Plot = dynamic(() => import('react-plotly.js'), {
 
 export async function getServerSideProps(context) {
 
-    if (context.query.currDatabase == undefined) {
+    if (context.query.currDatabase == undefined || context.query.currDatabase == '') {
         return {
             redirect: {
-                destination: '/gene/' + context.query.gene +'?currDatabase=0',
+                destination: '/gene/' + context.query.gene +'?currDatabase=ARCHS4',
                 permanent: false,
             }
         }
@@ -157,10 +157,21 @@ export async function getServerSideProps(context) {
         }
     }
 
+    const databases = new Map([
+        ['ARCHS4', 0],
+        ['GTEx_transcriptomics', 1],
+        ['Tabula_Sapiens', 2],
+        ['CCLE_transcriptomics', 3],
+        ['HPM', 4],
+        ['HPA', 5],
+        ['GTEx_proteomics', 6],
+        ['CCLE_proteomics', 7],
+    ]);
+
     return { 
         props: {
             gene: context.query.gene,
-            currDatabase: context.query.currDatabase, 
+            currDatabase: databases.get(context.query.currDatabase), 
             sorted_data: sorted_data,
             NCBI_data: gene_desc
         }
@@ -266,6 +277,17 @@ export default function Page(props) {
     }
 
     const router = useRouter();
+
+    const databases = new Map([
+        [0, 'ARCHS4'],
+        [1, 'GTEx_transcriptomics'],
+        [2, 'Tabula_Sapiens'],
+        [3, 'CCLE_transcriptomics'],
+        [4, 'HPM'],
+        [5, 'HPA'],
+        [6, 'GTEx_proteomics'],
+        [7, 'CCLE_proteomics'],
+    ]);
     
     // Function for submitting data to the next page
     function submitGene (gene) {
@@ -277,7 +299,7 @@ export default function Page(props) {
                 pathname: "[gene]",
                 query: {
                     gene: gene,
-                    currDatabase: currDatabase
+                    currDatabase: databases.get(currDatabase)
             }};
             router.push(href).then(() => {
                 setLoading(false);    
@@ -292,7 +314,7 @@ export default function Page(props) {
             pathname: "[gene]",
             query: {
                 gene: props.gene,
-                currDatabase: db
+                currDatabase: databases.get(db)
         }};
         router.push(href, undefined, { shallow: true, scroll: false } );
     }
