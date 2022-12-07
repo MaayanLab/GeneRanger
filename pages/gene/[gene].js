@@ -1,12 +1,10 @@
-import { Responsive, WidthProvider } from "react-grid-layout";
 import { PrismaClient } from '@prisma/client';
 import dynamic from 'next/dynamic';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import React, { useState } from 'react';
 import styles from '../../styles/Main.module.css';
-import { FormGroup, FormControlLabel, Switch, TextField, Autocomplete, Container, Tooltip, tooltipClasses, CircularProgress } from '@mui/material';
-import genes from '../../json/genes.json';
+import { FormGroup, FormControlLabel, Switch, Autocomplete, TextField, Container, Tooltip, tooltipClasses, CircularProgress } from '@mui/material';
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
@@ -288,12 +286,29 @@ export default function Page(props) {
         [6, 'GTEx_proteomics'],
         [7, 'CCLE_proteomics'],
     ]);
+
+    const [input, setInput] = useState('');
+    const [geneList, setGeneList] = useState([]);
+
+    async function updateGeneListData(text) {
+        let input = {'input': text}
+        let res = await fetch('/api/gene_list', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(input)
+        })
+        let json = await res.json();
+        setGeneList(json);
+    }
     
     // Function for submitting data to the next page
     function submitGene (gene) {
             
         if (gene != null) {
-
+            setInput('');
+            updateGeneListData('');
             setLoading(true);
             let href = {
                 pathname: "[gene]",
@@ -576,8 +591,15 @@ export default function Page(props) {
                         <div style={{marginBottom: '15px'}}>
                             <Autocomplete
                                 disablePortal
-                                options={ genes }
+                                options={ geneList }
                                 sx={{ width: 400 }}
+                                inputValue={input}
+                                onInputChange={(event, value, reason) => {
+                                    if (reason == 'input') {
+                                        setInput(value);
+                                        updateGeneListData(value);
+                                    }
+                                }}
                                 onChange={(event, value) => {submitGene(value)}}
                                 renderInput={(params) => <TextField {...params} label="Human Gene Symbol" />}
                                 />
@@ -733,10 +755,17 @@ export default function Page(props) {
                     <div className={styles.graphFlexbox}>
                         
                         <div className={styles.secondAutocomplete} style={{marginTop: '15px'}}>
-                            <Autocomplete
+                        <Autocomplete
                                 disablePortal
-                                options={ genes }
+                                options={ geneList }
                                 sx={{ width: 250 }}
+                                inputValue={input}
+                                onInputChange={(event, value, reason) => {
+                                    if (reason == 'input') {
+                                        setInput(value);
+                                        updateGeneListData(value);
+                                    }
+                                }}
                                 onChange={(event, value) => {submitGene(value)}}
                                 renderInput={(params) => <TextField {...params} label="Human Gene Symbol" />}
                                 />
