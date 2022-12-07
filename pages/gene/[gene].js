@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import dynamic from 'next/dynamic';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../../styles/Main.module.css';
 import { FormGroup, FormControlLabel, Switch, Autocomplete, TextField, Container, Tooltip, tooltipClasses, CircularProgress } from '@mui/material';
 import { useRouter } from 'next/router'
@@ -290,6 +290,19 @@ export default function Page(props) {
     const [input, setInput] = useState('');
     const [geneList, setGeneList] = useState([]);
 
+    async function setDefaultGeneListData() {
+        let input = {'input': ''}
+        let res = await fetch('/api/gene_list', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(input)
+        })
+        let json = await res.json();
+        setGeneList(json)
+    }
+
     async function updateGeneListData(text) {
         let input = {'input': text}
         let res = await fetch('/api/gene_list', {
@@ -305,10 +318,10 @@ export default function Page(props) {
     
     // Function for submitting data to the next page
     function submitGene (gene) {
-            
+        
         if (gene != null) {
             setInput('');
-            setGeneList([]);
+            setDefaultGeneListData();
             setLoading(true);
             let href = {
                 pathname: "[gene]",
@@ -323,6 +336,10 @@ export default function Page(props) {
         }
         
     }
+
+    useEffect(() => {
+        setDefaultGeneListData()
+    }, []);
 
     function updateURL(db) {
         let href = {
@@ -591,6 +608,8 @@ export default function Page(props) {
                         <div style={{marginBottom: '15px'}}>
                             <Autocomplete
                                 disablePortal
+                                disableClearable
+                                value={''}
                                 options={ geneList }
                                 sx={{ width: 400 }}
                                 inputValue={input}
@@ -757,6 +776,8 @@ export default function Page(props) {
                         <div className={styles.secondAutocomplete} style={{marginTop: '15px'}}>
                         <Autocomplete
                                 disablePortal
+                                disableClearable
+                                value={''}
                                 options={ geneList }
                                 sx={{ width: 250 }}
                                 inputValue={input}
