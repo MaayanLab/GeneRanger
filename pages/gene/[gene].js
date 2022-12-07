@@ -308,7 +308,7 @@ export default function Page(props) {
             
         if (gene != null) {
             setInput('');
-            updateGeneListData('');
+            setGeneList([]);
             setLoading(true);
             let href = {
                 pathname: "[gene]",
