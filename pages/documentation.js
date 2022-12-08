@@ -19,7 +19,7 @@ export default function Page() {
 
                 <Header/>
 
-                <div style={{height: '1000px'}}>
+                <div style={{height: '1500px'}}>
                     <p>[TODO: make it possible to get back to the main page from here]</p>
                     <div>
                         <b>API Documentation:</b>
