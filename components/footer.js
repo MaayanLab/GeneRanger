@@ -11,6 +11,7 @@ export default class Footer extends React.Component {
                 <div className={styles.footerLinks}>
                     <div><a className={styles.link} href="mailto:avi.maayan@mssm.edu">Contact Us</a></div>
                     <div><a className={styles.link} href="https://github.com/MaayanLab/single-gene-expression-dashboard/blob/main/LICENSE">Usage License</a></div>
+                    <div><a className={styles.link} href="/documentation">API & Downloads Page</a></div>
                 </div>
                 <div>
                     <a href="https://icahn.mssm.edu/research/bioinformatics" target="_blank" rel="noopener noreferrer"><Image src="/images/icahn_cb.png" alt="School Logo" width={137} height={80} /></a>
