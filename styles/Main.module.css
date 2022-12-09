@@ -29,7 +29,7 @@
 .formItem {
   margin-top: 10px;
   margin-bottom: 10px;
-  margin-right: 15px;
+  margin-right: 15px!important;
 }
 
 .databaseLogo {
