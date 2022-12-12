@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styles from '../styles/Footer.module.css';
 import Image from 'next/image';
-import Link from 'next/link'
+import Link from 'next/link';
 import { Button } from '@mui/material';
 
 export default class Footer extends React.Component {
@@ -12,7 +12,8 @@ export default class Footer extends React.Component {
                 <div className={styles.footerLinks}>
                     <div><a className={styles.link} href="mailto:avi.maayan@mssm.edu">Contact Us</a></div>
                     <div><a className={styles.link} href="https://github.com/MaayanLab/single-gene-expression-dashboard/blob/main/LICENSE">Usage License</a></div>
-                    <div><Link href="/documentation"><a className={styles.link}>API & Downloads Page</a></Link></div>
+                    <div><Link href="/api_documentation"><a className={styles.link}>API Documentation</a></Link></div>
+                    <div><Link href="/downloads"><a className={styles.link}>Database Downloads</a></Link></div>
                 </div>
                 <div>
                     <a href="https://icahn.mssm.edu/research/bioinformatics" target="_blank" rel="noopener noreferrer"><Image src="/images/icahn_cb.png" alt="School Logo" width={137} height={80} /></a>

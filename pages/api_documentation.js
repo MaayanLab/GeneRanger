@@ -60,24 +60,6 @@ export default function Page() {
                         </p>
                         <p>[TODO: Put a visualization of the structure here and describe the dbData property more]</p>
                     </div>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <div>
-                        <b>Download the databases:</b>
-                    </div>
-                    <p>Transcriptomics:</p>
-                    <Button variant="contained" color="primary">ARCHS4</Button>
-                    <Button variant="contained" color="primary">GTEx Transcriptomics</Button>
-                    <Button variant="contained" color="primary">Tabula Sapiens</Button>
-                    <Button variant="contained" color="primary">Cancer Cell Line Encyclopedia (Transcriptomics)</Button>
-                    <p>Proteomics:</p>
-                    <Button variant="contained" color="primary">Human Proteome Map</Button>
-                    <Button variant="contained" color="primary">Human Protein Atlas</Button>
-                    <Button variant="contained" color="primary">GTEx Proteomics</Button>
-                    <Button variant="contained" color="primary">Cancer Cell Line Encyclopedia (Proteomics)</Button>
-                    <p>[TODO: Make these buttons actually work (and look good)]</p>
                     
                 </div>
             
