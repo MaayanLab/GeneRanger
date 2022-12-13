@@ -13,7 +13,7 @@ export default class Header extends React.Component {
                 <Link href="/gene/A2M">
                     <h1 className={styles.header}>GeneRanger</h1>
                 </Link>
-                <div className={styles.text}>GeneRanger takes the input of a human gene and displays its expression across normal human cell types, tissues, and cell lines utilizing processed datasets from GTEx, ARCHS4, Tabula Sapiens, and CCLE.</div>
+                <div className={styles.text}>GeneRanger is a web-server application that provides access to processed data about the expression of human genes and proteins across human cell types, tissues, and cell lines from several atlases.</div>
             </div>
         );
     }

@@ -10,8 +10,6 @@ import ProteomicsDownloads from '../components/proteomicsDownloads';
 
 export default function Page() {
 
-    
-
     return (
 
         <div style={{position: 'relative', minHeight: '100vh'}}>
