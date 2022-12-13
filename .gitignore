@@ -32,4 +32,4 @@ yarn-error.log*
 .vercel
 
 # files for user download
-/files/downloads/*
+/public/files/downloads/*

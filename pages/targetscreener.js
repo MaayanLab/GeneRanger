@@ -141,7 +141,7 @@ export default function Page() {
                                 <Button onClick={() => setFile("GSE49155-lung-squamous-cell-carcinoma.tsv")} className={styles.darkOnHover} variant="outlined" endIcon={<HelpOutlineIcon />}>
                                     Load example file
                                 </Button>
-                                <a style={{textDecoration: 'none'}} href="../files/GSE49155-patient.tsv" download="GSE49155-patient.tsv">
+                                <a style={{textDecoration: 'none'}} href="/files/GSE49155-patient.tsv" download="GSE49155-patient.tsv">
                                     <Button className={styles.darkOnHover} variant="outlined" endIcon={<DownloadIcon />}>
                                         Download example file
                                     </Button>
