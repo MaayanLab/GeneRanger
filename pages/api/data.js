@@ -1,5 +1,12 @@
 const { PrismaClient, Prisma } = require("@prisma/client");
 
+/** 
+ * @swagger
+ *  /api/data:
+ *    post:
+ *      summary: Access processed data
+ *      description: Query for processed data by gene.
+*/
 export default async function handler(req, res) {
 
     const prisma = new PrismaClient();
