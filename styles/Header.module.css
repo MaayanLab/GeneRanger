@@ -1,11 +1,33 @@
-.header {
-    text-align: left;
-    font-size: 40px;
+.leftDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    margin-left: 38px;
+    margin-right: 38px;
 }
 
-.mainLogo {
-    margin-left: 35px;
-    padding: 3px;
+.logoAndTitleDiv {
+    display: flex;
+    gap: 33px;
+    align-items: center;
+}
+
+.APIandDownloadDiv {
+    display: flex;
+    gap: 20px;
+}
+
+.headerLink {
+    color: #606060;
+    text-decoration: none;
+    background-color: #aec2d0;
+    border-radius: 12px;
+    padding: 7px;
+}
+
+.headerLink:hover {
+    color: black;
 }
 
 .title {

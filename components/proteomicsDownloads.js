@@ -26,9 +26,9 @@ export default class ProteomicsDownloads extends React.Component {
     render() {
         return (
             <>
-                <h1>Proteomics Databases:</h1>
+                <h1>Proteomics Processed Datasets:</h1>
 
-                <TableContainer component={Paper}>
+                <Paper variant="outlined">
                     <Table sx={{ maxWidth: 2500 }}>
                         <TableHead>
                         <TableRow>
@@ -44,8 +44,9 @@ export default class ProteomicsDownloads extends React.Component {
                         {rows.map((row) => (
                             <TableRow
                                 key={row.database}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell>{row.database}</TableCell>
+                                <TableCell component="th" scope="row">{row.database}</TableCell>
                                 <TableCell align="right">{row.size}</TableCell>
                                 <TableCell align="right">{row.shape}</TableCell>
                                 <TableCell align="right">{row.file_type}</TableCell>
@@ -55,7 +56,7 @@ export default class ProteomicsDownloads extends React.Component {
                         ))}
                         </TableBody>
                     </Table>
-                </TableContainer>
+                </Paper>
             </>
         );
     }
