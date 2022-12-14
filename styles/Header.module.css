@@ -1,16 +1,25 @@
-.leftDiv {
+.rightDiv {
     display: flex;
     flex-direction: column;
     gap: 10px;
     align-items: center;
-    margin-left: 38px;
+    margin-left: auto;
     margin-right: 38px;
+}
+
+.centerDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
 }
 
 .logoAndTitleDiv {
     display: flex;
     gap: 33px;
     align-items: center;
+    margin-left: 38px;
+    margin-right: 38px;
 }
 
 .APIandDownloadDiv {
@@ -30,7 +39,7 @@
     color: black;
 }
 
-.title {
+.longTitle {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,19 +50,26 @@
     width: 100%;
 }
 
+.shortTitle {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 25px 0px 25px;
+    padding: 25px 0px 25px 0px;
+    gap: 30px;
+    background-color: #8eaabe;
+    width: 100%;
+}
+
 .text {
-    text-align: left;
     font-size: 18px;
-    width: 60%;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 @media only screen and (max-width: 700px) {
-    .text {
-        display: none;
+    .shortTitle {
+        display: flex;
     }
-    .mainLogo{
-        margin-left: 0px;
+    .longTitle {
+        display: none;
     }
 }
