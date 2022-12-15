@@ -5,7 +5,380 @@ const { PrismaClient, Prisma } = require("@prisma/client");
  *  /api/data:
  *    post:
  *      summary: Access processed data
- *      description: Query for processed data by gene.
+ *      description: Query for processed data by gene and resource. If the "databases" property is not included in the request body, all information regarding the chosen gene will be returned.
+ *      requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               gene:
+ *                 type: string
+ *                 description: The gene you would like to study.
+ *                 example: A2M
+ *               databases:
+ *                 type: string
+ *                 description: The resources to query, separated by commas
+ *                 example: ARCHS4,GTEx_proteomics,Tabula_Sapiens,CCLE_transcriptomics,HPM,HPA,GTEx_proteomics,CCLE_proteomics
+ *      responses:
+ *        200:
+ *          description: Data relating to the chosen gene from the chosen resources.
+ *          content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 allData:
+ *                   type: object
+ *                   properties:
+ *                     gene:
+ *                       type: string
+ *                       description: The chosen gene used to query information.
+ *                       example: A2M
+ *                     dbData:
+ *                       type: object
+ *                       properties:
+ *                         ARCHS4:
+ *                           type: object
+ *                           properties:
+ *                             q1:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             median:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             q3:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             mean:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             sd:
+ *                               type: array
+ *                               example: [0, 0, 0]                            
+ *                             lowerfence:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             upperfence:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             names:
+ *                               type: array
+ *                               example: ["name1", "name2", "name3"]
+ *                               description: The cell lines/cell types/tissues relating to the chosen gene 
+ *                         GTEx_transcriptomics:
+ *                           type: object
+ *                           properties:
+ *                             q1:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             median:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             q3:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             mean:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             sd:
+ *                               type: array
+ *                               example: [0, 0, 0]                            
+ *                             lowerfence:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             upperfence:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             names:
+ *                               type: array
+ *                               example: ["name1", "name2", "name3"]
+ *                               description: The cell lines/cell types/tissues relating to the chosen gene
+ *                         Tabula_Sapiens:
+ *                           type: object
+ *                           properties:
+ *                             q1:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             median:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             q3:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             mean:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             sd:
+ *                               type: array
+ *                               example: [0, 0, 0]                            
+ *                             lowerfence:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             upperfence:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             names:
+ *                               type: array
+ *                               example: ["name1", "name2", "name3"]
+ *                               description: The cell lines/cell types/tissues relating to the chosen gene
+ *                         CCLE_transcriptomics:
+ *                           type: object
+ *                           properties:
+ *                             levels:
+ *                               type: array
+ *                               example: [0, 0, 0]
+ *                             names:
+ *                               type: array
+ *                               example: ["name1", "name2", "name3"]
+ *                               description: The cell lines/cell types/tissues relating to the chosen gene
+ *                         HPM:
+ *                           type: object
+ *                           properties:
+ *                             levels:
+ *                               type: array
+ *                               example: [0, 0, 0]
+ *                             names:
+ *                               type: array
+ *                               example: ["name1", "name2", "name3"]
+ *                               description: The cell lines/cell types/tissues relating to the chosen gene
+ *                         HPA:
+ *                           type: object
+ *                           properties:
+ *                             levels:
+ *                               type: array
+ *                               example: [0, 0, 0]
+ *                             names:
+ *                               type: array
+ *                               example: ["name1", "name2", "name3"]
+ *                               description: The cell lines/cell types/tissues relating to the chosen gene
+ *                         GTEx_proteomics:
+ *                           type: object
+ *                           properties:
+ *                             q1:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             median:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             q3:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             mean:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             sd:
+ *                               type: array
+ *                               example: [0, 0, 0]                            
+ *                             lowerfence:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             upperfence:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             names:
+ *                               type: array
+ *                               example: ["name1", "name2", "name3"]
+ *                               description: The cell lines/cell types/tissues relating to the chosen gene
+ *                         CCLE_proteomics:
+ *                           type: object
+ *                           properties:
+ *                             levels:
+ *                               type: array
+ *                               example: [0, 0, 0]
+ *                             names:
+ *                               type: array
+ *                               example: ["name1", "name2", "name3"]
+ *                               description: The cell lines/cell types/tissues relating to the chosen gene
+ *                     NCBI_data:
+ *                       type: string
+ *                       description: The NCBI description of the chosen gene.
+ *                       example: The protein encoded by this gene is a protease inhibitor and cytokine transporter. It uses a bait-and-trap mechanism to inhibit a broad spectrum of proteases, including trypsin, thrombin and collagenase. It can also inhibit inflammatory cytokines, and it thus disrupts inflammatory cascades. Mutations in this gene are a cause of alpha-2-macroglobulin deficiency. This gene is implicated in Alzheimer's disease (AD) due to its ability to mediate the clearance and degradation of A-beta, the major component of beta-amyloid deposits. A related pseudogene, which is also located on the p arm of chromosome 12, has been identified.
+ *
+*/
+
+/** 
+ * @swagger
+ *  /api/data:
+ *    get:
+ *      summary: Access processed data for gene A2M
+ *      description: Query for all processed data relating to gene A2M
+ *      responses:
+ *        200:
+ *          description: All data relating to the gene A2M.
+ *          content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 allData:
+ *                   type: object
+ *                   properties:
+ *                     gene:
+ *                       type: string
+ *                       description: The chosen gene used to query information.
+ *                       example: A2M
+ *                     dbData:
+ *                       type: object
+ *                       properties:
+ *                         ARCHS4:
+ *                           type: object
+ *                           properties:
+ *                             q1:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             median:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             q3:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             mean:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             sd:
+ *                               type: array
+ *                               example: [0, 0, 0]                            
+ *                             lowerfence:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             upperfence:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             names:
+ *                               type: array
+ *                               example: ["name1", "name2", "name3"]
+ *                               description: The cell lines/cell types/tissues relating to the chosen gene 
+ *                         GTEx_transcriptomics:
+ *                           type: object
+ *                           properties:
+ *                             q1:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             median:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             q3:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             mean:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             sd:
+ *                               type: array
+ *                               example: [0, 0, 0]                            
+ *                             lowerfence:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             upperfence:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             names:
+ *                               type: array
+ *                               example: ["name1", "name2", "name3"]
+ *                               description: The cell lines/cell types/tissues relating to the chosen gene
+ *                         Tabula_Sapiens:
+ *                           type: object
+ *                           properties:
+ *                             q1:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             median:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             q3:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             mean:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             sd:
+ *                               type: array
+ *                               example: [0, 0, 0]                            
+ *                             lowerfence:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             upperfence:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             names:
+ *                               type: array
+ *                               example: ["name1", "name2", "name3"]
+ *                               description: The cell lines/cell types/tissues relating to the chosen gene
+ *                         CCLE_transcriptomics:
+ *                           type: object
+ *                           properties:
+ *                             levels:
+ *                               type: array
+ *                               example: [0, 0, 0]
+ *                             names:
+ *                               type: array
+ *                               example: ["name1", "name2", "name3"]
+ *                               description: The cell lines/cell types/tissues relating to the chosen gene
+ *                         HPM:
+ *                           type: object
+ *                           properties:
+ *                             levels:
+ *                               type: array
+ *                               example: [0, 0, 0]
+ *                             names:
+ *                               type: array
+ *                               example: ["name1", "name2", "name3"]
+ *                               description: The cell lines/cell types/tissues relating to the chosen gene
+ *                         HPA:
+ *                           type: object
+ *                           properties:
+ *                             levels:
+ *                               type: array
+ *                               example: [0, 0, 0]
+ *                             names:
+ *                               type: array
+ *                               example: ["name1", "name2", "name3"]
+ *                               description: The cell lines/cell types/tissues relating to the chosen gene
+ *                         GTEx_proteomics:
+ *                           type: object
+ *                           properties:
+ *                             q1:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             median:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             q3:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             mean:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             sd:
+ *                               type: array
+ *                               example: [0, 0, 0]                            
+ *                             lowerfence:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             upperfence:
+ *                               type: array
+ *                               example: [1, 2, 3]
+ *                             names:
+ *                               type: array
+ *                               example: ["name1", "name2", "name3"]
+ *                               description: The cell lines/cell types/tissues relating to the chosen gene
+ *                         CCLE_proteomics:
+ *                           type: object
+ *                           properties:
+ *                             levels:
+ *                               type: array
+ *                               example: [0, 0, 0]
+ *                             names:
+ *                               type: array
+ *                               example: ["name1", "name2", "name3"]
+ *                               description: The cell lines/cell types/tissues relating to the chosen gene
+ *                     NCBI_data:
+ *                       type: string
+ *                       description: The NCBI description of the chosen gene.
+ *                       example: The protein encoded by this gene is a protease inhibitor and cytokine transporter. It uses a bait-and-trap mechanism to inhibit a broad spectrum of proteases, including trypsin, thrombin and collagenase. It can also inhibit inflammatory cytokines, and it thus disrupts inflammatory cascades. Mutations in this gene are a cause of alpha-2-macroglobulin deficiency. This gene is implicated in Alzheimer's disease (AD) due to its ability to mediate the clearance and degradation of A-beta, the major component of beta-amyloid deposits. A related pseudogene, which is also located on the p arm of chromosome 12, has been identified.
+ *
 */
 export default async function handler(req, res) {
 
@@ -78,31 +451,15 @@ export default async function handler(req, res) {
             
                     let data;
 
-                    if (db == 'ARCHS4') {
-                        data = {
-                            q1: q1,
-                            median: median,
-                            q3: q3,
-                            mean: mean,
-                            lowerfence: lowerfence,
-                            upperfence: upperfence,
-                            y: names,
-                            orientation: 'h',
-                            type: 'box'
-                        }
-                    } else {
-                        data = {
-                            q1: q1,
-                            median: median,
-                            q3: q3,
-                            mean: mean,
-                            sd: std,
-                            lowerfence: lowerfence,
-                            upperfence: upperfence,
-                            y: names,
-                            orientation: 'h',
-                            type: 'box'
-                        }
+                    data = {
+                        q1: q1,
+                        median: median,
+                        q3: q3,
+                        mean: mean,
+                        sd: std,
+                        lowerfence: lowerfence,
+                        upperfence: upperfence,
+                        names: names
                     }
                     
 
@@ -120,17 +477,14 @@ export default async function handler(req, res) {
                     const levels = descriptions.map(description => df.value[description]);
 
                     if (db == 'HPA') {
-                        descriptions = descriptions.map(description => description.replace('\n', '<br>'));
+                        descriptions = descriptions.map(description => description.replace('\n', ' - '));
                     }
 
                     const names = descriptions;
 
                     let data = {
-                        x: levels,
-                        y: names,
-                        type: "scatter",
-                        mode: "markers",
-                        marker: { color: '#1f77b4' },
+                        levels: levels,
+                        names: names
                     }
                     
                     Object.assign(sorted_data, {[db]: data});
@@ -198,31 +552,15 @@ export default async function handler(req, res) {
             
                     let data;
 
-                    if (db == 'ARCHS4') {
-                        data = {
-                            q1: q1,
-                            median: median,
-                            q3: q3,
-                            mean: mean,
-                            lowerfence: lowerfence,
-                            upperfence: upperfence,
-                            y: names,
-                            orientation: 'h',
-                            type: 'box'
-                        }
-                    } else {
-                        data = {
-                            q1: q1,
-                            median: median,
-                            q3: q3,
-                            mean: mean,
-                            sd: std,
-                            lowerfence: lowerfence,
-                            upperfence: upperfence,
-                            y: names,
-                            orientation: 'h',
-                            type: 'box'
-                        }
+                    data = {
+                        q1: q1,
+                        median: median,
+                        q3: q3,
+                        mean: mean,
+                        sd: std,
+                        lowerfence: lowerfence,
+                        upperfence: upperfence,
+                        names: names
                     }
                     
 
@@ -240,17 +578,14 @@ export default async function handler(req, res) {
                     const levels = descriptions.map(description => df.value[description]);
 
                     if (db == 'HPA') {
-                        descriptions = descriptions.map(description => description.replace('\n', '<br>'));
+                        descriptions = descriptions.map(description => description.replace('\n', ' - '));
                     }
 
                     const names = descriptions;
 
                     let data = {
-                        x: levels,
-                        y: names,
-                        type: "scatter",
-                        mode: "markers",
-                        marker: { color: '#1f77b4' },
+                        levels: levels,
+                        names: names
                     }
                     
                     Object.assign(sorted_data, {[db]: data});
