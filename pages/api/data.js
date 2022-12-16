@@ -18,9 +18,9 @@ const { PrismaClient, Prisma } = require("@prisma/client");
  *                 description: The gene you would like to study.
  *                 example: A2M
  *               databases:
- *                 type: string
+ *                 type: array
  *                 description: The resources to query, separated by commas
- *                 example: ARCHS4,GTEx_proteomics,Tabula_Sapiens,CCLE_transcriptomics,HPM,HPA,GTEx_proteomics,CCLE_proteomics
+ *                 example: ['ARCHS4', 'GTEx_transcriptomics', 'Tabula_Sapiens', 'CCLE_transcriptomics', 'HPM', 'HPA', 'GTEx_proteomics', 'CCLE_proteomics']
  *      responses:
  *        200:
  *          description: Data relating to the chosen gene from the chosen resources.
@@ -44,152 +44,152 @@ const { PrismaClient, Prisma } = require("@prisma/client");
  *                           properties:
  *                             q1:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [9,19,10450.2]
  *                             median:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [3541,31185,82093]
  *                             q3:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [75970,77016.5,230069]
  *                             mean:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [47123,54065.9,161205]
  *                             sd:
  *                               type: array
- *                               example: [0, 0, 0]                            
+ *                               example: [80707.4,69564.7,215145]                            
  *                             lowerfence:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [null,null,null]
  *                             upperfence:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [189911.5,192512.75,559497.2]
  *                             names:
  *                               type: array
- *                               example: ["name1", "name2", "name3"]
- *                               description: The cell lines/cell types/tissues relating to the chosen gene 
+ *                               example: ["cell line - melanocyte","tissue - biliary","cell line - hepg2"]
+ *                               description: The cell lines/cell types/tissues relating to the chosen gene
  *                         GTEx_transcriptomics:
  *                           type: object
  *                           properties:
  *                             q1:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [104272,132609,271129]
  *                             median:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [139566,169494,379728]
  *                             q3:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [194508,216170,498696]
  *                             mean:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [157822,183111,412497]
  *                             sd:
  *                               type: array
- *                               example: [0, 0, 0]                            
+ *                               example: [83035.9,74648.3,193384]                            
  *                             lowerfence:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [37167,58613,46343]
  *                             upperfence:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [329862,341511.5,840046.5]
  *                             names:
  *                               type: array
- *                               example: ["name1", "name2", "name3"]
+ *                               example: ["Artery - Coronary","Artery - Aorta","Lung"]
  *                               description: The cell lines/cell types/tissues relating to the chosen gene
  *                         Tabula_Sapiens:
  *                           type: object
  *                           properties:
  *                             q1:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [19625,19460,33807.5]
  *                             median:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [19625,26573,42541]
  *                             q3:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [19625,33686,51274.5]
  *                             mean:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [19625,26573,42541]
  *                             sd:
  *                               type: array
- *                               example: [0, 0, 0]                            
+ *                               example: [null,14226,17467]                            
  *                             lowerfence:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [19625,12347,25074]
  *                             upperfence:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [19625,40799,60008]
  *                             names:
  *                               type: array
- *                               example: ["name1", "name2", "name3"]
+ *                               example: ["Uterus - endothelial cell","Vasculature - smooth muscle cell","Fat - endothelial cell"]
  *                               description: The cell lines/cell types/tissues relating to the chosen gene
  *                         CCLE_transcriptomics:
  *                           type: object
  *                           properties:
  *                             levels:
  *                               type: array
- *                               example: [0, 0, 0]
+ *                               example: [351680,361900,876110]
  *                             names:
  *                               type: array
- *                               example: ["name1", "name2", "name3"]
+ *                               example: ["HMY1","HEPG2","HS860T"]
  *                               description: The cell lines/cell types/tissues relating to the chosen gene
  *                         HPM:
  *                           type: object
  *                           properties:
  *                             levels:
  *                               type: array
- *                               example: [0, 0, 0]
+ *                               example: [893.9902027201,989.2300193915,1610.9621456553]
  *                             names:
  *                               type: array
- *                               example: ["name1", "name2", "name3"]
+ *                               example: ["Monocytes","Adult Gallbladder","Adult Lung"]
  *                               description: The cell lines/cell types/tissues relating to the chosen gene
  *                         HPA:
  *                           type: object
  *                           properties:
  *                             levels:
  *                               type: array
- *                               example: [0, 0, 0]
+ *                               example: ["Medium","High","High"]
  *                             names:
  *                               type: array
- *                               example: ["name1", "name2", "name3"]
+ *                               example: ["cells in endometrial stroma, - endometrium 2","endothelial cells, - colon","endothelial cells, - cerebral cortex"]
  *                               description: The cell lines/cell types/tissues relating to the chosen gene
  *                         GTEx_proteomics:
  *                           type: object
  *                           properties:
  *                             q1:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [0.975,0.8400000000000001,1.2425]
  *                             median:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [1.3,1.085,1.455]
  *                             q3:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [1.91,1.6525,1.6675]
  *                             mean:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [1.258571428571429,1.3233333333333337,1.455]
  *                             sd:
  *                               type: array
- *                               example: [0, 0, 0]                            
+ *                               example: [1.084703163257558,0.6984172582823729,0.6010407640085653]                            
  *                             lowerfence:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [-0.4274999999999999,0.68,1.03]
  *                             upperfence:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [2.52,2.49,1.88]
  *                             names:
  *                               type: array
- *                               example: ["name1", "name2", "name3"]
+ *                               example: ["Vagina","Nerve - Tibial","Artery - Coronary"]
  *                               description: The cell lines/cell types/tissues relating to the chosen gene
  *                         CCLE_proteomics:
  *                           type: object
  *                           properties:
  *                             levels:
  *                               type: array
- *                               example: [0, 0, 0]
+ *                               example: [3.65485734862368,3.90554376805634,5.05186115939223]
  *                             names:
  *                               type: array
- *                               example: ["name1", "name2", "name3"]
+ *                               example: ["KNS42","A172","RH30"]
  *                               description: The cell lines/cell types/tissues relating to the chosen gene
  *                     NCBI_data:
  *                       type: string
@@ -227,152 +227,152 @@ const { PrismaClient, Prisma } = require("@prisma/client");
  *                           properties:
  *                             q1:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [9,19,10450.2]
  *                             median:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [3541,31185,82093]
  *                             q3:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [75970,77016.5,230069]
  *                             mean:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [47123,54065.9,161205]
  *                             sd:
  *                               type: array
- *                               example: [0, 0, 0]                            
+ *                               example: [80707.4,69564.7,215145]                            
  *                             lowerfence:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [null,null,null]
  *                             upperfence:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [189911.5,192512.75,559497.2]
  *                             names:
  *                               type: array
- *                               example: ["name1", "name2", "name3"]
- *                               description: The cell lines/cell types/tissues relating to the chosen gene 
+ *                               example: ["cell line - melanocyte","tissue - biliary","cell line - hepg2"]
+ *                               description: The cell lines/cell types/tissues relating to the chosen gene
  *                         GTEx_transcriptomics:
  *                           type: object
  *                           properties:
  *                             q1:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [104272,132609,271129]
  *                             median:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [139566,169494,379728]
  *                             q3:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [194508,216170,498696]
  *                             mean:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [157822,183111,412497]
  *                             sd:
  *                               type: array
- *                               example: [0, 0, 0]                            
+ *                               example: [83035.9,74648.3,193384]                            
  *                             lowerfence:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [37167,58613,46343]
  *                             upperfence:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [329862,341511.5,840046.5]
  *                             names:
  *                               type: array
- *                               example: ["name1", "name2", "name3"]
+ *                               example: ["Artery - Coronary","Artery - Aorta","Lung"]
  *                               description: The cell lines/cell types/tissues relating to the chosen gene
  *                         Tabula_Sapiens:
  *                           type: object
  *                           properties:
  *                             q1:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [19625,19460,33807.5]
  *                             median:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [19625,26573,42541]
  *                             q3:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [19625,33686,51274.5]
  *                             mean:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [19625,26573,42541]
  *                             sd:
  *                               type: array
- *                               example: [0, 0, 0]                            
+ *                               example: [null,14226,17467]                            
  *                             lowerfence:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [19625,12347,25074]
  *                             upperfence:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [19625,40799,60008]
  *                             names:
  *                               type: array
- *                               example: ["name1", "name2", "name3"]
+ *                               example: ["Uterus - endothelial cell","Vasculature - smooth muscle cell","Fat - endothelial cell"]
  *                               description: The cell lines/cell types/tissues relating to the chosen gene
  *                         CCLE_transcriptomics:
  *                           type: object
  *                           properties:
  *                             levels:
  *                               type: array
- *                               example: [0, 0, 0]
+ *                               example: [351680,361900,876110]
  *                             names:
  *                               type: array
- *                               example: ["name1", "name2", "name3"]
+ *                               example: ["HMY1","HEPG2","HS860T"]
  *                               description: The cell lines/cell types/tissues relating to the chosen gene
  *                         HPM:
  *                           type: object
  *                           properties:
  *                             levels:
  *                               type: array
- *                               example: [0, 0, 0]
+ *                               example: [893.9902027201,989.2300193915,1610.9621456553]
  *                             names:
  *                               type: array
- *                               example: ["name1", "name2", "name3"]
+ *                               example: ["Monocytes","Adult Gallbladder","Adult Lung"]
  *                               description: The cell lines/cell types/tissues relating to the chosen gene
  *                         HPA:
  *                           type: object
  *                           properties:
  *                             levels:
  *                               type: array
- *                               example: [0, 0, 0]
+ *                               example: ["Medium","High","High"]
  *                             names:
  *                               type: array
- *                               example: ["name1", "name2", "name3"]
+ *                               example: ["cells in endometrial stroma, - endometrium 2","endothelial cells, - colon","endothelial cells, - cerebral cortex"]
  *                               description: The cell lines/cell types/tissues relating to the chosen gene
  *                         GTEx_proteomics:
  *                           type: object
  *                           properties:
  *                             q1:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [0.975,0.8400000000000001,1.2425]
  *                             median:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [1.3,1.085,1.455]
  *                             q3:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [1.91,1.6525,1.6675]
  *                             mean:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [1.258571428571429,1.3233333333333337,1.455]
  *                             sd:
  *                               type: array
- *                               example: [0, 0, 0]                            
+ *                               example: [1.084703163257558,0.6984172582823729,0.6010407640085653]                            
  *                             lowerfence:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [-0.4274999999999999,0.68,1.03]
  *                             upperfence:
  *                               type: array
- *                               example: [1, 2, 3]
+ *                               example: [2.52,2.49,1.88]
  *                             names:
  *                               type: array
- *                               example: ["name1", "name2", "name3"]
+ *                               example: ["Vagina","Nerve - Tibial","Artery - Coronary"]
  *                               description: The cell lines/cell types/tissues relating to the chosen gene
  *                         CCLE_proteomics:
  *                           type: object
  *                           properties:
  *                             levels:
  *                               type: array
- *                               example: [0, 0, 0]
+ *                               example: [3.65485734862368,3.90554376805634,5.05186115939223]
  *                             names:
  *                               type: array
- *                               example: ["name1", "name2", "name3"]
+ *                               example: ["KNS42","A172","RH30"]
  *                               description: The cell lines/cell types/tissues relating to the chosen gene
  *                     NCBI_data:
  *                       type: string
@@ -390,10 +390,6 @@ export default async function handler(req, res) {
 
             const gene = req.body.gene;
             let databases = req.body.databases;
-
-            if (databases != undefined) {
-                databases = databases.split(',');
-            }
 
             let gene_desc = await prisma.$queryRaw`select * from gene_info where gene_info.symbol = ${gene}`
             if (gene_desc.length != 0) {
