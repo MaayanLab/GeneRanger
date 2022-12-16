@@ -16,10 +16,10 @@ function createData(database, size, shape, file_type, compression, download) {
 }
 
 const rows = [
-    createData(<img className={styles.databaseLogo} src="/images/HPM.gif" alt="HPM Logo"/>, '4.7 MB', '17294 x 32', 'tsv', 'gzip', <a href="https://minio.dev.maayanlab.cloud/generanger/HPM.tsv.gz" download="HPM.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
-    createData(<img  className={styles.databaseLogo} src="/images/HPA.svg" alt="HPA Logo"/>, '13.3 MB', '13452 x 259', 'tsv', 'gzip', <a href="https://minio.dev.maayanlab.cloud/generanger/HPA.tsv.gz" download="HPA.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
-    createData(<img  className={styles.databaseLogo} src="/images/GTEx_proteomics.png" alt="GTEx Logo"/>, '25 MB', '100004 x 34', 'tsv', 'gzip', <a href="https://minio.dev.maayanlab.cloud/generanger/GTEx_proteomics.tsv.gz" download="GTEx_proteomics.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
-    createData(<img  className={styles.databaseLogo} src="/images/CCLE_proteomics.jpeg" alt="CCLE Logo"/>, '63.1 MB', '12196 x 380', 'tsv', 'gzip', <a href="https://minio.dev.maayanlab.cloud/generanger/CCLE_proteomics.tsv.gz" download="CCLE_proteomics.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>)
+    createData(<img className={styles.databaseLogo} src="/images/HPM.gif" alt="HPM Logo"/>, '4.7 MB', '17294 x 32', 'tsv', 'gzip', <a href={process.env.NEXT_PUBLIC_HPM} download="HPM.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
+    createData(<img  className={styles.databaseLogo} src="/images/HPA.svg" alt="HPA Logo"/>, '13.3 MB', '13452 x 259', 'tsv', 'gzip', <a href={process.env.NEXT_PUBLIC_HPA} download="HPA.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
+    createData(<img  className={styles.databaseLogo} src="/images/GTEx_proteomics.png" alt="GTEx Logo"/>, '25 MB', '100004 x 34', 'tsv', 'gzip', <a href={process.env.NEXT_PUBLIC_GTEx_proteomics} download="GTEx_proteomics.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
+    createData(<img  className={styles.databaseLogo} src="/images/CCLE_proteomics.jpeg" alt="CCLE Logo"/>, '63.1 MB', '12196 x 380', 'tsv', 'gzip', <a href={process.env.NEXT_PUBLIC_CCLE_proteomics} download="CCLE_proteomics.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>)
 ];
 
 export default class ProteomicsDownloads extends React.Component {

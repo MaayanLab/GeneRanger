@@ -16,10 +16,10 @@ function createData(database, size, shape, file_type, compression, download) {
 }
 
 const rows = [
-    createData(<img className={styles.databaseLogo} src="/images/archs4.png" alt="ARCHS4 Logo"/>, '444.8 MB', '281904 x 365', 'tsv', 'gzip', <a href="https://minio.dev.maayanlab.cloud/generanger/ARCHS4.tsv.gz" download="ARCHS4.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
-    createData(<img  className={styles.databaseLogo} src="/images/GTEx_transcriptomics.png" alt="GTEx Logo"/>, '114.7 MB', '449600 x 56', 'tsv', 'gzip', <a href="https://minio.dev.maayanlab.cloud/generanger/GTEx_transcriptomics.tsv.gz" download="GTEx_transcriptomics.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
-    createData(<img  className={styles.databaseLogo} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo"/>, '451.1 MB', '406856 x 471', 'tsv', 'gzip', <a href="https://minio.dev.maayanlab.cloud/generanger/Tabula_Sapiens.tsv.gz" download="Tabula_Sapiens.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
-    createData(<img  className={styles.databaseLogo} src="/images/CCLE_transcriptomics.jpeg" alt="CCLE Logo"/>, '372.1 MB', '54347 x 1408', 'tsv', 'gzip', <a href="https://minio.dev.maayanlab.cloud/generanger/CCLE_transcriptomics.tsv.gz" download="CCLE_transcriptomics.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>)
+    createData(<img className={styles.databaseLogo} src="/images/archs4.png" alt="ARCHS4 Logo"/>, '444.8 MB', '281904 x 365', 'tsv', 'gzip', <a href={process.env.NEXT_PUBLIC_ARCHS4} download="ARCHS4.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
+    createData(<img  className={styles.databaseLogo} src="/images/GTEx_transcriptomics.png" alt="GTEx Logo"/>, '114.7 MB', '449600 x 56', 'tsv', 'gzip', <a href={process.env.NEXT_PUBLIC_GTEx_transcriptomics} download="GTEx_transcriptomics.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
+    createData(<img  className={styles.databaseLogo} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo"/>, '451.1 MB', '406856 x 471', 'tsv', 'gzip', <a href={process.env.NEXT_PUBLIC_Tabula_Sapiens} download="Tabula_Sapiens.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
+    createData(<img  className={styles.databaseLogo} src="/images/CCLE_transcriptomics.jpeg" alt="CCLE Logo"/>, '372.1 MB', '54347 x 1408', 'tsv', 'gzip', <a href={process.env.NEXT_PUBLIC_CCLE_transcriptomics} download="CCLE_transcriptomics.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>)
 ];
 
 export default class TranscriptomicsDownloads extends React.Component {
