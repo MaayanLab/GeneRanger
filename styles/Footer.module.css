@@ -45,3 +45,15 @@
         margin-top: 125px;
     }
 }
+
+@media only screen and (max-width: 414px) {
+    .spacer {
+        margin-top: 300px;
+    }
+}
+
+@media only screen and (max-width: 319px) {
+    .spacer {
+        margin-top: 400px;
+    }
+}

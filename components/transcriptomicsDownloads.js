@@ -9,6 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
 
 function createData(database, size, shape, file_type, compression, download) {
     return { database, size, shape, file_type, compression, download };
@@ -25,11 +26,9 @@ export default class TranscriptomicsDownloads extends React.Component {
 
     render() {
         return (
-            <>
-                <h1>Transcriptomics Processed Datasets:</h1>
-
-                <Paper variant="outlined">
-                    <Table sx={{ maxWidth: 2500 }}>
+            <Box sx={{ overflow: "auto" }}>
+                <Box sx={{ width: "100%", display: "table", tableLayout: "fixed" }}>
+                    <Table sx={{ width: '100%'}}>
                         <TableHead>
                         <TableRow>
                             <TableCell>Database</TableCell>
@@ -56,8 +55,8 @@ export default class TranscriptomicsDownloads extends React.Component {
                         ))}
                         </TableBody>
                     </Table>
-                </Paper>
-            </>
+                </Box>
+            </Box>
         );
     }
 

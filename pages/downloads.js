@@ -20,10 +20,11 @@ export default function Page() {
 
                 <Header/>
 
-                <div style={{marginBottom: '150px'}}>
+                <div style={{marginBottom: '175px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
 
+                    <h1>Transcriptomics Processed Datasets:</h1>
                     <TranscriptomicsDownloads/>
-
+                    <h1>Proteomics Processed Datasets:</h1>
                     <ProteomicsDownloads/>
 
                 </div>

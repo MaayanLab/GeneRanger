@@ -32,8 +32,6 @@ export async function getStaticProps() {
 
 export default function Page(props) {
 
-    console.log(props)
-
     return (
 
         <div style={{position: 'relative', minHeight: '100vh'}}>
@@ -44,7 +42,7 @@ export default function Page(props) {
 
                 <Header/>
 
-                <div style={{width: '1000px', marginBottom: '150px'}}>
+                <div style={{width: '90%', marginBottom: '150px'}}>
                     <SwaggerUI spec={props.spec}/>
                 </div>
             
