@@ -107,7 +107,7 @@ def copy_from_df(con: 'psycopg2.connection', table: str, df: pd.DataFrame, float
     # we wait for the copy_from_tsv thread to finish
     rt.join()
 
-def copy_from_records(con: 'psycopg2.connection', table: str, columns: 'list[str]', records: t.Iterable[dict]):
+def copy_from_records(con: 'psycopg2.connection', table: str, columns: 'list[str]', records: t.Iterable[dict], chunk_size: int = 1000):
   ''' Copy from records into a postgres database table through as psycopg2 connection object.
   This is done by constructing a unix pipe, writing the records with csv writer
    into the pipe while loading from the pipe into postgres at the same time.
@@ -116,21 +116,22 @@ def copy_from_records(con: 'psycopg2.connection', table: str, columns: 'list[str
   :param columns: The columns being written into the table
   :param records: An iterable of records to write
   '''
-  import os, csv, threading
-  r, w = os.pipe()
-  # we copy_from_tsv with the read end of this pipe in
-  #  another thread
-  rt = threading.Thread(
-    target=copy_from_tsv,
-    args=(con, table, columns, r,),
-  )
-  rt.start()
-  try:
-    # we write to the write end of this pipe in this thread
-    with os.fdopen(w, 'w', closefd=True) as fw:
-      writer = csv.DictWriter(fw, fieldnames=columns, delimiter='\t')
-      writer.writeheader()
-      writer.writerows(records)
-  finally:
-    # we wait for the copy_from_tsv thread to finish
-    rt.join()
+  import os, csv, more_itertools as mit, threading
+  for chunked_records in mit.ichunked(records, chunk_size):
+    r, w = os.pipe()
+    # we copy_from_tsv with the read end of this pipe in
+    #  another thread
+    rt = threading.Thread(
+      target=copy_from_tsv,
+      args=(con, table, columns, r,),
+    )
+    rt.start()
+    try:
+      # we write to the write end of this pipe in this thread
+      with os.fdopen(w, 'w', closefd=True) as fw:
+        writer = csv.DictWriter(fw, fieldnames=columns, delimiter='\t')
+        writer.writeheader()
+        writer.writerows(chunked_records)
+    finally:
+      # we wait for the copy_from_tsv thread to finish
+      rt.join()

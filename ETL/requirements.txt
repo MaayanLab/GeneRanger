@@ -1,4 +1,5 @@
 click
+more_itertools
 numpy
 pandas
 psycopg2
