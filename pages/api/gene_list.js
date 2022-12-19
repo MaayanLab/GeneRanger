@@ -8,7 +8,7 @@ export default async function handler(req, res) {
 
         const prisma = new PrismaClient();
 
-        let genes = await prisma.$queryRaw`SELECT gene FROM gene WHERE gene LIKE CONCAT(${input}, '%') ORDER BY gene ASC LIMIT 8;`
+        let genes = await prisma.$queryRaw`SELECT gene FROM gene WHERE LOWER(gene) LIKE LOWER(CONCAT(${input}, '%')) ORDER BY gene ASC LIMIT 8;`
 
         genes = genes.map(x => x.gene);
 
