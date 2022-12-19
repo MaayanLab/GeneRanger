@@ -27,7 +27,10 @@ export async function getStaticProps() {
     spec.paths['/api/data'].post.tags = ['data'];
 
     spec.paths[`${process.env.NEXT_PUBLIC_ENTRYPOINT}/api/data`] = spec.paths['/api/data'];
-    delete spec.paths['/api/data'];
+    
+    if (process.env.NEXT_PUBLIC_ENTRYPOINT != '') {
+      delete spec.paths['/api/data'];
+    }
   
     return {
       props: {
