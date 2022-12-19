@@ -292,7 +292,7 @@ export default function Page(props) {
 
     async function setDefaultGeneListData() {
         let input = {'input': ''}
-        let res = await fetch('/api/gene_list', {
+        let res = await fetch(`${process.env.NEXT_PUBLIC_ENTRYPOINT}/api/gene_list`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -305,7 +305,7 @@ export default function Page(props) {
 
     async function updateGeneListData(text) {
         let input = {'input': text}
-        let res = await fetch('/api/gene_list', {
+        let res = await fetch(`${process.env.NEXT_PUBLIC_ENTRYPOINT}/api/gene_list`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -430,7 +430,7 @@ export default function Page(props) {
                         control={<Switch onChange={() => {setDatabase(0); updateURL(0)}} checked={database == 0} />} 
                         label={
                             <div className={styles.dbLogo}>
-                                <img className={styles.databaseLogo} src="/images/archs4.png" alt="archs4 Logo"/>
+                                <img className={styles.databaseLogo} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/archs4.png"} alt="archs4 Logo"/>
                                 <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
                                     <div className={styles.tooltipText}><a href="https://maayanlab.cloud/archs4/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/29636450/" target="_blank" rel="noopener noreferrer">Citation</a></div>}>
                                     <IconButton><InfoIcon color='info'/></IconButton>
@@ -446,7 +446,7 @@ export default function Page(props) {
                         control={<Switch onChange={() => {setDatabase(1); updateURL(1)}} checked={database == 1}/>} 
                         label={
                             <div className={styles.dbLogo}>
-                                <img className={styles.databaseLogo} src="/images/GTEx_transcriptomics.png" alt="GTEx Logo"/>
+                                <img className={styles.databaseLogo} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_transcriptomics.png"} alt="GTEx Logo"/>
                                 <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
                                     <div className={styles.tooltipText}><a href="https://gtexportal.org/home" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/23715323/" target="_blank" rel="noopener noreferrer">Citation</a></div>}>
                                     <IconButton><InfoIcon color='info'/></IconButton>
@@ -464,7 +464,7 @@ export default function Page(props) {
                         control={<Switch onChange={() => {setDatabase(2); updateURL(2)}} checked={database == 2} />} 
                         label={
                             <div className={styles.dbLogo}>
-                                <img className={styles.databaseLogo} style={{borderRadius: '8px'}} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo"/>
+                                <img className={styles.databaseLogo} style={{borderRadius: '8px'}} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/tabula_sapiens.png"} alt="Tabula Sapiens Logo"/>
                                 <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
                                     <div className={styles.tooltipText}><a href="https://tabula-sapiens-portal.ds.czbiohub.org" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/35549404/" target="_blank" rel="noopener noreferrer">Citation</a></div>}>
                                     <IconButton><InfoIcon color='info'/></IconButton>
@@ -480,7 +480,7 @@ export default function Page(props) {
                         control={<Switch onChange={() => {setDatabase(3); updateURL(3)}} checked={database == 3} />} 
                         label={
                             <div className={styles.dbLogo}>
-                                <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/CCLE_transcriptomics.jpeg" alt="CCLE Logo"/>
+                                <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/CCLE_transcriptomics.jpeg"} alt="CCLE Logo"/>
                                 <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
                                     <div className={styles.tooltipText}><a href="https://sites.broadinstitute.org/ccle/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/22460905/" target="_blank" rel="noopener noreferrer">Citation</a></div>}>
                                     <IconButton><InfoIcon color='info'/></IconButton>
@@ -503,7 +503,7 @@ export default function Page(props) {
                         control={<Switch onChange={() => {setDatabase(4); updateURL(4)}} checked={database == 4} />} 
                         label={
                             <div className={styles.dbLogo}>
-                                <img className={styles.databaseLogo} style={{width: '200px', marginRight: '0'}} src="/images/HPM.gif" alt="HPM Logo"/>
+                                <img className={styles.databaseLogo} style={{width: '200px', marginRight: '0'}} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/HPM.gif"} alt="HPM Logo"/>
                                 <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
                                     <div className={styles.tooltipText}><a href="http://www.humanproteomemap.org" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/24870542/" target="_blank" rel="noopener noreferrer">Citation</a></div>}>
                                     <IconButton><InfoIcon color='info'/></IconButton>
@@ -519,7 +519,7 @@ export default function Page(props) {
                         control={<Switch onChange={() => {setDatabase(5); updateURL(5)}} checked={database == 5} />} 
                         label={
                             <div className={styles.dbLogo}>
-                                <img className={styles.databaseLogo} style={{width: '200px', padding: '10px', marginLeft: '0px', marginRight: '-20px', backgroundColor: '#8eaabe', borderRadius: '5px'}} src="/images/HPA.svg" alt="HPA Logo"/>
+                                <img className={styles.databaseLogo} style={{width: '200px', padding: '10px', marginLeft: '0px', marginRight: '-20px', backgroundColor: '#8eaabe', borderRadius: '5px'}} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/HPA.svg"} alt="HPA Logo"/>
                                 <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
                                     <div className={styles.tooltipText}><a href="https://www.proteinatlas.org" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/25613900/" target="_blank" rel="noopener noreferrer">Citation</a></div>}>
                                     <IconButton><InfoIcon color='info'/></IconButton>
@@ -535,7 +535,7 @@ export default function Page(props) {
                         control={<Switch onChange={() => {setDatabase(6); updateURL(6)}} checked={database == 6} />} 
                         label={
                             <div className={styles.dbLogo}>
-                                <img className={styles.databaseLogo} src="/images/GTEx_proteomics.png" alt="GTEx Logo"/>
+                                <img className={styles.databaseLogo} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_proteomics.png"} alt="GTEx Logo"/>
                                 <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
                                     <div className={styles.tooltipText}><a href="https://tsomics.shinyapps.io/RNA_vs_protein/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/32916130/" target="_blank" rel="noopener noreferrer">Citation</a></div>}>
                                     <IconButton><InfoIcon color='info'/></IconButton>
@@ -551,7 +551,7 @@ export default function Page(props) {
                         control={<Switch onChange={() => {setDatabase(7); updateURL(7)}} checked={database == 7} />} 
                         label={
                             <div className={styles.dbLogo}>
-                                <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/CCLE_proteomics.jpeg" alt="CCLE Logo"/>
+                                <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/CCLE_proteomics.jpeg"} alt="CCLE Logo"/>
                                 <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
                                     <div className={styles.tooltipText}><a href="https://gygi.hms.harvard.edu" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/31978347/" target="_blank" rel="noopener noreferrer">Citation</a></div>}>
                                     <IconButton><InfoIcon color='info'/></IconButton>
@@ -635,7 +635,7 @@ export default function Page(props) {
                                     control={<Switch onChange={() => {setDatabase(0); updateURL(0)}} checked={database == 0} />} 
                                     label={
                                         <div className={styles.dbLogo}>
-                                            <img className={styles.databaseLogo} src="/images/archs4.png" alt="archs4 Logo"/>
+                                            <img className={styles.databaseLogo} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/archs4.png"} alt="archs4 Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://maayanlab.cloud/archs4/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/29636450/" target="_blank" rel="noopener noreferrer">Citation</a></div>}>
                                                 <IconButton><InfoIcon color='info'/></IconButton>
@@ -651,7 +651,7 @@ export default function Page(props) {
                                     control={<Switch onChange={() => {setDatabase(1); updateURL(1)}} checked={database == 1}/>} 
                                     label={
                                         <div className={styles.dbLogo}>
-                                            <img className={styles.databaseLogo} src="/images/GTEx_transcriptomics.png" alt="GTEx Logo"/>
+                                            <img className={styles.databaseLogo} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_transcriptomics.png"} alt="GTEx Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://gtexportal.org/home" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/23715323/" target="_blank" rel="noopener noreferrer">Citation</a></div>}>
                                                 <IconButton><InfoIcon color='info'/></IconButton>
@@ -669,7 +669,7 @@ export default function Page(props) {
                                     control={<Switch onChange={() => {setDatabase(2); updateURL(2)}} checked={database == 2} />} 
                                     label={
                                         <div className={styles.dbLogo}>
-                                            <img className={styles.databaseLogo} style={{borderRadius: '8px'}} src="/images/tabula_sapiens.png" alt="Tabula Sapiens Logo"/>
+                                            <img className={styles.databaseLogo} style={{borderRadius: '8px'}} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/tabula_sapiens.png"} alt="Tabula Sapiens Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://tabula-sapiens-portal.ds.czbiohub.org" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/35549404/" target="_blank" rel="noopener noreferrer">Citation</a></div>}>
                                                 <IconButton><InfoIcon color='info'/></IconButton>
@@ -685,7 +685,7 @@ export default function Page(props) {
                                     control={<Switch onChange={() => {setDatabase(3); updateURL(3)}} checked={database == 3} />} 
                                     label={
                                         <div className={styles.dbLogo}>
-                                            <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/CCLE_transcriptomics.jpeg" alt="CCLE Logo"/>
+                                            <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/CCLE_transcriptomics.jpeg"} alt="CCLE Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://sites.broadinstitute.org/ccle/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/22460905/" target="_blank" rel="noopener noreferrer">Citation</a></div>}>
                                                 <IconButton><InfoIcon color='info'/></IconButton>
@@ -708,7 +708,7 @@ export default function Page(props) {
                                     control={<Switch onChange={() => {setDatabase(4); updateURL(4)}} checked={database == 4} />} 
                                     label={
                                         <div className={styles.dbLogo}>
-                                            <img className={styles.databaseLogo} style={{width: '200px', marginRight: '0'}} src="/images/HPM.gif" alt="HPM Logo"/>
+                                            <img className={styles.databaseLogo} style={{width: '200px', marginRight: '0'}} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/HPM.gif"} alt="HPM Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="http://www.humanproteomemap.org" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/24870542/" target="_blank" rel="noopener noreferrer">Citation</a></div>}>
                                                 <IconButton><InfoIcon color='info'/></IconButton>
@@ -724,7 +724,7 @@ export default function Page(props) {
                                     control={<Switch onChange={() => {setDatabase(5); updateURL(5)}} checked={database == 5} />} 
                                     label={
                                         <div className={styles.dbLogo}>
-                                            <img className={styles.databaseLogo} style={{width: '200px', padding: '10px', marginLeft: '0px', marginRight: '-20px', backgroundColor: '#8eaabe', borderRadius: '5px'}} src="/images/HPA.svg" alt="HPA Logo"/>
+                                            <img className={styles.databaseLogo} style={{width: '200px', padding: '10px', marginLeft: '0px', marginRight: '-20px', backgroundColor: '#8eaabe', borderRadius: '5px'}} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/HPA.svg"} alt="HPA Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://www.proteinatlas.org" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/25613900/" target="_blank" rel="noopener noreferrer">Citation</a></div>}>
                                                 <IconButton><InfoIcon color='info'/></IconButton>
@@ -740,7 +740,7 @@ export default function Page(props) {
                                     control={<Switch onChange={() => {setDatabase(6); updateURL(6)}} checked={database == 6} />} 
                                     label={
                                         <div className={styles.dbLogo}>
-                                            <img className={styles.databaseLogo} src="/images/GTEx_proteomics.png" alt="GTEx Logo"/>
+                                            <img className={styles.databaseLogo} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_proteomics.png"} alt="GTEx Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://tsomics.shinyapps.io/RNA_vs_protein/" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/32916130/" target="_blank" rel="noopener noreferrer">Citation</a></div>}>
                                                 <IconButton><InfoIcon color='info'/></IconButton>
@@ -756,7 +756,7 @@ export default function Page(props) {
                                     control={<Switch onChange={() => {setDatabase(7); updateURL(7)}} checked={database == 7} />} 
                                     label={
                                         <div className={styles.dbLogo}>
-                                            <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src="/images/CCLE_proteomics.jpeg" alt="CCLE Logo"/>
+                                            <img className={styles.databaseLogo} style={{borderRadius: '3px'}} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/CCLE_proteomics.jpeg"} alt="CCLE Logo"/>
                                             <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                                 <div className={styles.tooltipText}><a href="https://gygi.hms.harvard.edu" target="_blank" rel="noopener noreferrer">Website</a> <br/> <a href="https://pubmed.ncbi.nlm.nih.gov/31978347/" target="_blank" rel="noopener noreferrer">Citation</a></div>}>
                                                 <IconButton><InfoIcon color='info'/></IconButton>
@@ -800,58 +800,58 @@ export default function Page(props) {
                                         {
                                             (database == 0)
                                                 ?
-                                                    <Tab icon={<img className={styles.tabLogo} alt="ARCHS4 logo" src="/images/archs4.png" />} />
+                                                    <Tab icon={<img className={styles.tabLogo} alt="ARCHS4 logo" src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/archs4.png"} />} />
                                                 :
-                                                    <Tab icon={<img className={styles.grayTabLogo} alt="ARCHS4 logo" src="/images/archs4.png" />} />
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="ARCHS4 logo" src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/archs4.png"} />} />
                                         }
                                         {
                                             (database == 1)
                                                 ?
-                                                    <Tab icon={<img className={styles.tabLogo} alt="GTEx logo" src="/images/GTEx_transcriptomics.png" />} />
+                                                    <Tab icon={<img className={styles.tabLogo} alt="GTEx logo" src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_transcriptomics.png"} />} />
                                                 :
-                                                    <Tab icon={<img className={styles.grayTabLogo} alt="GTEx logo" src="/images/GTEx_transcriptomics.png" />} />
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="GTEx logo" src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_transcriptomics.png"} />} />
                                         }
                                         {
                                             (database == 2)
                                                 ?
-                                                    <Tab icon={<img className={styles.tabLogo} alt="Tabula Sapiens logo" src="/images/tabula_sapiens.png" />} />
+                                                    <Tab icon={<img className={styles.tabLogo} alt="Tabula Sapiens logo" src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/tabula_sapiens.png"} />} />
                                                 :
-                                                    <Tab icon={<img className={styles.grayTabLogo} alt="Tabula Sapiens logo" src="/images/tabula_sapiens.png" />} />
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="Tabula Sapiens logo" src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/tabula_sapiens.png"} />} />
                                         }
                                         {
                                             (database == 3)
                                                 ?
-                                                    <Tab icon={<img className={styles.tabLogo} alt="CCLE logo" src="/images/CCLE_transcriptomics.jpeg" />} />
+                                                    <Tab icon={<img className={styles.tabLogo} alt="CCLE logo" src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/CCLE_transcriptomics.jpeg"} />} />
                                                 :
-                                                    <Tab icon={<img className={styles.grayTabLogo} alt="CCLE logo" src="/images/CCLE_transcriptomics.jpeg" />} />
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="CCLE logo" src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/CCLE_transcriptomics.jpeg"} />} />
                                         }
                                         {
                                             (database == 4)
                                                 ?
-                                                    <Tab icon={<img className={styles.tabLogo} alt="HPM logo" src="/images/HPM.gif" />} />
+                                                    <Tab icon={<img className={styles.tabLogo} alt="HPM logo" src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/HPM.gif"} />} />
                                                 :
-                                                    <Tab icon={<img className={styles.grayTabLogo} alt="HPM logo" src="/images/HPM.gif" />} />
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="HPM logo" src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/HPM.gif"} />} />
                                         }
                                         {
                                             (database == 5)
                                                 ?
-                                                    <Tab icon={<img className={styles.tabLogo} alt="HPA logo" src="/images/HPA.svg" />} />
+                                                    <Tab icon={<img className={styles.tabLogo} alt="HPA logo" src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/HPA.svg"} />} />
                                                 :
-                                                    <Tab icon={<img className={styles.grayTabLogo} alt="HPA logo" src="/images/HPA.svg" />} />
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="HPA logo" src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/HPA.svg"} />} />
                                         }
                                         {
                                             (database == 6)
                                                 ?
-                                                    <Tab icon={<img className={styles.tabLogo} alt="GTEx logo" src="/images/GTEx_proteomics.png" />} />
+                                                    <Tab icon={<img className={styles.tabLogo} alt="GTEx logo" src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_proteomics.png"} />} />
                                                 :
-                                                    <Tab icon={<img className={styles.grayTabLogo} alt="GTEx logo" src="/images/GTEx_proteomics.png" />} />
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="GTEx logo" src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_proteomics.png"} />} />
                                         }
                                         {
                                             (database == 7)
                                                 ?
-                                                    <Tab icon={<img className={styles.tabLogo} alt="CCLE logo" src="/images/CCLE_proteomics.jpeg" />} />
+                                                    <Tab icon={<img className={styles.tabLogo} alt="CCLE logo" src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/CCLE_proteomics.jpeg"} />} />
                                                 :
-                                                    <Tab icon={<img className={styles.grayTabLogo} alt="CCLE logo" src="/images/CCLE_proteomics.jpeg" />} />
+                                                    <Tab icon={<img className={styles.grayTabLogo} alt="CCLE logo" src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/CCLE_proteomics.jpeg"} />} />
                                         }
                                     </Tabs>
                                 </Box>

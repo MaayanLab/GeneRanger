@@ -10,7 +10,7 @@ export default class Header extends React.Component {
                 <div className={styles.longTitle}>
                     <div className={styles.logoAndTitleDiv}>
                         <Link href="/gene/A2M">
-                            <img src="/images/logo.png" alt="App Logo" width={75} height={75} />
+                            <img src={process.env.NEXT_PUBLIC_ENTRYPOINT + '/images/logo.png'} alt="App Logo" width={75} height={75} />
                         </Link>
                         <Link href="/gene/A2M">
                             <h1 style={{fontSize: '40px'}}>GeneRanger</h1>
@@ -28,7 +28,7 @@ export default class Header extends React.Component {
                     <div className={styles.centerDiv}>
                         <div className={styles.logoAndTitleDiv}>
                             <Link href="/gene/A2M">
-                                <img src="/images/logo.png" alt="App Logo" width={75} height={75} />
+                                <img src={process.env.NEXT_PUBLIC_ENTRYPOINT + '/images/logo.png'} alt="App Logo" width={75} height={75} />
                             </Link>
                             <Link href="/gene/A2M">
                                 <h1 style={{fontSize: '40px'}}>GeneRanger</h1>

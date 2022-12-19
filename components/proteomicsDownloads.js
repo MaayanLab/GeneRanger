@@ -3,10 +3,8 @@ import styles from '../styles/Main.module.css';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
@@ -16,10 +14,10 @@ function createData(database, size, shape, file_type, compression, download) {
 }
 
 const rows = [
-    createData(<img className={styles.databaseLogo} src="/images/HPM.gif" alt="HPM Logo"/>, '4.7 MB', '17294 x 32', 'tsv', 'gzip', <a href={process.env.NEXT_PUBLIC_DOWNLOADS + 'HPM.tsv.gz'} download="HPM.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
-    createData(<img  className={styles.databaseLogo} src="/images/HPA.svg" alt="HPA Logo"/>, '13.3 MB', '13452 x 259', 'tsv', 'gzip', <a href={process.env.NEXT_PUBLIC_DOWNLOADS + 'HPA.tsv.gz'} download="HPA.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
-    createData(<img  className={styles.databaseLogo} src="/images/GTEx_proteomics.png" alt="GTEx Logo"/>, '25 MB', '100004 x 34', 'tsv', 'gzip', <a href={process.env.NEXT_PUBLIC_DOWNLOADS + 'GTEx_proteomics.tsv.gz'} download="GTEx_proteomics.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
-    createData(<img  className={styles.databaseLogo} src="/images/CCLE_proteomics.jpeg" alt="CCLE Logo"/>, '63.1 MB', '12196 x 380', 'tsv', 'gzip', <a href={process.env.NEXT_PUBLIC_DOWNLOADS + 'CCLE_proteomics.tsv.gz'} download="CCLE_proteomics.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>)
+    createData(<img className={styles.databaseLogo} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/HPM.gif"} alt="HPM Logo"/>, '4.7 MB', '17294 x 32', 'tsv', 'gzip', <a href={process.env.NEXT_PUBLIC_DOWNLOADS + 'HPM.tsv.gz'} download="HPM.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
+    createData(<img  className={styles.databaseLogo} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/HPA.svg"} alt="HPA Logo"/>, '13.3 MB', '13452 x 259', 'tsv', 'gzip', <a href={process.env.NEXT_PUBLIC_DOWNLOADS + 'HPA.tsv.gz'} download="HPA.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
+    createData(<img  className={styles.databaseLogo} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_proteomics.png"} alt="GTEx Logo"/>, '25 MB', '100004 x 34', 'tsv', 'gzip', <a href={process.env.NEXT_PUBLIC_DOWNLOADS + 'GTEx_proteomics.tsv.gz'} download="GTEx_proteomics.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
+    createData(<img  className={styles.databaseLogo} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/CCLE_proteomics.jpeg"} alt="CCLE Logo"/>, '63.1 MB', '12196 x 380', 'tsv', 'gzip', <a href={process.env.NEXT_PUBLIC_DOWNLOADS + 'CCLE_proteomics.tsv.gz'} download="CCLE_proteomics.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>)
 ];
 
 export default class ProteomicsDownloads extends React.Component {
