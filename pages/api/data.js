@@ -1,4 +1,5 @@
-const { PrismaClient, Prisma } = require("@prisma/client");
+const { Prisma } = require("@prisma/client");
+import prisma from '../../prisma/prisma';
 
 /** 
  * @swagger
@@ -381,8 +382,6 @@ const { PrismaClient, Prisma } = require("@prisma/client");
  *
 */
 export default async function handler(req, res) {
-
-    const prisma = new PrismaClient();
 
     if (req.method === 'POST') {
 

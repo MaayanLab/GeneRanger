@@ -1,4 +1,3 @@
-import { PrismaClient } from '@prisma/client';
 import dynamic from 'next/dynamic';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
@@ -24,6 +23,7 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import MenuIcon from '@mui/icons-material/Menu';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import prisma from '../../prisma/prisma';
 
 const Plot = dynamic(() => import('react-plotly.js'), {
 	ssr: false,
@@ -39,8 +39,6 @@ export async function getServerSideProps(context) {
             }
         }
     }
-
-    const prisma = new PrismaClient();
 
     let gene_desc = await prisma.$queryRaw`select * from gene_info where gene_info.symbol = ${context.query.gene}`
     if (gene_desc.length != 0) {
