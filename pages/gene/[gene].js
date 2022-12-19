@@ -24,6 +24,7 @@ import Button from '@mui/material/Button';
 import MenuIcon from '@mui/icons-material/Menu';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import prisma from '../../prisma/prisma';
+import useSWRImmutable from 'swr/immutable';
 
 const Plot = dynamic(() => import('react-plotly.js'), {
 	ssr: false,
@@ -175,7 +176,17 @@ export async function getServerSideProps(context) {
 
 }
 
-export default function Page(props) {
+async function doAutocomplete(input) {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_ENTRYPOINT||''}/api/gene_list`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ input })
+    })
+    let json = await res.json();
+    return json;
+}
 
     let ARCHS4_link = <a href="https://maayanlab.cloud/archs4" target="_blank" rel="noopener noreferrer">ARCHS4</a>;
     let GTEx_transcriptomics_link = <a href="https://gtexportal.org/home" target="_blank" rel="noopener noreferrer">GTEx transcriptomics</a>;
@@ -286,40 +297,14 @@ export default function Page(props) {
     ]);
 
     const [input, setInput] = useState('');
-    const [geneList, setGeneList] = useState([]);
+    const  { data } = useSWRImmutable(input, doAutocomplete)
+    const geneList = data || []
 
-    async function setDefaultGeneListData() {
-        let input = {'input': ''}
-        let res = await fetch(`${process.env.NEXT_PUBLIC_ENTRYPOINT}/api/gene_list`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(input)
-        })
-        let json = await res.json();
-        setGeneList(json)
-    }
-
-    async function updateGeneListData(text) {
-        let input = {'input': text}
-        let res = await fetch(`${process.env.NEXT_PUBLIC_ENTRYPOINT}/api/gene_list`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(input)
-        })
-        let json = await res.json();
-        setGeneList(json);
-    }
-    
     // Function for submitting data to the next page
     function submitGene (gene) {
         
         if (gene != null) {
             setInput('');
-            setDefaultGeneListData();
             setLoading(true);
             let href = {
                 pathname: "[gene]",
@@ -334,10 +319,6 @@ export default function Page(props) {
         }
         
     }
-
-    useEffect(() => {
-        setDefaultGeneListData()
-    }, []);
 
     function updateURL(db) {
         let href = {
@@ -614,7 +595,6 @@ export default function Page(props) {
                                 onInputChange={(event, value, reason) => {
                                     if (reason == 'input') {
                                         setInput(value);
-                                        updateGeneListData(value);
                                     }
                                 }}
                                 onChange={(event, value) => {submitGene(value)}}
@@ -782,7 +762,6 @@ export default function Page(props) {
                                 onInputChange={(event, value, reason) => {
                                     if (reason == 'input') {
                                         setInput(value);
-                                        updateGeneListData(value);
                                     }
                                 }}
                                 onChange={(event, value) => {submitGene(value)}}
