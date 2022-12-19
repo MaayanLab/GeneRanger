@@ -1,0 +1,24 @@
+.mainDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.flexDiv {
+    margin-bottom: 175px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media only screen and (max-width: 500px) {
+    .text {
+      font-size: 18px !important;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .text {
+      font-size: 25px;
+    }
+}

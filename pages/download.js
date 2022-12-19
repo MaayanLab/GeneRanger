@@ -1,7 +1,7 @@
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import React from 'react';
-import styles from '../styles/Main.module.css';
+import styles from '../styles/Download.module.css';
 import Footer from '../components/footer';
 import Header from '../components/header';
 import Head from '../components/head';
@@ -20,11 +20,11 @@ export default function Page() {
 
                 <Header/>
 
-                <div style={{marginBottom: '175px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                <div className={styles.flexDiv}>
 
-                    <h1>Transcriptomics Processed Datasets:</h1>
+                    <h1 className={styles.text}>Transcriptomics Processed Datasets:</h1>
                     <TranscriptomicsDownloads/>
-                    <h1>Proteomics Processed Datasets:</h1>
+                    <h1 className={styles.text}>Proteomics Processed Datasets:</h1>
                     <ProteomicsDownloads/>
 
                 </div>
