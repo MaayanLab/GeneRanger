@@ -590,6 +590,7 @@ export default function Page(props) {
                             <Autocomplete
                                 disablePortal
                                 disableClearable
+                                freeSolo={true}
                                 value={''}
                                 options={ geneList }
                                 sx={{ width: 400 }}
@@ -757,6 +758,7 @@ export default function Page(props) {
                         <Autocomplete
                                 disablePortal
                                 disableClearable
+                                freeSolo={true}
                                 value={''}
                                 options={ geneList }
                                 sx={{ width: 250 }}
