@@ -34,7 +34,8 @@ export default function Page() {
 
     const [level, setLevel] = React.useState('Gene Level');
 
-    const [file, setFile] = React.useState("");
+    const [file, setFile] = React.useState(null);
+    const [useDefaultFile, setUseDefaultFile] = React.useState(false);
 
     const [membraneGenes, setMembraneGenes] = React.useState("Yes");
     const [backgroundDistribution, setBackgroundDistribution] = React.useState("Yes");
@@ -44,21 +45,38 @@ export default function Page() {
 
     const router = useRouter();
 
-    function submit() {
+    async function submit() {
             
-        if (file != "") {
+        if (useDefaultFile != false || file != null) {
 
+            let f = null;
+            if (!useDefaultFile) {
+                f = file;
+            }
+
+            const formData = new FormData()
+            formData.append("useDefaultFile", useDefaultFile);
+            formData.append("file", f);
+            formData.append("level", level);
+            formData.append("precombutedBackground", precomputedBackground);
+            formData.append("membraneGenes", membraneGenes);
+            formData.append("backgroundDistribution", backgroundDistribution);
+            formData.append("showProteinProfiles", showProteinProfiles);
+            const res = await fetch(`/api/target_screener`, { method: 'POST', body: formData })
+            const data = await res.json()
+            console.log(data)
+            
             // setLoading(true);
-            let href = {
-                pathname: "targetscreenerresults",
-                query: {
-                    membraneGenes: membraneGenes,
-                    backgroundDistribution: backgroundDistribution,
-                    showProteinProfiles: showProteinProfiles
-            }};
-            router.push(href).then(() => {
-                // setLoading(false);    
-            })
+            // let href = {
+            //     pathname: "targetscreenerresults",
+            //     query: {
+            //         membraneGenes: membraneGenes,
+            //         backgroundDistribution: backgroundDistribution,
+            //         showProteinProfiles: showProteinProfiles
+            // }};
+            // router.push(href).then(() => {
+            //     setLoading(false);    
+            // })
             
         }
         
@@ -138,7 +156,7 @@ export default function Page() {
 
                         <div className={styles.horizontalFlexbox}>
                             <div style={{alignItems: 'flex-end'}} className={styles.verticalFlexbox}>
-                                <Button onClick={() => setFile("GSE49155-lung-squamous-cell-carcinoma.tsv")} className={styles.darkOnHover} variant="outlined" endIcon={<HelpOutlineIcon />}>
+                                <Button onClick={() => setUseDefaultFile(true)} className={styles.darkOnHover} variant="outlined" endIcon={<HelpOutlineIcon />}>
                                     Load example file
                                 </Button>
                                 <a style={{textDecoration: 'none'}} href="/files/GSE49155-patient.tsv" download="GSE49155-patient.tsv">
@@ -197,21 +215,21 @@ export default function Page() {
                                     style={{ display: "none" }}
                                     id="fileUpload"
                                     type="file"
-                                    onChange={(e) => setFile(e.target.files[0].name)}
+                                    onChange={(e) => {setUseDefaultFile(false); setFile(e.target.files[0])}}
                                 />
                                 <label htmlFor="fileUpload">
                                     <Button variant="contained" color="primary" component="span">
                                         Upload File
                                     </Button>
                                 </label>
-                                <Button onClick={() => setFile("")} variant="contained" color="primary" component="span">
+                                <Button onClick={() => {setUseDefaultFile(false); setFile(null)}} variant="contained" color="primary" component="span">
                                     Clear Chosen File             
                                 </Button>
                             </div>
                         </div>
 
                         <div>Chosen file:</div>
-                        <div>{file == "" ? "None" : file}</div>
+                        <div>{file == null && useDefaultFile == false ? "None" : useDefaultFile == true ? "GSE49155-patient.tsv" : file.name}</div>
 
                     </div>
 
