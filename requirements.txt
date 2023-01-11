@@ -1,0 +1,14 @@
+flask
+flask_cors
+maayanlab-bioinformatics @ git+https://github.com/Maayanlab/maayanlab-bioinformatics@v0.5.4
+matplotlib
+matplotlib_venn
+numpy
+pandas
+plotly
+qnorm
+rpy2
+scikit-learn
+fsspec
+s3fs
+rpy2

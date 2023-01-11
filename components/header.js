@@ -19,6 +19,7 @@ export default class Header extends React.Component {
                     <div className={styles.rightDiv}>
                         <div className={styles.text}><b>GeneRanger is a web-server application that provides access to processed data about the expression of human genes and proteins across human cell types, tissues, and cell lines from several atlases.</b></div>
                         <div className={styles.APIandDownloadDiv}>
+                            <Link href="/targetscreener"><a className={styles.headerLink}>Target Screener</a></Link>
                             <Link href="/api_documentation"><a className={styles.headerLink}>API Documentation</a></Link>
                             <Link href="/download"><a className={styles.headerLink}>Download</a></Link>
                         </div>
@@ -35,9 +36,13 @@ export default class Header extends React.Component {
                             </Link>
                         </div>
                         <div className={styles.APIandDownloadDiv}>
+                            <Link href="/targetscreener"><a className={styles.headerLink}>Target Screener</a></Link>
                             <Link href="/api_documentation"><a className={styles.headerLink}>API Documentation</a></Link>
                             <Link href="/download"><a className={styles.headerLink}>Download</a></Link>
+                            
+                            
                         </div>
+                        
                     </div>
                 </div>
             </>
