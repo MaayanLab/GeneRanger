@@ -1,7 +1,8 @@
 version: '3'
 services:
   db:
-    image: postgres:14.4
+    build: .
+    image: maayanlab/postgres-py
     environment:
       - POSTGRES_HOST
       - POSTGRES_DB
