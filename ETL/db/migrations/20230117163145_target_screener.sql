@@ -2,6 +2,15 @@
 
 create extension if not exists "plpython3u";
 
+create function safe_log2fc(b numeric, a numeric) returns numeric as $$
+  select case
+    when b = 0 and a = 0 then 0.0
+    when b = 0 and a <> 0 then 'infinity'::numeric
+    when b <> 0 and a = 0 then '-infinity'::numeric
+    else log(2, b) - log(2, a)
+  end
+$$ language sql immutable;
+
 create type welchs_t_test_results AS (
   t double precision,
   p double precision
@@ -110,7 +119,7 @@ create function screen_targets(input_data jsonb, background uuid) returns setof 
   stats as (
     select
       gene,
-      log(2, (input_data->>'mean')::numeric) - log(2, (background_data->>'mean')::numeric) as log2fc,
+      safe_log2fc((input_data->>'mean')::numeric, (background_data->>'mean')::numeric) as log2fc,
       r.t as t,
       (1-r.p) as p
     from input_background
@@ -130,9 +139,10 @@ from stats
 $$ language sql immutable;
 
 -- migrate:down
-drop function screen_targets(jsonb, uuid) cascade;
-drop type screen_target_results cascade;
+drop function safe_log2fc(numeric, numeric);
+drop function screen_targets(jsonb, uuid);
+drop type screen_target_results;
 drop materialized view database_agg;
 drop function aggregate_stats(jsonb);
-drop function welchs_t_test(double precision, double precision, double precision, double precision, double precision, double precision, boolean, varchar) cascade;
-drop type welchs_t_test_results cascade;
+drop function welchs_t_test(double precision, double precision, double precision, double precision, double precision, double precision, boolean, varchar);
+drop type welchs_t_test_results;
