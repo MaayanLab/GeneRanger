@@ -53,13 +53,14 @@ from data;
 
 create type screen_target_results AS (
   gene varchar,
+  log2fc numeric,
   t double precision,
   p double precision
 );
 
 -- Usage:
 -- ```sql
--- select gene, t, p
+-- select *
 -- from screen_targets(
 --   '{"n": 5, "genes": {"STAT3": {"mean": 5400, "std": 16}, "ACE2": {"mean": 150, "std": 20}}}'::jsonb,
 --   (
@@ -74,7 +75,7 @@ create type screen_target_results AS (
 -- ```
 -- In JS:
 -- ```sql
--- select gene, t, p
+-- select *
 -- from screen_targets(
 --   ${input_data}::jsonb,
 --   (
@@ -109,6 +110,7 @@ create function screen_targets(input_data jsonb, background uuid) returns setof 
   stats as (
     select
       gene,
+      log(2, (input_data->>'mean')::numeric) - log(2, (background_data->>'mean')::numeric) as log2fc,
       r.t as t,
       (1-r.p) as p
     from input_background
