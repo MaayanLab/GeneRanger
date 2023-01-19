@@ -139,10 +139,10 @@ from stats
 $$ language sql immutable;
 
 -- migrate:down
-drop function safe_log2fc(numeric, numeric);
 drop function screen_targets(jsonb, uuid);
 drop type screen_target_results;
 drop materialized view database_agg;
 drop function aggregate_stats(jsonb);
 drop function welchs_t_test(double precision, double precision, double precision, double precision, double precision, double precision, boolean, varchar);
 drop type welchs_t_test_results;
+drop function safe_log2fc(numeric, numeric);
