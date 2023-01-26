@@ -27,3 +27,12 @@
   .darkOnHover:hover {
     background-color: #9ebfd7;
   }
+
+  .textDiv {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10%;
+    padding-right: 10%;
+  }

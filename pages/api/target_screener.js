@@ -1,3 +1,6 @@
+const { Prisma } = require("@prisma/client");
+import prisma from '../../prisma/prisma';
+
 
 export const config = {
     api: {
@@ -27,10 +30,7 @@ export default async function handler(req, res) {
         const final_url = "https://appyters.maayanlab.cloud/Tumor_Gene_Target_Screener/" + id.session_id
 
         response = requests.get(final_url)
-
-
         
-
         res.status(200).json(input);
 
     }
