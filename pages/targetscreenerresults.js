@@ -5,14 +5,9 @@ import styles from '../styles/TargetScreener.module.css';
 import Footer from '../components/footer';
 import Header from '../components/header';
 import Head from '../components/head';
-import { Box } from "@mui/system";
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Link from "next/link";
-import PropTypes from 'prop-types';
+import { Autocomplete, TextField, Button } from '@mui/material';
 import TargetResultTable from '../components/targetResultsTable';
 import DbTabsViewer from '../components/dbTabsViewer';
-import Typography from '@mui/material/Typography';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { useRouter } from 'next/router';
@@ -21,27 +16,27 @@ import { useRouter } from 'next/router';
 
 
 export default function Results() {
-    const router = useRouter()
-    const string_res = router.query['res']
-    const string_stats = router.query['ogfile']
+  // Recieve results and relevant gene stats from user submission
+  const router = useRouter()
+  const string_res = router.query['res']
+  const string_stats = router.query['ogfile']
 
-    console.log(router.query)
-
-
+  // Try to display results --> on reload direct them back to the Target Screener page
+  try {
+    // Get results list of differentially expressed genes and create array for autocomplete
     const results = JSON.parse(string_res)
+    const geneList = results.map(x => x.gene)
 
-    const geneStats = JSON.parse(string_stats)
 
-    console.log(geneStats)
-
+    // Set state of membrane gene filter based on submission page
     const [membraneGenes, setMembraneGenes] = React.useState(JSON.parse(router.query['membraneGenes']));
 
-    const filtMembranes = {
-      items: [{columnField: "membrane", operatorValue: "=", value: "1"}]
-    };
+    // Setup possible filters
+    const filtMembranes = {items: [{ columnField: "membrane", operatorValue: "=", value: "1" }]};
+    const filtEmpty = { items: [{ columnField: "t", operatorValue: ">", value: "0" }] }
 
-    const filtEmpty = {items: [{columnField: "t", operatorValue: ">", value: "0"}]}
 
+    // Use membraneGene state to determine filter
     var initFilt;
     if (membraneGenes) {
       initFilt = filtMembranes
@@ -50,42 +45,25 @@ export default function Results() {
     }
 
     const [filt, setFilt] = useState(initFilt)
-    const [gene, setGene] = useState('CYSLTR1')
+    const [gene, setGene] = useState(geneList[0])
     const [database, setDatabase] = useState(0)
-
-
-    const [tabsData, setTabsData] = useState({sorted_data: {}, NCBI_data: ''})
-
-    
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
-    let id = -1;
-
-    function getId() {
-        id += 1;
-        return id
-    }
-
-
+    const [tabsData, setTabsData] = useState({ sorted_data: {}, NCBI_data: '' })
 
     useEffect(() => {
-      // declare the data fetching function
-      const fetchData = async () => { 
+      // fetch data for given gene
+      const fetchData = async () => {
         let res = await fetch(`${process.env.NEXT_PUBLIC_ENTRYPOINT || ''}/api/get_gene_info`, {
-        method: 'POST',
-        headers: {
+          method: 'POST',
+          headers: {
             'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({'gene': gene})
+          },
+          body: JSON.stringify({ 'gene': gene })
         })
         const json = await res.json()
         console.log(json)
         setTabsData(json)
       }
-    
+
       // call the function
       fetchData()
         // make sure to catch any error
@@ -94,41 +72,76 @@ export default function Results() {
 
 
     return (
-    
-    <div style={{position: 'relative', minHeight: '100vh'}}>
 
-        <Head/>
+      <div style={{ position: 'relative', minHeight: '100vh' }}>
+
+        <Head />
 
         <div className={styles.mainDiv}>
 
-            <Header/>
-            <div className={styles.textDiv}>
-              <h2>Target Screener Results</h2>
-              <p>This pipeline uses RNA-seq expression data for a tumor and identifies over-expressed proteins verses a baseline dataset of normal tissues such those in GTEx or ARCHS4. It then prioritizes candidates by significance and targetability.</p>
-            </div>
+          <Header />
+          <div className={styles.textDiv}>
+            <h2>Target Screener Results</h2>
+            <p>This pipeline uses RNA-seq expression data for a tumor and identifies over-expressed proteins verses a baseline dataset of normal tissues such those in GTEx or ARCHS4. It then prioritizes candidates by significance and targetability.</p>
+          </div>
 
-            <div className={styles.horizontalFlexbox}>
-                <div style={{width: '250px'}}>Prioritize membrane genes:</div>
-                <ToggleButtonGroup
-                    color="primary"
-                    value={membraneGenes}
-                    exclusive
-                    onChange={(event, newValue) => {
-                      if (newValue !== null) {
-                        setMembraneGenes(!membraneGenes)
-                        if (membraneGenes) {
-                          setFilt(filtEmpty)
-                        } else setFilt(filtMembranes)
-                    }}}
-                    >
-                    <ToggleButton value={true}>YES</ToggleButton>
-                    <ToggleButton value={false}>NO</ToggleButton>
-                </ToggleButtonGroup>
-            </div>
-            <TargetResultTable results={string_res} membraneGenes={membraneGenes} filt={filt} setFilt={setFilt} setgene={setGene} /* select={select} setSelection={setSelection} *//>
-            <DbTabsViewer gene={gene} database={database} setdatabase={setDatabase} result={tabsData} geneStats={string_stats}/>
-            <Footer/>
+          <div className={styles.horizontalFlexbox}>
+            <div style={{ width: '250px' }}>Prioritize membrane genes:</div>
+            <ToggleButtonGroup
+              color="primary"
+              value={membraneGenes}
+              exclusive
+              onChange={(event, newValue) => {
+                if (newValue !== null) {
+                  setMembraneGenes(!membraneGenes)
+                  if (membraneGenes) {
+                    setFilt(filtEmpty)
+                  } else setFilt(filtMembranes)
+                }
+              }}
+            >
+              <ToggleButton value={true}>YES</ToggleButton>
+              <ToggleButton value={false}>NO</ToggleButton>
+            </ToggleButtonGroup>
+          </div>
+          <TargetResultTable results={string_res} membraneGenes={membraneGenes} filt={filt} setFilt={setFilt} setgene={setGene} />
+          <div className={styles.textDiv}>
+            <p>Visualize genes identified in the table above across databses either by selecting the desired row or searching for the gene below:</p>
+          </div>
+          <div style={{ marginBottom: '15px' }}>
+            <Autocomplete
+              disablePortal
+              disableClearable
+              freeSolo={false}
+              value={''}
+              options={geneList}
+              sx={{ width: 400 }}
+              onChange={(event, value) => { setGene(value) }}
+              renderInput={(params) => <TextField {...params} label="Gene Symbol" />}
+            />
+
+          </div>
+          <DbTabsViewer gene={gene} database={database} setdatabase={setDatabase} result={tabsData} geneStats={string_stats} />
+          <Footer />
         </div>
-    </div>
+      </div>
     )
+  } catch {
+    return (
+      <>
+        <div style={{ position: 'relative', minHeight: '100vh' }}>
+
+          <Head />
+
+          <div className={styles.mainDiv}>
+            <Header />
+            <p>Error: No results found</p>
+            <p>Please try resubmitting your data</p>
+            <Button variant="contained" color="primary" href="targetscreener">Target Screener</Button>
+            <Footer />
+          </div>
+        </div>
+      </>
+    )
+  }
 }

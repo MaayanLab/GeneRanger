@@ -1,6 +1,3 @@
-import { Responsive, WidthProvider } from "react-grid-layout";
-import { PrismaClient } from '@prisma/client';
-import dynamic from 'next/dynamic';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import React, { useState } from 'react';
@@ -33,6 +30,7 @@ import exampleData from '../public/files/GSE49155.json';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
+import { Alert } from '@mui/material';
 
 
 export default function Page() {
@@ -42,6 +40,7 @@ export default function Page() {
     const [loading, setLoading] = React.useState(false);
     const [file, setFile] = React.useState(null);
     const [useDefaultFile, setUseDefaultFile] = React.useState(false);
+    const [alert, setAlert] = React.useState('')
 
     const [membraneGenes, setMembraneGenes] = React.useState(true);
 
@@ -155,6 +154,11 @@ export default function Page() {
 
                 handleFileChosen(file)
             }
+        } else {
+            setAlert(<Alert variant="outlined" severity="error">Please select a file to submit</Alert>)
+            setTimeout(() => {
+                setAlert('');
+              }, 3000);
         }
     }
 
@@ -201,53 +205,33 @@ export default function Page() {
 
                             <div className={styles.verticalFlexbox}>
 
-                                <div className={styles.verticalFlexbox}>
-                                    <div>Normal tissue background:</div>
-
-                                    <div className={styles.horizontalFlexbox}>
-                                        <Box sx={{ width: 390 }}>
-                                            <FormControl fullWidth>
-                                                <Select
-                                                    value={precomputedBackground}
-                                                    onChange={(event) => setPrecomputedBackground(event.target.value)}
-                                                >
-                                                    <MenuItem value={0}>ARCHS4 (bulk RNA-seq)</MenuItem>
-                                                    <MenuItem value={1}>GTEx (bulk RNA-seq)</MenuItem>
-                                                    <MenuItem value={2}>Tabula Sapiens (scRNA-seq)</MenuItem>
-                                                </Select>
-                                            </FormControl>
-                                        </Box>
-                                    </div>
-                                </div>
-                                <div className={styles.horizontalFlexbox}>
-                                    <ToggleButtonGroup
-                                        color="primary"
-                                        value={membraneGenes}
-                                        exclusive
-                                        onChange={(event, newValue) => { if (newValue !== null) setMembraneGenes(newValue) }}
-                                    >
-                                        <ToggleButton value={true}>Yes</ToggleButton>
-                                        <ToggleButton value={false}>No</ToggleButton>
-                                    </ToggleButtonGroup>
-                                    <div>Prioritize membrane genes</div>
-                                </div>
-                            </div>
-
-                            <div className={styles.verticalFlexbox}>
-
                                 <div>Tumor RNA-seq expression vectors</div>
 
                                 <div className={styles.horizontalFlexbox}>
-                                    <div style={{ alignItems: 'flex-end' }} className={styles.verticalFlexbox}>
-                                        <Button onClick={() => setUseDefaultFile(true)} className={styles.darkOnHover} variant="outlined" endIcon={<HelpOutlineIcon />}>
-                                            Load example file
-                                        </Button>
-                                        <a style={{ textDecoration: 'none' }} href="files/GSE49155-patient.tsv" download="GSE49155-patient.tsv">
-                                            <Button className={styles.darkOnHover} variant="outlined" endIcon={<DownloadIcon />}>
-                                                Download example file
+
+                                    <div className={styles.verticalFlexbox}>
+                                        <input
+                                            style={{ display: "none" }}
+                                            id="fileUpload"
+                                            type="file"
+                                            onChange={(e) => { setUseDefaultFile(false); setFile(e.target.files[0]) }}
+                                        />
+                                        <label htmlFor="fileUpload">
+                                            <Button variant="contained" color="primary" component="span">
+                                                Upload File
                                             </Button>
-                                        </a>
-                                        <Button className={styles.darkOnHover} onClick={(event) => { setAnchorEl(event.currentTarget) }} variant="outlined" endIcon={<HelpOutlineIcon />}>
+                                        </label>
+                                        <div className={styles.horizontalFlexbox}>
+                                            <Button onClick={() => setUseDefaultFile(true)} className={styles.darkOnHover} variant="text" >
+                                                Load example file
+                                            </Button>
+                                            <a style={{ textDecoration: 'none' }} href="files/GSE49155-patient.tsv" download="GSE49155-patient.tsv">
+                                                <Button className={styles.darkOnHover} variant="text" endIcon={<DownloadIcon />}>
+                                                    Download example file
+                                                </Button>
+                                            </a>
+                                        </div>
+                                        <Button className={styles.darkOnHover} onClick={(event) => { setAnchorEl(event.currentTarget) }} variant="text" endIcon={<HelpOutlineIcon />}>
                                             File specifications
                                         </Button>
                                         <Popover
@@ -292,25 +276,12 @@ export default function Page() {
                                                 </Table>
                                             </TableContainer>
                                         </Popover>
-                                    </div>
-                                    <div className={styles.verticalFlexbox}>
-                                        <input
-                                            style={{ display: "none" }}
-                                            id="fileUpload"
-                                            type="file"
-                                            onChange={(e) => { setUseDefaultFile(false); setFile(e.target.files[0]) }}
-                                        />
-                                        <label htmlFor="fileUpload">
-                                            <Button variant="contained" color="primary" component="span">
-                                                Upload File
-                                            </Button>
-                                        </label>
-                                        <Button onClick={() => { setUseDefaultFile(false); setFile(null) }} variant="contained" color="primary" component="span">
+
+                                        <Button onClick={() => { setUseDefaultFile(false); setFile(null) }} variant="outlined" component="span">
                                             Clear Chosen File
                                         </Button>
                                     </div>
                                 </div>
-
                                 <div>Chosen file:</div>
                                 <div>{file == null && useDefaultFile == false ? "None" : useDefaultFile == true ? "GSE49155-patient.tsv" : file.name}</div>
 
@@ -320,15 +291,53 @@ export default function Page() {
 
                             </div>
 
+                            <div className={styles.verticalFlexbox}>
+
+                                <div className={styles.verticalFlexbox}>
+                                    <div>Normal tissue background:</div>
+
+                                    <div className={styles.horizontalFlexbox}>
+                                        <Box sx={{ width: 390 }}>
+                                            <FormControl fullWidth>
+                                                <Select
+                                                    value={precomputedBackground}
+                                                    onChange={(event) => setPrecomputedBackground(event.target.value)}
+                                                >
+                                                    <MenuItem value={0}>ARCHS4 (bulk RNA-seq)</MenuItem>
+                                                    <MenuItem value={1}>GTEx (bulk RNA-seq)</MenuItem>
+                                                    <MenuItem value={2}>Tabula Sapiens (scRNA-seq)</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        </Box>
+                                    </div>
+                                </div>
+                                <div className={styles.horizontalFlexbox}>
+                                    <ToggleButtonGroup
+                                        color="primary"
+                                        value={membraneGenes}
+                                        exclusive
+                                        onChange={(event, newValue) => { if (newValue !== null) setMembraneGenes(newValue) }}
+                                    >
+                                        <ToggleButton value={true}>Yes</ToggleButton>
+                                        <ToggleButton value={false}>No</ToggleButton>
+                                    </ToggleButtonGroup>
+                                    <div>Prioritize membrane genes</div>
+                                </div>
+                            </div>
+
+
 
 
                         </div>
                     </CardContent>
                     <CardActions style={{ justifyContent: 'center' }}>
-                        <Button style={{ marginTop: '25px' }} variant="contained" color="primary" onClick={submitTest}>Submit</Button>
+                        <Button style={{ marginTop: '25px' }} variant="contained" color="primary" size='large'onClick={submitTest}>Submit</Button>
                     </CardActions>
                 </Card>
-                <Footer/>
+                <>
+                {alert}
+                </>
+                <Footer />
             </div>
         </div>
 

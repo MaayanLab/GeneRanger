@@ -4,7 +4,7 @@ import prisma from '../../prisma/prisma';
 export const config = {
     api: {
         bodyParser: {
-            sizeLimit: '10mb' // Set desired value here
+            sizeLimit: '50mb' // Set desired value here
         }
     }
 }

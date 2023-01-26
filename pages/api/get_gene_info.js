@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         console.log(gene)
 
 
-/*         let gene_desc = await prisma.$queryRaw`select * from gene_info where gene_info.symbol = ${gene}`
+        let gene_desc = await prisma.$queryRaw`select * from gene_info where gene_info.symbol = ${gene}`
         if (gene_desc.length != 0) {
             gene_desc = gene_desc[0].summary;
             if (gene_desc.indexOf('[') != -1) {
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
             }
         } else {
             gene_desc = "No gene description available."
-        } */
+        }
 
         let all_db_data = await prisma.$queryRaw
         `
@@ -137,7 +137,7 @@ export default async function handler(req, res) {
         
         const props = {
                 sorted_data: sorted_data,
-                NCBI_data: ''
+                NCBI_data: gene_desc
             }
 
 
