@@ -173,7 +173,6 @@ export async function getServerSideProps(context) {
             NCBI_data: gene_desc
         }
     }
-
 }
 
 async function doAutocomplete(input) {

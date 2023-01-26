@@ -11,10 +11,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.0",
-    "@emotion/styled": "^11.10.0",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.8.4",
-    "@mui/material": "^5.10.0",
+    "@mui/material": "^5.11.5",
+    "@mui/x-data-grid": "^5.17.20",
     "@prisma/client": "^4.2.1",
     "next": "12.2.3",
     "next-swagger-doc": "^0.3.6",
