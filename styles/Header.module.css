@@ -24,8 +24,9 @@
 
 .APIandDownloadDiv {
     display: flex;
-    gap: 20px;
-    align-content: left;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .headerLink {
