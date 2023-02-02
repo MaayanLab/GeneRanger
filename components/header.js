@@ -35,8 +35,12 @@ export default class Header extends React.Component {
                                 <h1 style={{fontSize: '40px'}}>GeneRanger</h1>
                             </Link>
                         </div>
-                        <div className={styles.APIandDownloadDiv}>
+                        <div className={styles.rightDiv}>
+                        <div className={styles.verticalFlexbox}>
+                            <b style={{fontSize: '16px', marginBottom: '5px'}}>Identify targets with:</b>
+                            <Link href={process.env.NEXT_PUBLIC_TARGETRANGERURL} ><a style={{textDecoration: 'none'}}><img src={process.env.NEXT_PUBLIC_ENTRYPOINT + '/images/TargetRangerLogo.png'} alt="Logo" width={50} /><div className={styles.sisterSite}><b>TargetRanger</b></div></a></Link>
                         </div>
+                    </div>
                     </div>
                 </div>
             </>
