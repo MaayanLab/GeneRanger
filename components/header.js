@@ -19,7 +19,7 @@ export default class Header extends React.Component {
                     <div className={styles.text}><b>GeneRanger is a web-server application that provides access to processed data about the expression of human genes and proteins across human cell types, tissues, and cell lines from several atlases.</b></div>
                     <div className={styles.rightDiv}>
                         <div className={styles.verticalFlexbox}>
-                            <b style={{fontSize: '18px'}}>Identify Targets with:</b>
+                            <b style={{fontSize: '16px', marginBottom: '5px'}}>Identify targets with:</b>
                             <Link href={process.env.NEXT_PUBLIC_TARGETRANGERURL} ><a style={{textDecoration: 'none'}}><img src={process.env.NEXT_PUBLIC_ENTRYPOINT + '/images/TargetRangerLogo.png'} alt="Logo" width={50} /><div className={styles.sisterSite}><b>TargetRanger</b></div></a></Link>
                         </div>
                            
