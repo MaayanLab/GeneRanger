@@ -12,7 +12,6 @@ function GeneAndGraphDescription({NCBI_data, gene, database, database_desc, data
     let ARCHS4_link = 'https://maayanlab.cloud/archs4/gene/' + gene;
     let GDLPA = 'https://cfde-gene-pages.cloud/gene/' + gene +'?CF=false&PS=true&Ag=true&gene=false&variant=false';
 
-    console.log(database)
     return (
         <>
             {/* {
