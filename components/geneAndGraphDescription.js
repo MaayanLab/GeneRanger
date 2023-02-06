@@ -1,8 +1,8 @@
-import { PropaneSharp } from '@mui/icons-material';
+import { Button } from '@mui/material';
 import * as React from 'react';
 import styles from '../styles/GeneDescription.module.css';
 
-function GeneAndGraphDescription({NCBI_data, gene, database, database_desc}) {
+function GeneAndGraphDescription({NCBI_data, gene, database, database_desc, data}) {
 
     // Gene links
 
@@ -12,6 +12,7 @@ function GeneAndGraphDescription({NCBI_data, gene, database, database_desc}) {
     let ARCHS4_link = 'https://maayanlab.cloud/archs4/gene/' + gene;
     let GDLPA = 'https://cfde-gene-pages.cloud/gene/' + gene +'?CF=false&PS=true&Ag=true&gene=false&variant=false';
 
+    console.log(database)
     return (
         <>
             {/* {
@@ -33,6 +34,10 @@ function GeneAndGraphDescription({NCBI_data, gene, database, database_desc}) {
                             </div>
                             <br/>
                             <div><b>{database}:</b> {database_desc}</div>
+                            
+                            <div className={styles.download}>
+                                <Button href={`data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(data))}`} download={gene + '-' + database.props.children + '.json' }> Download plot data</Button>
+                            </div>
                         {/* </>
                         
             } */}

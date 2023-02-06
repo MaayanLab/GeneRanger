@@ -841,7 +841,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={ARCHS4_link} database_desc={ARCHS4_desc_d}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={ARCHS4_link} database_desc={ARCHS4_desc_d} data={props.sorted_data.ARCHS4}/>
                                                         <div style={{height: '13000px'}}>
                                                             <Plot
                                                                 data={[archs4]}
@@ -1043,7 +1043,7 @@ export default function Page(props) {
                                     <TabPanel value={database} index={7}>
                                         {
                                             ccle_proteomics != null 
-                                                ? 
+                                                ?
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
                                                         <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={CCLE_proteomics_link} database_desc={CCLE_proteomics_desc_d}/>

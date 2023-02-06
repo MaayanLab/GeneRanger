@@ -9,3 +9,9 @@
 .geneLink:hover {
     color: black;
 }
+
+.download {
+    justify-content: right;
+    text-align: right;
+    margin: 10px;
+}
