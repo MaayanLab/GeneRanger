@@ -20,7 +20,7 @@ export default function Header() {
                     <div className={styles.rightDiv}>
                         <div className={styles.verticalFlexbox}>
                             <b style={{fontSize: '16px', marginBottom: '5px'}}>Identify targets with:</b>
-                            <Link href={process.env.NEXT_PUBLIC_TARGETRANGERURL} ><a style={{textDecoration: 'none'}}><img src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + '/images/TargetRangerLogo.png'} alt="Logo" width={50} /><div className={styles.sisterSite}><b>TargetRanger</b></div></a></Link>
+                            <Link href={process.env.NEXT_PUBLIC_TARGETRANGERURL || ''} ><a style={{textDecoration: 'none'}}><img src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + '/images/TargetRangerLogo.png'} alt="Logo" width={50} /><div className={styles.sisterSite}><b>TargetRanger</b></div></a></Link>
                         </div>
                            
                     </div>
@@ -38,7 +38,7 @@ export default function Header() {
                         <div className={styles.rightDiv}>
                         <div className={styles.verticalFlexbox}>
                             <b style={{fontSize: '16px', marginBottom: '5px'}}>Identify targets with:</b>
-                            <Link href={process.env.NEXT_PUBLIC_TARGETRANGERURL} ><a style={{textDecoration: 'none'}}><img src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + '/images/TargetRangerLogo.png'} alt="Logo" width={50} /><div className={styles.sisterSite}><b>TargetRanger</b></div></a></Link>
+                            <Link href={process.env.NEXT_PUBLIC_TARGETRANGERURL || ''} ><a style={{textDecoration: 'none'}}><img src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + '/images/TargetRangerLogo.png'} alt="Logo" width={50} /><div className={styles.sisterSite}><b>TargetRanger</b></div></a></Link>
                         </div>
                     </div>
                     </div>
