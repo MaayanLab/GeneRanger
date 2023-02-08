@@ -3,10 +3,10 @@ import styles from '../styles/Footer.module.css';
 import Link from 'next/link';
 import { Button } from '@mui/material';
 import YouTubeIcon from '@mui/icons-material/YouTube';
+import { useRuntimeConfig } from "./runtimeConfig";
 
-export default class Footer extends React.Component {
-
-    render() {
+export default function Footer() {
+    const runtimeConfig = useRuntimeConfig()
         return (
             <>
                 <div className={styles.spacer}/>
@@ -18,10 +18,10 @@ export default class Footer extends React.Component {
                         <div><Link href="/download"><a className={styles.link}>Download</a></Link></div>
                     </div>
                     <div>
-                        <a href="https://icahn.mssm.edu/research/bioinformatics" target="_blank" rel="noopener noreferrer"><img src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/icahn_cb.png"} alt="School Logo" width={137} height={80} /></a>
+                        <a href="https://icahn.mssm.edu/research/bioinformatics" target="_blank" rel="noopener noreferrer"><img src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/icahn_cb.png"} alt="School Logo" width={137} height={80} /></a>
                     </div>
                     <div>
-                        <a href="https://labs.icahn.mssm.edu/maayanlab/" target="_blank" rel="noopener noreferrer"><img style={{borderRadius: '10px'}} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/maayanlab_logo.png"} alt="Lab Logo" width={80} height={80} /></a>
+                        <a href="https://labs.icahn.mssm.edu/maayanlab/" target="_blank" rel="noopener noreferrer"><img style={{borderRadius: '10px'}} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/maayanlab_logo.png"} alt="Lab Logo" width={80} height={80} /></a>
                     </div>
                     <div>
                         <a style={{textDecoration: 'none', color: 'black'}}href="https://youtu.be/_XM9NS4G1-4" target="_blank" rel="noopener noreferrer">
@@ -29,17 +29,15 @@ export default class Footer extends React.Component {
                                 <YouTubeIcon/>
                                 <div>Video Tutorial</div>
                             </div>
-                            <img style={{borderRadius: '5px'}} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/videoThumbnail.png"} alt="Video Thumbnail" width={137} height={80} />
+                            <img style={{borderRadius: '5px'}} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/videoThumbnail.png"} alt="Video Thumbnail" width={137} height={80} />
                         </a>
                     </div>
                     <div className={styles.githubButtons}>
-                        <a className={styles.buttonLink} href="https://github.com/MaayanLab/single-gene-expression-dashboard" target="_blank" rel="noopener noreferrer"><Button variant="contained" color="primary"><img style={{borderRadius: '5px'}} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/GitHub-Mark.png"} alt="GitHub Logo" width={16} height={16} />&nbsp;View source code</Button></a>
-                        <a className={styles.buttonLink} href="https://github.com/MaayanLab/single-gene-expression-dashboard/issues/new" target="_blank" rel="noopener noreferrer"><Button variant="contained" color="primary"><img style={{borderRadius: '5px'}} src={process.env.NEXT_PUBLIC_ENTRYPOINT + "/images/GitHub-Mark.png"} alt="GitHub Logo" width={16} height={16} />&nbsp;Submit an issue</Button></a>
+                        <a className={styles.buttonLink} href="https://github.com/MaayanLab/single-gene-expression-dashboard" target="_blank" rel="noopener noreferrer"><Button variant="contained" color="primary"><img style={{borderRadius: '5px'}} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/GitHub-Mark.png"} alt="GitHub Logo" width={16} height={16} />&nbsp;View source code</Button></a>
+                        <a className={styles.buttonLink} href="https://github.com/MaayanLab/single-gene-expression-dashboard/issues/new" target="_blank" rel="noopener noreferrer"><Button variant="contained" color="primary"><img style={{borderRadius: '5px'}} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/GitHub-Mark.png"} alt="GitHub Logo" width={16} height={16} />&nbsp;Submit an issue</Button></a>
                     </div>
                 </footer>
             </>
             
         );
-    }
-
 }

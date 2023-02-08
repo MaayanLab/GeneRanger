@@ -1,16 +1,16 @@
 import * as React from 'react';
 import styles from '../styles/Header.module.css';
 import Link from 'next/link';
+import { useRuntimeConfig } from "./runtimeConfig";
 
-export default class Header extends React.Component {
-
-    render() {
-        return (
+export default function Header() {
+    const runtimeConfig = useRuntimeConfig()
+    return (
             <>
                 <div className={styles.longTitle}>
                     <div className={styles.logoAndTitleDiv}>
                         <Link href="/gene/A2M">
-                            <img src={process.env.NEXT_PUBLIC_ENTRYPOINT + '/images/logo.png'} alt="App Logo" width={75} height={75} />
+                            <img src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + '/images/logo.png'} alt="App Logo" width={75} height={75} />
                         </Link>
                         <Link href="/gene/A2M">
                             <h1 style={{fontSize: '40px'}}>GeneRanger</h1>
@@ -20,7 +20,7 @@ export default class Header extends React.Component {
                     <div className={styles.rightDiv}>
                         <div className={styles.verticalFlexbox}>
                             <b style={{fontSize: '16px', marginBottom: '5px'}}>Identify targets with:</b>
-                            <Link href={process.env.NEXT_PUBLIC_TARGETRANGERURL} ><a style={{textDecoration: 'none'}}><img src={process.env.NEXT_PUBLIC_ENTRYPOINT + '/images/TargetRangerLogo.png'} alt="Logo" width={50} /><div className={styles.sisterSite}><b>TargetRanger</b></div></a></Link>
+                            <Link href={process.env.NEXT_PUBLIC_TARGETRANGERURL} ><a style={{textDecoration: 'none'}}><img src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + '/images/TargetRangerLogo.png'} alt="Logo" width={50} /><div className={styles.sisterSite}><b>TargetRanger</b></div></a></Link>
                         </div>
                            
                     </div>
@@ -29,7 +29,7 @@ export default class Header extends React.Component {
                     <div className={styles.centerDiv}>
                         <div className={styles.logoAndTitleDiv}>
                             <Link href="/gene/A2M">
-                                <img src={process.env.NEXT_PUBLIC_ENTRYPOINT + '/images/logo.png'} alt="App Logo" width={75} height={75} />
+                                <img src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + '/images/logo.png'} alt="App Logo" width={75} height={75} />
                             </Link>
                             <Link href="/gene/A2M">
                                 <h1 style={{fontSize: '40px'}}>GeneRanger</h1>
@@ -38,7 +38,7 @@ export default class Header extends React.Component {
                         <div className={styles.rightDiv}>
                         <div className={styles.verticalFlexbox}>
                             <b style={{fontSize: '16px', marginBottom: '5px'}}>Identify targets with:</b>
-                            <Link href={process.env.NEXT_PUBLIC_TARGETRANGERURL} ><a style={{textDecoration: 'none'}}><img src={process.env.NEXT_PUBLIC_ENTRYPOINT + '/images/TargetRangerLogo.png'} alt="Logo" width={50} /><div className={styles.sisterSite}><b>TargetRanger</b></div></a></Link>
+                            <Link href={process.env.NEXT_PUBLIC_TARGETRANGERURL} ><a style={{textDecoration: 'none'}}><img src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + '/images/TargetRangerLogo.png'} alt="Logo" width={50} /><div className={styles.sisterSite}><b>TargetRanger</b></div></a></Link>
                         </div>
                     </div>
                     </div>
@@ -46,6 +46,4 @@ export default class Header extends React.Component {
             </>
             
         );
-    }
-
 }
