@@ -6,7 +6,7 @@ const fetcher = (...args) => fetch(...args).then(res => res.json())
 
 const fallbackRuntimeConfig = {
   NEXT_PUBLIC_ENTRYPOINT: process.env.NEXT_PUBLIC_ENTRYPOINT || '',
-  NEXT_PUBLIC_GENERANGERURL: process.env.NEXT_PUBLIC_GENERANGERURL || '',
+  NEXT_PUBLIC_TARGETRANGERURL: process.env.NEXT_PUBLIC_TARGETRANGERURL || '',
 }
 
 const RuntimeConfigContext = React.createContext(fallbackRuntimeConfig)
