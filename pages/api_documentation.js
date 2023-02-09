@@ -12,6 +12,7 @@ import 'swagger-ui-react/swagger-ui.css';
 
 const SwaggerUI = dynamic(import('swagger-ui-react'), {ssr: false})
 
+
 export async function getStaticProps() {
     let spec = createSwaggerSpec({
       definition: {
@@ -25,12 +26,6 @@ export async function getStaticProps() {
 
     spec.paths['/api/data'].get.tags = ['data'];
     spec.paths['/api/data'].post.tags = ['data'];
-
-    spec.paths[`${process.env.NEXT_PUBLIC_ENTRYPOINT}/api/data`] = spec.paths['/api/data'];
-    
-    if (process.env.NEXT_PUBLIC_ENTRYPOINT != '') {
-      delete spec.paths['/api/data'];
-    }
   
     return {
       props: {

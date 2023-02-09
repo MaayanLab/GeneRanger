@@ -3,7 +3,6 @@ import * as React from 'react';
 import styles from '../styles/GeneDescription.module.css';
 
 function createCSV(gene, data, dbname) {
-    console.log('formatting data')
     var csvData = '';
     if (dbname == 'ARCHS4' || dbname == 'GTEx transcriptomics' || dbname == 'Tabula Sapiens' || dbname == 'GTEx proteomics') {
         csvData += ',,' + [...data.y].reverse().join(',') + '\n'
