@@ -121,7 +121,7 @@ create function screen_targets(input_data jsonb, background uuid) returns setof 
       gene,
       safe_log2fc((input_data->>'mean')::numeric, (background_data->>'mean')::numeric) as log2fc,
       r.t as t,
-      (1-r.p) as p
+      r.p as p
     from input_background
     cross join lateral welchs_t_test(
         (input_data->>'mean')::double precision,
@@ -131,7 +131,7 @@ create function screen_targets(input_data jsonb, background uuid) returns setof 
         (background_data->>'std')::double precision,
         (background_data->>'count')::double precision,
         false,
-        'less'
+        'greater'
     ) as r
   )
 select *
