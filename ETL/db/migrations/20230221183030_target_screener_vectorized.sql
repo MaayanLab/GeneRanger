@@ -2,57 +2,74 @@
 
 create extension if not exists "plpython3u";
 
-create function safe_log2fc(b numeric, a numeric) returns numeric as $$
-  select case
-    when b = 0 and a = 0 then 0.0
-    when b = 0 and a <> 0 then 'infinity'::numeric
-    when b <> 0 and a = 0 then '-infinity'::numeric
-    else log(2, b) - log(2, a)
-  end
-$$ language sql immutable;
-
-create type welchs_t_test_results AS (
+create type welchs_t_test_vectorized_results AS (
+  gene varchar,
+  log2fc double precision,
   t double precision,
   p double precision
 );
 
-create function welchs_t_test(a_mean double precision, a_std double precision, a_n double precision, b_mean double precision, b_std double precision, b_n double precision, equal_var boolean, alternative varchar) returns welchs_t_test_results as $$
+create function welchs_t_test_vectorized(
+  genes varchar[],
+  a_mean double precision[],
+  a_std double precision[],
+  a_n double precision[],
+  b_mean double precision[],
+  b_std double precision[],
+  b_n double precision[],
+  ttest_equal_var boolean,
+  ttest_alternative varchar
+) returns welchs_t_test_vectorized_results[] as $$
+  import numpy as np
   import scipy.stats
-  if a_mean is None or not a_std or not a_n or b_mean is None or not b_std or not b_n:
-    return (None, None)
-  result = scipy.stats.ttest_ind_from_stats(a_mean, a_std, a_n, b_mean, b_std, b_n, equal_var=equal_var, alternative=alternative)
-  return (result.statistic, result.pvalue)
-$$ language plpython3u immutable;
 
--- given stats of the form { mean: { desc1: value, desc2: value, ... }, std: {...}, count: {...} }
--- compute an aggregated distribution by:
---  mean(means)
---  sqrt(sum(std**2))
---  sum(count)
-create function aggregate_stats(stats jsonb) returns jsonb as $$
-  select jsonb_build_object(
-    'mean',
-    (
-      select to_jsonb(avg(j.value::text::double precision))
-      from jsonb_each(stats->'mean') j
-    ),
-    'std',
-    (
-      select to_jsonb(sqrt(sum(power(j.value::text::double precision,2))))
-      from jsonb_each(stats->'std') j
-    ),
-    'count',
-    (
-      select to_jsonb(sum(j.value::text::double precision))
-      from jsonb_each(stats->'count') j
-    )
+  n = len(genes)
+  np_a_mean = np.array(a_mean)
+  np_a_std = np.array(a_std)
+  np_a_n = np.array(a_n)
+  np_b_mean = np.array(b_mean)
+  np_b_std = np.array(b_std)
+  np_b_n = np.array(b_n)
+
+  np_a_mean_is_zero = np.isclose(np_a_mean, 0.)
+  np_b_mean_is_zero = np.isclose(np_b_mean, 0.)
+  log2fc = np.zeros(n)
+  log2fc[np_a_mean_is_zero & np_b_mean_is_zero] = 0.
+  log2fc[np_a_mean_is_zero & ~np_b_mean_is_zero] = -np.inf
+  log2fc[~np_a_mean_is_zero & np_b_mean_is_zero] = np.inf
+  log2fc[~np_a_mean_is_zero & ~np_b_mean_is_zero] = np.log2(np_b_mean) - np.log2(np_a_mean)
+  
+  mask = ~(
+    np.isnan(np_a_mean)
+    |np.isnan(np_a_std)|np.isclose(np_a_std, 0.)
+    |np.isnan(np_a_n)|np.isclose(np_a_n, 0.)
+    |np.isnan(np_b_mean)
+    |np.isnan(np_b_std)|np.isclose(np_b_std, 0.)
+    |np.isnan(np_b_n)|np.isclose(np_b_n, 0.)
   )
-$$ language sql immutable;
+  result = scipy.stats.ttest_ind_from_stats(
+    np_a_mean[mask], np_a_std[mask], np_a_n[mask],
+    np_b_mean[mask], np_b_std[mask], np_b_n[mask],
+    equal_var=ttest_equal_var, alternative=ttest_alternative,
+  )
+  tstats = result.statistic
+  pvals = result.pvalue
+
+  results = np.zeros((n, 3))
+  results[~mask, :] = np.nan
+  results[:, 0] = log2fc
+  results[mask, 1] = tstats
+  results[mask, 2] = pvals
+  return [
+    (gene, log2fc, t, p)
+    for gene, (log2fc, t, p) in zip(genes, results)
+  ]
+$$ language plpython3u immutable;
 
 -- Here we store an aggregated version of data, this will be much
 --  smaller and cheaper to query against. It must be refreshed if
 --  data is added.
-create materialized view database_agg as
+create materialized view if not exists database_agg as
 select
   data.id as id,
   data.database as database,
@@ -60,17 +77,10 @@ select
   aggregate_stats(data.values) as values
 from data;
 
-create type screen_target_results AS (
-  gene varchar,
-  log2fc numeric,
-  t double precision,
-  p double precision
-);
-
 -- Usage:
 -- ```sql
 -- select *
--- from screen_targets(
+-- from screen_targets_vectorized(
 --   '{"n": 5, "genes": {"STAT3": {"mean": 5400, "std": 16}, "ACE2": {"mean": 150, "std": 20}}}'::jsonb,
 --   (
 --     select database.id
@@ -85,7 +95,7 @@ create type screen_target_results AS (
 -- In JS:
 -- ```sql
 -- select *
--- from screen_targets(
+-- from screen_targets_vectorized(
 --   ${input_data}::jsonb,
 --   (
 --     select database.id
@@ -98,7 +108,7 @@ create type screen_target_results AS (
 -- order by t desc;
 -- ```
 
-create function screen_targets(input_data jsonb, background uuid) returns setof screen_target_results as $$
+create function screen_targets_vectorized(input_data jsonb, background uuid) returns setof welchs_t_test_vectorized_results as $$
   with
   input_data_each as (
     select
@@ -116,33 +126,35 @@ create function screen_targets(input_data jsonb, background uuid) returns setof 
     inner join database_agg on database_agg.gene = gene.id
     where database_agg.database = background
   ),
-  stats as (
+  vectorized_stats as (
     select
-      gene,
-      safe_log2fc((input_data->>'mean')::numeric, (background_data->>'mean')::numeric) as log2fc,
-      r.t as t,
-      r.p as p
-    from input_background
-    cross join lateral welchs_t_test(
-        (input_data->>'mean')::double precision,
-        (input_data->>'std')::double precision,
-        (input_data->>'count')::double precision,
-        (background_data->>'mean')::double precision,
-        (background_data->>'std')::double precision,
-        (background_data->>'count')::double precision,
+      welchs_t_test_vectorized(
+        array_agg(gene),
+        array_agg((input_data->>'mean')::double precision),
+        array_agg((input_data->>'std')::double precision),
+        array_agg((input_data->>'count')::double precision),
+        array_agg((background_data->>'mean')::double precision),
+        array_agg((background_data->>'std')::double precision),
+        array_agg((background_data->>'count')::double precision),
         false,
-        'greater'
-    ) as r
+        'greater',
+        0.05,
+        'fdr_bh'
+      ) as value
+    from input_background
+  ),
+  stats as (
+    select r.*
+    from
+      vectorized_stats,
+      unnest(vectorized_stats.value) r
   )
 select *
 from stats
 $$ language sql immutable;
 
 -- migrate:down
-drop function screen_targets(jsonb, uuid);
-drop type screen_target_results;
-drop materialized view database_agg;
-drop function aggregate_stats(jsonb);
-drop function welchs_t_test(double precision, double precision, double precision, double precision, double precision, double precision, boolean, varchar);
-drop type welchs_t_test_results;
-drop function safe_log2fc(numeric, numeric);
+
+drop function screen_targets_vectorized(input_data jsonb, background uuid);
+drop function welchs_t_test_vectorized(varchar[],double precision[],double precision[],double precision[],double precision[],double precision[],double precision[],boolean,varchar);
+drop type welchs_t_test_vectorized_results;
