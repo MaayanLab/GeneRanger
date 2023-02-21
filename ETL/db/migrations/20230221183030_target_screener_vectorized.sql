@@ -37,11 +37,15 @@ create function welchs_t_test_vectorized(
 
   np_a_mean_is_zero = np.isclose(np_a_mean, 0.)
   np_b_mean_is_zero = np.isclose(np_b_mean, 0.)
+  np_a_and_b_are_nonzero = ~np_a_mean_is_zero & ~np_b_mean_is_zero
   log2fc = np.zeros(n)
   log2fc[np_a_mean_is_zero & np_b_mean_is_zero] = 0.
   log2fc[np_a_mean_is_zero & ~np_b_mean_is_zero] = -np.inf
   log2fc[~np_a_mean_is_zero & np_b_mean_is_zero] = np.inf
-  log2fc[~np_a_mean_is_zero & ~np_b_mean_is_zero] = np.log2(np_b_mean) - np.log2(np_a_mean)
+  log2fc[np_a_and_b_are_nonzero] = (
+    np.log2(np_b_mean[np_a_and_b_are_nonzero])
+    - np.log2(np_a_mean[np_a_and_b_are_nonzero])
+  )
   
   mask = ~(
     np.isnan(np_a_mean)
