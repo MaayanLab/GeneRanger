@@ -6,7 +6,8 @@ create type welchs_t_test_vectorized_results AS (
   gene varchar,
   log2fc double precision,
   t double precision,
-  p double precision
+  p double precision,
+  adj_p double precision
 );
 
 create function welchs_t_test_vectorized(
@@ -18,10 +19,13 @@ create function welchs_t_test_vectorized(
   b_std double precision[],
   b_n double precision[],
   ttest_equal_var boolean,
-  ttest_alternative varchar
+  ttest_alternative varchar,
+  p_adjust_alpha double precision,
+  p_adjust_method varchar
 ) returns welchs_t_test_vectorized_results[] as $$
   import numpy as np
   import scipy.stats
+  import statsmodels.stats.multitest
 
   n = len(genes)
   np_a_mean = np.array(a_mean)
@@ -55,14 +59,24 @@ create function welchs_t_test_vectorized(
   tstats = result.statistic
   pvals = result.pvalue
 
-  results = np.zeros((n, 3))
+  try:
+    reject, adj_pvals, alphacSidak, alphacBonf = statsmodels.stats.multitest.multipletests(
+      pvals,
+      p_adjust_alpha,
+      p_adjust_method,
+    )
+  except:
+    adj_pvals = np.nan
+
+  results = np.zeros((n, 4))
   results[~mask, :] = np.nan
   results[:, 0] = log2fc
   results[mask, 1] = tstats
   results[mask, 2] = pvals
+  results[mask, 3] = adj_pvals
   return [
-    (gene, log2fc, t, p)
-    for gene, (log2fc, t, p) in zip(genes, results)
+    (gene, log2fc, t, p, adj_p)
+    for gene, (log2fc, t, p, adj_p) in zip(genes, results)
   ]
 $$ language plpython3u immutable;
 
@@ -156,5 +170,5 @@ $$ language sql immutable;
 -- migrate:down
 
 drop function screen_targets_vectorized(input_data jsonb, background uuid);
-drop function welchs_t_test_vectorized(varchar[],double precision[],double precision[],double precision[],double precision[],double precision[],double precision[],boolean,varchar);
+drop function welchs_t_test_vectorized(varchar[],double precision[],double precision[],double precision[],double precision[],double precision[],double precision[],boolean,varchar,double precision,varchar);
 drop type welchs_t_test_vectorized_results;
