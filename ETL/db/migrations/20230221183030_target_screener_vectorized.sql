@@ -28,12 +28,12 @@ create function welchs_t_test_vectorized(
   import statsmodels.stats.multitest
 
   n = len(genes)
-  np_a_mean = np.array(a_mean)
-  np_a_std = np.array(a_std)
-  np_a_n = np.array(a_n)
-  np_b_mean = np.array(b_mean)
-  np_b_std = np.array(b_std)
-  np_b_n = np.array(b_n)
+  np_a_mean = np.array(a_mean, dtype=np.float64)
+  np_a_std = np.array(a_std, dtype=np.float64)
+  np_a_n = np.array(a_n, dtype=np.float64)
+  np_b_mean = np.array(b_mean, dtype=np.float64)
+  np_b_std = np.array(b_std, dtype=np.float64)
+  np_b_n = np.array(b_n, dtype=np.float64)
 
   np_a_mean_is_zero = np.isclose(np_a_mean, 0.)
   np_b_mean_is_zero = np.isclose(np_b_mean, 0.)
