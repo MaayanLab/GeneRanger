@@ -161,6 +161,46 @@ ingest/CCLE_Proteomics: preprocessed/CCLE_proteomics.tsv
 	mkdir -p ingest
 	$(PYTHON) 11_ingest_standard_form.py -n CCLE_proteomics -i $< -o $@
 
+ingest/ARCHS4.sql: input/archs4-gene-stats-clean.tsv
+	make PYTHON=$(PYTHON) ensure-db
+	mkdir -p ingest
+	$(PYTHON) 11_ingest_standard_form.py -n ARCHS4 -i $< -o $@ -m
+
+ingest/GTEx_transcriptomics.sql: input/gtex-gene-stats.tsv
+	make PYTHON=$(PYTHON) ensure-db
+	mkdir -p ingest
+	$(PYTHON) 11_ingest_standard_form.py -n GTEx_transcriptomics -i $< -o $@ -m
+
+ingest/Tabula_Sapiens.sql: input/ts_10x_cell-ontology-class_donors_tissue-labels_v1.tsv
+	make PYTHON=$(PYTHON) ensure-db
+	mkdir -p ingest
+	$(PYTHON) 11_ingest_standard_form.py -n Tabula_Sapiens -i $< -o $@ -m
+
+ingest/HPM.sql: preprocessed/hpm.tsv
+	make PYTHON=$(PYTHON) ensure-db
+	mkdir -p ingest
+	$(PYTHON) 11_ingest_standard_form.py -n HPM -i $< -o $@ -m
+
+ingest/HPA.sql: preprocessed/hpa.tsv
+	make PYTHON=$(PYTHON) ensure-db
+	mkdir -p ingest
+	$(PYTHON) 11_ingest_standard_form.py -n HPA -i $< -o $@ -m
+
+ingest/GTEx_proteomics.sql: preprocessed/gtex_proteomics.tsv
+	make PYTHON=$(PYTHON) ensure-db
+	mkdir -p ingest
+	$(PYTHON) 11_ingest_standard_form.py -n GTEx_proteomics -i $< -o $@ -m
+
+ingest/CCLE_Transcriptomics.sql: preprocessed/CCLE_transcriptomics.tsv
+	make PYTHON=$(PYTHON) ensure-db
+	mkdir -p ingest
+	$(PYTHON) 11_ingest_standard_form.py -n CCLE_transcriptomics -i $< -o $@ -m
+
+ingest/CCLE_Proteomics.sql: preprocessed/CCLE_proteomics.tsv
+	make PYTHON=$(PYTHON) ensure-db
+	mkdir -p ingest
+	$(PYTHON) 11_ingest_standard_form.py -n CCLE_proteomics -i $< -o $@ -m
+
 .PHONY: ingest
 ingest: ingest/gene_info ingest/ARCHS4 ingest/GTEx_transcriptomics ingest/Tabula_Sapiens ingest/HPM ingest/HPA ingest/GTEx_proteomics ingest/CCLE_Transcriptomics ingest/CCLE_Proteomics
 

@@ -34,11 +34,25 @@ cur.execute('select * from data limit 5')
 cur.fetchall()
 df.head()
 '''
+import json
 import typing as t
 import pandas as pd
 import psycopg2
 
 FileDescriptor = t.Union[int, str]
+
+def pgrepr(value, column=False):
+  ''' Sanitize a value for a pg statement
+  '''
+  if type(value) == str:
+    if column:
+      return f'''"{value}"'''
+    else:
+      return f"""'{value.replace("'", "''")}'"""
+  elif type(value) in {int, float, bool, dict}:
+    return json.dumps(value)
+  else:
+    raise NotImplementedError(type(value))
 
 def copy_from_tsv(con: 'psycopg2.connection', table: str, columns: 'list[str]', r: FileDescriptor):
   ''' Copy from a file descriptor into a postgres database table through as psycopg2 connection object
@@ -53,7 +67,7 @@ def copy_from_tsv(con: 'psycopg2.connection', table: str, columns: 'list[str]', 
       columns = fr.readline().strip().split(b'\t')
       cur.copy_expert(
         sql=f'''
-        COPY "{table}" ({",".join(f'"{c.decode()}"' for c in columns)})
+        COPY {pgrepr(table, True)} ({",".join(pgrepr(c.decode(), True) for c in columns)})
         FROM STDIN WITH CSV DELIMITER E'\\t'
         ''',
         file=fr,
@@ -107,7 +121,7 @@ def copy_from_df(con: 'psycopg2.connection', table: str, df: pd.DataFrame, float
     # we wait for the copy_from_tsv thread to finish
     rt.join()
 
-def copy_from_records(con: 'psycopg2.connection', table: str, columns: 'list[str]', records: t.Iterable[dict], chunk_size: int = 1000):
+def copy_from_records(con: 'psycopg2.connection', table: str, columns: 'list[str]', records: t.Iterable[dict], chunk_size: int = 1000, migration=None):
   ''' Copy from records into a postgres database table through as psycopg2 connection object.
   This is done by constructing a unix pipe, writing the records with csv writer
    into the pipe while loading from the pipe into postgres at the same time.
@@ -115,6 +129,7 @@ def copy_from_records(con: 'psycopg2.connection', table: str, columns: 'list[str
   :param table: The table to write the pandas dataframe into
   :param columns: The columns being written into the table
   :param records: An iterable of records to write
+  :param migration: An optional file to store the insertions for applying to another db
   '''
   import os, csv, more_itertools as mit, threading
   for chunked_records in mit.ichunked(records, chunk_size):
@@ -131,6 +146,18 @@ def copy_from_records(con: 'psycopg2.connection', table: str, columns: 'list[str
       with os.fdopen(w, 'w', closefd=True) as fw:
         writer = csv.DictWriter(fw, fieldnames=columns, delimiter='\t')
         writer.writeheader()
+        if migration:
+          chunked_records = list(chunked_records)
+          print(
+            'insert','into', pgrepr(table, True), '(', ','.join(pgrepr(c, True) for c in columns), ')',
+            'values',
+            ','.join(
+              '(' + ','.join(pgrepr(record[col]) for col in columns) + ')'
+              for record in chunked_records
+            ),
+            ';',
+            file=migration,
+          )
         writer.writerows(chunked_records)
     finally:
       # we wait for the copy_from_tsv thread to finish
