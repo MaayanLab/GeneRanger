@@ -58,9 +58,9 @@ input/gtex-gene-stats.tsv:
 	curl -L -o $@ https://appyters.maayanlab.cloud/storage/Tumor_Gene_Target_Screener/gtex-gene-stats.tsv
 
 ## ARCHS4:
-input/archs4-gene-stats.tsv:
+input/archs4-gene-stats-clean.tsv:
 	mkdir -p input
-	curl -L -o $@ https://appyters.maayanlab.cloud/storage/Tumor_Gene_Target_Screener/archs4-gene-stats.tsv
+	curl -L -o $@ https://appyters.maayanlab.cloud/storage/Tumor_Gene_Target_Screener/archs4-gene-stats-clean.tsv
 
 ## Tabula Sapiens
 input/ts_10x_cell-ontology-class_donors_tissue-labels_v1.tsv:
@@ -83,7 +83,7 @@ input/gtex_proteomics.tsv:
 	curl -L -o $@ https://appyters.maayanlab.cloud/storage/Tumor_Gene_Target_Screener/gtex_proteomics.tsv
 
 .PHONY: fetch
-fetch: input/Homo_sapiens.gene_info.gz input/Homo_sapiens.gene_summary.tsv input/protein_quant_current_normalized.csv.gz input/CCLE_RNAseq_reads.csv input/CCLE_sample_info.csv input/gtex-gene-stats.tsv input/archs4-gene-stats.tsv input/ts_10x_cell-ontology-class_donors_tissue-labels_v1.tsv input/hpm.tsv input/hpa.tsv input/gtex_proteomics.tsv
+fetch: input/Homo_sapiens.gene_info.gz input/Homo_sapiens.gene_summary.tsv input/protein_quant_current_normalized.csv.gz input/CCLE_RNAseq_reads.csv input/CCLE_sample_info.csv input/gtex-gene-stats.tsv input/archs4-gene-stats-clean.tsv input/ts_10x_cell-ontology-class_donors_tissue-labels_v1.tsv input/hpm.tsv input/hpa.tsv input/gtex_proteomics.tsv
 
 
 # PREPROCESS
@@ -121,7 +121,7 @@ ingest/gene_info: preprocessed/Homo_sapiens.gene_info.complete.tsv
 	mkdir -p ingest
 	$(PYTHON) 10_ingest_gene_info.py && touch ingest/gene_info
 
-ingest/ARCHS4: input/archs4-gene-stats.tsv
+ingest/ARCHS4: input/archs4-gene-stats-clean.tsv
 	make PYTHON=$(PYTHON) ensure-db
 	mkdir -p ingest
 	$(PYTHON) 11_ingest_standard_form.py -n ARCHS4 -i $< -o $@
