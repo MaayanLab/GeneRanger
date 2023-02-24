@@ -43,8 +43,8 @@ create function welchs_t_test_vectorized(
   log2fc[np_a_mean_is_zero & ~np_b_mean_is_zero] = -np.inf
   log2fc[~np_a_mean_is_zero & np_b_mean_is_zero] = np.inf
   log2fc[np_a_and_b_are_nonzero] = (
-    np.log2(np_b_mean[np_a_and_b_are_nonzero])
-    - np.log2(np_a_mean[np_a_and_b_are_nonzero])
+    np.log2(np_a_mean[np_a_and_b_are_nonzero])
+    - np.log2(np_b_mean[np_a_and_b_are_nonzero])
   )
   
   mask = ~(
