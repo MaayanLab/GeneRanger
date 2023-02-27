@@ -131,8 +131,10 @@ create function screen_targets(input_data jsonb, background uuid) returns setof 
         (background_data->>'std')::double precision,
         (background_data->>'count')::double precision,
         false,
-        'greater'
+        'two-sided'
     ) as r
+    where
+      r.t > 0
   )
 select *
 from stats
