@@ -155,7 +155,7 @@ create function screen_targets_vectorized(input_data jsonb, background uuid) ret
         array_agg((background_data->>'std')::double precision),
         array_agg((background_data->>'count')::double precision),
         false,
-        'greater',
+        'two-sided',
         0.05,
         'fdr_bh'
       ) as value
@@ -166,6 +166,8 @@ create function screen_targets_vectorized(input_data jsonb, background uuid) ret
     from
       vectorized_stats,
       unnest(vectorized_stats.value) r
+    where
+      r.t > 0
   )
 select *
 from stats
