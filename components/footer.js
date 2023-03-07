@@ -13,9 +13,9 @@ export default function Footer() {
                 <footer className={styles.footer}>
                     <div className={styles.footerLinks}>
                         <div><a className={styles.link} href="mailto:avi.maayan@mssm.edu">Contact Us</a></div>
-                        <div><Link href="/license"><a className={styles.link}>Usage License</a></Link></div>
                         <div><Link href="/api_documentation"><a className={styles.link}>API Documentation</a></Link></div>
                         <div><Link href="/download"><a className={styles.link}>Download</a></Link></div>
+                        <a href='https://creativecommons.org/licenses/by-sa/3.0/' target={'_blank'} rel={"noopener noreferrer"}><img style={{maxWidth: '100px'}} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/CC_BY-SA_3.0.png"} alt={"CC BY-SA 3.0"}></img></a>
                     </div>
                     <div>
                         <a href="https://icahn.mssm.edu/research/bioinformatics" target="_blank" rel="noopener noreferrer"><img src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/icahn_cb.png"} alt="School Logo" width={137} height={80} /></a>
