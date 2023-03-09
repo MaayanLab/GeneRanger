@@ -16,6 +16,8 @@ export default function SideBar(props) {
     var geneList = props.geneList
     var input = props.input
     var HtmlTooltip = props.HtmlTooltip
+    var setInput = props.setinput
+    var submitGene = props.submitgene
 
     let ARCHS4_link = <a href="https://maayanlab.cloud/archs4" target="_blank" rel="noopener noreferrer">ARCHS4</a>;
     let GTEx_transcriptomics_link = <a href="https://gtexportal.org/home" target="_blank" rel="noopener noreferrer">GTEx transcriptomics</a>;

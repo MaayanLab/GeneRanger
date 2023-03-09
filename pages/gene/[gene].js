@@ -159,6 +159,7 @@ export async function getServerSideProps(context) {
         ['HPA', 5],
         ['GTEx_proteomics', 6],
         ['CCLE_proteomics', 7],
+        ['HuBMAP', 8],
     ]);
 
     return { 
@@ -172,8 +173,6 @@ export async function getServerSideProps(context) {
 }
 
 
-
-
 const databases = new Map([
     [0, 'ARCHS4'],
     [1, 'GTEx_transcriptomics'],
@@ -183,7 +182,9 @@ const databases = new Map([
     [5, 'HPA'],
     [6, 'GTEx_proteomics'],
     [7, 'CCLE_proteomics'],
+    [8, 'HuBMAP'],
 ]);
+
 const HtmlTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} classes={{ popper: className }} />
   ))(({ theme }) => ({
@@ -204,7 +205,6 @@ export default function Page(props) {
 
     const [loading, setLoading] = React.useState(false);
 
-    const [compare, setCompare] = React.useState(false);
 
     const doAutocomplete = useCallback(async (input) => {
         let res = await fetch(`${runtimeConfig.NEXT_PUBLIC_ENTRYPOINT||''}/api/gene_list`, {
@@ -519,7 +519,7 @@ export default function Page(props) {
                         </Tooltip>
                     </div>
 
-                    <SideBar database={database} setdatabase={setDatabase} updateurl={updateURL} geneList={geneList} input={input} HtmlTooltip={HtmlTooltip}></SideBar>
+                    <SideBar database={database} setdatabase={setDatabase} updateurl={updateURL} geneList={geneList} input={input} setinput={setInput} HtmlTooltip={HtmlTooltip} submitgene={submitGene}></SideBar>
 
 
                     <div className={styles.graphFlexbox}>
