@@ -235,6 +235,8 @@ export default function Page(props) {
 
     const [loading, setLoading] = React.useState(false);
 
+    const [compare, setCompare] = React.useState(false);
+
     const doAutocomplete = useCallback(async (input) => {
         let res = await fetch(`${runtimeConfig.NEXT_PUBLIC_ENTRYPOINT||''}/api/gene_list`, {
             method: 'POST',
@@ -390,8 +392,6 @@ export default function Page(props) {
     const drawerContents = (
         <Box
             sx={{ width: '375px', height: '100%' }}
-            // onClick={toggleDrawer(false)}
-            // onKeyDown={toggleDrawer(false)}
             className={styles.drawer}
         >       
             <div style={{width: '400px', display: 'flex', flexDirection: 'column', gap: '20px'}}>
@@ -432,9 +432,6 @@ export default function Page(props) {
                         labelPlacement="start"/>
 
                         <div className={styles.logoDesc}>{GTEx_transcriptomics_desc}</div>
-
-                        
-                        
                         <FormControlLabel 
                         className={styles.formItem} 
                         control={<Switch onChange={() => {setDatabase(2); updateURL(2)}} checked={database == 2} />} 
