@@ -18,7 +18,6 @@ export default function SideBar(props) {
     var HtmlTooltip = props.HtmlTooltip
     var setInput = props.setinput
     var submitGene = props.submitgene
-
     let ARCHS4_link = <a href="https://maayanlab.cloud/archs4" target="_blank" rel="noopener noreferrer">ARCHS4</a>;
     let GTEx_transcriptomics_link = <a href="https://gtexportal.org/home" target="_blank" rel="noopener noreferrer">GTEx transcriptomics</a>;
     let Tabula_Sapiens_link = <a href="https://tabula-sapiens-portal.ds.czbiohub.org/" target="_blank" rel="noopener noreferrer">Tabula Sapiens</a>;
@@ -27,6 +26,8 @@ export default function SideBar(props) {
     let HPA_link = <a href="https://www.proteinatlas.org/" target="_blank" rel="noopener noreferrer">Human Protein Atlas (HPA)</a>;
     let GTEx_proteomics_link = <a href="https://tsomics.shinyapps.io/RNA_vs_protein/" target="_blank" rel="noopener noreferrer">GTEx proteomics</a>;
     let CCLE_proteomics_link = <a href="https://gygi.hms.harvard.edu/" target="_blank" rel="noopener noreferrer">Cancer Cell Line Encyclopedia (CCLE)</a>;
+    let HuBMAP_link = <a href="https://hubmapconsortium.org/" target="_blank" rel="noopener noreferrer">HuBMAP</a>;
+
 
     let ARCHS4_links = <><a href="https://maayanlab.cloud/archs4" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/29636450/" target="_blank" rel="noopener noreferrer">citation</a></>
     let GTEx_transcriptomics_links = <><a href="https://gtexportal.org/home" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/23715323/" target="_blank" rel="noopener noreferrer">citation</a></>
@@ -36,6 +37,7 @@ export default function SideBar(props) {
     let HPA_links = <><a href="https://www.proteinatlas.org/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/25613900/" target="_blank" rel="noopener noreferrer">citation</a></>
     let GTEx_proteomics_links = <><a href="https://tsomics.shinyapps.io/RNA_vs_protein/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/32916130/" target="_blank" rel="noopener noreferrer">citation</a></>
     let CCLE_proteomics_links = <><a href="https://gygi.hms.harvard.edu/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/31978347/" target="_blank" rel="noopener noreferrer">citation</a></>
+    let HuBMAP_links =  <><a href="https://hubmapconsortium.org/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/31597973/" target="_blank" rel="noopener noreferrer">citation</a></>
 
     let ARCHS4_str_m = ', developed by the Ma’ayan Lab, contains over 1 million samples of uniformly processed RNA-seq data from the Gene Expression Omnibus (GEO). The samples were aligned using kallisto with an efficient parallelized cloud workflow.';
     let GTEx_transcriptomics_str_m = ' provides bulk RNA-seq data for 54 human tissues collected from postmortem donors. The GTEx database was designed to study the relationship between genetic variation and gene expression across multiple human tissues.';
@@ -45,6 +47,7 @@ export default function SideBar(props) {
     let HPA_str_m = ' contains protein expression data from 44 normal human tissues derived from antibody-based protein profiling using immunohistochemistry.';
     let GTEx_proteomics_str_m = ' dataset has relative protein levels for more than 12,000 proteins across 32 normal human tissues. The data was collected using tandem mass tag (TMT) proteomics to profile tissues collected from 14 postmortem donors.';
     let CCLE_proteomics_str_m = ' proteomics dataset contains protein expression in 375 pan-cancer cell lines. Data was collected by quantitative multiplex mass spectrometry proteomics.';
+    let HuBMAP_str_m = ' HuBMAP integrates its efforts with other funding agencies, programs, consortia, and the biomedical research community at large towards the shared vision of a comprehensive, accessible three-dimensional molecular and cellular atlas of the human body, in health and under various disease conditions.'
 
 
     let ARCHS4_desc = <>{ARCHS4_link}{ARCHS4_str_m} <span style={{whiteSpace: 'nowrap'}}>{ARCHS4_links}</span></>;
@@ -55,6 +58,7 @@ export default function SideBar(props) {
     let HPA_desc = <>The {HPA_link}{HPA_str_m} <span style={{whiteSpace: 'nowrap'}}>{HPA_links}</span></>;
     let GTEx_proteomics_desc = <>The {GTEx_proteomics_link}{GTEx_proteomics_str_m} <span style={{whiteSpace: 'nowrap'}}>{GTEx_proteomics_links}</span></>;
     let CCLE_proteomics_desc = <>The {CCLE_proteomics_link}{CCLE_proteomics_str_m} <span style={{whiteSpace: 'nowrap'}}>{CCLE_proteomics_links}</span></>;
+    let HuBMAP_desc = <>The {HuBMAP_link}{HuBMAP_str_m} <span style={{whiteSpace: 'nowrap'}}>{HuBMAP_links}</span></>;
 
 
     return (
@@ -105,6 +109,22 @@ export default function SideBar(props) {
                         control={<Switch onChange={() => { setDatabase(1); updateURL(1) }} checked={database == 1} />}
                         label={
                             <div className={styles.dbLogo}>
+                                <img className={styles.databaseLogo} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/HubMAP_logo.png"} alt="archs4 Logo" />
+                                <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
+                                    <div className={styles.tooltipText}><a href="https://maayanlab.cloud/archs4/" target="_blank" rel="noopener noreferrer">Website</a> <br /> <a href="https://pubmed.ncbi.nlm.nih.gov/29636450/" target="_blank" rel="noopener noreferrer">Citation</a></div>}>
+                                    <IconButton><InfoIcon color='info' /></IconButton>
+                                </HtmlTooltip>
+                            </div>
+                        }
+                        labelPlacement="start" />
+
+                    <div className={styles.logoDesc}>{HuBMAP_desc}</div>
+
+                    <FormControlLabel
+                        className={styles.formItem}
+                        control={<Switch onChange={() => { setDatabase(2); updateURL(2) }} checked={database == 2} />}
+                        label={
+                            <div className={styles.dbLogo}>
                                 <img className={styles.databaseLogo} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_transcriptomics.png"} alt="GTEx Logo" />
                                 <HtmlTooltip arrow TransitionComponent={Zoom} placement="top" title={
                                     <div className={styles.tooltipText}><a href="https://gtexportal.org/home" target="_blank" rel="noopener noreferrer">Website</a> <br /> <a href="https://pubmed.ncbi.nlm.nih.gov/23715323/" target="_blank" rel="noopener noreferrer">Citation</a></div>}>
@@ -120,7 +140,7 @@ export default function SideBar(props) {
 
                     <FormControlLabel
                         className={styles.formItem}
-                        control={<Switch onChange={() => { setDatabase(2); updateURL(2) }} checked={database == 2} />}
+                        control={<Switch onChange={() => { setDatabase(3); updateURL(3) }} checked={database == 3} />}
                         label={
                             <div className={styles.dbLogo}>
                                 <img className={styles.databaseLogo} style={{ borderRadius: '8px' }} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/tabula_sapiens.png"} alt="Tabula Sapiens Logo" />
@@ -136,7 +156,7 @@ export default function SideBar(props) {
 
                     <FormControlLabel
                         className={styles.formItem}
-                        control={<Switch onChange={() => { setDatabase(3); updateURL(3) }} checked={database == 3} />}
+                        control={<Switch onChange={() => { setDatabase(4); updateURL(4) }} checked={database == 4} />}
                         label={
                             <div className={styles.dbLogo}>
                                 <img className={styles.databaseLogo} style={{ borderRadius: '3px' }} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/CCLE_transcriptomics.jpeg"} alt="CCLE Logo" />
@@ -159,7 +179,7 @@ export default function SideBar(props) {
 
                     <FormControlLabel
                         className={styles.formItem}
-                        control={<Switch onChange={() => { setDatabase(4); updateURL(4) }} checked={database == 4} />}
+                        control={<Switch onChange={() => { setDatabase(5); updateURL(5) }} checked={database == 5} />}
                         label={
                             <div className={styles.dbLogo}>
                                 <img className={styles.databaseLogo} style={{ width: '200px', marginRight: '0' }} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/HPM.gif"} alt="HPM Logo" />
@@ -175,7 +195,7 @@ export default function SideBar(props) {
 
                     <FormControlLabel
                         className={styles.formItem}
-                        control={<Switch onChange={() => { setDatabase(5); updateURL(5) }} checked={database == 5} />}
+                        control={<Switch onChange={() => { setDatabase(6); updateURL(6) }} checked={database == 6} />}
                         label={
                             <div className={styles.dbLogo}>
                                 <img className={styles.databaseLogo} style={{ width: '200px', padding: '10px', marginLeft: '0px', marginRight: '-20px', backgroundColor: '#8eaabe', borderRadius: '5px' }} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/HPA.svg"} alt="HPA Logo" />
@@ -191,7 +211,7 @@ export default function SideBar(props) {
 
                     <FormControlLabel
                         className={styles.formItem}
-                        control={<Switch onChange={() => { setDatabase(6); updateURL(6) }} checked={database == 6} />}
+                        control={<Switch onChange={() => { setDatabase(7); updateURL(7) }} checked={database == 7} />}
                         label={
                             <div className={styles.dbLogo}>
                                 <img className={styles.databaseLogo} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_proteomics.png"} alt="GTEx Logo" />
@@ -207,7 +227,7 @@ export default function SideBar(props) {
 
                     <FormControlLabel
                         className={styles.formItem}
-                        control={<Switch onChange={() => { setDatabase(7); updateURL(7) }} checked={database == 7} />}
+                        control={<Switch onChange={() => { setDatabase(8); updateURL(8) }} checked={database == 8} />}
                         label={
                             <div className={styles.dbLogo}>
                                 <img className={styles.databaseLogo} style={{ borderRadius: '3px' }} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/CCLE_proteomics.jpeg"} alt="CCLE Logo" />

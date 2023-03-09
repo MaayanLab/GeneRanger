@@ -88,6 +88,7 @@ export default function TabsViewer(props) {
     let HPA_link = <a href="https://www.proteinatlas.org/" target="_blank" rel="noopener noreferrer">Human Protein Atlas (HPA)</a>;
     let GTEx_proteomics_link = <a href="https://tsomics.shinyapps.io/RNA_vs_protein/" target="_blank" rel="noopener noreferrer">GTEx proteomics</a>;
     let CCLE_proteomics_link = <a href="https://gygi.hms.harvard.edu/" target="_blank" rel="noopener noreferrer">Cancer Cell Line Encyclopedia (CCLE)</a>;
+    let HuBMAP_link = <a href="https://hubmapconsortium.org/" target="_blank" rel="noopener noreferrer">HuBMAP</a>;
 
     let ARCHS4_str = 'ARCHS4, developed by the Ma’ayan Lab, contains over 1 million samples of uniformly processed RNA-seq data from the Gene Expression Omnibus (GEO). The samples were aligned using kallisto with an efficient parallelized cloud workflow.';
     let GTEx_transcriptomics_str = 'GTEx transcriptomics provides bulk RNA-seq data for 54 human tissues collected from postmortem donors. The GTEx database was designed to study the relationship between genetic variation and gene expression across multiple human tissues.';
@@ -97,6 +98,7 @@ export default function TabsViewer(props) {
     let HPA_str = 'The Human Protein Atlas (HPA) contains protein expression data from 44 normal human tissues derived from antibody-based protein profiling using immunohistochemistry.';
     let GTEx_proteomics_str = 'The GTEx proteomics dataset has relative protein levels for more than 12,000 proteins across 32 normal human tissues. The data was collected using tandem mass tag (TMT) proteomics to profile tissues collected from 14 postmortem donors.';
     let CCLE_proteomics_str = 'The Cancer Cell Line Encyclopedia (CCLE) proteomics dataset contains protein expression in 375 pan-cancer cell lines. Data was collected by quantitative multiplex mass spectrometry proteomics.';
+    let HuBMAP_str = ' HuBMAP integrates its efforts with other funding agencies, programs, consortia, and the biomedical research community at large towards the shared vision of a comprehensive, accessible three-dimensional molecular and cellular atlas of the human body, in health and under various disease conditions.'
 
     let ARCHS4_links = <><a href="https://maayanlab.cloud/archs4" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/29636450/" target="_blank" rel="noopener noreferrer">citation</a></>
     let GTEx_transcriptomics_links = <><a href="https://gtexportal.org/home" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/23715323/" target="_blank" rel="noopener noreferrer">citation</a></>
@@ -106,6 +108,7 @@ export default function TabsViewer(props) {
     let HPA_links = <><a href="https://www.proteinatlas.org/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/25613900/" target="_blank" rel="noopener noreferrer">citation</a></>
     let GTEx_proteomics_links = <><a href="https://tsomics.shinyapps.io/RNA_vs_protein/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/32916130/" target="_blank" rel="noopener noreferrer">citation</a></>
     let CCLE_proteomics_links = <><a href="https://gygi.hms.harvard.edu/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/31978347/" target="_blank" rel="noopener noreferrer">citation</a></>
+    let HuBMAP_links =  <><a href="https://hubmapconsortium.org/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/31597973/" target="_blank" rel="noopener noreferrer">citation</a></>
 
     let ARCHS4_desc_d = <>{ARCHS4_str} <span style={{whiteSpace: 'nowrap'}}>{ARCHS4_links}</span></>;
     let GTEx_transcriptomics_desc_d = <>{GTEx_transcriptomics_str} <span style={{whiteSpace: 'nowrap'}}>{GTEx_transcriptomics_links}</span></>;
@@ -115,6 +118,7 @@ export default function TabsViewer(props) {
     let HPA_desc_d = <>{HPA_str} <span style={{whiteSpace: 'nowrap'}}>{HPA_links}</span></>;
     let GTEx_proteomics_desc_d = <>{GTEx_proteomics_str} <span style={{whiteSpace: 'nowrap'}}>{GTEx_proteomics_links}</span></>;
     let CCLE_proteomics_desc_d = <>{CCLE_proteomics_str} <span style={{whiteSpace: 'nowrap'}}>{CCLE_proteomics_links}</span></>;
+    let HuBMAP_desc_d = <>{HuBMAP_str} <span style={{whiteSpace: 'nowrap'}}>{HuBMAP_links}</span></>;
 
     let archs4_title = props.gene + ' Expression across ARCHS4 Cells & Tissues (RNA-seq)';
     let gtex_transcriptomics_title = props.gene + ' Expression across GTEx Tissues (RNA-seq)';
@@ -124,6 +128,7 @@ export default function TabsViewer(props) {
     let gtex_proteomics_title = props.gene + ' Protein Expression across GTEx Tissues';
     let ccle_transcriptomics_title = props.gene + ' Expression across CCLE Cell Lines';
     let ccle_proteomics_title = props.gene + ' Protein Expression across CCLE Cell Lines';
+    let hubmap_title = props.gene + ' Expression across Tissues  (RNA-seq)';
 
     return (
     <div style={{ width: '80%' }}>
@@ -140,47 +145,54 @@ export default function TabsViewer(props) {
                     {
                         (database == 1)
                             ?
+                            <Tab icon={<img className={styles.tabLogo} alt="GTEx logo" src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/HuBMAP_logo.png"} />} />
+                            :
+                            <Tab icon={<img className={styles.grayTabLogo} alt="GTEx logo" src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/HuBMAP_logo.png"} />} />
+                    }
+                    {
+                        (database == 2)
+                            ?
                             <Tab icon={<img className={styles.tabLogo} alt="GTEx logo" src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_transcriptomics.png"} />} />
                             :
                             <Tab icon={<img className={styles.grayTabLogo} alt="GTEx logo" src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_transcriptomics.png"} />} />
                     }
                     {
-                        (database == 2)
+                        (database == 3)
                             ?
                             <Tab icon={<img className={styles.tabLogo} alt="Tabula Sapiens logo" src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/tabula_sapiens.png"} />} />
                             :
                             <Tab icon={<img className={styles.grayTabLogo} alt="Tabula Sapiens logo" src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/tabula_sapiens.png"} />} />
                     }
                     {
-                        (database == 3)
+                        (database == 4)
                             ?
                             <Tab icon={<img className={styles.tabLogo} alt="CCLE logo" src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/CCLE_transcriptomics.jpeg"} />} />
                             :
                             <Tab icon={<img className={styles.grayTabLogo} alt="CCLE logo" src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/CCLE_transcriptomics.jpeg"} />} />
                     }
                     {
-                        (database == 4)
+                        (database == 5)
                             ?
                             <Tab icon={<img className={styles.tabLogo} alt="HPM logo" src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/HPM.gif"} />} />
                             :
                             <Tab icon={<img className={styles.grayTabLogo} alt="HPM logo" src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/HPM.gif"} />} />
                     }
                     {
-                        (database == 5)
+                        (database == 6)
                             ?
                             <Tab icon={<img className={styles.tabLogo} alt="HPA logo" src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/HPA.svg"} />} />
                             :
                             <Tab icon={<img className={styles.grayTabLogo} alt="HPA logo" src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/HPA.svg"} />} />
                     }
                     {
-                        (database == 6)
+                        (database == 7)
                             ?
                             <Tab icon={<img className={styles.tabLogo} alt="GTEx logo" src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_proteomics.png"} />} />
                             :
                             <Tab icon={<img className={styles.grayTabLogo} alt="GTEx logo" src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_proteomics.png"} />} />
                     }
                     {
-                        (database == 7)
+                        (database == 8)
                             ?
                             <Tab icon={<img className={styles.tabLogo} alt="CCLE logo" src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/CCLE_proteomics.jpeg"} />} />
                             :
@@ -226,6 +238,36 @@ export default function TabsViewer(props) {
                         ?
                         <>
                             <h1 style={{ textAlign: 'center' }}>{props.gene}</h1>
+                            <GeneAndGraphDescription NCBI_data={NCBI_data} gene={props.gene} database={HuBMAP_link} database_desc={HuBMAP_desc_d} data={gtex_transcriptomics}/>
+                            <div style={{ height: '1500px' }}>
+                                <Plot
+                                    data={[gtex_transcriptomics]}
+                                    layout={{
+                                        title: hubmap_title, yaxis: { automargin: true },
+                                        xaxis: {
+                                            title: {
+                                                text: 'RNA counts',
+                                            }
+                                        },
+                                        showlegend: false,
+                                    }}
+                                    style={{ width: '100%', height: '100%' }}
+                                    config={{ responsive: true }}
+                                    id={"gtex_transcriptomics"}
+                                />
+                            </div>
+                        </>
+
+                        :
+                        <GraphMissing />
+                }
+            </TabPanel>
+            <TabPanel style={{ width: '100%' }} value={database} index={2}>
+                {
+                    gtex_transcriptomics != null
+                        ?
+                        <>
+                            <h1 style={{ textAlign: 'center' }}>{props.gene}</h1>
                             <GeneAndGraphDescription NCBI_data={NCBI_data} gene={props.gene} database={GTEx_transcriptomics_link} database_desc={GTEx_transcriptomics_desc_d} data={gtex_transcriptomics}/>
                             <div style={{ height: '1500px' }}>
                                 <Plot
@@ -250,7 +292,7 @@ export default function TabsViewer(props) {
                         <GraphMissing />
                 }
             </TabPanel>
-            <TabPanel value={database} index={2}>
+            <TabPanel value={database} index={3}>
                 {
                     tabula_sapiens != null
                         ?
@@ -282,7 +324,7 @@ export default function TabsViewer(props) {
                         <GraphMissing />
                 }
             </TabPanel>
-            <TabPanel value={database} index={3}>
+            <TabPanel value={database} index={4}>
                 {
                     ccle_transcriptomics != null
                         ?
@@ -313,7 +355,7 @@ export default function TabsViewer(props) {
                         <GraphMissing />
                 }
             </TabPanel>
-            <TabPanel value={database} index={4}>
+            <TabPanel value={database} index={5}>
                 {
                     hpm != null
                         ?
@@ -343,7 +385,7 @@ export default function TabsViewer(props) {
                         <GraphMissing />
                 }
             </TabPanel>
-            <TabPanel value={database} index={5}>
+            <TabPanel value={database} index={6}>
                 {
                     hpa != null
                         ?
@@ -376,7 +418,7 @@ export default function TabsViewer(props) {
                         <GraphMissing />
                 }
             </TabPanel>
-            <TabPanel value={database} index={6}>
+            <TabPanel value={database} index={7}>
                 {
                     gtex_proteomics != null
                         ?
@@ -407,7 +449,7 @@ export default function TabsViewer(props) {
                         <GraphMissing />
                 }
             </TabPanel>
-            <TabPanel value={database} index={7}>
+            <TabPanel value={database} index={8}>
                 {
                     ccle_proteomics != null
                         ?
