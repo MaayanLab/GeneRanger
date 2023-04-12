@@ -22,10 +22,10 @@ function createCSV(gene, data, dbname) {
     return csvData;
 }
 
-function GeneAndGraphDescription({ NCBI_data, gene, database, database_desc, data }) {
+function GeneAndGraphDescription({ NCBI_data, gene, transcript, database, database_desc, data }) {
 
     // Gene links
-
+    let Ensembl_link = 'https://useast.ensembl.org/Homo_sapiens/Transcript/Summary?t=' + transcript;
     let NCBI_entrez = 'https://www.ncbi.nlm.nih.gov/gene/?term=' + gene;
     let GeneCards = 'https://www.genecards.org/cgi-bin/carddisp.pl?gene=' + gene;
     let Harmonizome = 'https://maayanlab.cloud/Harmonizome/gene/' + gene;
@@ -72,6 +72,7 @@ function GeneAndGraphDescription({ NCBI_data, gene, database, database_desc, dat
             <div><b>Gene pages on other sites:</b></div>
             <br />
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '25px' }}>
+                {transcript && <a className={styles.geneLink} href={Ensembl_link} target="_blank" rel="noopener noreferrer">Ensembl</a>}
                 <a className={styles.geneLink} href={ARCHS4_link} target="_blank" rel="noopener noreferrer">ARCHS4</a>
                 <a className={styles.geneLink} href={Harmonizome} target="_blank" rel="noopener noreferrer">Harmonizome</a>
                 <a className={styles.geneLink} href={NCBI_entrez} target="_blank" rel="noopener noreferrer">Entrez Gene</a>

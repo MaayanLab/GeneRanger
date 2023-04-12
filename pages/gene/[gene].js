@@ -14,6 +14,8 @@ import Header from '../../components/header';
 import Head from '../../components/head';
 import { styled } from '@mui/material/styles';
 import InfoIcon from '@mui/icons-material/Info';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import IconButton from '@mui/material/IconButton';
 import GraphMissing from '../../components/graphMissing';
 import GeneAndGraphDescription from '../../components/geneAndGraphDescription';
@@ -582,6 +584,24 @@ export default function Page(props) {
 
                     <div className={styles.dbGroup}>
                         <div style={{marginBottom: '15px'}}>
+                            <ToggleButtonGroup
+                                color="secondary"
+                                value={true}
+                                exclusive
+                                sx={{ marginBottom: '10px'}}
+                                onChange={(event, newValue) => {
+                                    if (newValue !== null)
+                                    setInput('');
+                                    setLoading(true);
+                                    router.push('/transcript/ENST00000000233?database=ARCHS4_transcript').then(() => {
+                                        setLoading(false);
+                                    })
+                                }
+                            }
+                            >
+                                <ToggleButton value={true}>Gene</ToggleButton>
+                                <ToggleButton value={false}>Transcript</ToggleButton>
+                            </ToggleButtonGroup>
                             <Autocomplete
                                 disablePortal
                                 disableClearable
