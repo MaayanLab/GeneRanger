@@ -43,6 +43,7 @@ export async function getServerSideProps(context) {
             }
         }
     }
+    var gene = '';
 
     let gene_desc = await prisma.$queryRaw
         `select
@@ -54,6 +55,7 @@ export async function getServerSideProps(context) {
         where mapper.transcript = ${context.query.transcript} and gene_info.symbol = mapper.gene
         `
     if (gene_desc.length != 0) {
+        gene = gene_desc[0].gene
         gene_desc = gene_desc[0].summary;
         if (gene_desc.indexOf('[') != -1) {
             gene_desc = gene_desc.substring(0, gene_desc.lastIndexOf('[') - 1)
@@ -144,6 +146,7 @@ export async function getServerSideProps(context) {
     return {
         props: {
             transcript: context.query.transcript,
+            gene: gene,
             database: databases.get(context.query.database),
             sorted_data: sorted_data,
             NCBI_data: gene_desc,
@@ -326,7 +329,7 @@ export default function Page(props) {
     let gtex_proteomics_title = props.gene + ' Protein Expression across GTEx Tissues';
     let ccle_transcriptomics_title = props.gene + ' Expression across CCLE Cell Lines';
     let ccle_proteomics_title = props.gene + ' Protein Expression across CCLE Cell Lines';
-
+    console.log(props.gene)
     const drawerContents = (
         <Box
             sx={{ width: '375px', height: '100%' }}

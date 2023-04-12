@@ -94,9 +94,12 @@ export default async function handler(req, res) {
 
             }
 
+            
+            
+
             const props = {
                 sorted_data: sorted_data,
-                NCBI_data: gene_desc
+                NCBI_data: gene_desc,
             }
 
 

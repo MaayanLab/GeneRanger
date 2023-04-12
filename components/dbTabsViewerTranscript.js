@@ -16,13 +16,16 @@ const Plot = dynamic(() => import('react-plotly.js'), {
 });
 
 
-export default function DbTabsViewer(props) {
+export default function DbTabsViewerTrancript(props) {
     const runtimeConfig = useRuntimeConfig()
     var database = props.database
     var setDatabase = props.setdatabase
     var result = props.sorted_data
     var transcript = props.transcript
+    var gene = props.gene
     var NCBI_data = props.NCBI_data
+
+
 
     function TabPanel(props) {
         const {children, value, index, classes, ...other} = props;
@@ -105,7 +108,7 @@ export default function DbTabsViewer(props) {
                         ?
                         <>
                             <h1 style={{ textAlign: 'center' }}>{props.transcript}</h1>
-                            <GeneAndGraphDescription NCBI_data={NCBI_data} transcript={transcript} gene={props.transcript} database={ARCHS4_link} database_desc={ARCHS4_desc_d} data={archs4_transcript}/>
+                            <GeneAndGraphDescription NCBI_data={NCBI_data} transcript={transcript} gene={gene} database={ARCHS4_link} database_desc={ARCHS4_desc_d} data={archs4_transcript}/>
                             <div style={{ height: '13000px' }}>
                                 <Plot
                                     data={[archs4_transcript]}
@@ -137,7 +140,7 @@ export default function DbTabsViewer(props) {
                         ?
                         <>
                             <h1 style={{ textAlign: 'center' }}>{props.transcript}</h1>
-                            <GeneAndGraphDescription NCBI_data={NCBI_data} gene={props.transcript} transcript={transcript} database={GTEx_transcriptomics_link} database_desc={GTEx_transcriptomics_desc_d} data={gtex_transcript}/>
+                            <GeneAndGraphDescription NCBI_data={NCBI_data} gene={gene} transcript={transcript} database={GTEx_transcriptomics_link} database_desc={GTEx_transcriptomics_desc_d} data={gtex_transcript}/>
                             <div style={{ height: '1500px' }}>
                                 <Plot
                                     data={[gtex_transcript]}

@@ -22,7 +22,8 @@ function createCSV(gene, data, dbname) {
     return csvData;
 }
 
-function GeneAndGraphDescription({ NCBI_data, gene, transcript, database, database_desc, data }) {
+function GeneAndGraphDescription({ NCBI_data, gene, transcript, database, database_desc, data, mappings }) {
+
 
     // Gene links
     let Ensembl_link = 'https://useast.ensembl.org/Homo_sapiens/Transcript/Summary?t=' + transcript;
@@ -31,6 +32,7 @@ function GeneAndGraphDescription({ NCBI_data, gene, transcript, database, databa
     let Harmonizome = 'https://maayanlab.cloud/Harmonizome/gene/' + gene;
     let ARCHS4_link = 'https://maayanlab.cloud/archs4/gene/' + gene;
     let GDLPA = 'https://cfde-gene-pages.cloud/gene/' + gene + '?CF=false&PS=true&Ag=true&gene=false&variant=false';
+
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -68,6 +70,7 @@ function GeneAndGraphDescription({ NCBI_data, gene, transcript, database, databa
                     :
                         <> */}
             <div><b>Short description (from <a href={NCBI_entrez} target="_blank" rel="noopener noreferrer">NCBI&apos;s Gene Database</a>):</b> {NCBI_data}</div>
+            {/* {View Expression of $gene} */}
             <br />
             <div><b>Gene pages on other sites:</b></div>
             <br />
