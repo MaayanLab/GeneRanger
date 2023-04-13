@@ -63,6 +63,15 @@ export async function getServerSideProps(context) {
         gene_desc = "No gene description available."
     }
 
+    let mappings = await prisma.$queryRaw
+    `
+        select 
+            mapper.transcript
+        from
+            mapper
+        where mapper.gene = ${context.query.gene};
+    `
+
     let all_db_data = await prisma.$queryRaw
     `
         select d.dbname, d.values as df
@@ -173,7 +182,8 @@ export async function getServerSideProps(context) {
             gene: context.query.gene,
             database: databases.get(context.query.database), 
             sorted_data: sorted_data,
-            NCBI_data: gene_desc
+            NCBI_data: gene_desc,
+            mappings: mappings
         }
     }
 }
@@ -857,7 +867,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={ARCHS4_link} database_desc={ARCHS4_desc_d} data={props.sorted_data.ARCHS4}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={ARCHS4_link} database_desc={ARCHS4_desc_d} data={props.sorted_data.ARCHS4} mappings={props.mappings}/>
                                                         <div style={{height: '13000px'}}>
                                                             <Plot
                                                                 data={[archs4]}
@@ -886,7 +896,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={GTEx_transcriptomics_link} database_desc={GTEx_transcriptomics_desc_d}  data={props.sorted_data.GTEx_transcriptomics}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={GTEx_transcriptomics_link} database_desc={GTEx_transcriptomics_desc_d}  data={props.sorted_data.GTEx_transcriptomics} mappings={props.mappings}/>
                                                         <div style={{height: '1500px'}}>
                                                             <Plot
                                                                 data={[gtex_transcriptomics]}
@@ -913,7 +923,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={Tabula_Sapiens_link} database_desc={Tabula_Sapiens_desc_d}  data={props.sorted_data.Tabula_Sapiens}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={Tabula_Sapiens_link} database_desc={Tabula_Sapiens_desc_d}  data={props.sorted_data.Tabula_Sapiens} mappings={props.mappings}/>
                                                         <div style={{height: '13000px'}}>
                                                             <Plot
                                                                 data={[tabula_sapiens]}
@@ -942,7 +952,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={CCLE_transcriptomics_link} database_desc={CCLE_transcriptomics_desc_d}  data={props.sorted_data.CCLE_transcriptomics}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={CCLE_transcriptomics_link} database_desc={CCLE_transcriptomics_desc_d}  data={props.sorted_data.CCLE_transcriptomics} mappings={props.mappings}/>
                                                         <div style={{height: '50000px'}}>
                                                             <Plot
                                                                 data={[ccle_transcriptomics]}
@@ -972,7 +982,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={HPM_link} database_desc={HPM_desc_d}  data={props.sorted_data.HPM}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={HPM_link} database_desc={HPM_desc_d}  data={props.sorted_data.HPM} mappings={props.mappings}/>
                                                         <div style={{height: '1000px'}}>
                                                             <Plot
                                                                 data={[hpm]}
@@ -1001,7 +1011,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={HPA_link} database_desc={HPA_desc_d}  data={props.sorted_data.HPA}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={HPA_link} database_desc={HPA_desc_d}  data={props.sorted_data.HPA} mappings={props.mappings}/>
                                                         <div style={{height: '4500px'}}>
                                                             <Plot
                                                                 data={[hpa]}
@@ -1033,7 +1043,7 @@ export default function Page(props) {
                                                 ? 
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={GTEx_proteomics_link} database_desc={GTEx_proteomics_desc_d}  data={props.sorted_data.GTEx_proteomics}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={GTEx_proteomics_link} database_desc={GTEx_proteomics_desc_d}  data={props.sorted_data.GTEx_proteomics} mappings={props.mappings}/>
                                                         <div style={{height: (gtex_proteomics_length * 50).toString() + 'px'}}>
                                                             <Plot
                                                                 data={[gtex_proteomics]}
@@ -1062,7 +1072,7 @@ export default function Page(props) {
                                                 ?
                                                     <>
                                                         <h1 style={{textAlign: 'center'}}>{props.gene}</h1>
-                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={CCLE_proteomics_link} database_desc={CCLE_proteomics_desc_d}  data={props.sorted_data.CCLE_proteomics}/>
+                                                        <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={CCLE_proteomics_link} database_desc={CCLE_proteomics_desc_d}  data={props.sorted_data.CCLE_proteomics} mappings={props.mappings}/>
                                                         <div style={{height: (ccle_proteomics_length * 25).toString() + 'px'}}>
                                                             <Plot
                                                                 data={[ccle_proteomics]}
