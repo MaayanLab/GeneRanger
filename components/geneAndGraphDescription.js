@@ -122,7 +122,7 @@ function GeneAndGraphDescription({ NCBI_data, gene, transcript, database, databa
                 }}
             >
                 {mappings.map((element) => {
-                    return <MenuItem onClick={() => {handleClose2; router.push(`/transcript/${element.transcript}?database=ARCHS4_transcript`)}}>{element.transcript}</MenuItem>
+                    return <MenuItem key={element.transcript} onClick={() => {handleClose2; router.push(`/transcript/${element.transcript}?database=ARCHS4_transcript`)}}>{element.transcript}</MenuItem>
                 })
                 }
             </Menu>
