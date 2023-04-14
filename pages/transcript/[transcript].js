@@ -113,7 +113,7 @@ export async function getServerSideProps(context) {
                     mean: mean,
                     lowerfence: lowerfence,
                     upperfence: upperfence,
-                    y: names,
+                    names: names,
                     orientation: 'h',
                     type: 'box'
                 }
@@ -126,7 +126,7 @@ export async function getServerSideProps(context) {
                     sd: std,
                     lowerfence: lowerfence,
                     upperfence: upperfence,
-                    y: names,
+                    names: names,
                     orientation: 'h',
                     type: 'box'
                 }
@@ -503,7 +503,7 @@ export default function Page(props) {
                     </div>
                     <div className={styles.graphFlexbox}>
 
-                        <div className={styles.secondAutocomplete} style={{ marginTop: '15px' }}>
+                        <div className={styles.secondAutocomplete} style={{ marginTop: '15px', textAlign: 'center' }}>
                             <ToggleButtonGroup
                                     color="secondary"
                                     value={false}
@@ -541,9 +541,9 @@ export default function Page(props) {
 
                         </div>
 
-                        
+                        <DbTabsViewerTrascript sorted_data={props.sorted_data} database={database} setdatabase={setDatabase} NCBI_data={props.NCBI_data} gene={props.gene} transcript={props.transcript}/>
                     </div>
-                    <DbTabsViewerTrascript sorted_data={props.sorted_data} database={database} setdatabase={setDatabase} NCBI_data={props.NCBI_data} gene={props.gene} transcript={props.transcript}/>
+                    
                 </div>
 
                 <Footer />

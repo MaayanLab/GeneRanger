@@ -4,6 +4,10 @@ import styles from '../styles/GeneDescription.module.css';
 import { useRouter } from 'next/router'
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+
+
 
 function createCSV(gene, data, dbname) {
     var csvData = '';
@@ -25,7 +29,7 @@ function createCSV(gene, data, dbname) {
     return csvData;
 }
 
-function GeneAndGraphDescription({ NCBI_data, gene, transcript, database, database_desc, data, mappings }) {
+function GeneAndGraphDescription({ NCBI_data, gene, transcript, database, database_desc, data, mappings, horizontal, setHorizontal }) {
 
     const router = useRouter();
 
@@ -66,19 +70,18 @@ function GeneAndGraphDescription({ NCBI_data, gene, transcript, database, databa
     const [anchorEl2, setAnchorEl2] = React.useState(null);
     const open2 = Boolean(anchorEl2);
     const handleClick2 = (event) => {
-      setAnchorEl2(event.currentTarget);
+        setAnchorEl2(event.currentTarget);
     };
     const handleClose2 = () => {
         setAnchorEl2(null);
     };
 
-
     return (
         <>
             <div><b>Short description (from <a href={NCBI_entrez} target="_blank" rel="noopener noreferrer">NCBI&apos;s Gene Database</a>):</b> {NCBI_data}</div>
 
-            
-                
+
+
             <div><b>Gene pages on other sites:</b></div>
             <br />
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '25px' }}>
@@ -96,64 +99,80 @@ function GeneAndGraphDescription({ NCBI_data, gene, transcript, database, databa
                         {`View Expression of ${gene}`}
                     </Button>}
                     {mappings && <div>
-            <Button
-                id="demo-positioned-button"
-                aria-controls={open2 ? 'demo-positioned-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open2 ? 'true' : undefined}
-                onClick={handleClick2}
-                variant='outlined'
-            >
-                View Transcript Expression
-            </Button>
-            <Menu
-                id="demo-positioned-menu"
-                aria-labelledby="demo-positioned-button"
-                anchorEl={anchorEl2}
-                open={open2}
-                onClose={handleClose2}
-                anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-                }}
-                transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-                }}
-            >
-                {mappings.map((element) => {
-                    return <MenuItem key={element.transcript} onClick={() => {handleClose2; router.push(`/transcript/${element.transcript}?database=ARCHS4_transcript`)}}>{element.transcript}</MenuItem>
-                })
-                }
-            </Menu>
-            </div>}
+                        <Button
+                            id="demo-positioned-button"
+                            aria-controls={open2 ? 'demo-positioned-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open2 ? 'true' : undefined}
+                            onClick={handleClick2}
+                            variant='outlined'
+                        >
+                            View Transcript Expression
+                        </Button>
+                        <Menu
+                            id="demo-positioned-menu"
+                            aria-labelledby="demo-positioned-button"
+                            anchorEl={anchorEl2}
+                            open={open2}
+                            onClose={handleClose2}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }}
+                        >
+                            {mappings.map((element) => {
+                                return <MenuItem key={element.transcript} onClick={() => { handleClose2; router.push(`/transcript/${element.transcript}?database=ARCHS4_transcript`) }}>{element.transcript}</MenuItem>
+                            })}
+                        </Menu>
+                    </div>}
                 </div>
             </div>
             <br />
             <div><b>{database}:</b> {database_desc}</div>
-
-            <div className={styles.download}>
-                <Button
-                    id="basic-button"
-                    aria-controls={open ? 'basic-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={handleClick}
-                >
-                    Download plot data
-                </Button>
-                <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                        'aria-labelledby': 'basic-button',
-                    }}
-                >
-                    <Button download={gene + '-' + database.props.children + '.csv'} onClick={formatCSV}>CSV</Button>
-                    <Button href={`data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(data))}`} download={gene + '-' + database.props.children + '.json'} onClick={handleClose}>JSON</Button>
-                </Menu>
+            <div style={{ display: 'flex', margin: '1%', textAlign: 'right', justifyContent: 'end' }}>
+                <div >
+                    <ToggleButtonGroup
+                        color="secondary"
+                        value={horizontal}
+                        exclusive
+                        sx={{ marginBottom: '10px' }}
+                        onChange={(event, newValue) => {
+                            if (newValue !== null)
+                                setHorizontal(newValue);
+                        }
+                        }
+                    >
+                        <ToggleButton value={false}>Vertical</ToggleButton>
+                        <ToggleButton value={true}>Horizontal</ToggleButton>
+                    </ToggleButtonGroup>
+                </div>
+                <div className={styles.download}>
+                    <Button
+                        id="basic-button"
+                        aria-controls={open ? 'basic-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? 'true' : undefined}
+                        onClick={handleClick}
+                    >
+                        Download plot data
+                    </Button>
+                    <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        MenuListProps={{
+                            'aria-labelledby': 'basic-button',
+                        }}
+                    >
+                        <Button download={gene + '-' + database.props.children + '.csv'} onClick={formatCSV}>CSV</Button>
+                        <Button href={`data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(data))}`} download={gene + '-' + database.props.children + '.json'} onClick={handleClose}>JSON</Button>
+                    </Menu>
+                </div>
             </div>
         </>
     );
