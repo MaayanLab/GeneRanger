@@ -43,6 +43,7 @@ export async function getServerSideProps(context) {
             }
         }
     }
+    var gene = '';
 
     let gene_desc = await prisma.$queryRaw
         `select
@@ -54,6 +55,7 @@ export async function getServerSideProps(context) {
         where mapper.transcript = ${context.query.transcript} and gene_info.symbol = mapper.gene
         `
     if (gene_desc.length != 0) {
+        gene = gene_desc[0].gene
         gene_desc = gene_desc[0].summary;
         if (gene_desc.indexOf('[') != -1) {
             gene_desc = gene_desc.substring(0, gene_desc.lastIndexOf('[') - 1)
@@ -111,7 +113,7 @@ export async function getServerSideProps(context) {
                     mean: mean,
                     lowerfence: lowerfence,
                     upperfence: upperfence,
-                    y: names,
+                    names: names,
                     orientation: 'h',
                     type: 'box'
                 }
@@ -124,7 +126,7 @@ export async function getServerSideProps(context) {
                     sd: std,
                     lowerfence: lowerfence,
                     upperfence: upperfence,
-                    y: names,
+                    names: names,
                     orientation: 'h',
                     type: 'box'
                 }
@@ -144,6 +146,7 @@ export async function getServerSideProps(context) {
     return {
         props: {
             transcript: context.query.transcript,
+            gene: gene,
             database: databases.get(context.query.database),
             sorted_data: sorted_data,
             NCBI_data: gene_desc,
@@ -266,66 +269,16 @@ export default function Page(props) {
 
     let ARCHS4_link = <a href="https://maayanlab.cloud/archs4" target="_blank" rel="noopener noreferrer">ARCHS4</a>;
     let GTEx_transcriptomics_link = <a href="https://gtexportal.org/home" target="_blank" rel="noopener noreferrer">GTEx transcriptomics</a>;
-    let Tabula_Sapiens_link = <a href="https://tabula-sapiens-portal.ds.czbiohub.org/" target="_blank" rel="noopener noreferrer">Tabula Sapiens</a>;
-    let CCLE_transcriptomics_link = <a href="https://sites.broadinstitute.org/ccle/" target="_blank" rel="noopener noreferrer">Cancer Cell Line Encyclopedia (CCLE)</a>;
-    let HPM_link = <a href="http://www.humanproteomemap.org/" target="_blank" rel="noopener noreferrer">Human Proteome Map (HPM)</a>;
-    let HPA_link = <a href="https://www.proteinatlas.org/" target="_blank" rel="noopener noreferrer">Human Protein Atlas (HPA)</a>;
-    let GTEx_proteomics_link = <a href="https://tsomics.shinyapps.io/RNA_vs_protein/" target="_blank" rel="noopener noreferrer">GTEx proteomics</a>;
-    let CCLE_proteomics_link = <a href="https://gygi.hms.harvard.edu/" target="_blank" rel="noopener noreferrer">Cancer Cell Line Encyclopedia (CCLE)</a>;
-
-    let ARCHS4_str = 'ARCHS4, developed by the Ma’ayan Lab, contains over 1 million samples of uniformly processed RNA-seq data from the Gene Expression Omnibus (GEO). The samples were aligned using kallisto with an efficient parallelized cloud workflow.';
-    let GTEx_transcriptomics_str = 'GTEx transcriptomics provides bulk RNA-seq data for 54 human tissues collected from postmortem donors. The GTEx database was designed to study the relationship between genetic variation and gene expression across multiple human tissues.';
-    let Tabula_Sapiens_str = 'Tabula Sapiens is a gene expression atlas created from single cell RNA-seq data collected from multiple tissues of 16 postmortem donors. The processed data contains average expression of each human gene in 486 cell types.';
-    let CCLE_transcriptomics_str = 'The Cancer Cell Line Encyclopedia (CCLE) transcriptomics dataset contains gene expression data collected with RNA-seq from over 1000 human pan-cancer cell lines.';
-    let HPM_str = 'The Human Proteome Map (HPM) contains data from LC-MS/MS proteomics profiling protein expression in 30 human tissues collected from 17 adult postmortem donors.';
-    let HPA_str = 'The Human Protein Atlas (HPA) contains protein expression data from 44 normal human tissues derived from antibody-based protein profiling using immunohistochemistry.';
-    let GTEx_proteomics_str = 'The GTEx proteomics dataset has relative protein levels for more than 12,000 proteins across 32 normal human tissues. The data was collected using tandem mass tag (TMT) proteomics to profile tissues collected from 14 postmortem donors.';
-    let CCLE_proteomics_str = 'The Cancer Cell Line Encyclopedia (CCLE) proteomics dataset contains protein expression in 375 pan-cancer cell lines. Data was collected by quantitative multiplex mass spectrometry proteomics.';
 
     let ARCHS4_str_m = ', developed by the Ma’ayan Lab, contains over 1 million samples of uniformly processed RNA-seq data from the Gene Expression Omnibus (GEO). The samples were aligned using kallisto with an efficient parallelized cloud workflow.';
     let GTEx_transcriptomics_str_m = ' provides bulk RNA-seq data for 54 human tissues collected from postmortem donors. The GTEx database was designed to study the relationship between genetic variation and gene expression across multiple human tissues.';
-    let Tabula_Sapiens_str_m = ' is a gene expression atlas created from single cell RNA-seq data collected from multiple tissues of 16 postmortem donors. The processed data contains average expression of each human gene in 486 cell types.';
-    let CCLE_transcriptomics_str_m = ' transcriptomics dataset contains gene expression data collected with RNA-seq from over 1000 human pan-cancer cell lines.';
-    let HPM_str_m = ' contains data from LC-MS/MS proteomics profiling protein expression in 30 human tissues collected from 17 adult postmortem donors.';
-    let HPA_str_m = ' contains protein expression data from 44 normal human tissues derived from antibody-based protein profiling using immunohistochemistry.';
-    let GTEx_proteomics_str_m = ' dataset has relative protein levels for more than 12,000 proteins across 32 normal human tissues. The data was collected using tandem mass tag (TMT) proteomics to profile tissues collected from 14 postmortem donors.';
-    let CCLE_proteomics_str_m = ' proteomics dataset contains protein expression in 375 pan-cancer cell lines. Data was collected by quantitative multiplex mass spectrometry proteomics.';
 
     let ARCHS4_links = <><a href="https://maayanlab.cloud/archs4" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/29636450/" target="_blank" rel="noopener noreferrer">citation</a></>
     let GTEx_transcriptomics_links = <><a href="https://gtexportal.org/home" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/23715323/" target="_blank" rel="noopener noreferrer">citation</a></>
-    let Tabula_Sapiens_links = <><a href="https://tabula-sapiens-portal.ds.czbiohub.org/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/35549404/" target="_blank" rel="noopener noreferrer">citation</a></>
-    let CCLE_transcriptomics_links = <><a href="https://sites.broadinstitute.org/ccle/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/22460905/" target="_blank" rel="noopener noreferrer">citation</a></>
-    let HPM_links = <><a href="http://www.humanproteomemap.org/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/24870542/" target="_blank" rel="noopener noreferrer">citation</a></>
-    let HPA_links = <><a href="https://www.proteinatlas.org/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/25613900/" target="_blank" rel="noopener noreferrer">citation</a></>
-    let GTEx_proteomics_links = <><a href="https://tsomics.shinyapps.io/RNA_vs_protein/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/32916130/" target="_blank" rel="noopener noreferrer">citation</a></>
-    let CCLE_proteomics_links = <><a href="https://gygi.hms.harvard.edu/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/31978347/" target="_blank" rel="noopener noreferrer">citation</a></>
+
 
     let ARCHS4_desc = <>{ARCHS4_link}{ARCHS4_str_m} <span style={{whiteSpace: 'nowrap'}}>{ARCHS4_links}</span></>;
     let GTEx_transcriptomics_desc = <>{GTEx_transcriptomics_link}{GTEx_transcriptomics_str_m} <span style={{whiteSpace: 'nowrap'}}>{GTEx_transcriptomics_links}</span></>;
-    let Tabula_Sapiens_desc = <>{Tabula_Sapiens_link}{Tabula_Sapiens_str_m} <span style={{whiteSpace: 'nowrap'}}>{Tabula_Sapiens_links}</span></>;
-    let CCLE_transcriptomics_desc = <>The {CCLE_transcriptomics_link}{CCLE_transcriptomics_str_m} <span style={{whiteSpace: 'nowrap'}}>{CCLE_transcriptomics_links}</span></>;
-    let HPM_desc = <>The {HPM_link}{HPM_str_m} <span style={{whiteSpace: 'nowrap'}}>{HPM_links}</span></>;
-    let HPA_desc = <>The {HPA_link}{HPA_str_m} <span style={{whiteSpace: 'nowrap'}}>{HPA_links}</span></>;
-    let GTEx_proteomics_desc = <>The {GTEx_proteomics_link}{GTEx_proteomics_str_m} <span style={{whiteSpace: 'nowrap'}}>{GTEx_proteomics_links}</span></>;
-    let CCLE_proteomics_desc = <>The {CCLE_proteomics_link}{CCLE_proteomics_str_m} <span style={{whiteSpace: 'nowrap'}}>{CCLE_proteomics_links}</span></>;
-
-    let ARCHS4_desc_d = <>{ARCHS4_str} <span style={{whiteSpace: 'nowrap'}}>{ARCHS4_links}</span></>;
-    let GTEx_transcriptomics_desc_d = <>{GTEx_transcriptomics_str} <span style={{whiteSpace: 'nowrap'}}>{GTEx_transcriptomics_links}</span></>;
-    let Tabula_Sapiens_desc_d = <>{Tabula_Sapiens_str} <span style={{whiteSpace: 'nowrap'}}>{Tabula_Sapiens_links}</span></>;
-    let CCLE_transcriptomics_desc_d = <>{CCLE_transcriptomics_str} <span style={{whiteSpace: 'nowrap'}}>{CCLE_transcriptomics_links}</span></>;
-    let HPM_desc_d = <>{HPM_str} <span style={{whiteSpace: 'nowrap'}}>{HPM_links}</span></>;
-    let HPA_desc_d = <>{HPA_str} <span style={{whiteSpace: 'nowrap'}}>{HPA_links}</span></>;
-    let GTEx_proteomics_desc_d = <>{GTEx_proteomics_str} <span style={{whiteSpace: 'nowrap'}}>{GTEx_proteomics_links}</span></>;
-    let CCLE_proteomics_desc_d = <>{CCLE_proteomics_str} <span style={{whiteSpace: 'nowrap'}}>{CCLE_proteomics_links}</span></>;
-
-    let archs4_title = props.gene + ' Expression across ARCHS4 Cells & Tissues (RNA-seq)';
-    let gtex_transcriptomics_title = props.gene + ' Expression across GTEx Tissues (RNA-seq)';
-    let tabula_sapiens_title = props.gene + ' Expression across Tabula Sapiens Cells (RNA-seq)';
-    let hpm_title = props.gene + ' Protein Expression across HPM Cells & Tissues';
-    let hpa_title = props.gene + ' Protein Expression across HPA Cells & Tissues';
-    let gtex_proteomics_title = props.gene + ' Protein Expression across GTEx Tissues';
-    let ccle_transcriptomics_title = props.gene + ' Expression across CCLE Cell Lines';
-    let ccle_proteomics_title = props.gene + ' Protein Expression across CCLE Cell Lines';
 
     const drawerContents = (
         <Box
@@ -500,7 +453,7 @@ export default function Page(props) {
                     </div>
                     <div className={styles.graphFlexbox}>
 
-                        <div className={styles.secondAutocomplete} style={{ marginTop: '15px' }}>
+                        <div className={styles.secondAutocomplete} style={{ marginTop: '15px', textAlign: 'center' }}>
                             <ToggleButtonGroup
                                     color="secondary"
                                     value={false}
@@ -538,9 +491,9 @@ export default function Page(props) {
 
                         </div>
 
-                        
+                        <DbTabsViewerTrascript sorted_data={props.sorted_data} database={database} setdatabase={setDatabase} NCBI_data={props.NCBI_data} gene={props.gene} transcript={props.transcript}/>
                     </div>
-                    <DbTabsViewerTrascript sorted_data={props.sorted_data} database={database} setdatabase={setDatabase} NCBI_data={props.NCBI_data} gene={props.gene} transcript={props.transcript}/>
+                    
                 </div>
 
                 <Footer />
