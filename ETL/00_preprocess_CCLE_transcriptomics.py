@@ -5,7 +5,7 @@ import pandas as pd
 #%%
 sample_info = pd.read_csv('input/CCLE_sample_info.csv')
 cell_lines = {
-  row['DepMap_ID']: row['stripped_cell_line_name']
+  row['DepMap_ID']: f"{row['primary_disease']} - {row['stripped_cell_line_name']}"
   for _, row in sample_info.iterrows()
 }
 del sample_info
