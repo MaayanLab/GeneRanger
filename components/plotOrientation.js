@@ -32,7 +32,7 @@ export default function PlotOrientation({ data, labels_x, labels_y, title, text,
                 ...labels_x
             }]}
             layout={{
-                title: {text: title, xanchor: 'left', yanchor: 'top', x: 0.05}, 
+                title: {text: title, xanchor: 'left', yanchor: 'top', x: 0}, 
                 xaxis: { automargin: true,
                         range: [-0.5, labels_x['x'].length],
                         tickangle: 45 },
