@@ -27,7 +27,7 @@ export default function DbTabsViewerTrancript(props) {
     var gene = props.gene
     var NCBI_data = props.NCBI_data
 
-    const [horizontal, setHorizontal] = useState(false);
+    const [horizontal, setHorizontal] = useState(true);
 
 
 
@@ -64,12 +64,12 @@ export default function DbTabsViewerTrancript(props) {
     let gtex_transcript_names_x = [], gtex_transcript_names_y = [], archs4_transcript_names_x = [], archs4_transcript_names_y = [];
     if ('GTEx_transcript' in result) {
         gtex_transcript = result.GTEx_transcript;
-        gtex_transcript_names_x = {"x": gtex_transcript.names, orientation: 'v'}
+        gtex_transcript_names_x = {"x": gtex_transcript.names.slice().reverse(), orientation: 'v'}
         gtex_transcript_names_y = {"y": gtex_transcript.names, orientation: 'h'}
     }
     if ('ARCHS4_transcript' in result) {
         archs4_transcript = result.ARCHS4_transcript;
-        archs4_transcript_names_x = {"x": archs4_transcript.names, orientation: 'v'}
+        archs4_transcript_names_x = {"x": archs4_transcript.names.slice().reverse(), orientation: 'v'}
         archs4_transcript_names_y = {"y": archs4_transcript.names, orientation: 'h'}
     } 
    

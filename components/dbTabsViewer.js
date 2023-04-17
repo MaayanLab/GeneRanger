@@ -20,7 +20,7 @@ export default function DbTabsViewer(props) {
     var setDatabase = props.setdatabase
     var updateURL = props.updateurl
 
-    const [horizontal, setHorizontal] = useState(false);
+    const [horizontal, setHorizontal] = useState(true);
 
     function TabPanel(props) {
         const { children, value, index, classes, ...other } = props;
@@ -101,51 +101,46 @@ export default function DbTabsViewer(props) {
     let hpm_names_x = [], hpm_names_y = [], hpa_names_x = [], hpa_names_y = [], gtex_proteomics_names_x = [], gtex_proteomics_names_y = [], ccle_transcriptomics_names_x = [], ccle_transcriptomics_names_y = [], ccle_prot_names_x = [], ccle_prot_names_y = [];
     if ('GTEx_transcriptomics' in props.sorted_data) {
         gtex_transcriptomics = props.sorted_data.GTEx_transcriptomics;
-        gtex_transcriptomics_names_x = {"x": gtex_transcriptomics.names, orientation: 'v'}
+        gtex_transcriptomics_names_x = {"x": gtex_transcriptomics.names.slice().reverse(), orientation: 'v'}
         gtex_transcriptomics_names_y = {"y": gtex_transcriptomics.names, orientation: 'h'}
     }
     if ('ARCHS4' in props.sorted_data) {
         archs4 = props.sorted_data.ARCHS4;  
-        archs4_names_x = {"x": archs4.names, orientation: 'v'}
+        archs4_names_x = {"x": archs4.names.slice().reverse(), orientation: 'v'}
         archs4_names_y = {"y": archs4.names, orientation: 'h'}
     } 
     if ('Tabula_Sapiens' in props.sorted_data) {
         tabula_sapiens = props.sorted_data.Tabula_Sapiens;
-        ts_names_x = {"x": tabula_sapiens.names, orientation: 'v'}
+        ts_names_x = {"x": tabula_sapiens.names.slice().reverse(), orientation: 'v'}
         ts_names_y = {"y": tabula_sapiens.names, orientation: 'h'}
     } 
     if ('HPM' in props.sorted_data) {
         hpm = props.sorted_data.HPM;
-        hpm_names_x = {"x": hpm.names, "y": hpm.values, orientation: 'v'}
+        hpm_names_x = {"x": hpm.names.slice().reverse(), "y": hpm.values.reverse(), orientation: 'v'}
         hpm_names_y = {"y": hpm.names, "x": hpm.values, orientation: 'h'}
     } 
     if ('HPA' in props.sorted_data) {
         hpa = props.sorted_data.HPA;
-        hpa_names_x = {"x": hpa.names, "y": hpa.values, orientation: 'v'}
+        hpa_names_x = {"x": hpa.names.slice().reverse(), "y": hpa.values.slice().reverse(), orientation: 'v'}
         hpa_names_y = {"y": hpa.names, "x": hpa.values, orientation: 'h'}
     } 
     if ('GTEx_proteomics' in props.sorted_data) {
         gtex_proteomics = props.sorted_data.GTEx_proteomics;
-        gtex_proteomics_names_x = {"x": gtex_proteomics.names, orientation: 'v'}
+        gtex_proteomics_names_x = {"x": gtex_proteomics.names.slice().reverse(), orientation: 'v'}
         gtex_proteomics_names_y = {"y": gtex_proteomics.names, orientation: 'h'}
     }
     if ('CCLE_transcriptomics' in props.sorted_data) {
         ccle_transcriptomics = props.sorted_data.CCLE_transcriptomics;
-        ccle_transcriptomics_names_x = {"x": ccle_transcriptomics.names, "y": ccle_transcriptomics.values, orientation: 'v'}
+        ccle_transcriptomics_names_x = {"x": ccle_transcriptomics.names.slice().reverse(), "y": ccle_transcriptomics.values.slice().reverse(), orientation: 'v'}
         ccle_transcriptomics_names_y = {"y": ccle_transcriptomics.names, "x": ccle_transcriptomics.values, orientation: 'h'}
     }
     if ('CCLE_proteomics' in props.sorted_data) {
         ccle_proteomics = props.sorted_data.CCLE_proteomics;
-        ccle_prot_names_x = {"x": ccle_proteomics.names, "y": ccle_proteomics.values,orientation: 'v'}
+        ccle_prot_names_x = {"x": ccle_proteomics.names.slice().reverse(), "y": ccle_proteomics.values.slice().reverse(), orientation: 'v'}
         ccle_prot_names_y = {"y": ccle_proteomics.names, "x": ccle_proteomics.values, orientation: 'h'}
     }
 
 
-
-    console.log({
-        ...gtex_transcriptomics,
-        ...gtex_transcriptomics_names_y
-    })
     return (
         <Box sx={{ width: '100%' }}>
             <Box className={styles.tabsBox}>
