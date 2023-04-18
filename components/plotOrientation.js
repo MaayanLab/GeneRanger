@@ -22,6 +22,7 @@ export default function PlotOrientation({ data, labels_x, labels_y, title, text,
             data_reverse[attr] = data[attr].slice().reverse();
         }
     });
+
     return (<>
     {horizontal ? 
     <>

@@ -130,7 +130,7 @@ export default function DbTabsViewerTrancript(props) {
                         ?
                         <>
                             <h1 style={{ textAlign: 'center' }}>{props.transcript}</h1>
-                            <GeneAndGraphDescription NCBI_data={NCBI_data} gene={gene} transcript={transcript} database={GTEx_transcriptomics_link} database_desc={GTEx_transcriptomics_desc_d} data={gtex_transcript} horizontal={horizontal} setHorizontal={setHorizontal}a/>
+                            <GeneAndGraphDescription NCBI_data={NCBI_data} gene={gene} transcript={transcript} database={GTEx_transcriptomics_link} database_desc={GTEx_transcriptomics_desc_d} data={gtex_transcript} horizontal={horizontal} setHorizontal={setHorizontal}/>
                             <PlotOrientation data={gtex_transcript} labels_x={gtex_transcript_names_x} labels_y={gtex_transcript_names_y} title={gtex_transcriptomics_title} text={'RNA Counts'} horizontal={horizontal}></PlotOrientation>
                         </>
                         :
