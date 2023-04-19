@@ -29,7 +29,7 @@ function createCSV(gene, data, dbname) {
     return csvData;
 }
 
-function GeneAndGraphDescription({ NCBI_data, gene, transcript, database, database_desc, data, mappings, horizontal, setHorizontal }) {
+function GeneAndGraphDescription({ index, NCBI_data, gene, transcript, database, database_desc, data, mappings, horizontal, setHorizontal }) {
 
     const router = useRouter();
 
@@ -128,6 +128,9 @@ function GeneAndGraphDescription({ NCBI_data, gene, transcript, database, databa
                                 return <MenuItem key={element.transcript} onClick={() => { handleClose2; router.push(`/transcript/${element.transcript}?database=ARCHS4_transcript`) }}>{element.transcript}</MenuItem>
                             })}
                         </Menu>
+                        &nbsp;
+                        {index === 1 ? <a href={`/gene/${gene}?database=GTEx`}><Button variant='outlined'>Plot with Proteomics</Button></a> : null}
+                        {index === 6 ? <a href={`/gene/${gene}?database=GTEx`}><Button variant='outlined'>Plot with Transcriptomics</Button></a> : null}
                     </div>}
                 </div>
             </div>

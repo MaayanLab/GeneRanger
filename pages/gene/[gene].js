@@ -389,7 +389,7 @@ export default function Page(props) {
 
                         <FormControlLabel
                             className={styles.formItem}
-                            control={<Switch onChange={() => { setDatabase(1); updateURL(1) }} checked={database == 1} />}
+                            control={<Switch onChange={() => { setDatabase(1); updateURL(1) }} checked={database == 1 || database == 8} />}
                             label={
                                 <div className={styles.dbLogo}>
                                     <img className={styles.databaseLogo} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_transcriptomics.png"} alt="GTEx Logo" />
@@ -478,7 +478,7 @@ export default function Page(props) {
 
                         <FormControlLabel
                             className={styles.formItem}
-                            control={<Switch onChange={() => { setDatabase(6); updateURL(6) }} checked={database == 6} />}
+                            control={<Switch onChange={() => { setDatabase(6); updateURL(6) }} checked={database == 6 || database == 8} />}
                             label={
                                 <div className={styles.dbLogo}>
                                     <img className={styles.databaseLogo} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_proteomics.png"} alt="GTEx Logo" />
@@ -612,7 +612,7 @@ export default function Page(props) {
 
                                     <FormControlLabel
                                         className={styles.formItem}
-                                        control={<Switch onChange={() => { setDatabase(1); updateURL(1) }} checked={database == 1} />}
+                                        control={<Switch onChange={() => { setDatabase(1); updateURL(1) }} checked={database == 1 || database == 8} />}
                                         label={
                                             <div className={styles.dbLogo}>
                                                 <img className={styles.databaseLogo} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_transcriptomics.png"} alt="GTEx Logo" />
@@ -701,7 +701,7 @@ export default function Page(props) {
 
                                     <FormControlLabel
                                         className={styles.formItem}
-                                        control={<Switch onChange={() => { setDatabase(6); updateURL(6) }} checked={database == 6} />}
+                                        control={<Switch onChange={() => { setDatabase(6); updateURL(6) }} checked={database == 6 || database == 8} />}
                                         label={
                                             <div className={styles.dbLogo}>
                                                 <img className={styles.databaseLogo} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_proteomics.png"} alt="GTEx Logo" />
