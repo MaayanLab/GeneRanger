@@ -3,6 +3,7 @@ import { Box } from "@mui/system";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import GeneAndGraphDescription from './geneAndGraphDescription';
+import JointGeneAndGraphDescription from './jointGeneAndGraphDescription';
 import GraphMissing from './graphMissing';
 import { useState } from "react";
 import styles from '../styles/Main.module.css';
@@ -22,6 +23,7 @@ export default function DbTabsViewer(props) {
     var updateURL = props.updateurl
 
     const [horizontal, setHorizontal] = useState(true);
+    const [kind, setKind] = useState('horizontal');
 
     function TabPanel(props) {
         const { children, value, index, classes, ...other } = props;
@@ -326,8 +328,8 @@ export default function DbTabsViewer(props) {
                         ?
                         <>
                             <h1 style={{ textAlign: 'center' }}>{props.gene}</h1>
-                            <GeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={GTEx_link} database_desc={GTEx_desc_d} data={props.sorted_data.GTEx_transcriptomics} mappings={props.mappings} horizontal={horizontal} setHorizontal={setHorizontal}/>
-                            <JointPlotOrientation data={gtex} title={gtex_title} text={'Normalized Z Score Expression'}  horizontal={horizontal}></JointPlotOrientation>
+                            <JointGeneAndGraphDescription NCBI_data={props.NCBI_data} gene={props.gene} database={GTEx_link} database_desc={GTEx_desc_d} data={props.sorted_data.GTEx_transcriptomics} mappings={props.mappings} kind={kind} setKind={setKind}/>
+                            <JointPlotOrientation data={gtex} title={gtex_title} text={'Normalized Z Score Expression'}  kind={kind}></JointPlotOrientation>
                         </>
                         :
                         <GraphMissing />

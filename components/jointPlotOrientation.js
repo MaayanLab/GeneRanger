@@ -4,7 +4,9 @@ const Plot = dynamic(() => import('react-plotly.js'), {
     ssr: false,
 });
 
-export default function JointPlotOrientation({ data, title, text, horizontal }) {
+export default function JointPlotOrientation({ data, title, text, kind }) {
+    const alllabels = {}
+    Object.values(data).forEach(({ names }) => {names.forEach(l => {alllabels[l] = null})})
     const alignedData = {}
     Object.keys(data).forEach((db, i) => {
         alignedData[db] = {}
@@ -15,8 +17,43 @@ export default function JointPlotOrientation({ data, title, text, horizontal }) 
             })
         })
     })
-    const alllabels = {}
-    Object.values(data).forEach(({ names }) => {names.forEach(l => {alllabels[l] = null})})
+    if (kind === 'scatterplot') {
+        const [x, y] = Object.keys(alignedData)
+        const alldata = [{
+            x: Object.keys(alllabels).map(label => alignedData[x][label]),
+            y: Object.keys(alllabels).map(label => alignedData[y][label]),
+            text: Object.keys(alllabels),
+            mode: 'text',
+            textposition: 'top center',
+        }]
+        return <>
+            <div style={{ height: '800px', overflowX: 'scroll'}}>
+                <Plot
+                    data={alldata}
+                    layout={{
+                        title: {text: title, xanchor: 'left', yanchor: 'top', x: 0}, 
+                        xaxis: {
+                            title: {
+                                text: x,
+                            },
+                            automargin: true,
+                        },
+                        yaxis: {
+                            title: {
+                                text: y
+                            },
+                            automargin: true,
+                        },
+                        font: {
+                            size: 16,
+                        },
+                    }}
+                    style={{ width: '100%', height: '100%' }}
+                    config={{ responsive: true }}
+                />
+            </div>
+        </>
+    }
     const alllabels_sorted = Object.keys(alllabels)
     alllabels_sorted.sort((a, b) =>
         Object.values(alignedData).reduce((agg, datum) =>
@@ -44,10 +81,10 @@ export default function JointPlotOrientation({ data, title, text, horizontal }) 
                 d[attr] = data[bg][attr];
             }
         });
-        if (horizontal) {
+        if (kind === 'horizontal') {
             d.x = data[bg].names
             d.orientation = 'v'
-         } else {
+         } else if (kind === 'vertical') {
             d.y = data[bg].names
             d.orientation = 'h'
          }
@@ -55,57 +92,58 @@ export default function JointPlotOrientation({ data, title, text, horizontal }) 
         alldata.push(d)
     })
 
-    return (<>
-    {horizontal ? 
-    <>
-        <div style={{ height: '800px', overflowX: 'scroll'}}>
-        <Plot
-            data={alldata}
-            layout={{
-                title: {text: title, xanchor: 'left', yanchor: 'top', x: 0}, 
-                boxmode: 'group',
-                xaxis: {
-                    automargin: true,
-                    range: [-0.5, labels_length],
-                    tickangle: 45,
-                    categoryorder: 'array',
-                    categoryarray: alllabels_sorted,
-                },
-                yaxis: {
-                    title: {
-                        text: text
-                    },
-                    automargin: true,
-                },
+    if (kind === 'horizontal') {
+        return <>
+            <div style={{ height: '800px', overflowX: 'scroll'}}>
+                <Plot
+                    data={alldata}
+                    layout={{
+                        title: {text: title, xanchor: 'left', yanchor: 'top', x: 0}, 
+                        boxmode: 'group',
+                        xaxis: {
+                            automargin: true,
+                            range: [-0.5, labels_length],
+                            tickangle: 45,
+                            categoryorder: 'array',
+                            categoryarray: alllabels_sorted,
+                        },
+                        yaxis: {
+                            title: {
+                                text: text
+                            },
+                            automargin: true,
+                        },
 
-            }}
-            style={{ width: labels_length_px, height: '100%' }}
-            config={{ responsive: true }}
-        />
-    </div>
-    </>: <> 
-    <div style={{ height: labels_length_px }}>
-        <Plot
-            data={alldata}
-            layout={{
-                title: title,
-                boxmode: 'group',
-                yaxis: {
-                    automargin: true,
-                    range: [-0.5, labels_length],
-                    categoryorder:'array',
-                    categoryarray: alllabels_sorted.reverse(),
-                },
-                xaxis: {
-                    title: {
-                        text: text
-                    }
-                }
-            }}
-            style={{ width: '100%', height: '100%' }}
-            config={{ responsive: true }}
-        />
-    </div></>}
-    </>
-    )
+                    }}
+                    style={{ width: labels_length_px, height: '100%' }}
+                    config={{ responsive: true }}
+                />
+            </div>
+        </>
+    } else if (kind === 'vertical') {
+        return <> 
+            <div style={{ height: labels_length_px }}>
+                <Plot
+                    data={alldata}
+                    layout={{
+                        title: title,
+                        boxmode: 'group',
+                        yaxis: {
+                            automargin: true,
+                            range: [-0.5, labels_length],
+                            categoryorder:'array',
+                            categoryarray: alllabels_sorted.reverse(),
+                        },
+                        xaxis: {
+                            title: {
+                                text: text
+                            }
+                        }
+                    }}
+                    style={{ width: '100%', height: '100%' }}
+                    config={{ responsive: true }}
+                />
+            </div>
+        </>
+    }
 }
