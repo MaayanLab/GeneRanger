@@ -28,52 +28,7 @@ const Plot = dynamic(() => import('react-plotly.js'), {
     ssr: false,
 });
 
-export async function getServerSideProps(context) {
-
-    if (context.query.database == undefined || context.query.database == '') {
-        return {
-            redirect: {
-                destination: '/gene/' + context.query.gene + '?database=ARCHS4',
-                permanent: false,
-            }
-        }
-    }
-
-    let gene_desc = await prisma.$queryRaw`select * from gene_info where gene_info.symbol = ${context.query.gene}`
-    if (gene_desc.length != 0) {
-        gene_desc = gene_desc[0].summary;
-        if (gene_desc.indexOf('[') != -1) {
-            gene_desc = gene_desc.substring(0, gene_desc.lastIndexOf('[') - 1)
-        }
-        if (context.query.gene == 'GUCA1A' && gene_desc.indexOf('provided') != -1) {
-            gene_desc = gene_desc.substring(0, gene_desc.indexOf('provided') - 1)
-        }
-        if (gene_desc == 'nan') {
-            gene_desc = "No gene description available."
-        }
-        if (gene_desc != '' && gene_desc.slice(-1) != '.') {
-            gene_desc = gene_desc + '.';
-        }
-    } else {
-        gene_desc = "No gene description available."
-    }
-
-    let mappings = await prisma.$queryRaw
-        `
-        select 
-            mapper.transcript
-        from
-            mapper
-        where mapper.gene = ${context.query.gene};
-    `
-
-    let all_db_data = await prisma.$queryRaw
-        `
-        select d.dbname, d.values as df
-        from data_complete d
-        where d.gene = ${context.query.gene};
-    `
-
+function sortData(all_db_data) {
     let sorted_data = {};
 
     for (let i in all_db_data) {
@@ -159,6 +114,65 @@ export async function getServerSideProps(context) {
         }
     }
 
+    return sorted_data
+}
+
+export async function getServerSideProps(context) {
+
+    if (context.query.database == undefined || context.query.database == '') {
+        return {
+            redirect: {
+                destination: '/gene/' + context.query.gene + '?database=ARCHS4',
+                permanent: false,
+            }
+        }
+    }
+
+    let gene_desc = await prisma.$queryRaw`select * from gene_info where gene_info.symbol = ${context.query.gene}`
+    if (gene_desc.length != 0) {
+        gene_desc = gene_desc[0].summary;
+        if (gene_desc.indexOf('[') != -1) {
+            gene_desc = gene_desc.substring(0, gene_desc.lastIndexOf('[') - 1)
+        }
+        if (context.query.gene == 'GUCA1A' && gene_desc.indexOf('provided') != -1) {
+            gene_desc = gene_desc.substring(0, gene_desc.indexOf('provided') - 1)
+        }
+        if (gene_desc == 'nan') {
+            gene_desc = "No gene description available."
+        }
+        if (gene_desc != '' && gene_desc.slice(-1) != '.') {
+            gene_desc = gene_desc + '.';
+        }
+    } else {
+        gene_desc = "No gene description available."
+    }
+
+    let mappings = await prisma.$queryRaw
+        `
+        select 
+            mapper.transcript
+        from
+            mapper
+        where mapper.gene = ${context.query.gene}
+        limit 0;
+    `
+
+    let all_db_data = await prisma.$queryRaw
+        `
+        select d.dbname, d.values as df
+        from data_complete d
+        where d.gene = ${context.query.gene};
+    `
+
+    let joint_db_data = await prisma.$queryRaw
+        `
+        select dbname, df
+        from jsonb_each(unified_data_complete(${context.query.gene}, '{"GTEx_proteomics", "GTEx_transcriptomics"}'::varchar[])) as d(dbname, df);
+    `
+
+    let sorted_data = sortData(all_db_data)
+    Object.assign( sorted_data, { GTEx: sortData(joint_db_data) })
+
     const databases = new Map([
         ['ARCHS4', 0],
         ['GTEx_transcriptomics', 1],
@@ -168,6 +182,7 @@ export async function getServerSideProps(context) {
         ['HPA', 5],
         ['GTEx_proteomics', 6],
         ['CCLE_proteomics', 7],
+        ['GTEx', 8],
     ]);
 
     return {
@@ -230,6 +245,7 @@ const databases = new Map([
     [5, 'HPA'],
     [6, 'GTEx_proteomics'],
     [7, 'CCLE_proteomics'],
+    [8, 'GTEx'],
 ]);
 
 let ARCHS4_str_m = ', developed by the Ma’ayan Lab, contains over 1 million samples of uniformly processed RNA-seq data from the Gene Expression Omnibus (GEO). The samples were aligned using kallisto with an efficient parallelized cloud workflow.';
@@ -240,6 +256,7 @@ let HPM_str_m = ' contains data from LC-MS/MS proteomics profiling protein expre
 let HPA_str_m = ' contains protein expression data from 44 normal human tissues derived from antibody-based protein profiling using immunohistochemistry.';
 let GTEx_proteomics_str_m = ' dataset has relative protein levels for more than 12,000 proteins across 32 normal human tissues. The data was collected using tandem mass tag (TMT) proteomics to profile tissues collected from 14 postmortem donors.';
 let CCLE_proteomics_str_m = ' proteomics dataset contains protein expression in 375 pan-cancer cell lines. Data was collected by quantitative multiplex mass spectrometry proteomics.';
+let GTEx_str_m = ' provides an aggregate view of bulk RNA-seq data for 54 human tissues collected from postmortem donors & relative protein levels for more than 12,000 proteins across 32 normal human tissues. The GTEx database was designed to study the relationship between genetic variation and gene expression across multiple human tissues.';
 
 let ARCHS4_link = <a href="https://maayanlab.cloud/archs4" target="_blank" rel="noopener noreferrer">ARCHS4</a>;
 let GTEx_transcriptomics_link = <a href="https://gtexportal.org/home" target="_blank" rel="noopener noreferrer">GTEx transcriptomics</a>;
@@ -249,6 +266,7 @@ let HPM_link = <a href="http://www.humanproteomemap.org/" target="_blank" rel="n
 let HPA_link = <a href="https://www.proteinatlas.org/" target="_blank" rel="noopener noreferrer">Human Protein Atlas (HPA)</a>;
 let GTEx_proteomics_link = <a href="https://tsomics.shinyapps.io/RNA_vs_protein/" target="_blank" rel="noopener noreferrer">GTEx proteomics</a>;
 let CCLE_proteomics_link = <a href="https://gygi.hms.harvard.edu/" target="_blank" rel="noopener noreferrer">Cancer Cell Line Encyclopedia (CCLE)</a>;
+let GTEx_link = <a href="https://gtexportal.org/home" target="_blank" rel="noopener noreferrer">Cancer Cell Line Encyclopedia (CCLE)</a>;
 
 let ARCHS4_links = <><a href="https://maayanlab.cloud/archs4" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/29636450/" target="_blank" rel="noopener noreferrer">citation</a></>
 let GTEx_transcriptomics_links = <><a href="https://gtexportal.org/home" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/23715323/" target="_blank" rel="noopener noreferrer">citation</a></>
@@ -258,6 +276,7 @@ let HPM_links = <><a href="http://www.humanproteomemap.org/" target="_blank" rel
 let HPA_links = <><a href="https://www.proteinatlas.org/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/25613900/" target="_blank" rel="noopener noreferrer">citation</a></>
 let GTEx_proteomics_links = <><a href="https://tsomics.shinyapps.io/RNA_vs_protein/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/32916130/" target="_blank" rel="noopener noreferrer">citation</a></>
 let CCLE_proteomics_links = <><a href="https://gygi.hms.harvard.edu/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/31978347/" target="_blank" rel="noopener noreferrer">citation</a></>
+let GTEx_links = <><a href="https://gtexportal.org/home" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/23715323/" target="_blank" rel="noopener noreferrer">citation</a></>
 
 let ARCHS4_desc = <>{ARCHS4_link}{ARCHS4_str_m} <span style={{ whiteSpace: 'nowrap' }}>{ARCHS4_links}</span></>;
 let GTEx_transcriptomics_desc = <>{GTEx_transcriptomics_link}{GTEx_transcriptomics_str_m} <span style={{ whiteSpace: 'nowrap' }}>{GTEx_transcriptomics_links}</span></>;
@@ -267,6 +286,7 @@ let HPM_desc = <>The {HPM_link}{HPM_str_m} <span style={{ whiteSpace: 'nowrap' }
 let HPA_desc = <>The {HPA_link}{HPA_str_m} <span style={{ whiteSpace: 'nowrap' }}>{HPA_links}</span></>;
 let GTEx_proteomics_desc = <>The {GTEx_proteomics_link}{GTEx_proteomics_str_m} <span style={{ whiteSpace: 'nowrap' }}>{GTEx_proteomics_links}</span></>;
 let CCLE_proteomics_desc = <>The {CCLE_proteomics_link}{CCLE_proteomics_str_m} <span style={{ whiteSpace: 'nowrap' }}>{CCLE_proteomics_links}</span></>;
+let GTEx_desc = <>{GTEx_link}{GTEx_str_m} <span style={{ whiteSpace: 'nowrap' }}>{GTEx_links}</span></>;
 
 
 export default function Page(props) {
