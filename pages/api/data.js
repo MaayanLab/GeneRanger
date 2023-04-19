@@ -381,6 +381,110 @@ import prisma from '../../prisma/prisma';
  *                       example: The protein encoded by this gene is a protease inhibitor and cytokine transporter. It uses a bait-and-trap mechanism to inhibit a broad spectrum of proteases, including trypsin, thrombin and collagenase. It can also inhibit inflammatory cytokines, and it thus disrupts inflammatory cascades. Mutations in this gene are a cause of alpha-2-macroglobulin deficiency. This gene is implicated in Alzheimer's disease (AD) due to its ability to mediate the clearance and degradation of A-beta, the major component of beta-amyloid deposits. A related pseudogene, which is also located on the p arm of chromosome 12, has been identified.
  *
 */
+
+/** 
+ * @swagger
+ *  /api/data_transcript:
+ *    post:
+ *      summary: Access processed data
+ *      description: Query for processed data by gene and resource. If the "databases" property is not included in the request body, all information regarding the chosen gene will be returned.
+ *      requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               transcript:
+ *                 type: string
+ *                 description: The gene you would like to study.
+ *                 example: ENST00000495442
+ *               databases:
+ *                 type: array
+ *                 description: The resources to query, separated by commas
+ *                 example: ['ARCHS4_transcript', 'GTEx_transcript']
+ *      responses:
+ *        200:
+ *          description: Data relating to the chosen gene from the chosen resources.
+ *          content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 allData:
+ *                   type: object
+ *                   properties:
+ *                     gene:
+ *                       type: string
+ *                       description: The chosen gene used to query information.
+ *                       example: ENST00000495442
+ *                     dbData:
+ *                       type: object
+ *                       properties:
+ *                         ARCHS4_transcript:
+ *                           type: object
+ *                           properties:
+ *                             q1:
+ *                               type: array
+ *                               example: [9,19,10450.2]
+ *                             median:
+ *                               type: array
+ *                               example: [3541,31185,82093]
+ *                             q3:
+ *                               type: array
+ *                               example: [75970,77016.5,230069]
+ *                             mean:
+ *                               type: array
+ *                               example: [47123,54065.9,161205]
+ *                             sd:
+ *                               type: array
+ *                               example: [80707.4,69564.7,215145]                            
+ *                             lowerfence:
+ *                               type: array
+ *                               example: [null,null,null]
+ *                             upperfence:
+ *                               type: array
+ *                               example: [189911.5,192512.75,559497.2]
+ *                             names:
+ *                               type: array
+ *                               example: ["cell line - melanocyte","tissue - biliary","cell line - hepg2"]
+ *                               description: The cell lines/cell types/tissues relating to the chosen gene
+ *                         GTEx_transcript:
+ *                           type: object
+ *                           properties:
+ *                             q1:
+ *                               type: array
+ *                               example: [104272,132609,271129]
+ *                             median:
+ *                               type: array
+ *                               example: [139566,169494,379728]
+ *                             q3:
+ *                               type: array
+ *                               example: [194508,216170,498696]
+ *                             mean:
+ *                               type: array
+ *                               example: [157822,183111,412497]
+ *                             sd:
+ *                               type: array
+ *                               example: [83035.9,74648.3,193384]                            
+ *                             lowerfence:
+ *                               type: array
+ *                               example: [37167,58613,46343]
+ *                             upperfence:
+ *                               type: array
+ *                               example: [329862,341511.5,840046.5]
+ *                             names:
+ *                               type: array
+ *                               example: ["Artery - Coronary","Artery - Aorta","Lung"]
+ *                               description: The cell lines/cell types/tissues relating to the chosen gene
+ *                     NCBI_data:
+ *                       type: string
+ *                       description: The NCBI description of the chosen gene.
+ *                       example: The protein encoded by this gene is a protease inhibitor and cytokine transporter. It uses a bait-and-trap mechanism to inhibit a broad spectrum of proteases, including trypsin, thrombin and collagenase. It can also inhibit inflammatory cytokines, and it thus disrupts inflammatory cascades. Mutations in this gene are a cause of alpha-2-macroglobulin deficiency. This gene is implicated in Alzheimer's disease (AD) due to its ability to mediate the clearance and degradation of A-beta, the major component of beta-amyloid deposits. A related pseudogene, which is also located on the p arm of chromosome 12, has been identified.
+ *
+*/
+
+
 export default async function handler(req, res) {
 
     if (req.method === 'POST') {
