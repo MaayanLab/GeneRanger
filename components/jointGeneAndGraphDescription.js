@@ -78,16 +78,6 @@ function JointGeneAndGraphDescription({ NCBI_data, gene, transcript, database, d
                         {`View Expression of ${gene}`}
                     </Button>}
                     {mappings && <div>
-                        <Button
-                            id="demo-positioned-button"
-                            aria-controls={open2 ? 'demo-positioned-menu' : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={open2 ? 'true' : undefined}
-                            onClick={handleClick2}
-                            variant='outlined'
-                        >
-                            View Transcript Expression
-                        </Button>
                         <Menu
                             id="demo-positioned-menu"
                             aria-labelledby="demo-positioned-button"
