@@ -12,7 +12,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 function createCSV(gene, data, dbname) {
     var csvData = '';
     if (dbname == 'ARCHS4' || dbname == 'GTEx transcriptomics' || dbname == 'Tabula Sapiens' || dbname == 'GTEx proteomics') {
-        csvData += ',,' + [...data.y].reverse().join(',') + '\n'
+        csvData += ',,' + [...data.names].reverse().join(',') + '\n'
         csvData += `${gene},25%,` + [...data.q1].reverse().join(',') + '\n'
         csvData += `${gene},50%,` + [...data.median].reverse().join(',') + '\n'
         csvData += `${gene},75%,` + [...data.q3].reverse().join(',') + '\n'
@@ -23,8 +23,8 @@ function createCSV(gene, data, dbname) {
         csvData += `${gene},min,` + [...data.lowerfence].reverse().join(',') + '\n'
         csvData += `${gene},max,` + [...data.upperfence].reverse().join(',') + '\n'
     } else {
-        csvData += ',,' + [...data.y].reverse().join(',') + '\n'
-        csvData += `${gene},value,` + [...data.x].reverse().join(',')
+        csvData += ',,' + [...data.names].reverse().join(',') + '\n'
+        csvData += `${gene},value,` + [...data.values].reverse().join(',')
     }
     return csvData;
 }
@@ -129,8 +129,8 @@ function GeneAndGraphDescription({ index, NCBI_data, gene, transcript, database,
                             })}
                         </Menu>
                         &nbsp;
-                        {index === 1 ? <a href={`/gene/${gene}?database=GTEx`}><Button variant='outlined'>Plot with Proteomics</Button></a> : null}
-                        {index === 6 ? <a href={`/gene/${gene}?database=GTEx`}><Button variant='outlined'>Plot with Transcriptomics</Button></a> : null}
+                        {index === 1 ? <a href={`/gene/${gene}?database=GTEx`} style={{textDecoration: 'none'}}><Button variant='outlined'>Plot with Proteomics</Button></a> : null}
+                        {index === 6 ? <a href={`/gene/${gene}?database=GTEx`} style={{textDecoration: 'none'}}><Button variant='outlined'>Plot with Transcriptomics</Button></a> : null}
                     </div>}
                 </div>
             </div>
