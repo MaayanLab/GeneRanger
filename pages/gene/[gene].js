@@ -153,8 +153,7 @@ export async function getServerSideProps(context) {
             mapper.transcript
         from
             mapper
-        where mapper.gene = ${context.query.gene}
-        limit 0;
+        where mapper.gene = ${context.query.gene};
     `
 
     let all_db_data = await prisma.$queryRaw
