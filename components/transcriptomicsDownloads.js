@@ -24,7 +24,7 @@ export default function TranscriptomicsDownloads() {
     ], [runtimeConfig])
 
     const rowsTranscript = React.useMemo(() => [
-        createData(<img className={styles.databaseLogo} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/archs4.png"} alt="ARCHS4 Logo"/>, '495.3 MB', '1425088 x 253', 'tsv', 'gzip', <a href={runtimeConfig.NEXT_PUBLIC_DOWNLOADS + 'ARCHS4_transcript.tsv.gz'} download="ARCHS4_transcript.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
+        createData(<img className={styles.databaseLogo} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/archs4.png"} alt="ARCHS4 Logo"/>, '494.9 MB', '1425088 x 253', 'tsv', 'gzip', <a href={runtimeConfig.NEXT_PUBLIC_DOWNLOADS + 'ARCHS4_transcript.tsv.gz'} download="ARCHS4_transcript.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
         createData(<img className={styles.databaseLogo} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_transcriptomics.png"} alt="GTEx Logo"/>, '159.7 MB', '1594592 x 56', 'tsv', 'gzip', <a href={runtimeConfig.NEXT_PUBLIC_DOWNLOADS + 'GTEx_transcript.tsv.gz'} download="GTEx_transcriptomics.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
     ], [runtimeConfig])
     
