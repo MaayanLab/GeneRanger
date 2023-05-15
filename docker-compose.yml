@@ -8,7 +8,7 @@ services:
       - POSTGRES_HOST=localhost
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=4d767b6d084d896eefff4564b40611de
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - DATABASE_URL='postgres://postgres:${POSTGRES_PASSWORD}@127.0.0.1:5432/postgres?sslmode=disable'
       - NEXT_PUBLIC_DOWNLOADS=https://minio.dev.maayanlab.cloud/generanger/
       - NEXT_PUBLIC_TARGETRANGERURL=https://targetranger.dev.maayanlab.cloud/targetscreener
