@@ -104,7 +104,8 @@
   background-color: #b9d2e4;
   border-radius: 5px;
   padding-top: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 50px;
+  margin-bottom: 50px;
 }
 
 .mainFlexbox {

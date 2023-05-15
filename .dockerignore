@@ -32,4 +32,8 @@ env
 # vercel
 .vercel
 
+#database
 ETL
+
+#git
+.git
