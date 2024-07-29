@@ -8,28 +8,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 
-
-function createCSV(gene, data, dbname) {
-    var csvData = '';
-    if (dbname == 'ARCHS4' || dbname == 'GTEx transcriptomics' || dbname == 'Tabula Sapiens' || dbname == 'GTEx proteomics') {
-        csvData += ',,' + [...data.names].reverse().join(',') + '\n'
-        csvData += `${gene},25%,` + [...data.q1].reverse().join(',') + '\n'
-        csvData += `${gene},50%,` + [...data.median].reverse().join(',') + '\n'
-        csvData += `${gene},75%,` + [...data.q3].reverse().join(',') + '\n'
-        csvData += `${gene},mean,` + [...data.mean].reverse().join(',') + '\n'
-        if (dbname != 'ARCHS4') {
-            csvData += `${gene},std,` + [...data.sd].reverse().join(',') + '\n'
-        }
-        csvData += `${gene},min,` + [...data.lowerfence].reverse().join(',') + '\n'
-        csvData += `${gene},max,` + [...data.upperfence].reverse().join(',') + '\n'
-    } else {
-        csvData += ',,' + [...data.names].reverse().join(',') + '\n'
-        csvData += `${gene},value,` + [...data.values].reverse().join(',')
-    }
-    return csvData;
-}
-
-function GeneAndGraphDescription({ index, NCBI_data, gene, transcript, database, database_desc, data, mappings, horizontal, setHorizontal }) {
+function JointGeneAndGraphDescription({ NCBI_data, gene, transcript, database, database_desc, data, mappings, kind, setKind }) {
 
     const router = useRouter();
 
@@ -99,16 +78,6 @@ function GeneAndGraphDescription({ index, NCBI_data, gene, transcript, database,
                         {`View Expression of ${gene}`}
                     </Button>}
                     {mappings && <div>
-                        <Button
-                            id="demo-positioned-button"
-                            aria-controls={open2 ? 'demo-positioned-menu' : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={open2 ? 'true' : undefined}
-                            onClick={handleClick2}
-                            variant='outlined'
-                        >
-                            View Transcript Expression
-                        </Button>
                         <Menu
                             id="demo-positioned-menu"
                             aria-labelledby="demo-positioned-button"
@@ -128,9 +97,6 @@ function GeneAndGraphDescription({ index, NCBI_data, gene, transcript, database,
                                 return <MenuItem key={element.transcript} onClick={() => { handleClose2; router.push(`/transcript/${element.transcript}?database=ARCHS4_transcript`) }}>{element.transcript}</MenuItem>
                             })}
                         </Menu>
-                        &nbsp;
-                        {index === 1 ? <a href={`/gene/${gene}?database=GTEx`} style={{textDecoration: 'none'}}><Button variant='outlined'>Plot with Proteomics</Button></a> : null}
-                        {index === 6 ? <a href={`/gene/${gene}?database=GTEx`} style={{textDecoration: 'none'}}><Button variant='outlined'>Plot with Transcriptomics</Button></a> : null}
                     </div>}
                 </div>
             </div>
@@ -140,46 +106,24 @@ function GeneAndGraphDescription({ index, NCBI_data, gene, transcript, database,
                 <div >
                     <ToggleButtonGroup
                         color="secondary"
-                        value={horizontal}
+                        value={kind}
                         exclusive
                         sx={{ marginBottom: '10px' }}
                         onChange={(event, newValue) => {
                             if (newValue !== null)
-                                setHorizontal(newValue);
+                                setKind(newValue);
                         }
                         }
                     >
-                        <ToggleButton value={false}>Vertical</ToggleButton>
-                        <ToggleButton value={true}>Horizontal</ToggleButton>
+                        <ToggleButton value={'vertical'}>Vertical</ToggleButton>
+                        <ToggleButton value={'horizontal'}>Horizontal</ToggleButton>
+                        <ToggleButton value={'scatterplot'}>Scatterplot</ToggleButton>
                     </ToggleButtonGroup>
-                </div>
-                <div className={styles.download}>
-                    <Button
-                        id="basic-button"
-                        aria-controls={open ? 'basic-menu' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? 'true' : undefined}
-                        onClick={handleClick}
-                    >
-                        Download plot data
-                    </Button>
-                    <Menu
-                        id="basic-menu"
-                        anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleClose}
-                        MenuListProps={{
-                            'aria-labelledby': 'basic-button',
-                        }}
-                    >
-                        <Button download={gene + '-' + database.props.children + '.csv'} onClick={formatCSV}>CSV</Button>
-                        <Button href={`data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(data))}`} download={gene + '-' + database.props.children + '.json'} onClick={handleClose}>JSON</Button>
-                    </Menu>
                 </div>
             </div>
         </>
     );
 }
 
-export default GeneAndGraphDescription;
+export default JointGeneAndGraphDescription;
 

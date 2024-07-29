@@ -16,15 +16,15 @@ function createData(database, size, shape, file_type, compression, download) {
 export default function ProteomicsDownloads() {
     const runtimeConfig = useRuntimeConfig()
     const rows = React.useMemo(() => [
-        createData(<img className={styles.databaseLogo} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/HPM.gif"} alt="HPM Logo"/>, '4.7 MB', '17294 x 32', 'tsv', 'gzip', <a href={runtimeConfig.NEXT_PUBLIC_DOWNLOADS + 'HPM.tsv.gz'} download="HPM.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
-        createData(<img className={styles.databaseLogo} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/HPA.svg"} alt="HPA Logo"/>, '13.3 MB', '13452 x 259', 'tsv', 'gzip', <a href={runtimeConfig.NEXT_PUBLIC_DOWNLOADS + 'HPA.tsv.gz'} download="HPA.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
-        createData(<img className={styles.databaseLogo} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_proteomics.png"} alt="GTEx Logo"/>, '25 MB', '100004 x 34', 'tsv', 'gzip', <a href={runtimeConfig.NEXT_PUBLIC_DOWNLOADS + 'GTEx_proteomics.tsv.gz'} download="GTEx_proteomics.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
-        createData(<img className={styles.databaseLogo} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/CCLE_proteomics.jpeg"} alt="CCLE Logo"/>, '63.1 MB', '12196 x 380', 'tsv', 'gzip', <a href={runtimeConfig.NEXT_PUBLIC_DOWNLOADS + 'CCLE_proteomics.tsv.gz'} download="CCLE_proteomics.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>)
+        createData(<img className={styles.databaseLogo} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/HPM.gif"} alt="HPM Logo"/>, '1.4 MB', '17294 x 32', 'tsv', 'gzip', <a href={runtimeConfig.NEXT_PUBLIC_DOWNLOADS + 'HPM.tsv.gz'} download="HPM.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
+        createData(<img className={styles.databaseLogo} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/HPA.svg"} alt="HPA Logo"/>, '845 KB', '13452 x 259', 'tsv', 'gzip', <a href={runtimeConfig.NEXT_PUBLIC_DOWNLOADS + 'HPA.tsv.gz'} download="HPA.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
+        createData(<img className={styles.databaseLogo} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/GTEx_proteomics.png"} alt="GTEx Logo"/>, '7.3 MB', '100004 x 34', 'tsv', 'gzip', <a href={runtimeConfig.NEXT_PUBLIC_DOWNLOADS + 'GTEx_proteomics.tsv.gz'} download="GTEx_proteomics.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>),
+        createData(<img className={styles.databaseLogo} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/CCLE_proteomics.jpeg"} alt="CCLE Logo"/>, '28.5 MB', '12196 x 380', 'tsv', 'gzip', <a href={runtimeConfig.NEXT_PUBLIC_DOWNLOADS + 'CCLE_proteomics.tsv.gz'} download="CCLE_proteomics.tsv.gz"><IconButton><FileDownloadIcon/></IconButton></a>)
     ], [runtimeConfig])
 
     return (
-        <Box sx={{ overflow: "auto" }}>
-            <Box sx={{ width: "100%", display: "table", tableLayout: "fixed" }}>
+        <Box sx={{ width: '80%'}}>
+            <Box sx={{ width: '100%', display: "table", tableLayout: "fixed", justifyItems: 'center' }}>
                 <Table sx={{ width: '100%' }}>
                     <TableHead>
                     <TableRow>
