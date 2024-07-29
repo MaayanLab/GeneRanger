@@ -34,7 +34,7 @@ function sortData(all_db_data) {
     for (let i in all_db_data) {
         let db = all_db_data[i].dbname;
         let df = all_db_data[i].df;
-        if (db == 'GTEx_transcriptomics' || db == 'ARCHS4' || db == 'Tabula_Sapiens' || db == 'GTEx_proteomics') {
+        if (db == 'GTEx_transcriptomics' || db == 'HuBMAP' || db == 'ARCHS4' || db == 'Tabula_Sapiens' || db == 'GTEx_proteomics') {
             const descriptions = Object.keys(df.mean);
             descriptions.sort((a, b) => df.mean[a] - df.mean[b]);
             let names = descriptions;
@@ -182,6 +182,7 @@ export async function getServerSideProps(context) {
         ['GTEx_proteomics', 6],
         ['CCLE_proteomics', 7],
         ['GTEx', 8],
+        ['HuBMAP', 9]
     ]);
 
     return {
@@ -245,10 +246,12 @@ const databases = new Map([
     [6, 'GTEx_proteomics'],
     [7, 'CCLE_proteomics'],
     [8, 'GTEx'],
+    [9, 'HuBMAP'],
 ]);
 
 let ARCHS4_str_m = ', developed by the Ma’ayan Lab, contains over 1 million samples of uniformly processed RNA-seq data from the Gene Expression Omnibus (GEO). The samples were aligned using kallisto with an efficient parallelized cloud workflow.';
 let GTEx_transcriptomics_str_m = ' provides bulk RNA-seq data for 54 human tissues collected from postmortem donors. The GTEx database was designed to study the relationship between genetic variation and gene expression across multiple human tissues.';
+let HuBMAP_str_m = 'aims to create a multi-scale spatial atlas of the healthy human body at single-cell resolution by applying advanced technologies and disseminating resources to the community';
 let Tabula_Sapiens_str_m = ' is a gene expression atlas created from single cell RNA-seq data collected from multiple tissues of 16 postmortem donors. The processed data contains average expression of each human gene in 486 cell types.';
 let CCLE_transcriptomics_str_m = ' transcriptomics dataset contains gene expression data collected with RNA-seq from over 1000 human pan-cancer cell lines.';
 let HPM_str_m = ' contains data from LC-MS/MS proteomics profiling protein expression in 30 human tissues collected from 17 adult postmortem donors.';
@@ -260,6 +263,7 @@ let GTEx_str_m = ' provides an aggregate view of bulk RNA-seq data for 54 human 
 let ARCHS4_link = <a href="https://maayanlab.cloud/archs4" target="_blank" rel="noopener noreferrer">ARCHS4</a>;
 let GTEx_transcriptomics_link = <a href="https://gtexportal.org/home" target="_blank" rel="noopener noreferrer">GTEx transcriptomics</a>;
 let Tabula_Sapiens_link = <a href="https://tabula-sapiens-portal.ds.czbiohub.org/" target="_blank" rel="noopener noreferrer">Tabula Sapiens</a>;
+let HuBMAP_link =  <a href="https://hubmapconsortium.org/" target="_blank" rel="noopener noreferrer">Human BioMolecular Atlas Program (HubMAP)</a>;
 let CCLE_transcriptomics_link = <a href="https://sites.broadinstitute.org/ccle/" target="_blank" rel="noopener noreferrer">Cancer Cell Line Encyclopedia (CCLE)</a>;
 let HPM_link = <a href="http://www.humanproteomemap.org/" target="_blank" rel="noopener noreferrer">Human Proteome Map (HPM)</a>;
 let HPA_link = <a href="https://www.proteinatlas.org/" target="_blank" rel="noopener noreferrer">Human Protein Atlas (HPA)</a>;
@@ -270,6 +274,7 @@ let GTEx_link = <a href="https://gtexportal.org/home" target="_blank" rel="noope
 let ARCHS4_links = <><a href="https://maayanlab.cloud/archs4" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/29636450/" target="_blank" rel="noopener noreferrer">citation</a></>
 let GTEx_transcriptomics_links = <><a href="https://gtexportal.org/home" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/23715323/" target="_blank" rel="noopener noreferrer">citation</a></>
 let Tabula_Sapiens_links = <><a href="https://tabula-sapiens-portal.ds.czbiohub.org/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/35549404/" target="_blank" rel="noopener noreferrer">citation</a></>
+let HuBMAP_links = <><a href="https://hubmapconsortium.org/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/31597973/" target="_blank" rel="noopener noreferrer">citation</a></>
 let CCLE_transcriptomics_links = <><a href="https://sites.broadinstitute.org/ccle/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/22460905/" target="_blank" rel="noopener noreferrer">citation</a></>
 let HPM_links = <><a href="http://www.humanproteomemap.org/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/24870542/" target="_blank" rel="noopener noreferrer">citation</a></>
 let HPA_links = <><a href="https://www.proteinatlas.org/" target="_blank" rel="noopener noreferrer">website</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/25613900/" target="_blank" rel="noopener noreferrer">citation</a></>
@@ -280,6 +285,7 @@ let GTEx_links = <><a href="https://gtexportal.org/home" target="_blank" rel="no
 let ARCHS4_desc = <>{ARCHS4_link}{ARCHS4_str_m} <span style={{ whiteSpace: 'nowrap' }}>{ARCHS4_links}</span></>;
 let GTEx_transcriptomics_desc = <>{GTEx_transcriptomics_link}{GTEx_transcriptomics_str_m} <span style={{ whiteSpace: 'nowrap' }}>{GTEx_transcriptomics_links}</span></>;
 let Tabula_Sapiens_desc = <>{Tabula_Sapiens_link}{Tabula_Sapiens_str_m} <span style={{ whiteSpace: 'nowrap' }}>{Tabula_Sapiens_links}</span></>;
+let HuBMAP_desc = <>{HuBMAP_link}{HuBMAP_str_m} <span style={{ whiteSpace: 'nowrap' }}>{HuBMAP_links}</span></>;
 let CCLE_transcriptomics_desc = <>The {CCLE_transcriptomics_link}{CCLE_transcriptomics_str_m} <span style={{ whiteSpace: 'nowrap' }}>{CCLE_transcriptomics_links}</span></>;
 let HPM_desc = <>The {HPM_link}{HPM_str_m} <span style={{ whiteSpace: 'nowrap' }}>{HPM_links}</span></>;
 let HPA_desc = <>The {HPA_link}{HPA_str_m} <span style={{ whiteSpace: 'nowrap' }}>{HPA_links}</span></>;
@@ -402,8 +408,6 @@ export default function Page(props) {
 
                         <div className={styles.logoDesc}>{GTEx_transcriptomics_desc}</div>
 
-
-
                         <FormControlLabel
                             className={styles.formItem}
                             control={<Switch onChange={() => { setDatabase(2); updateURL(2) }} checked={database == 2} />}
@@ -419,6 +423,24 @@ export default function Page(props) {
                             labelPlacement="start" />
 
                         <div className={styles.logoDesc}>{Tabula_Sapiens_desc}</div>
+
+
+
+                        <FormControlLabel
+                            className={styles.formItem}
+                            control={<Switch onChange={() => { setDatabase(9); updateURL(9) }} checked={database == 9} />}
+                            label={
+                                <div className={styles.dbLogo}>
+                                    <img className={styles.databaseLogo} style={{ borderRadius: '8px' }} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/hubmap.png"} alt="HubMAP Logo" />
+                                    <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
+                                        <div className={styles.tooltipText}><a href="https://hubmapconsortium.org/" target="_blank" rel="noopener noreferrer">Website</a> <br /> <a href="https://pubmed.ncbi.nlm.nih.gov/31597973/" target="_blank" rel="noopener noreferrer">Citation</a></div>}>
+                                        <IconButton><InfoIcon color='info' /></IconButton>
+                                    </HtmlTooltip>
+                                </div>
+                            }
+                            labelPlacement="start" />
+
+                        <div className={styles.logoDesc}>{HuBMAP_desc}</div>
 
                         <FormControlLabel
                             className={styles.formItem}
@@ -624,6 +646,22 @@ export default function Page(props) {
                                         labelPlacement="start" />
 
                                     <div className={styles.logoDesc}>{GTEx_transcriptomics_desc}</div>
+
+                                    <FormControlLabel
+                                        className={styles.formItem}
+                                        control={<Switch onChange={() => { setDatabase(9); updateURL(9) }} checked={database == 9} />}
+                                        label={
+                                            <div className={styles.dbLogo}>
+                                                <img className={styles.databaseLogo} style={{ borderRadius: '8px' }} src={runtimeConfig.NEXT_PUBLIC_ENTRYPOINT + "/images/hubmap.png"} alt="HuBMAP Logo" />
+                                                <HtmlTooltip enterTouchDelay={0} leaveTouchDelay={3000} arrow TransitionComponent={Zoom} placement="top" title={
+                                                    <div className={styles.tooltipText}><a href="https://hubmapconsortium.org/" target="_blank" rel="noopener noreferrer">Website</a> <br /> <a href="https://pubmed.ncbi.nlm.nih.gov/31597973/" target="_blank" rel="noopener noreferrer">Citation</a></div>}>
+                                                    <IconButton><InfoIcon color='info' /></IconButton>
+                                                </HtmlTooltip>
+                                            </div>
+                                        }
+                                        labelPlacement="start" />
+
+                                    <div className={styles.logoDesc}>{HuBMAP_desc}</div>
 
 
 

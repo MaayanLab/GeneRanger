@@ -159,7 +159,7 @@ ingest/CCLE_Transcriptomics: preprocessed/CCLE_transcriptomics.tsv
 ingest/CCLE_Proteomics: preprocessed/CCLE_proteomics.tsv
 	make PYTHON=$(PYTHON) ensure-db
 	mkdir -p ingest
-	$(PYTHON) 11_ingest_standard_form.py -n CCLE_proteomics -i $< -o $@
+	$(PYTHON) 11_ingest_standard_form.py -n CCLE_proteomics -i $< -o $
 
 .PHONY: ingest
 ingest: ingest/gene_info ingest/ARCHS4 ingest/GTEx_transcriptomics ingest/Tabula_Sapiens ingest/HPM ingest/HPA ingest/GTEx_proteomics ingest/CCLE_Transcriptomics ingest/CCLE_Proteomics

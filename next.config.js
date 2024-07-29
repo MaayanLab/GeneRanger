@@ -7,7 +7,7 @@ const nextConfig = {
     return [
       {
         source: '/',
-        destination: '/gene/A2M?database=ARCHS4',
+        destination: '/gene/A1CF?database=ARCHS4',
         permanent: false,
       },
     ]

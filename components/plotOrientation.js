@@ -24,6 +24,8 @@ function calculateMean(array) {
 
 export default function PlotOrientation({ data, labels_x, labels_y, title, text, horizontal }) {
 
+    console.log(data, labels_x, labels_y)
+
     const labels_length = (labels_x['x'].length * 25).toString() + 'px';
     const val_names = ['lowerfence', 'upperfence', 'mean', 'median', 'q1', 'q3', 'sd'];
     var data_reverse = {};
