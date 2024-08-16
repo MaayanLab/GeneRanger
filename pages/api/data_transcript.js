@@ -40,7 +40,6 @@ export default async function handler(req, res) {
             } else {
                 gene_desc = "No gene description available."
             }
-            console.log('here')
 
             let all_db_data = await prisma.$queryRaw
                 `
@@ -51,7 +50,6 @@ export default async function handler(req, res) {
                         databases != undefined ? Prisma.sql`and d.dbname IN (${Prisma.join(databases)});` : Prisma.empty 
                     }
                 `
-            console.log(all_db_data)
             let sorted_data = {};
 
             for (let i in all_db_data) {
@@ -108,7 +106,6 @@ export default async function handler(req, res) {
 
                 }
             }
-            console.log(sorted_data)
 
             res.status(200).json({ allData: {'transcript': transcript, 'gene': gene, 'dbData': sorted_data, 'NCBI_data': gene_desc}  });
         } catch (err) {
