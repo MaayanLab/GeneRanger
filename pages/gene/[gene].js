@@ -30,11 +30,11 @@ const Plot = dynamic(() => import('react-plotly.js'), {
 
 function sortData(all_db_data) {
     let sorted_data = {};
-
+    let db_list = all_db_data.map(db => db.dbname)
     for (let i in all_db_data) {
         let db = all_db_data[i].dbname;
         let df = all_db_data[i].df;
-        if (db == 'GTEx_transcriptomics' || db == 'HuBMAP' || db == 'ARCHS4' || db == 'Tabula_Sapiens' || db == 'GTEx_proteomics') {
+        if (db == 'GTEx_transcriptomics' || db == 'HuBMAP' || db == 'ARCHS4' || db == 'ARCHS4_norm' || db == 'Tabula_Sapiens' || db == 'GTEx_proteomics') {
             const descriptions = Object.keys(df.mean);
             descriptions.sort((a, b) => df.mean[a] - df.mean[b]);
             let names = descriptions;
@@ -47,7 +47,7 @@ function sortData(all_db_data) {
             const lowerfence = descriptions.map(description => df.lowerfence[description] || null);
 
             // Dealing with dashes and underscores in the names
-            if (db == 'ARCHS4') {
+            if (db == 'ARCHS4' ||  db == 'ARCHS4_norm') {
                 names = names.map(name => name.replace('-', ' - '));
             }
             if (db == 'Tabula_Sapiens') {
@@ -56,7 +56,7 @@ function sortData(all_db_data) {
 
             let data;
 
-            if (db == 'ARCHS4') {
+            if (db == 'ARCHS4' || db == 'ARCHS4_norm') {
                 data = {
                     q1: q1,
                     median: median,
@@ -113,9 +113,9 @@ function sortData(all_db_data) {
 
         }
     }
-
     return sorted_data
 }
+
 
 export async function getServerSideProps(context) {
 
@@ -162,7 +162,6 @@ export async function getServerSideProps(context) {
         from data_complete d
         where d.gene = ${context.query.gene};
     `
-
     let joint_db_data = await prisma.$queryRaw
         `
         select dbname, df
@@ -182,7 +181,8 @@ export async function getServerSideProps(context) {
         ['GTEx_proteomics', 6],
         ['CCLE_proteomics', 7],
         ['GTEx', 8],
-        ['HuBMAP', 9]
+        ['HuBMAP', 9],
+        ['ARCHS4_norm', 10]
     ]);
 
     return {
@@ -247,6 +247,7 @@ const databases = new Map([
     [7, 'CCLE_proteomics'],
     [8, 'GTEx'],
     [9, 'HuBMAP'],
+    [10, 'ARCHS4_norm']
 ]);
 
 let ARCHS4_str_m = ', developed by the Ma’ayan Lab, contains over 1 million samples of uniformly processed RNA-seq data from the Gene Expression Omnibus (GEO). The samples were aligned using kallisto with an efficient parallelized cloud workflow.';

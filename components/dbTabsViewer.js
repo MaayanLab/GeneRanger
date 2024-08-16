@@ -8,7 +8,7 @@ import GraphMissing from './graphMissing';
 import { useState } from "react";
 import styles from '../styles/Main.module.css';
 import PropTypes from 'prop-types';
-import { Container } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import PlotOrientation from "./plotOrientation";
 import JointPlotOrientation from "./jointPlotOrientation";
 import { useRuntimeConfig } from "./runtimeConfig";
@@ -25,6 +25,7 @@ export default function DbTabsViewer(props) {
 
     const [horizontal, setHorizontal] = useState(true);
     const [kind, setKind] = useState('horizontal');
+    const [viewNormExpression, setViewNormExpression] = useState(true);
 
     function TabPanel(props) {
         const { children, value, index, classes, ...other } = props;
@@ -109,11 +110,10 @@ export default function DbTabsViewer(props) {
     let ccle_proteomics_title = props.gene + ' Protein Expression across CCLE Cell Lines';
     let gtex_title = props.gene + ' Normalized Expression across Multiple Databases';
 
-    let gtex_transcriptomics = null, archs4 = null, tabula_sapiens = null, hpm = null, hpa = null, gtex_proteomics = null, ccle_transcriptomics = null, ccle_proteomics = null, gtex = null, hubmap = null;
-    let gtex_transcriptomics_names_x = [], gtex_transcriptomics_names_y = [], archs4_names_x = [], archs4_names_y = [], ts_names_y = [], ts_names_x = [], hubmap_names_x = [], hubmap_names_y = [];
+    let gtex_transcriptomics = null, archs4 = null, archs4_norm=null, tabula_sapiens = null, hpm = null, hpa = null, gtex_proteomics = null, ccle_transcriptomics = null, ccle_proteomics = null, gtex = null, hubmap = null;
+    let gtex_transcriptomics_names_x = [], gtex_transcriptomics_names_y = [], archs4_names_x = [], archs4_names_y = [], ts_names_y = [], ts_names_x = [], hubmap_names_x = [], hubmap_names_y = [], archs4_norm_names_x = [], archs4_norm_names_y = [];
     let hpm_names_x = [], hpm_names_y = [], hpa_names_x = [], hpa_names_y = [], gtex_proteomics_names_x = [], gtex_proteomics_names_y = [], ccle_transcriptomics_names_x = [], ccle_transcriptomics_names_y = [], ccle_prot_names_x = [], ccle_prot_names_y = [];
 
-    console.log(props.sorted_data)
     if ('GTEx_transcriptomics' in props.sorted_data) {
         gtex_transcriptomics = props.sorted_data.GTEx_transcriptomics;
         gtex_transcriptomics_names_x = {"x": gtex_transcriptomics.names.slice().reverse(), orientation: 'v'}
@@ -123,6 +123,11 @@ export default function DbTabsViewer(props) {
         archs4 = props.sorted_data.ARCHS4;  
         archs4_names_x = {"x": archs4.names.slice().reverse(), orientation: 'v'}
         archs4_names_y = {"y": archs4.names, orientation: 'h'}
+    } 
+    if ('ARCHS4_norm' in props.sorted_data) {
+        archs4_norm = props.sorted_data.ARCHS4_norm;  
+        archs4_norm_names_x = {"x": archs4.names.slice().reverse(), orientation: 'v'}
+        archs4_norm_names_y = {"y": archs4.names, orientation: 'h'}
     } 
     if ('Tabula_Sapiens' in props.sorted_data) {
         tabula_sapiens = props.sorted_data.Tabula_Sapiens;
@@ -162,6 +167,7 @@ export default function DbTabsViewer(props) {
     if (props.database === 8) {
         gtex = props.sorted_data.GTEx;
     }
+
 
     return (
         <Box sx={{ width: '100%' }}>
@@ -238,6 +244,32 @@ export default function DbTabsViewer(props) {
             
             </div>
             <TabPanel value={database} index={0}>
+                
+                {viewNormExpression ? 
+                    archs4_norm != null
+                        ?
+                        <>
+                            <h1 style={{ textAlign: 'center' }}>{props.gene}</h1>
+                            <GeneAndGraphDescription index={0} NCBI_data={props.NCBI_data} gene={props.gene} database={ARCHS4_link} database_desc={ARCHS4_desc_d} data={props.sorted_data.ARCHS4_norm} mappings={props.mappings} horizontal={horizontal} setHorizontal={setHorizontal} setViewNormExpression={setViewNormExpression} viewNormExpression={viewNormExpression}/>
+                            <PlotOrientation data={archs4_norm} labels_x={archs4_norm_names_x} labels_y={archs4_norm_names_y} title={archs4_title} text={'log2 Quantile Normalized RNA Counts'} horizontal={horizontal}></PlotOrientation>
+                        </>
+
+                        :
+                        <GraphMissing />
+                    :
+                        archs4 != null
+                            ?
+                            <>
+                                <h1 style={{ textAlign: 'center' }}>{props.gene}</h1>
+                                <GeneAndGraphDescription index={0} NCBI_data={props.NCBI_data} gene={props.gene} database={ARCHS4_link} database_desc={ARCHS4_desc_d} data={props.sorted_data.ARCHS4} mappings={props.mappings} horizontal={horizontal} setHorizontal={setHorizontal} setViewNormExpression={setViewNormExpression} viewNormExpression={viewNormExpression}/>
+                                <PlotOrientation data={archs4} labels_x={archs4_names_x} labels_y={archs4_names_y} title={archs4_title} text={'RNA Counts'} horizontal={horizontal}></PlotOrientation>
+                            </>
+    
+                            :
+                            <GraphMissing />
+                }
+            </TabPanel>
+            <TabPanel value={database} index={10}>
                 {
                     archs4 != null
                         ?

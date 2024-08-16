@@ -29,7 +29,7 @@ function createCSV(gene, data, dbname) {
     return csvData;
 }
 
-function GeneAndGraphDescription({ index, NCBI_data, gene, transcript, database, database_desc, data, mappings, horizontal, setHorizontal }) {
+function GeneAndGraphDescription({ index, NCBI_data, gene, transcript, database, database_desc, data, mappings, horizontal, setHorizontal, viewNormExpression=null, setViewNormExpression=null }) {
 
     const router = useRouter();
 
@@ -138,6 +138,14 @@ function GeneAndGraphDescription({ index, NCBI_data, gene, transcript, database,
             <div><b>{database}:</b> {database_desc}</div>
             <div style={{ display: 'flex', margin: '1%', textAlign: 'right', justifyContent: 'end' }}>
                 <div >
+                    {viewNormExpression != null ? 
+                    <Button
+                        variant="outlined"
+                        sx={{ justifyContent: 'start', marginTop: '10px', marginRight: '10px' }}
+                        onClick={() => setViewNormExpression(!viewNormExpression)}
+                    >
+                        {viewNormExpression ? 'View Raw Expression' : 'View Normalized Expression'}
+                    </Button>: <></>}
                     <ToggleButtonGroup
                         color="secondary"
                         value={horizontal}

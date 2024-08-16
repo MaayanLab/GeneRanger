@@ -24,8 +24,6 @@ function calculateMean(array) {
 
 export default function PlotOrientation({ data, labels_x, labels_y, title, text, horizontal }) {
 
-    console.log(data, labels_x, labels_y)
-
     const labels_length = (labels_x['x'].length * 25).toString() + 'px';
     const val_names = ['lowerfence', 'upperfence', 'mean', 'median', 'q1', 'q3', 'sd'];
     var data_reverse = {};
@@ -84,7 +82,7 @@ export default function PlotOrientation({ data, labels_x, labels_y, title, text,
             q3: data_reverse['q3']?.filter((x, i) => index.includes(i)),
             orientation: 'v',
             width: '1000px',
-            x: labels_x['x'].filter((x, i) => index.includes(i)),
+            x: labels_x['x'].filter((x, i) => index.includes(i)).map((x) => x.replace('_', ' - ')),
             type: data_reverse['type'],
             visible: true,
             marker: {
@@ -122,9 +120,6 @@ export default function PlotOrientation({ data, labels_x, labels_y, title, text,
     
 
     });
-
-    console.log(traces);
-    console.log(traces_y);
 
     
 
