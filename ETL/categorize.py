@@ -18,16 +18,16 @@ def categorize(labels):
     return response.choices[0].message.content
 
 
-""" filename = 'GTEx_Transcriptomics'
+filename = 'hubmap'
 with open(f'{filename}.txt', 'r') as f:
-    labels = f.read().splitlines()
+    labels = f.read().split('\t')
 
 
 for i in range(0, len(labels), 100):
     res = categorize(labels[i:i+100])
     res_json = json.loads(res)
     with open(f'categories/{filename}{i}.json', 'w') as f:
-        json.dump(res_json, f) """
+        json.dump(res_json, f)
 
 
 cats = os.listdir('categories')
