@@ -3,7 +3,7 @@ services:
   app:
     platform: linux/amd64
     build: .
-    image: maayanlab/generanger:0.3.15
+    image: maayanlab/generanger:0.3.16
     environment:
       - POSTGRES_HOST=localhost
       - POSTGRES_DB=postgres
