@@ -303,7 +303,7 @@ export default function DbTabsViewer(props) {
                         ?
                         <>
                             <h1 style={{ textAlign: 'center' }}>{props.gene}</h1>
-                            <GeneAndGraphDescription index={9} NCBI_data={props.NCBI_data} gene={props.gene} database={HuBMAP_link} database_desc={HuBMAP_desc_d} data={props.sorted_data.Tabula_Sapiens} mappings={props.mappings} horizontal={horizontal} setHorizontal={setHorizontal}/>
+                            <GeneAndGraphDescription index={9} NCBI_data={props.NCBI_data} gene={props.gene} database={HuBMAP_link} database_desc={HuBMAP_desc_d} data={props.sorted_data.HuBMAP} mappings={props.mappings} horizontal={horizontal} setHorizontal={setHorizontal}/>
                             <PlotOrientation data={hubmap} labels_x={hubmap_names_x} labels_y={hubmap_names_y} title={hubmap_title} text={'RNA Counts'} horizontal={horizontal}></PlotOrientation>
                         </>
 

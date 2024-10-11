@@ -10,8 +10,9 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 
 function createCSV(gene, data, dbname) {
+    console.log(dbname)
     var csvData = '';
-    if (dbname == 'ARCHS4' || dbname == 'GTEx transcriptomics' || dbname == 'Tabula Sapiens' || dbname == 'GTEx proteomics') {
+    if (dbname == 'ARCHS4' || dbname == 'ARCHS4_norm'|| dbname == 'GTEx transcriptomics' || dbname == 'Tabula Sapiens' || dbname == 'GTEx proteomics' || dbname == 'Human BioMolecular Atlas Program (HubMAP)') {
         csvData += ',,' + [...data.names].reverse().join(',') + '\n'
         csvData += `${gene},25%,` + [...data.q1].reverse().join(',') + '\n'
         csvData += `${gene},50%,` + [...data.median].reverse().join(',') + '\n'
