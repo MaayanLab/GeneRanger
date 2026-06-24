@@ -4,3 +4,4 @@ numpy
 pandas
 psycopg2
 tqdm
+python-dotenv

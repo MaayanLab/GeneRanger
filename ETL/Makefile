@@ -171,7 +171,7 @@ ingest: ingest/gene_info ingest/ARCHS4 ingest/GTEx_transcriptomics ingest/Tabula
 
 .PHONY: ensure-env
 ensure-env: .env
-	@dotenv get POSTGRES_PASSWORD || dotenv -qauto set POSTGRES_PASSWORD $(shell openssl rand -hex 16)
+	@dotenv get POSTGRES_PASSWORD || dotenv -qauto set POSTGRES_PASSWORD $(shell python -c "import string, secrets; print(''.join(secrets.choice(string.ascii_letters + string.digits) for _ in range(32)))")
 	dotenv -qauto set DATABASE_URL postgres://$(shell dotenv get POSTGRES_USER):$(shell dotenv get POSTGRES_PASSWORD)@$(shell dotenv get POSTGRES_HOST):5432/$(shell dotenv get POSTGRES_DB)?sslmode=disable
 
 .PHONY: check-deps
