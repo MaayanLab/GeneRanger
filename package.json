@@ -1,6 +1,6 @@
 {
   "name": "single-gene-expression-dashboard",
-  "version": "0.3.18",
+  "version": "0.3.19",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -17,20 +17,28 @@
     "@mui/material": "^5.11.5",
     "@mui/x-data-grid": "^5.17.20",
     "@prisma/client": "^4.2.1",
-    "next": "12.2.3",
+    "dompurify": "^3.4.11",
+    "next": "^16.2.10",
     "next-swagger-doc": "^0.3.6",
     "plotly.js": "^2.14.0",
+    "postcss": "^8.5.16",
     "react": "^18.2.0",
     "react-dom": "18.2.0",
     "react-grid-layout": "^1.3.4",
     "react-plotly.js": "^2.5.1",
-    "sharp": "^0.31.0",
+    "sharp": "^0.35.3",
     "swagger-ui-react": "^4.15.5",
-    "swr": "^2.0.0"
+    "swr": "^2.0.0",
+    "tmp": "^0.2.7"
   },
   "devDependencies": {
     "eslint": "8.21.0",
     "eslint-config-next": "12.2.3",
     "prisma": "^4.2.1"
+  },
+  "overrides": {
+    "postcss": "^8.5.16",
+    "dompurify": "^3.4.11",
+    "tmp": "^0.2.7"
   }
 }
